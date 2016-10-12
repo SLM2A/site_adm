@@ -2,16 +2,23 @@
 session_start();
 require('../_app/Config.inc.php');
 
-//$login = new login(3);
-//$login = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
-//var_dump($login);
-//if (!$login->CheckLogin()):
-//    unset($_SESSION['userlogin']);
-//    header('Location: index.php?exe=restrito');
-//else:
-//    $userlogin = $_SESSION['userlogin'];
-//endif;
+$login = new login(3);
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+$getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
+
+if (!$login->CheckLogin()):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=restrito');
+else:
+    $userlogin = $_SESSION['userlogin'];
+endif;
+    
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=logoff');
+endif;    
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -35,7 +42,7 @@ require('../_app/Config.inc.php');
                 <h1 class="logomarcaa">Pro Admin</h1>
 
                 <ul class="systema_nav radius">
-                    <li class="username">Olá <?= $_SESSION['userlogin']['user_name']; ?> <?= $_SESSION['userlogin']['user_lastname']; ?></li>
+                    <li class="username">Olá <?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></li>
                     <li><a class="icon profile radius" href="painel.php?exe=users/profile">Perfíl</a></li>
                     <li><a class="icon users radius" href="painel.php?exe=users/users">Usuários</a></li>
                     <li><a class="icon logout radius" href="painel.php?logoff=true">Sair</a></li>
@@ -46,8 +53,8 @@ require('../_app/Config.inc.php');
 
                     <?php
                     //ATIVA MENU
-                    if (isset($_GET['exe'])):
-                        $linkto = explode('/', $_GET['exe']);
+                    if (isset($getexe)):
+                        $linkto = explode('/', $getexe);
                     else:
                         $linkto = array();
                     endif;
@@ -68,7 +75,7 @@ require('../_app/Config.inc.php');
                             </ul>
                         </li> 
 
-                        <li class="li<?php if (in_array('pages', $linkto)) echo ' active'; ?>"><a class="opensub" onclick="return false;" href="#">Empresas</a>
+                        <li class="li<?php if (in_array('empresas', $linkto)) echo ' active'; ?>"><a class="opensub" onclick="return false;" href="#">Empresas</a>
                             <ul class="sub">
                                 <li><a href="painel.php?exe=empresas/create">Cadastrar Empresa</a></li>
                                 <li><a href="painel.php?exe=empresas/index">Listar / Editar Empresas</a></li>
@@ -85,8 +92,8 @@ require('../_app/Config.inc.php');
         <div id="painel">
             <?php
             //QUERY STRING
-            if (!empty($_GET['exe'])):
-                $includepatch = __DIR__ . '\\system\\' . strip_tags(trim($_GET['exe']) . '.php');
+            if (!empty($getexe)):
+                $includepatch = __DIR__ . '\\system\\' . strip_tags(trim($getexe) . '.php');
             else:
                 $includepatch = __DIR__ . '\\system\\home.php';
             endif;
@@ -95,7 +102,7 @@ require('../_app/Config.inc.php');
                 require_once($includepatch);
             else:
                 echo "<div class=\"content notfound\">";
-                WSErro("<b>Erro ao incluir tela:</b> Erro ao incluir o controller /{$_GET['exe']}.php!", WS_ERROR);
+                WSErro("<b>Erro ao incluir tela:</b> Erro ao incluir o controller /{$getexe}.php!", WS_ERROR);
                 echo "</div>";
             endif;
             ?>

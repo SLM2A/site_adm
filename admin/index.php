@@ -26,9 +26,7 @@ require('../_app/Config.inc.php');
                 
                 if($login->CheckLogin()):
                     header('Location: painel.php');
-                endif;                    
-                                                
-                //WSErro("Os dados não conferem. Favor informe seu e-mail e senha!", WS_ERROR);
+                endif;
                 
                 $dataLogin = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 if(!empty($dataLogin['AdminLogin'])):
@@ -43,7 +41,7 @@ require('../_app/Config.inc.php');
                 $get = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
                 if (!empty($get)):
                     if($get == 'restrito'):
-                        WSErro('<b>OPSS!</b> Acesso negado, Favor efetue login para acessar o painel!',WS_ALERT);
+                        WSErro('<b>OPSS!</b> Acesso negado, favor efetue login para acessar o painel!',WS_ALERT);
                     elseif($get == 'logoff'):
                         WSErro('<b>Sucesso ao deslogar!</b> Sua sessão foi finalizada, volte sempre!',WS_ACCEPT);
                     endif;
