@@ -17,7 +17,7 @@ endif;
             $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             if(!empty($post['SendPostForm'])):
                 unset($post['SendPostForm']);
-                
+                                
                 require '_models/AdminCategory.class.php';
                 $cadastra = new AdminCategory;
                 $cadastra->ExeCreate($post);

@@ -20,12 +20,13 @@ class AdminCategory{
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
         
-        if(in_array('', $this->Data)):
+        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
             $this->Error = ['<b>Erro ao cadastrar:</b> Para cadastrar uma categoria preencha todos os campos!', WS_ALERT];
         else:
             $this->setData();        
             $this->setName();
+            $this->Create();
         endif;        
     }
     
@@ -37,20 +38,32 @@ class AdminCategory{
         return $this->Error;
     }
     
-    //PRIVATE
-    
+    //PRIVATE    
     private function setData() {
         $this->Data = array_map('strip_tags', $this->Data); //limpar array
         $this->Data = array_map('trim', $this->Data); //limpar array
-        $this->Data ['category_name'] = Check::Name($this->Data ['cateory_title']);//criar o nome da categoria para o titulo
-        $this->Data ['category_date'] = Check::Data($this->Data ['cateory_date']);//Rescrever data no formato TIME STAMP
+        $this->Data ['category_name'] = Check::Name($this->Data ['category_title']);//criar o nome da categoria para o titulo
+        $this->Data ['category_date'] = Check::Data($this->Data ['category_date']);//Rescrever data no formato TIME STAMP
         $this->Data ['category_parent'] = ($this->Data['category_parent'] == 'null' ? NULL : $this->Data['category_parent'] == $this->Data['category_parent']);
     }
     
     private function setName() {
-        $Where = ( !empty($this->cadID)?"category_id != {$this->CadID} AND " : ''); //se existir cadID esta editando 
+        $Where = ( !empty($this->cadID)?"category_id != {$this->CadID} AND " : ''); //verifica se existir cadID
+        
+        $readName = new Read;
+        $readName->ExeRead(self::ENTITY, "WHERE {$Where} category_title = :t", "t={$this->Data['category_title']}");
+        if ($readName->getResult()):
+        $this->Data['category_title'] = $this->Data['category_title'] . '-' . $readName->getRowCount(); 
+        endif;
     }
 
-
+    private function Create() {
+        $Create = new Create;
+        $Create->ExeCreate(self::ENTITY, $this->Data);
+        if ($Create->getResult()):
+        $this->Result = $Create->getResult();
+        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}A categoria foi cadastrada no sistema!",WS_ACCEPT];
+        endif;
+    }
     
 }
