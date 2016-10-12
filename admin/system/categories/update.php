@@ -10,22 +10,28 @@ endif;
     <article>
 
         <header>
-            <h1>Criar Categoria:</h1>
+            <h1>Atualizar Categoria:</h1>
         </header>
         
         <?php
             $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+            $catid = filter_input(INPUT_GET, 'catid', FILTER_VALIDATE_INT);
+            
             if(!empty($data['SendPostForm'])):
                 unset($data['SendPostForm']);
                                 
                 require '_models/AdminCategory.class.php';
                 $cadastra = new AdminCategory;
-                $cadastra->ExeCreate($data);
+                $cadastra->ExeUpdate($catid, $data);
                 
-                if (!$cadastra->getResult()):
-                    WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+                WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+            else:
+                $read = new Read();
+                $read->ExeRead("ws_categories", "WHERE category_id = :id", "id={$catid}");
+                if(!$read->getResult()):
+                    header('Location: painel.php?exe=categories/index.php&update=false');
                 else:
-                    header ('Location: painel.php?exe=categories/update&create=true&catid='.$cadastra->getResult());
+                    $data = $read->getResult()[0];
                 endif;
             endif;
         ?>
@@ -79,7 +85,7 @@ endif;
 
             <div class="gbform"></div>
 
-            <input type="submit" class="btn green" value="Cadastrar Categoria" name="SendPostForm" />
+            <input type="submit" class="btn blue" value="Atualizar Categoria" name="SendPostForm" />
         </form>
 
     </article>

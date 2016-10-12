@@ -30,6 +30,20 @@ class AdminCategory{
         endif;        
     }
     
+    public function ExeUpdate($CategoryId, array $Data) {
+        $this->CadID = (int) $CategoryId;
+        $this->Data = $Data;
+        
+        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
+            $this->Result = false;
+            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
+        else:
+            $this->setData();        
+            $this->setName();
+            $this->Update();
+        endif;        
+    }
+    
     function getResult() {
         return $this->Result;
     }
@@ -62,8 +76,16 @@ class AdminCategory{
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}A categoria foi cadastrada no sistema!",WS_ACCEPT];
+        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi cadastrada no sistema!",WS_ACCEPT];
         endif;
     }
-    
+
+    private function Update() {
+        $update = new Update();
+        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
+        if($update->getResult()):
+        $this->Result = TRUE;
+        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+        endif;
+    }
 }
