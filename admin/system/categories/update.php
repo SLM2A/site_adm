@@ -29,10 +29,16 @@ endif;
                 $read = new Read();
                 $read->ExeRead("ws_categories", "WHERE category_id = :id", "id={$catid}");
                 if(!$read->getResult()):
-                    header('Location: painel.php?exe=categories/index.php&update=false');
+                    header('Location: painel.php?exe=categories/index.php&empty=true');
                 else:
                     $data = $read->getResult()[0];
                 endif;
+            endif;
+            
+            $checkCreate = filter_input(INPUT_GET, 'create', FILTER_VALIDATE_BOOLEAN);
+            if($checkCreate):
+                $tipo = (empty($data['category_parent']) ? 'seção' : 'categoria');//verifica se e uma seção 
+                WSErro("A {$tipo} <b>{$data['category_title']}</b> foi cadastrada com sucesso no sistema! continue atualizando a mesma!", WS_ACCEPT);
             endif;
         ?>
 
