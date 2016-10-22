@@ -81,6 +81,13 @@ endif;
                                 <li><a href="painel.php?exe=empresas/index">Listar / Editar Empresas</a></li>
                             </ul>
                         </li>
+                        
+                         <li class="li<?php if (in_array('profissional', $linkto)) echo ' active'; ?>"><a class="opensub" onclick="return false;" href="#">Profissional</a>
+                            <ul class="sub">
+                                <li><a href="painel.php?exe=profissional/create">Cadastrar Profissional</a></li>
+                                <li><a href="painel.php?exe=profissional/index">Listar / Editar Profissional</a></li>
+                            </ul>
+                        </li>
                         <li class="li"><a href="../" class="opensub">Ver Site</a></li>
                     </ul>
                 </nav>
@@ -114,7 +121,10 @@ endif;
 
     </body>
 
-    <script src="../_cdn/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../_cdn/jmask.js"></script>
     <script src="../_cdn/combo.js"></script>
     <script src="__jsc/tiny_mce/tiny_mce.js"></script>
