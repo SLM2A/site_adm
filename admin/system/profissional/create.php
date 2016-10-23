@@ -22,21 +22,24 @@
                 <input id="tags" size="50">
             </label>
 
+
             <label class="label">
                 <span class="field">Foto de Perfil<sup>Exatamente 578x288px (JPG ou PNG)</sup></span>
                 <input type="file" name="cover" />
             </label>
 
-            <label class="label">
+            <div class="label_line">
+            <label class="label_medium">
                 <span class="field">Nome:</span>
                 <input type="text" name="txtNomeUsuario" />
             </label>
 
-            <label class="label">
+            <label class="label_medium">
                 <span class="field">Sobrenome</span>
                 <input type="text" name="txtSobrenomeUsuario" />
             </label>
-            
+            </div>
+
             <label class="label">
                 <span class="field">Sexo:</span>
                 <select name="cbSexoUsuario">
@@ -45,23 +48,20 @@
                         <option value="feminino">  Feminino  </option>
                 </select>
             </label>
-            
-            <label class="label">
+
+
+            <div class="label_line">
+            <label class="label_medium">
                 <span class="field">CPF</span>
-                <input type="text" name="txtCPFUsuario" />
+                <input type="text" name="txtCPFUsuario" class="formCPF center"/>
             </label>
 
 
-<!--            <label class="label">
-                <span class="field">Sobre a empresa:</span>
-                <textarea name="" rows="3"></textarea>
-            </label>-->
-
-            <label class="label">
+            <label class="label_medium">
                 <span class="field">Data de Nascimento</span>
-                <input type="text" name="txtDataNascimento" />
+                <input type="text" name="txtDataNascimento" class="formDataMask center"/>
             </label>
-
+            </div>
             <label class="label">
                 <span class="field">CEP</span>
                 <input type="text" name="txtCEP" />
@@ -73,12 +73,12 @@
             </label>
 
             <div class="label_line">
-                    <label class="label_small">
+                    <label class="label_medium">
                         <span class="field">Número</span>
                         <input type="text" name="txtNumero" />
                     </label>
 
-                    <label class="label_small">
+                    <label class="label_medium">
                         <span class="field">Complemento</span>
                         <input type="text" name="txtComplemento" />
                     </label>
@@ -86,7 +86,7 @@
 
             <div class="label_line">
 
-                <label class="label_small">
+                <label class="label_medium">
                     <span class="field">Estado UF:</span>
                     <select class="j_loadstate" name="post_category">
                         <option value="" disabled selected> Selecione o estado </option>
@@ -101,7 +101,7 @@
                     </select>
                 </label>
 
-                <label class="label_small">
+                <label class="label_medium">
                     <span class="field">Cidade:</span>
                     <select class="j_loadcity" name="post_category" disabled>
                         <option value="" disabled selected> Selecione antes um estado </option>

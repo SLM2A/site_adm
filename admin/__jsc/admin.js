@@ -4,7 +4,8 @@ $(function() {
 
     //MASCARAS
     $(".formDate").mask("99/99/9999 99:99:99", {placeholder: " "});
-
+    $(".formCPF") .mask("999.999.999-99" , {placeholder: ""});
+    $(".formDataMask") .mask("99/99/9999" , {placeholder: ""});
 
     //TinyMCE
     //EXTENSÂO DE YOUTUBE EM \tiny_mce\plugins\media\js MEDIA.js
