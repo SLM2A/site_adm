@@ -49,7 +49,7 @@ endif;
                 </ul>
 
                 <nav>
-                    <h1><a href="painel.php" title="Dasboard">Dasboard</a></h1>
+                    <h1><a href="painel.php" title="Dasboard">Dashboard</a></h1>
 
                     <?php
                     //ATIVA MENU
