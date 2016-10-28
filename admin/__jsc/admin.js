@@ -58,6 +58,9 @@ $(function() {
 });
 
   $( function() {
+
+      alert(arrayAreaAtuacao);
+
     var availableTags = [
       "Acupuntura",
       "Barbeiro",

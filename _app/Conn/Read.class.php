@@ -43,6 +43,10 @@ class Read extends Conn {
         return $this->Result;
     }
 
+    public function getSelect() {
+        return $this->Select;
+    }
+
     /**
      * <b>Contar Registros: </b> Retorna o número de registros encontrados pelo select!
      * @return INT $Var = Quantidade de registros encontrados
@@ -100,6 +104,7 @@ class Read extends Conn {
         try {
             $this->getSyntax();
             $this->Read->execute();
+            //$this->Result = $this->Read->fetchAll();
             $this->Result = $this->Read->fetchAll();
         } catch (PDOException $e) {
             $this->Result = null;

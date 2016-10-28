@@ -76,15 +76,9 @@ class AdminProfissional{
     public function readAreaAtuacao() {
         $readName = new Read;
         $readName->ExeRead(self::DB_AREAATUACAO, "ORDER BY nomeProfissao", "");
-
-       //PARAMOS AQUI
-        if ($readName->getResult()):
-            $this->Data['nomeProfissional'] = $this->Data['nomeProfissional'];
-            $string = implode(",", $this->Data);
-        endif;
-        var_dump($string);
+            $areaAtuacao = array_column($readName->getResult(), 'nomeProfissao');
+            return $areaAtuacao;
     }
-
 
     private function Create() {
         $Create = new Create;

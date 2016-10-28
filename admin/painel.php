@@ -16,8 +16,14 @@ endif;
 if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
-endif;    
-?>
+endif;
+
+
+//PARAMOS AQUI
+//include_once('../_models/AdminProfissional.class.php);
+
+//$ObjArrayAreaAtuacao = new AdminProfissional();
+//$arrayAreaAtuacao = implode(" | ", $ObjArrayAreaAtuacao->readAreaAtuacao());?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -130,5 +136,6 @@ endif;
     <script src="__jsc/tiny_mce/tiny_mce.js"></script>
     <script src="__jsc/tiny_mce/plugins/tinybrowser/tb_tinymce.js.php"></script>
     <script src="__jsc/admin.js"></script>
+    <script> var arrayAreaAtuacao = "<?php echo $arrayAreaAtuacao;?>";</script>
 
 </html>
