@@ -5,6 +5,8 @@
 
     $teste = new AdminProfissional();
     $teste-> readAreaAtuacao();
+    
+
 
     ?>
 

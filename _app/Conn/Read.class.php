@@ -33,7 +33,7 @@ class Read extends Conn {
         $this->Select = "SELECT * FROM {$Tabela} {$Termos}";
         $this->Execute();
     }
-
+    
     /**
      * <b>Obter resultado:</b> Retorna um array com todos os resultados obtidos. Envelope primário númérico. Para obter
      * um resultado chame o índice getResult()[0]!
@@ -42,11 +42,6 @@ class Read extends Conn {
     public function getResult() {
         return $this->Result;
     }
-
-    public function getSelect() {
-        return $this->Select;
-    }
-
     /**
      * <b>Contar Registros: </b> Retorna o número de registros encontrados pelo select!
      * @return INT $Var = Quantidade de registros encontrados

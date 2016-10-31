@@ -7,6 +7,7 @@
  * @copyright (c) 2016, Marcelo Lima Doe
  */
 
+
 class AdminProfissional{
     
     private $Data;
@@ -28,7 +29,7 @@ class AdminProfissional{
             $this->setData();        
             $this->setName();
             $this->Create();
-        endif;        
+        endif;
     }
     
     public function ExeUpdate($CategoryId, array $Data) {
@@ -72,14 +73,32 @@ class AdminProfissional{
         endif;
     }
 
-    //puxando area de atuação para o autocomplete - qual sua profissão
+  //  puxando area de atuação para o autocomplete - qual sua profissão
     public function readAreaAtuacao() {
+        $search = mysql_real_escape_string($_GET['term']);
         $readName = new Read;
-        $readName->ExeRead(self::DB_AREAATUACAO, "ORDER BY nomeProfissao", "");
-            $areaAtuacao = array_column($readName->getResult(), 'nomeProfissao');
-            return $areaAtuacao;
+        $readName->ExeRead(self::DB_AREAATUACAO, "WHERE nome LIKE '%$search%' ORDER BY nomeProfissao", "");
+        
+        $resJson="[";
+        $first = true;
+     
+        while($res = mysql_fetch_assoc($readName->getResult())):
+            if(!$first):
+                $resJson .=', ';
+            else:
+                $first = false;
+            endif;
+           
+        $resJson .= json_encode($res['nomeProfissao']);  
+        
+        endwhile;      
+                
+       $resJson .=']';
+       
+       echo $resJson;
+              
     }
-
+    
     private function Create() {
         $Create = new Create;
         $Create->ExeCreate(self::ENTITY, $this->Data);

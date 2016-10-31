@@ -18,13 +18,13 @@ if ($logoff):
     header('Location: index.php?exe=logoff');
 endif;
 
-
-//PARAMOS AQUI
-//include_once('../_models/AdminProfissional.class.php);
-
+//
+////PARAMOS AQUI
+//require '_models/AdminProfissional.class.php';
 //$ObjArrayAreaAtuacao = new AdminProfissional();
-//$arrayAreaAtuacao = implode(" | ", $ObjArrayAreaAtuacao->readAreaAtuacao());?>
-
+//$arrayAreaAtuacao = implode(" | ", $ObjArrayAreaAtuacao->readAreaAtuacao());
+    
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -122,13 +122,12 @@ endif;
         </div> <!-- painel -->
 
         <footer class="main_footer">
-            <a href="http://www.upinside.com.br/campus" target="_blank" title="Campus UpInside">&copy; Campus UpInside - Todos os Direitos Reservados</a>
+            <a href="" target="_blank" title="SLM2A">&copy; SLM2A - Todos os Direitos Reservados</a>
         </footer>
 
     </body>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../_cdn/jmask.js"></script>
@@ -136,6 +135,11 @@ endif;
     <script src="__jsc/tiny_mce/tiny_mce.js"></script>
     <script src="__jsc/tiny_mce/plugins/tinybrowser/tb_tinymce.js.php"></script>
     <script src="__jsc/admin.js"></script>
-    <script> var arrayAreaAtuacao = "<?php echo $arrayAreaAtuacao;?>";</script>
+<!--    <script> 
+        var areaAtuacao = "<?php //echo $arrayAreaAtuacao;?>";
+        var array = areaAtuacao.split(" | ");      
+    </script>-->
 
+    
+      
 </html>
