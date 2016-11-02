@@ -1,28 +1,3 @@
-
- <?php
-$search = $_GET['term'];
-$readName = new Read;
-$readName->ExeRead(self::DB_AREAATUACAO, "WHERE nome LIKE '%$search%' ORDER BY nomeProfissao", "");
-
-$resJson = "[";
-$first = true;
-
-while ($res = mysql_fetch_assoc($readName->getResult())):
-    if (!$first):
-        $resJson .=', ';
-    else:
-        $first = false;
-    endif;
-
-    $resJson .= json_encode($res['nomeProfissao']);
-
-endwhile;
-
-    $resJson .=']';
-
-    echo $resJson;
-?>
-
 <div class="content form_create">
 
     <article>
@@ -34,15 +9,17 @@ endwhile;
         <?php
 //        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
 //        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
-//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);
+//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
         ?>
-
+        
+        
+        
         <form name="PostForm" action="" method="post" enctype="multipart/form-data">
 
 
             <label class="label">
                 <span class="field">Areas de Atuação:</span>
-                <input type="text" class="j_autocomplete" name="search" id="txtAreaAtuacao"/>
+                <input type="text" id="txtAreaAtuacao"/>
 
                 <ul class="resultados">
 
@@ -146,6 +123,5 @@ endwhile;
         </form>
 
     </article>
-
     <div class="clear"></div>
-</div> <!-- content form- -->
+<!--</div>  content form- -->

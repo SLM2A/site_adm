@@ -75,28 +75,9 @@ class AdminProfissional{
 
   //  puxando area de atuação para o autocomplete - qual sua profissão
     public function readAreaAtuacao() {
-        $search = mysql_real_escape_string($_GET['term']);
         $readName = new Read;
         $readName->ExeRead(self::DB_AREAATUACAO, "WHERE nome LIKE '%$search%' ORDER BY nomeProfissao", "");
-        
-        $resJson="[";
-        $first = true;
-     
-        while($res = mysql_fetch_assoc($readName->getResult())):
-            if(!$first):
-                $resJson .=', ';
-            else:
-                $first = false;
-            endif;
-           
-        $resJson .= json_encode($res['nomeProfissao']);  
-        
-        endwhile;      
-                
-       $resJson .=']';
-       
-       echo $resJson;
-              
+        $json = json.encode($readName->getResult());           
     }
     
     private function Create() {

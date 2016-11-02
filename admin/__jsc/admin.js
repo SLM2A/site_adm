@@ -57,92 +57,31 @@ $(function() {
     });
 });
 
-//
-//  $( function() {
-//
-//   var availableTags = [
-//      "Acupuntura",
-//      "Barbeiro",
-//      "Cabelereiro",
-//      "Maquiador",
-//      "Manicure",
-//      "Depilador",
-//    ];
-//    function split( val ) {
-//      return val.split( /,\s*/ );
-//    }
-//    function extractLast( term ) {
-//      return split( term ).pop();
-//    }
-// 
-//    $( "#tags" )
-//      // don't navigate away from the field on tab when selecting an item
-//      .on( "keydown", function( event ) {
-//        if ( event.keyCode === $.ui.keyCode.TAB &&
-//            $( this ).autocomplete( "instance" ).menu.active ) {
-//          event.preventDefault();
-//        }
-//      })
-//      .autocomplete({
-//        minLength: 0,
-//        source: function( request, response ) {
-//          // delegate back to autocomplete, but extract the last term
-//          response( $.ui.autocomplete.filter(
-//            availableTags, extractLast( request.term ) ) );
-//        },
-//        focus: function() {
-//          // prevent value inserted on focus
-//          return false;
-//        },
-//        select: function( event, ui ) {
-//          var terms = split( this.value );
-//          // remove the current input
-//          terms.pop();
-//          // add the selected item
-//          terms.push( ui.item.value );
-//          // add placeholder to get the comma-and-space at the end
-//          terms.push( "" );
-//          this.value = terms.join( ", " );
-//          return false;
-//        }
-//      });
-//  } );
- 
-//function autoCompleteAreaAtuacao(){
-//    //variaveis;
-//    var itens = "", url = "AdminProfissional.class.php";
-//    
-//    $.ajax({
-//        url: url,
-//        cache: false,
-//        dataType: "json",
-//       
-//        error: function(){
-//            $("h2").html("há um problema com a fonte de dados");
-//        },
-//        sucess: function(retorno){
-//            if(retorno[0].erro){
-//                $("h2").html(retorno[0].erro);
-//            }
-//            else{
-//                //Laço para criar as linhas 
-//                for(var i=0; i<retorno.legth; i++){
-//                    itens+= retorno[i].idAreaAtuacao;
-//                    itens+= retorno[i].nomeProfissao;     
-//                }
-//                $("#txtAreaAtuacao").autocomplete({source: itens, minLength:3});
-//            }
-//        }
-//    });
-//}
 
-
-$(function(){
-    var resultado = ["Cabelereiro", "Barbeiro", "Teste"];
-    var apresenta = $('.resultados');
+$(function () {
     
-    apresenta.hide().html('<li style="color:green">Aguarde, Carrendo...</li>');
-         $('.j_autocomplete').autocomplete({
-                source: 'profissional/create.php'
+    
+    $('#txtAreaAtuacao').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '__jsc/areaAtuacao.php',
+                dataType: "json",
+                data: {
+                    name_startsWith: request.term,
+                    type: 'areaatuacao'
+                },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item,
+                            value: item
+                        };
+                    }));
+                }
             });
-     });
+        },
+        autoFocus: true,
+        minLength: 0
+    });
+    
+});
