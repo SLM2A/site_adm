@@ -76,8 +76,8 @@ endif;
 
                         <li class="li<?php if (in_array('categories', $linkto)) echo ' active'; ?>"><a class="opensub" onclick="return false;" href="#">Categorias</a>
                             <ul class="sub">
-                                <li><a href="painel.php?exe=categories/create">Criar Categoria</a></li>
-                                <li><a href="painel.php?exe=categories/index">Listar / Editar Categorias</a></li>
+                                <li><a href="painel.php?exe=areaAtuacao/create">Criar Area de Atuacão</a></li>
+                                <li><a href="painel.php?exe=areaAtuacao/index">Listar / Editar Categorias</a></li>
                             </ul>
                         </li> 
 

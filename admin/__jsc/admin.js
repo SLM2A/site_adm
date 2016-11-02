@@ -65,12 +65,12 @@ $(function () {
         return split(term).pop();
     }
 
-    $('#txtAreaAtuacao').on( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
+    $('#txtAreaAtuacao').on("keydown", function (event) {
+        if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+            event.preventDefault();
         }
-      }).autocomplete({
+    }).autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: '__jsc/areaAtuacao.php',
