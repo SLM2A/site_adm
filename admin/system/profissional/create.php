@@ -10,6 +10,7 @@
 //        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
 //        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
 //        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
+        //echo ($_GET['termos']);
         ?>
         
         
@@ -57,7 +58,7 @@
             <div class="label_line">
                 <label class="label_medium">
                     <span class="field">CPF</span>
-                    <input type="text" name="txtCPFUsuario" class="formCPF center"/>
+                    <input type="text" name="txtCPFUsuario" onblur="TestaCPF()" class="formCPF center" />
                 </label>
 
 
@@ -114,10 +115,10 @@
 
             </div><!--/line-->
 
-
+            
             <div class="gbform"></div>
 
-            <input type="submit" class="btn blue" value="Cadastrar" name="SendPostForm" />
+            <input type="submit" class="btn blue" value="Cadastrar" name="SendPostForm" onclick="EnviarAreaAtuacao()" />
             <input type="submit" class="btn green" value="Cadastrar & Publicar" name="SendPostFormPublish" />
 
         </form>

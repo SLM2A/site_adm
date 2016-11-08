@@ -57,6 +57,7 @@ $(function() {
     });
 });
 
+var termos;
 $(function () {
     function split(val) {
         return val.split(/,\s*/);
@@ -92,14 +93,14 @@ $(function () {
         search: function () {
             // custom minLength
             var term = extractLast(this.value);
-            if (term.length < 2) {
+            if (term.length < 1) {
                 return false;
             }
         },
         focus: function () {
             // prevent value inserted on focus
             return false;
-        },
+        },             
         select: function (event, ui) {
             var terms = split(this.value);
             // remove the current input
@@ -108,11 +109,43 @@ $(function () {
             terms.push(ui.item.value);
             // add placeholder to get the comma-and-space at the end
             terms.push("");
+            termos = terms;
             this.value = terms.join(", ");
             return false;
-        }
+            
+        },
+    }).blur(function (){
+        
     });
 
 });
 
+function EnviarAreaAtuacao(){
+    $.ajax({
+        url: 'system/profissional/create.php',
+        data: termos       
+    })
+};
 
+
+function TestaCPF(strCPF) {
+    strCPF = preg_replace("/[^0-9]/", "", strCPF);
+    var Soma;
+    var Resto;
+    Soma = 0;
+	if (strCPF == "00000000000") return false;
+    
+	for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+	Resto = (Soma * 10) % 11;
+	
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(9, 10)) ) return false;
+	
+	Soma = 0;
+    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+	
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(10, 11) ) ) return false;
+    return true;
+}
