@@ -57,7 +57,7 @@ $(function() {
     });
 });
 
-var termos;
+
 $(function () {
     function split(val) {
         return val.split(/,\s*/);
@@ -109,7 +109,7 @@ $(function () {
             terms.push(ui.item.value);
             // add placeholder to get the comma-and-space at the end
             terms.push("");
-            termos = terms;
+           
             this.value = terms.join(", ");
             return false;
             
@@ -121,10 +121,14 @@ $(function () {
 });
 
 function EnviarAreaAtuacao(){
-    $.ajax({
-        url: 'system/profissional/create.php',
-        data: termos       
-    })
+                $.ajax({
+                url: '__jsc/areaAtuacao.php',
+                dataType: "json",
+                data: {
+                    type: termos,
+                },
+                success: alert('dados enviados')
+            });
 };
 
 

@@ -16,7 +16,7 @@ class AdminProfissional{
     private $Result;
     
     //Nome da tabela no banco de dados!
-    const ENTITY = 'ws_categories';
+    const ENTITY = 'usuario';
     const DB_AREAATUACAO = 'areaatuacao';
     
     public function ExeCreate(array $Data) {
@@ -58,34 +58,25 @@ class AdminProfissional{
     private function setData() {
         $this->Data = array_map('strip_tags', $this->Data); //limpar array
         $this->Data = array_map('trim', $this->Data); //limpar array
-        $this->Data ['category_name'] = Check::Name($this->Data ['category_title']);//criar o nome da categoria para o titulo
-        $this->Data ['category_date'] = Check::Data($this->Data ['category_date']);//Rescrever data no formato TIME STAMP
-        $this->Data ['category_parent'] = ($this->Data['category_parent'] == 'null' ? NULL : $this->Data['category_parent'] == $this->Data['category_parent']);
-    }
+        $this->Data ['nomeUsuario'] = Check::Name($this->Data ['nomeUsuario']);//criar o nome da categoria para o titulo
+        }
     
     private function setName() {
-        $Where = ( !empty($this->cadID)?"category_id != {$this->CadID} AND " : ''); //verifica se existir cadID
+        $Where = ( !empty($this->cadID)?"idUsuario != {$this->CadID} AND " : ''); //verifica se existir cadID
         
         $readName = new Read;
-        $readName->ExeRead(self::ENTITY, "WHERE {$Where} category_title = :t", "t={$this->Data['category_title']}");
+        $readName->ExeRead(self::ENTITY, "WHERE {$Where} nomeUsuario = :t", "t={$this->Data['nomeUsuario']}");
         if ($readName->getResult()):
-        $this->Data['category_title'] = $this->Data['category_title'] . '-' . $readName->getRowCount(); 
+        $this->Data['nomeUsuario'] = $this->Data['nomeUsuario'] . '-' . $readName->getRowCount(); 
         endif;
     }
 
-  //  puxando area de atuação para o autocomplete - qual sua profissão
-    public function readAreaAtuacao() {
-        $readName = new Read;
-        $readName->ExeRead(self::DB_AREAATUACAO, "WHERE nome LIKE '%$search%' ORDER BY nomeProfissao", "");
-        $json = json.encode($readName->getResult());           
-    }
-    
     private function Create() {
         $Create = new Create;
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi cadastrada no sistema!",WS_ACCEPT];
+        $this->Error = ["<b>Sucesso:</b> {$this->Data['nomeUsuario']}, a categoria foi cadastrada no sistema!",WS_ACCEPT];
         endif;
     }
 
@@ -98,3 +89,4 @@ class AdminProfissional{
         endif;
     }
 }
+
