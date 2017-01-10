@@ -94,7 +94,7 @@ endif;
                                 <li><a href="painel.php?exe=profissional/index">Listar / Editar Profissional</a></li>
                             </ul>
                         </li>
-                        <li class="li"><a href="../" class="opensub">Ver Site</a></li>
+                        <li class="li"><a href="../../Site cliente/index.html" class="opensub">Ver Site</a></li>
                     </ul>
                 </nav>
 

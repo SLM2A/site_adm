@@ -111,9 +111,9 @@
                            value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" required/>
                 </label>
             </div>
-            <label class="label">
+<!--            <label class="label">
                 <span class="field">CEP</span>
-                <input type="text" name="txtCEP" required />
+                <input type="text" name="pinto" required />
             </label>
 
             <label class="label">
@@ -131,7 +131,7 @@
                     <span class="field">Complemento</span>
                     <input type="text" name="txtComplemento"/>
                 </label>
-            </div><!--/line-->
+            </div>/line
 
             <div class="label_line">
 
@@ -157,13 +157,13 @@
                     </select>
                 </label>
 
-            </div><!--/line-->
+            </div>/line-->
 
 
             <div class="gbform"></div>
 
             <input type="submit" class="btn blue" value="Cadastrar" name="SendPostForm" />
-            <input type="submit" class="btn green" value="Cadastrar & Publicar" name="SendPostFormPublish" />
+<!--            <input type="submit" class="btn green" value="Cadastrar & Publicar" name="SendPostFormPublish" />-->
 
         </form>
 
