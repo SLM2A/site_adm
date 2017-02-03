@@ -365,82 +365,12 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Dashboard
-        <small>Informações</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
+     
     </section>
 
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>0</h3>
-
-              <p>Visualizações</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-eye"></i>
-            </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>0<sup style="font-size: 20px"></sup></h3>
-
-              <p>Candidaturas</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="candidaturas.html" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>0</h3>
-
-              <p>Fotos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-camera"></i>
-            </div>
-            <a href="portfolio.html" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>0</h3>
-
-              <p>Medalhas</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-ribbon-a"></i>
-            </div>
-            <a href="#" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
 	  
 	  <div class="row">
         <!-- Left col -->
@@ -449,56 +379,92 @@
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-person"></i> Meus Dados</li>
+              <li class="pull-left header"><i class="ion-person"></i> Quem é você?</li>
             </ul>
             <div class="tab-content no-padding">
               <!-- Morris chart - Sales -->
 			  <br>
-              <div ><img class="profile-user-img img-responsive img-circle" src="dist/img/user2-160x160.jpg" alt="User profile picture"></div>
-              <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 300px;">
-			  <h3 class="profile-username text-center">Rafael Milaré</h3>
-
-              <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
-
-              <ul class="list-group list-group-unbordered">
-                <li class="list-group-item">
-                  <b>Sobre você</b> <a class="pull-right">editar</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Competências</b> <a class="pull-right">editar</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Certificados</b> <a class="pull-right">editar</a>
-				</li> 
-				<li class="list-group-item">
-                  <b>Experiência</b> <a class="pull-right">editar</a>
-				</li>
-				<br>
-					<a href="pages/examples/profile.html" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
+              <div ></div>
+              <div class="box-body box-profile" id="sales-chart" >
+			  	<div class="form-group">
+                  <label>Nome:</label>
+                  <input type="text" class="form-control" >
+				  <label>Sobrenome:</label>
+                  <input type="text" class="form-control" >
+				   <label>Sexo:</label>
+                  <select class="form-control">
+					<option></option>
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                  </select>
+				  <label>CPF:</label>
+                  <input type="text" class="form-control" >
+				  <label>Data de Nascimento:</label>
+                  <input type="text" class="form-control" >
+				  <label>Celular:</label>
+                  <input type="text" class="form-control" >
+				  <label>Telefone:</label>
+                  <input type="text" class="form-control" >
+                </div>
+             
 			  </div>
 
             </div>
           </div>
+		 <center> 
+		 <nav aria-label="Page navigation">
+				  <ul class="pagination">
+					<li>
+					  <a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					  </a>
+					</li>
+					<li><a href="#">Sobre Mim</a></li>
+					<li><a href="#">Perfil</a></li>
+					<li><a href="#">Experiências</a></li>
+					<li><a href="#">Certificados</a></li>
+					<li><a href="#">Competências</a></li>
+					<li>
+					  <a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					  </a>
+					</li>
+				  </ul>
+		</nav>
+		</center>
 		</section>
 		
 		 <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-6 connectedSortable">
           <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
+           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-paper-airplane"></i> Funções</li>
+              <li class="pull-left header"><i class="ion-location"></i> Como te encontramos?</li>
             </ul>
             <div class="tab-content no-padding">
               <!-- Morris chart - Sales -->
 			  <br>
               <div ></div>
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 300px;">
-				<a href="procurarvaga.html"><button type="submit" class="btn btn-block btn-success btn-lg">Procurar Vagas</button></a>
-				<a href="sobremim.html"><button type="button" class="btn btn-block btn-info btn-lg">Atualizar Perfil</button></a>
-				<button type="button" class="btn btn-block btn-primary btn-lg">Dicas de Sustentabilidade</button>
+              <div class="box-body box-profile" id="sales-chart" >
+			  	<div class="form-group">
+                  <label>CEP:</label>
+                  <input type="text" class="form-control" >
+				  <label>Endereço:</label>
+                  <input type="text" class="form-control" >
+				  <label>Número:</label>
+                  <input type="text" class="form-control" >
+				  <label>Complemento:</label>
+                  <input type="text" class="form-control" >
+				  <label>Bairro:</label>
+                  <input type="text" class="form-control" >
+				  <label>Cidade:</label>
+                  <input type="text" class="form-control" >
+				  <label>Estado:</label>
+                  <input type="text" class="form-control" >
+                </div>
+             
 			  </div>
 
             </div>
