@@ -64,7 +64,7 @@ require('_app/Config.inc.php');
                     if(!$login->getResult()):
                             WSErro ($login->getError ()[0], $login->getError ()[1]);
                     else:
-                            header('Location: testelogar.php ');
+                            header('Location: AdminLTE-master/index.php ');
                     endif;
                 endif;
                 
