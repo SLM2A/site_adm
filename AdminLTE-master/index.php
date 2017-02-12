@@ -1,6 +1,22 @@
 <?php
 session_start();
 require('../_app/Config.inc.php');
+
+$login = new login(3);
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+$getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
+
+if (!$login->CheckLogin()):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=restrito');
+else:
+    $userlogin = $_SESSION['userlogin'];
+endif;
+    
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=logoff');
+endif;
 ?>
 
 <!DOCTYPE html>
@@ -259,7 +275,7 @@ require('../_app/Config.inc.php');
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Rafael Milaré</span>
+              <span class="hidden-xs"><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -315,7 +331,7 @@ require('../_app/Config.inc.php');
           <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Rafael Milaré</p>
+          <p><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -461,7 +477,7 @@ require('../_app/Config.inc.php');
 			  <br>
               <div ><img class="profile-user-img img-responsive img-circle" src="dist/img/user2-160x160.jpg" alt="User profile picture"></div>
               <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 300px;">
-			  <h3 class="profile-username text-center">Rafael Milaré</h3>
+			  <h3 class="profile-username text-center"><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></h3>
 
               <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
 
