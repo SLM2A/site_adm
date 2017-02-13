@@ -283,7 +283,7 @@ endif;
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Rafael Milaré - Profissional
+                  <?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -355,7 +355,7 @@ endif;
 		</li>
 		
 		<li class="treeview">
-			<a href="pages/examples/profile.html"><i class="fa fa-user"></i> <span>Perfil</span></a>	
+			<a href="cadPerfil/perfilpublico"><i class="fa fa-user"></i> <span>Perfil</span></a>	
 		</li>	
 	
         <li class="treeview">
@@ -498,7 +498,7 @@ endif;
                   <b>Competências</b> <a href="cadPerfil/competencia.html" class="pull-right">editar</a>
                 </li>
 								<br>
-					<a href="pages/examples/profile.html" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
+					<a href="cadPerfil/perfilpublico.html" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
 			  </div>
 
             </div>
