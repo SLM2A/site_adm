@@ -17,13 +17,6 @@ if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
 endif;
-
-//
-////PARAMOS AQUI
-//require '_models/AdminProfissional.class.php';
-//$ObjArrayAreaAtuacao = new AdminProfissional();
-//$arrayAreaAtuacao = implode(" | ", $ObjArrayAreaAtuacao->readAreaAtuacao());
-    
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

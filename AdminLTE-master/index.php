@@ -17,6 +17,7 @@ if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
 endif;
+	
 ?>
 
 <!DOCTYPE html>
@@ -358,6 +359,10 @@ endif;
 			<a href="cadPerfil/perfilpublico"><i class="fa fa-user"></i> <span>Perfil</span></a>	
 		</li>	
 	
+		<li class="treeview">
+			<a href="menu.php"><i class="fa fa-user"></i> <span>Menu teste</span></a>	
+		</li>
+		
         <li class="treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>Exemplos</span>
