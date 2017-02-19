@@ -1,3 +1,28 @@
+<?php
+session_start();
+require('../../_app/Config.inc.php');
+
+           
+//        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
+//        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
+//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
+          
+            $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+            if(!empty($data['SendPostForm'])):
+                unset($data['SendPostForm']);
+                             
+                require '../../admin/_models/SiteRegistrar.class.php';
+                $cadastra = new AdminProfissional;
+                $cadastra->ExeUpdate($data);
+                
+                if (!$cadastra->getResult()):
+                    WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+                else:
+                    header ('Location: ../index.php');
+                endif;
+            endif;
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +54,7 @@
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="../plugins/select2/select2.min.css">
-  
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -372,74 +395,9 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-	  
-	  <div class="row">
-        <!-- Left col -->
-        <section class="col-lg-12 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-person"></i> Sobre Mim</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
+      
+    </section>
 
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" >
-				<div class="box-body pad">
-				  <form>
-					<textarea class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-				  </form>
-				</div>
-				
-			  <div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-instagram"></i></span>
-				<input type="email" class="form-control" placeholder="Instagram">
-				<span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-				<input type="email" class="form-control" placeholder="Facebook">
-			  </div>
-			  <br>
-			  <div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-				<input type="email" class="form-control" placeholder="Twitter">
-				<span class="input-group-addon"><i class="ion-social-snapchat-outline"></i></span>
-				<input type="email" class="form-control" placeholder="Snapchat">
-			  </div>
-			  			
-              </div>
-             
-			  </div>
-
-            </div>
-          </div>
-		  
-		  <center> 
-		 <nav aria-label="Page navigation">
-				  <ul class="pagination">
-					<li>
-					  <a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					  </a>
-					</li>
-					<li><a href="#">Sobre Mim</a></li>
-					<li><a href="perfil.html">Perfil</a></li>
-					<li><a href="experiencia.html">Experiências</a></li>
-					<li><a href="certificacao.html">Certificados</a></li>
-					<li><a href="competencia.html">Competências</a></li>
-					<li>
-					  <a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					  </a>
-					</li>
-				  </ul>
-		</nav>
-		</center>
-		  
-		</section>
-		 
-  
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -638,7 +596,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -674,76 +632,5 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
-<!-- Select2 -->
-<script src="../plugins/select2/select2.full.min.js"></script>
-
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2();
-
-    //Datemask dd/mm/yyyy
-    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-    //Datemask2 mm/dd/yyyy
-    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-    //Money Euro
-    $("[data-mask]").inputmask();
-
-    //Date range picker
-    $('#reservation').daterangepicker();
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-        {
-          ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-          },
-          startDate: moment().subtract(29, 'days'),
-          endDate: moment()
-        },
-        function (start, end) {
-          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        }
-    );
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    });
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass: 'iradio_minimal-blue'
-    });
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass: 'iradio_minimal-red'
-    });
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass: 'iradio_flat-green'
-    });
-
-    //Colorpicker
-    $(".my-colorpicker1").colorpicker();
-    //color picker with addon
-    $(".my-colorpicker2").colorpicker();
-
-    //Timepicker
-    $(".timepicker").timepicker({
-      showInputs: false
-    });
-  });
-</script>
-
 </body>
 </html>

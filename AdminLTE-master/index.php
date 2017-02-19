@@ -2,7 +2,7 @@
 session_start();
 require('../_app/Config.inc.php');
 
-$login = new login(3);
+$login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
 $getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
 
@@ -64,7 +64,7 @@ endif;
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -276,7 +276,7 @@ endif;
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></span>
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -284,7 +284,7 @@ endif;
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?> - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -309,7 +309,7 @@ endif;
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -332,7 +332,7 @@ endif;
           <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></p>
+          <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -350,38 +350,44 @@ endif;
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Navegação Principal</li>
-		
-		<li class="active treeview">
+		<?php
+                echo '
+		<li class="active treeview/">
 			<a href="index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
-			<a href="cadPerfil/perfilpublico"><i class="fa fa-user"></i> <span>Perfil</span></a>	
-		</li>	
-	
-		<li class="treeview">
-			<a href="menu.php"><i class="fa fa-user"></i> <span>Menu teste</span></a>	
+			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
 		</li>
-		
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Exemplos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Compra</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Perfil</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Registro</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Tela de Bloqueio</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Erro 404</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Erro 500</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>             
+                ';
+                if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                    <li class="treeview">
+			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+                    </li> 
+                    
+                     ';
+                else :
+                    echo '
+                    <li class="treeview">
+                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    ';
+                endif;
+             
+                echo '              
+                 <li class="treeview">
+                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+		</li>
+                <li class="treeview">
+                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+		</li>
+                   ';     
+		?>
+            
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -482,7 +488,7 @@ endif;
 			  <br>
               <div ><img class="profile-user-img img-responsive img-circle" src="dist/img/user2-160x160.jpg" alt="User profile picture"></div>
               <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 300px;">
-			  <h3 class="profile-username text-center"><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></h3>
+			  <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
 
               <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
 
@@ -525,10 +531,22 @@ endif;
               <div ></div>
               <div ></div>
               <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 300px;">
-				<a href="procurarvaga.html"><button type="submit" class="btn btn-block btn-success btn-lg">Procurar Vagas</button></a>
-				<a href="cadPerfil/sobremim.html"><button type="button" class="btn btn-block btn-info btn-lg">Atualizar Perfil</button></a>
-				<a href="cadEmpresa/minhaempresa.html"><button type="button" class="btn btn-block btn-warning btn-lg">Minhas Empresas</button></a>
-				<button type="button" class="btn btn-block btn-primary btn-lg">Dicas de Sustentabilidade</button>
+                    <a href="cadPerfil/sobremim.html"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
+                    <?php
+                    if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                        <a href="procurarvaga.html"><button type="submit" class="btn btn-block btn-success btn-lg"><i class="fa fa-search"></i> Procurar Vagas</button></a>
+                     ';
+                    else :
+                        echo '
+                        <a href="cadEmpresa/minhaempresa.html"><button type="button" class="btn btn-block btn-warning btn-lg"><i class="fa fa-building"></i> Meus Salões</button></a>
+                        <a href="cadEmpresa/minhaempresa.html"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
+                        ';
+                    endif;
+
+                    ?>      
+                    <button type="button" class="btn btn-block btn-primary btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
+                    
 			  </div>
 
             </div>

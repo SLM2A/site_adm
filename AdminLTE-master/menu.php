@@ -63,7 +63,7 @@ endif;
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+  header class="main-header">
     <!-- Logo -->
     <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -87,7 +87,7 @@ endif;
               <span class="label label-success">1</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem 4 mensagens</li>
+              <li class="header">VocÃª tem 4 mensagens</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
@@ -164,7 +164,7 @@ endif;
               <span class="label label-warning">10</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem 10 notificações</li>
+              <li class="header">VocÃª tem 10 notificaÃ§Ãµes</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
@@ -206,7 +206,7 @@ endif;
               <span class="label label-danger">9</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem 9 tarefas</li>
+              <li class="header">VocÃª tem 9 tarefas</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
@@ -277,7 +277,7 @@ endif;
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?></span>
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -285,7 +285,7 @@ endif;
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?= $userlogin['user_name']; ?> <?= $userlogin['user_lastname']; ?> - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -310,7 +310,7 @@ endif;
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

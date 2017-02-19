@@ -15,7 +15,7 @@ endif;
     
 if ($logoff):
     unset($_SESSION['userlogin']);
-    header('Location: index.php?exe=logoff');
+    header('Location: ../index.php');
 endif;
 ?>
 <!DOCTYPE html>

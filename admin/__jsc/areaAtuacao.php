@@ -5,7 +5,7 @@ require('../../_app/Config.inc.php');
 $readArea = new Read();
 
 if($_GET['type'] == 'areaatuacao'){
-    $readArea->ExeRead('areaatuacao', "where nomeProfissao like '%".strtoupper($_GET['name_startsWith'])."%' Order By nomeProfissao");
+    $readArea->ExeRead('areaatuacao', "where nomeProfissao like '%".strtoupper($_GET['q'])."%' Order By nomeProfissao");
     $data = array();
     $id = array();
     

@@ -1,3 +1,25 @@
+<?php
+session_start();
+require('../../_app/Config.inc.php');
+
+$login = new LoginSite(0);
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+$getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
+
+if (!$login->CheckLogin()):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=restrito');
+else:
+    $userlogin = $_SESSION['userlogin'];
+endif;
+    
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=logoff');
+endif;
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +51,7 @@
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="../plugins/select2/select2.min.css">
-  
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -41,10 +61,11 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
+    
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -256,7 +277,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Rafael Milaré</span>
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -264,7 +285,7 @@
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Rafael Milaré - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -289,7 +310,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -312,7 +333,7 @@
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Rafael Milaré</p>
+          <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -330,34 +351,44 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Navegação Principal</li>
-		
-		<li class="active treeview">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+		<?php
+                echo '
+		<li class="active treeview/">
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
-			<a href="pages/examples/profile.html"><i class="fa fa-user"></i> <span>Perfil</span></a>	
-		</li>	
-	
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Exemplos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Compra</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Perfil</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Registro</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Tela de Bloqueio</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Erro 404</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Erro 500</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>             
+			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
+		</li>
+                ';
+                if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                    <li class="treeview">
+			<a href="../procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+                    </li> 
+                    
+                     ';
+                else :
+                    echo '
+                    <li class="treeview">
+                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    ';
+                endif;
+             
+                echo '              
+                 <li class="treeview">
+                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+		</li>
+                <li class="treeview">
+                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+		</li>
+                   ';     
+		?>
+            
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -368,78 +399,127 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
      
-    </section>
+   
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-	  
-	  <div class="row">
-        <!-- Left col -->
-        <section class="col-lg-12 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-person"></i> Sobre Mim</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
+	
+			<section class="col-lg-3 connectedSortable">
+			<!-- Profile Image -->
+				  <div class="box box-primary">
+					<div class="box-body box-profile">
+					  <img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture">
 
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" >
-				<div class="box-body pad">
-				  <form>
-					<textarea class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-				  </form>
+					  <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
+					  <hr>
+						<strong><i class="fa fa-pencil margin-r-5"></i>Áreas de Atuação</strong>
+						<p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
+						<hr>
+					</div>
+					<!-- /.box-body -->
+				  </div>
+				  <!-- /.box -->
+			</section>
+			<!-- Fim Profile Image -->
+	
+			<!-- About Me Box -->
+			<section class="col-lg-9 connectedSortable">   
+				<div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title"><i class="ion-person"></i> Sobre Mim</h3>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						  <strong><i class="fa fa-book margin-r-5"></i> O que acho sobre mim</strong>
+
+						  <p class="text-muted">
+						   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.
+						  </p>
+						  <hr>
+						  <strong><i class="fa fa-pencil margin-r-5"></i> Competências</strong>
+						  <p>
+							<span class="label label-danger">Pigmentação</span>
+							<span class="label label-success">Navalhado</span>
+						  </p>
+						  <hr>						  
+						  <strong><i class="fa fa-map-marker margin-r-5"></i> Localidade</strong>
+						  <p class="text-muted">São Paulo, Brasil</p>
+						  
+					</div>
+				</div>
+			</section>
+			<!-- Fim About Me Box -->	
+			
+			<!-- Inicio Minhas Experiências -->	
+		<section class="col-md-12">	
+          <div class="box">
+				<div class="box-header">
+				  <h3 class="box-title"><i class="ion-briefcase"></i> Minhas Experiências</h3>
+
+				  <div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 150px;">
+					  <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
+
+					  <div class="input-group-btn">
+						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+					  </div>
+					</div>
+				  </div>
 				</div>
 				
-			  <div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-instagram"></i></span>
-				<input type="email" class="form-control" placeholder="Instagram">
-				<span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-				<input type="email" class="form-control" placeholder="Facebook">
-			  </div>
-			  <br>
-			  <div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-				<input type="email" class="form-control" placeholder="Twitter">
-				<span class="input-group-addon"><i class="ion-social-snapchat-outline"></i></span>
-				<input type="email" class="form-control" placeholder="Snapchat">
-			  </div>
-			  			
-              </div>
-             
-			  </div>
+				<div class="box-body table-responsive no-padding">
+				  <table class="table table-hover">
+					<tr>
+					  <th>Cargo</th>
+					  <th>Empresa</th>
+					  <th>Localização</th>
+					  <th>De</th>
+					  <th>Até</th>
+					  <th>Descrição</th>
+					</tr>
+				   
+				  </table>
+				</div>
+			</div>
+		</section> 
+			<!-- Fim Minhas Experiências -->	
+			
+					<!-- Inicio Minhas Experiências -->	
+		<section class="col-md-12">	
+          <div class="box">
+				<div class="box-header">
+				  <h3 class="box-title"><i class="ion-ios-bookmarks"></i> Meus Certificados</h3>
 
-            </div>
-          </div>
-		  
-		  <center> 
-		 <nav aria-label="Page navigation">
-				  <ul class="pagination">
-					<li>
-					  <a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					  </a>
-					</li>
-					<li><a href="#">Sobre Mim</a></li>
-					<li><a href="perfil.html">Perfil</a></li>
-					<li><a href="experiencia.html">Experiências</a></li>
-					<li><a href="certificacao.html">Certificados</a></li>
-					<li><a href="competencia.html">Competências</a></li>
-					<li>
-					  <a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					  </a>
-					</li>
-				  </ul>
-		</nav>
-		</center>
-		  
-		</section>
-		 
-  
+				  <div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 150px;">
+					  <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
+
+					  <div class="input-group-btn">
+						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="box-body table-responsive no-padding">
+				  <table class="table table-hover">
+					<tr>
+					  <th>Instituição</th>
+					  <th>Curso</th>
+					  <th>Nível</th>
+					  <th>Duração</th>
+					  <th>Ano de ínicio</th>
+					  <th>Ano de conclusão</th>
+					</tr>
+				   
+				  </table>
+				</div>
+			</div>
+		</section> 
+			<!-- Fim Minhas Experiências -->	
+			
+			
+	</section>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -638,112 +718,33 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="../plugins/morris/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="../plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="../plugins/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
+<!-- Select2 -->
+<script src="../plugins/select2/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="../plugins/input-mask/jquery.inputmask.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 <script src="../plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
+<!-- bootstrap datepicker -->
 <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
+<!-- bootstrap color picker -->
+<script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll 1.3.0 -->
 <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="../plugins/iCheck/icheck.min.js"></script>
 <!-- FastClick -->
 <script src="../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
-<!-- Select2 -->
-<script src="../plugins/select2/select2.full.min.js"></script>
-
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2();
-
-    //Datemask dd/mm/yyyy
-    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-    //Datemask2 mm/dd/yyyy
-    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-    //Money Euro
-    $("[data-mask]").inputmask();
-
-    //Date range picker
-    $('#reservation').daterangepicker();
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-        {
-          ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-          },
-          startDate: moment().subtract(29, 'days'),
-          endDate: moment()
-        },
-        function (start, end) {
-          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        }
-    );
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    });
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass: 'iradio_minimal-blue'
-    });
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass: 'iradio_minimal-red'
-    });
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass: 'iradio_flat-green'
-    });
-
-    //Colorpicker
-    $(".my-colorpicker1").colorpicker();
-    //color picker with addon
-    $(".my-colorpicker2").colorpicker();
-
-    //Timepicker
-    $(".timepicker").timepicker({
-      showInputs: false
-    });
-  });
-</script>
-
 </body>
 </html>

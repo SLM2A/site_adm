@@ -52,14 +52,15 @@ require('_app/Config.inc.php');
             
             <?php
                 
-                $login = new login(3);
+                $login = new LoginSite(0);
                 
                 if($login->CheckLogin()):
                     header('Location: index.php');
-                endif;
-                
+                endif;            
+				
+				
                 $dataLogin = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-                if(!empty($dataLogin['AdminLogin'])):
+				if(!empty($dataLogin['AdminLogin'])):
                     $login->ExeLogin($dataLogin);
                     if(!$login->getResult()):
                             WSErro ($login->getError ()[0], $login->getError ()[1]);
@@ -75,6 +76,12 @@ require('_app/Config.inc.php');
                     elseif($get == 'logoff'):
                         WSErro('<b>Sucesso ao deslogar!</b> Sua sessão foi finalizada, volte sempre!',WS_ACCEPT);
                     endif;
+                endif;
+                
+                $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+                if ($logoff):
+                unset($_SESSION['userlogin']);
+                header('Location: index.php?exe=logoff');
                 endif;
                                 
                 ?>           
@@ -108,15 +115,16 @@ require('_app/Config.inc.php');
 								<label for="exampleInputEmail1">
 									<i class="glyphicon glyphicon-envelope"></i> Email
 								</label> 
-								<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Seu email" name="user"/>
+								<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Seu email" name="email"/>
 							</div>
 							<div class="form-group form-space">
 								<label for="exampleInputPassword1">
-									<i class="glyphicon glyphicon-lock"></i> Senha
+									<i class="glyphicon glyphicon-lock" required ></i> Senha
 								</label> 
-								<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" name="pass"/>
+								<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" name="senha"/>
 							</div>
-                                                        <input type="submit" class="btn btn-success btn-block" name ="AdminLogin" value="Logar" />
+                                                        <input type="submit" class="btn btn-success btn-block" name ="AdminLogin" value="Logar" /> 
+														
                                                     </form>
 						</div>
 					</li>
