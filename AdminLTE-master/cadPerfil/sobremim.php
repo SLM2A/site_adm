@@ -66,9 +66,9 @@ endif;
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <header class="main-header">
+ <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -280,7 +280,7 @@ endif;
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Rafael Milaré</span>
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -288,7 +288,7 @@ endif;
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Rafael Milaré - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -313,7 +313,7 @@ endif;
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -336,7 +336,7 @@ endif;
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Rafael Milaré</p>
+          <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -354,34 +354,44 @@ endif;
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Navegação Principal</li>
-		
-		<li class="active treeview">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+		<?php
+                echo '
+		<li class="active treeview/">
+			<a href="index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
-			<a href="pages/examples/profile.html"><i class="fa fa-user"></i> <span>Perfil</span></a>	
-		</li>	
-	
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Exemplos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Compra</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Perfil</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Registro</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Tela de Bloqueio</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Erro 404</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Erro 500</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>             
+			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
+		</li>
+                ';
+                if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                    <li class="treeview">
+			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+                    </li> 
+                    
+                     ';
+                else :
+                    echo '
+                    <li class="treeview">
+                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    ';
+                endif;
+             
+                echo '              
+                 <li class="treeview">
+                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+		</li>
+                <li class="treeview">
+                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+		</li>
+                   ';     
+		?>
+            
       </ul>
     </section>
     <!-- /.sidebar -->

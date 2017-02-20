@@ -1,3 +1,27 @@
+<?php
+session_start();
+require('../../_app/Config.inc.php');
+
+$login = new LoginSite(0);
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+$getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
+
+if (!$login->CheckLogin()):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=restrito');
+else:
+    $userlogin = $_SESSION['userlogin'];
+endif;
+    
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=logoff');
+endif;
+	
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +66,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -254,7 +278,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Rafael Milaré</span>
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -262,7 +286,7 @@
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Rafael Milaré - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -287,7 +311,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -310,7 +334,7 @@
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Rafael Milaré</p>
+          <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -328,34 +352,44 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Navegação Principal</li>
-		
-		<li class="active treeview">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+		<?php
+                echo '
+		<li class="active treeview/">
+			<a href="index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
-			<a href="pages/examples/profile.html"><i class="fa fa-user"></i> <span>Perfil</span></a>	
-		</li>	
-	
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Exemplos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Compra</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Perfil</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Registro</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Tela de Bloqueio</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Erro 404</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Erro 500</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>             
+			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
+		</li>
+                ';
+                if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                    <li class="treeview">
+			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+                    </li> 
+                    
+                     ';
+                else :
+                    echo '
+                    <li class="treeview">
+                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    ';
+                endif;
+             
+                echo '              
+                 <li class="treeview">
+                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+		</li>
+                <li class="treeview">
+                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+		</li>
+                   ';     
+		?>
+            
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -364,15 +398,28 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-     
-    </section>
+
 
     <!-- Main content -->
     <section class="content">
 	
-	<h1> <i class="ion-ios-bookmarks"></i> Certificação</h1> 
-<section class="col-lg-6 connectedSortable">
+	<h1> <i class="ion-briefcase"></i> Experiências</h1> 
+	
+	
+	 <!-- INICIO-->
+	       <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="ion-edit"></i> Cadastrar Experiência</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
+              <i class="fa fa-minus"></i></button>
+            
+          </div>
+        </div>
+        <div class="box-body">
+          <section class="col-lg-6 connectedSortable">
           <!-- Custom tabs (Charts with tabs)-->
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
@@ -385,21 +432,22 @@
               <div ></div>
               <div class="box-body box-profile" id="sales-chart" >
 			  	<div class="form-group">
-                  <label>Instituição:</label>
-                  <input type="text" class="form-control" >
-				  <label>Curso:</label>
-                  <input type="text" class="form-control" >
-				  <label>Nível:</label>
+                  <label>Cargo:</label>
                   <select class="form-control">
 					<option></option>
-                    <option>Técnico</option>
-                    <option>Especialização</option>
-					<option>Bacharelado</option>
+                    <option>Cabelereiro</option>
+                    <option>Manicure</option>
+					<option>ETC</option>
                   </select>
+				  <label>Empresa:</label>
+                  <input type="text" class="form-control" >
+				  <label>Estado:</label>
+                  <input type="text" class="form-control" >
 				   
                 </div>
 			</div>
           </div>
+		 </div>
 		</section>
 		
 		 <!-- /.Left col -->
@@ -417,60 +465,91 @@
               <div ></div>
               <div class="box-body box-profile" id="sales-chart" >
 			  	<div class="form-group">
-				<label>Duração:</label>
-                  <select class="form-control">
-					<option></option>
-                    <option>3 meses</option>
-                    <option>6 meses</option>
-					<option>12 meses</option>
-					<option>15 meses</option>
-					<option>18 meses</option>
-					<option>24 meses</option>
-                  </select>
-                  <label>Ano de Inicio:</label>
+				<label>De:</label>
                   <select class="form-control">
 					<option></option>
                     <option>2015</option>
                     <option>2016</option>
 					<option>2017</option>
                   </select>
-				  <label>Ano de Conclusão:</label>
+                  <label>Até</label>
                   <select class="form-control">
 					<option></option>
                     <option>2015</option>
                     <option>2016</option>
 					<option>2017</option>
                   </select>
-
+				  <label>Descrição:</label>
+                  <input type="text" class="form-control" >
                 </div>
 			  </div>
             </div>
-
 			
           </div>
 		</section>
-	
-	<button type="button" class="btn btn-block btn-primary btn-lg"><i class="ion-plus"></i>  Adicionar Certificado</button>
-	<br>
+		
+		<section class="col-lg-12 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">                  
+              <li class="pull-left header"><i class="ion-person"></i> Sobre a Experiência</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <!-- Morris chart - Sales -->
+
+              <div ></div>
+              <div class="box-body box-profile" id="sales-chart" >
+				<div class="box-body pad">
+				  <form>
+					<textarea class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+				  </form>
+				</div>
+		
+			  			
+              </div>
+             
+			  </div>
+
+            </div>
+		  </section>
+		
+		<button type="button" class="btn btn-block btn-primary btn-lg"><i class="ion-plus"></i>  Adicionar Experiências</button>
+        </div>
+        <!-- /.box-body -->
+        
+      </div>
+      <!-- /.box -->
+	 
+	  <!-- FIM -->
+
 	
 	<div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Meus Certificados</h3>
+              <h3 class="box-title">Minhas Experiências</h3>
 
-              
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
+
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
-                  <th>Instituição</th>
-                  <th>Curso</th>
-                  <th>Nível</th>
-                  <th>Duração</th>
-				  <th>Ano de ínicio</th>
-				  <th>Ano de conclusão</th>
+                  <th>Cargo</th>
+                  <th>Empresa</th>
+                  <th>Localização</th>
+                  <th>De</th>
+                  <th>Até</th>
+				  <th>Descrição</th>
                 </tr>
                
               </table>
@@ -480,7 +559,8 @@
           <!-- /.box -->
         </div>
       </div>
-	
+	  
+
 	</section>
 
 <center>	
@@ -493,8 +573,8 @@
 					</li>
 					<li><a href="sobremim.html">Sobre Mim</a></li>
 					<li><a href="perfil.html">Perfil</a></li>
-					<li><a href="experiencia.html">Experiências</a></li>
-					<li><a href="#">Certificados</a></li>
+					<li><a href="#">Experiências</a></li>
+					<li><a href="certificacao.html">Certificados</a></li>
 					<li><a href="competencia.html">Competências</a></li>
 					<li>
 					  <a href="#" aria-label="Next">
@@ -704,40 +784,27 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="../plugins/morris/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="../plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="../plugins/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="../plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
+<!-- PACE -->
+<script src="../plugins/pace/pace.min.js"></script>
+<!-- SlimScroll -->
 <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<!-- page script -->
+<script type="text/javascript">
+	// To make Pace works on Ajax calls
+	$(document).ajaxStart(function() { Pace.restart(); });
+    $('.ajax').click(function(){
+        $.ajax({url: '#', success: function(result){
+            $('.ajax-content').html('<hr>Ajax Request Completed !');
+        }});
+    });
+</script>
 </body>
 </html>

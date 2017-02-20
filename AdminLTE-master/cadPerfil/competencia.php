@@ -1,37 +1,57 @@
+<?php
+session_start();
+require('../../_app/Config.inc.php');
+
+$login = new LoginSite(0);
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+$getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
+
+if (!$login->CheckLogin()):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=restrito');
+else:
+    $userlogin = $_SESSION['userlogin'];
+endif;
+    
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=logoff');
+endif;
+	
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>AdminLTE 2 | Blank Page</title>
   <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../plugins/iCheck/all.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="../plugins/colorpicker/bootstrap-colorpicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../plugins/select2/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="../plugins/iCheck/flat/blue.css">
-  <!-- Morris chart -->
-  <link rel="stylesheet" href="../plugins/morris/morris.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-  <!-- Date Picker -->
-  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
-  <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="../plugins/select2/select2.min.css">
-  
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -40,11 +60,12 @@
   <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
 <div class="wrapper">
 
-  <header class="main-header">
+ <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -256,7 +277,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Rafael Milaré</span>
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -264,7 +285,7 @@
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Rafael Milaré - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -289,7 +310,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -312,7 +333,7 @@
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Rafael Milaré</p>
+          <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -330,92 +351,93 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Navegação Principal</li>
-		
-		<li class="active treeview">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+		<?php
+                echo '
+		<li class="active treeview/">
+			<a href="index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
-			<a href="pages/examples/profile.html"><i class="fa fa-user"></i> <span>Perfil</span></a>	
-		</li>	
-	
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Exemplos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Compra</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Perfil</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Registro</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Tela de Bloqueio</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Erro 404</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Erro 500</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>             
+			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
+		</li>
+                ';
+                if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                    <li class="treeview">
+			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+                    </li> 
+                    
+                     ';
+                else :
+                    echo '
+                    <li class="treeview">
+                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    ';
+                endif;
+             
+                echo '              
+                 <li class="treeview">
+                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+		</li>
+                <li class="treeview">
+                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+		</li>
+                   ';     
+		?>
+            
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
 
+  <!-- =============================================== -->
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-     
-    </section>
-
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-	  
-	  <div class="row">
-        <!-- Left col -->
-        <section class="col-lg-12 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-person"></i> Sobre Mim</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" >
-				<div class="box-body pad">
-				  <form>
-					<textarea class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-				  </form>
-				</div>
-				
-			  <div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-instagram"></i></span>
-				<input type="email" class="form-control" placeholder="Instagram">
-				<span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-				<input type="email" class="form-control" placeholder="Facebook">
-			  </div>
-			  <br>
-			  <div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-				<input type="email" class="form-control" placeholder="Twitter">
-				<span class="input-group-addon"><i class="ion-social-snapchat-outline"></i></span>
-				<input type="email" class="form-control" placeholder="Snapchat">
-			  </div>
-			  			
+		<h1> <i class="ion-briefcase"></i> Competências</h1> 
+		
+		<h3> Quais serviços e técnicas você oferece?</h3>
+		  <div class="col-md-12">
+              <div class="form-group">
+                <select class="form-control select2" multiple="multiple"  style="width: 100%;">
+                  <option>Alabama</option>
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
               </div>
-             
-			  </div>
+		</div>
+		
+		<h3> Quais marcas, produtos e equipamentos você utiliza?</h3>
+		  <div class="col-md-12">
+              <div class="form-group">
+                <select class="form-control select2" multiple="multiple"  style="width: 100%;">
+                  <option>Alabama</option>
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
+              </div>
+		</div>
+     
+	 
 
-            </div>
-          </div>
-		  
-		  <center> 
+    </section>
+	
+	<center>	
 		 <nav aria-label="Page navigation">
 				  <ul class="pagination">
 					<li>
@@ -423,11 +445,11 @@
 						<span aria-hidden="true">&laquo;</span>
 					  </a>
 					</li>
-					<li><a href="#">Sobre Mim</a></li>
+					<li><a href="sobremim.html">Sobre Mim</a></li>
 					<li><a href="perfil.html">Perfil</a></li>
 					<li><a href="experiencia.html">Experiências</a></li>
 					<li><a href="certificacao.html">Certificados</a></li>
-					<li><a href="competencia.html">Competências</a></li>
+					<li><a href="#">Competências</a></li>
 					<li>
 					  <a href="#" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
@@ -436,16 +458,24 @@
 				  </ul>
 		</nav>
 		</center>
-		  
-		</section>
-		 
-  
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.3.11
+    </div>
+    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    reserved.
+  </footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+
       <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
     </ul>
     <!-- Tab panes -->
@@ -637,46 +667,36 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
+!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="../plugins/morris/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="../plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="../plugins/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
+<!-- Select2 -->
+<script src="../plugins/select2/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="../plugins/input-mask/jquery.inputmask.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 <script src="../plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
+<!-- bootstrap datepicker -->
 <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
+<!-- bootstrap color picker -->
+<script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll 1.3.0 -->
 <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="../plugins/iCheck/icheck.min.js"></script>
 <!-- FastClick -->
 <script src="../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
-<!-- Select2 -->
-<script src="../plugins/select2/select2.full.min.js"></script>
-
+<!-- Page script -->
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -744,6 +764,5 @@
     });
   });
 </script>
-
 </body>
 </html>
