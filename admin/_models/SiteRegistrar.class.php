@@ -8,7 +8,7 @@
  */
 
 
-class AdminProfissional{
+class SiteRegistrar{
     
     private $Data;
     private $CadID;
@@ -20,27 +20,31 @@ class AdminProfissional{
     
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
+        $readEmail = new Read;
         
         if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
             $this->Error = ['<b>Erro ao cadastrar:</b> Para cadastrar uma categoria preencha todos os campos!', WS_ALERT];
         else:
-            $this->setData();        
-            $this->setName();
+            $this->setData();     
+            $this->setEmail();
+            if($this->setEmail()==1):
+                $this->Error = ['<b>E-mail em uso', WS_ALERT];
+           else:        
             $this->Create();
+           endif;
         endif;
     }
     
-    public function ExeUpdate($CategoryId, array $Data) {
-        $this->CadID = (int) $CategoryId;
+    public function ExeUpdate($idUsuario, array $Data) {
+        $this->CadID = (int) $idUsuario;
         $this->Data = $Data;
         
         if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
+            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar o cliente, preencha todos os campos!", WS_ALERT];
         else:
             $this->setData();        
-            $this->setName();
             $this->Update();
         endif;        
     }
@@ -57,7 +61,7 @@ class AdminProfissional{
     private function setData() {
         $this->Data = array_map('strip_tags', $this->Data); //limpar array
         $this->Data = array_map('trim', $this->Data); //limpar array
-        $this->Data ['nomeUsuario'] = Check::Name($this->Data ['nomeUsuario']);//criar o nome da categoria para o titulo
+        $this->Data ['cpfUsuario'] = Check::Name($this->Data['cpfUsuario']);//criar o nome da categoria para o titulo
         }
     
     private function setName() {
@@ -70,6 +74,16 @@ class AdminProfissional{
         endif;
     }
 
+       private function setEmail() {
+        $Where = ( !empty($this->cadID)?"idUsuario != {$this->CadID} AND " : ''); //verifica se existir cadID
+        $readEmail = new Read;
+        $readEmail->ExeRead(self::ENTITY, "WHERE {$Where} email = :t", "t={$this->Data['email']}");
+        if ($readEmail->getResult()):
+            return 1;
+        endif;
+    }
+    
+    
     private function Create() {
         $Create = new Create;
         $Create->ExeCreate(self::ENTITY, $this->Data);
@@ -81,10 +95,10 @@ class AdminProfissional{
 
     private function Update() {
         $update = new Update();
-        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
+        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idUsuario = :cadId", "cadId={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+        $this->Error = ["<b>Sucesso:</b>  a categoria foi atualizada no sistema!",WS_ACCEPT];
         endif;
     }
 }

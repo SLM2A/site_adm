@@ -421,8 +421,7 @@ endif;
               <!-- Morris chart - Sales -->    
               <div class="box-body box-profile" id="sales-chart" >
               <div class="form-group">
-                <select class="form-control select2" multiple="multiple" style="width: 100%;" id="txtAreaAtuacao">
-                </select>
+                <input type="text" class="form-control" id="txtAreaAtuacao" required/>
               </div>
                                  
                               
@@ -678,7 +677,7 @@ endif;
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+<script src="../dist/js/pages/sobremim.js"></script>
 <!-- jQuery 2.2.3 -->
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -709,12 +708,15 @@ endif;
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <!-- Page script -->
+
 <script>
     
    
   $(function () {
     //Initialize Select2 Elements
-    $(".select2").select2({
+     
+    
+     $(".select2").select2({
         placeholder: "Quais são suas áreas de atuação?",
               
         ajax: {

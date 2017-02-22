@@ -42,7 +42,8 @@ class Check {
         self::$Data = str_replace(' ', '-', self::$Data);
         self::$Data = str_replace(array('-----', '----', '---', '--'), '-', self::$Data);
 
-        return strtolower(utf8_encode(self::$Data));
+        //return strtolower(utf8_encode(self::$Data));
+        return utf8_encode(self::$Data);
     }
 
     /**

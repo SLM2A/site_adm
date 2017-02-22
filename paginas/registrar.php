@@ -9,8 +9,8 @@ require('../_app/Config.inc.php');
           
             $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             if(!empty($data['SendPostForm'])):
-                unset($data['SendPostForm']);
-                $data['senha'] = md5($data['senha']);                
+                unset($data['SendPostForm']);   
+                $data['senha'] = md5($data['senha']);
                 require '../admin/_models/SiteRegistrar.class.php';
                 $cadastra = new AdminProfissional;
                 $cadastra->ExeCreate($data);
@@ -37,7 +37,7 @@ require('../_app/Config.inc.php');
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="../vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="../css/form-elements.css">
+        <link rel="stylesheet" href="../css/form-elements.css">
         <link rel="stylesheet" href="../css/style.css">
 
 

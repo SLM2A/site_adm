@@ -515,7 +515,7 @@ endif;
             </div>
           </div>
 		</section>
-		
+          	
 		 <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-6 connectedSortable">
@@ -553,7 +553,7 @@ endif;
           </div>
 		</section>
 
-  
+  </div>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
