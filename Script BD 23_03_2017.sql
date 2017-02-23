@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 22-Out-2016 às 17:49
--- Versão do servidor: 10.1.13-MariaDB
--- PHP Version: 5.6.21
+-- Generation Time: 23-Fev-2017 às 21:55
+-- Versão do servidor: 5.7.14
+-- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -169,7 +169,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (129, 21, 'Alpestre', 'RS'),
 (130, 13, 'Alpinópolis', 'MG'),
 (131, 11, 'Alta Floresta', 'MT'),
-(132, 22, 'Alta Floresta D''Oeste', 'RO'),
+(132, 22, 'Alta Floresta D\'Oeste', 'RO'),
 (133, 25, 'Altair', 'SP'),
 (134, 14, 'Altamira', 'PA'),
 (135, 10, 'Altamira do Maranhão', 'MA'),
@@ -221,7 +221,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (181, 18, 'Alvorada do Gurguéia', 'PI'),
 (182, 9, 'Alvorada do Norte', 'GO'),
 (183, 16, 'Alvorada do Sul', 'PR'),
-(184, 22, 'Alvorada D''Oeste', 'RO'),
+(184, 22, 'Alvorada D\'Oeste', 'RO'),
 (185, 23, 'Amajari', 'RR'),
 (186, 12, 'Amambai', 'MS'),
 (187, 3, 'Amapá', 'AP'),
@@ -312,7 +312,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (272, 9, 'Aparecida do Rio Doce', 'GO'),
 (273, 27, 'Aparecida do Rio Negro', 'TO'),
 (274, 12, 'Aparecida do Taboado', 'MS'),
-(275, 25, 'Aparecida d''Oeste', 'SP'),
+(275, 25, 'Aparecida d\'Oeste', 'SP'),
 (276, 19, 'Aperibé', 'RJ'),
 (277, 8, 'Apiacá', 'ES'),
 (278, 11, 'Apiacás', 'MT'),
@@ -546,7 +546,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (506, 24, 'Barra Bonita', 'SC'),
 (507, 25, 'Barra Bonita', 'SP'),
 (508, 5, 'Barra da Estiva', 'BA'),
-(509, 18, 'Barra D''Alcântara', 'PI'),
+(509, 18, 'Barra D\'Alcântara', 'PI'),
 (510, 17, 'Barra de Guabiraba', 'PE'),
 (511, 15, 'Barra de Santa Rosa', 'PB'),
 (512, 15, 'Barra de Santana', 'PB'),
@@ -1401,7 +1401,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (1361, 13, 'Congonhas do Norte', 'MG'),
 (1362, 16, 'Congonhinhas', 'PR'),
 (1363, 13, 'Conquista', 'MG'),
-(1364, 11, 'Conquista D''Oeste', 'MT'),
+(1364, 11, 'Conquista D\'Oeste', 'MT'),
 (1365, 13, 'Conselheiro Lafaiete', 'MG'),
 (1366, 16, 'Conselheiro Mairinck', 'PR'),
 (1367, 13, 'Conselheiro Pena', 'MG'),
@@ -1592,11 +1592,11 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (1552, 15, 'Diamante', 'PB'),
 (1553, 16, 'Diamante do Norte', 'PR'),
 (1554, 16, 'Diamante do Sul', 'PR'),
-(1555, 16, 'Diamante D''Oeste', 'PR'),
+(1555, 16, 'Diamante D\'Oeste', 'PR'),
 (1556, 13, 'Diamantina', 'MG'),
 (1557, 11, 'Diamantino', 'MT'),
 (1558, 27, 'Dianópolis', 'TO'),
-(1559, 5, 'Dias d''Ávila', 'BA'),
+(1559, 5, 'Dias d\'Ávila', 'BA'),
 (1560, 21, 'Dilermando de Aguiar', 'RS'),
 (1561, 13, 'Diogo de Vasconcelos', 'MG'),
 (1562, 13, 'Dionísio', 'MG'),
@@ -1739,7 +1739,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (1698, 27, 'Esperantina', 'TO'),
 (1699, 10, 'Esperantinópolis', 'MA'),
 (1700, 16, 'Espigão Alto do Iguaçu', 'PR'),
-(1701, 22, 'Espigão d''Oeste', 'RO'),
+(1701, 22, 'Espigão d\'Oeste', 'RO'),
 (1702, 13, 'Espinosa', 'MG'),
 (1703, 20, 'Espírito Santo', 'RN'),
 (1704, 13, 'Espírito Santo do Dourado', 'MG'),
@@ -1761,7 +1761,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (1720, 9, 'Estrela do Norte', 'GO'),
 (1721, 25, 'Estrela do Norte', 'SP'),
 (1722, 13, 'Estrela do Sul', 'MG'),
-(1723, 25, 'Estrela d''Oeste', 'SP'),
+(1723, 25, 'Estrela d\'Oeste', 'SP'),
 (1724, 21, 'Estrela Velha', 'RS'),
 (1725, 5, 'Euclides da Cunha', 'BA'),
 (1726, 25, 'Euclides da Cunha Paulista', 'SP'),
@@ -1825,7 +1825,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (1784, 16, 'Figueira', 'PR'),
 (1785, 12, 'Figueirão', 'MS'),
 (1786, 27, 'Figueirópolis', 'TO'),
-(1787, 11, 'Figueirópolis D''Oeste', 'MT'),
+(1787, 11, 'Figueirópolis D\'Oeste', 'MT'),
 (1788, 5, 'Filadélfia', 'BA'),
 (1789, 27, 'Filadélfia', 'TO'),
 (1790, 5, 'Firmino Alves', 'BA'),
@@ -1954,7 +1954,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (1913, 5, 'Glória', 'BA'),
 (1914, 12, 'Glória de Dourados', 'MS'),
 (1915, 17, 'Glória do Goitá', 'PE'),
-(1916, 11, 'Glória D''Oeste', 'MT'),
+(1916, 11, 'Glória D\'Oeste', 'MT'),
 (1917, 21, 'Glorinha', 'RS'),
 (1918, 10, 'Godofredo Viana', 'MA'),
 (1919, 16, 'Godoy Moreira', 'PR'),
@@ -2054,7 +2054,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2013, 13, 'Guarani', 'MG'),
 (2014, 21, 'Guarani das Missões', 'RS'),
 (2015, 9, 'Guarani de Goiás', 'GO'),
-(2016, 25, 'Guarani d''Oeste', 'SP'),
+(2016, 25, 'Guarani d\'Oeste', 'SP'),
 (2017, 16, 'Guaraniaçu', 'PR'),
 (2018, 25, 'Guarantã', 'SP'),
 (2019, 11, 'Guarantã do Norte', 'MT'),
@@ -2096,7 +2096,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2055, 5, 'Heliópolis', 'BA'),
 (2056, 25, 'Herculândia', 'SP'),
 (2057, 21, 'Herval', 'RS'),
-(2058, 24, 'Herval d''Oeste', 'SC'),
+(2058, 24, 'Herval d\'Oeste', 'SC'),
 (2059, 21, 'Herveiras', 'RS'),
 (2060, 6, 'Hidrolândia', 'CE'),
 (2061, 9, 'Hidrolândia', 'GO'),
@@ -2403,7 +2403,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2362, 13, 'Itapecerica', 'MG'),
 (2363, 25, 'Itapecerica da Serra', 'SP'),
 (2364, 10, 'Itapecuru Mirim', 'MA'),
-(2365, 16, 'Itapejara d''Oeste', 'PR'),
+(2365, 16, 'Itapejara d\'Oeste', 'PR'),
 (2366, 24, 'Itapema', 'SC'),
 (2367, 8, 'Itapemirim', 'ES'),
 (2368, 16, 'Itaperuçu', 'PR'),
@@ -2431,7 +2431,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2390, 27, 'Itaporã do Tocantins', 'TO'),
 (2391, 15, 'Itaporanga', 'PB'),
 (2392, 25, 'Itaporanga', 'SP'),
-(2393, 26, 'Itaporanga d''Ajuda', 'SE'),
+(2393, 26, 'Itaporanga d\'Ajuda', 'SE'),
 (2394, 15, 'Itapororoca', 'PB'),
 (2395, 22, 'Itapuã do Oeste', 'RO'),
 (2396, 21, 'Itapuca', 'RS'),
@@ -2724,7 +2724,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2683, 2, 'Lagoa da Canoa', 'AL'),
 (2684, 27, 'Lagoa da Confusão', 'TO'),
 (2685, 13, 'Lagoa da Prata', 'MG'),
-(2686, 20, 'Lagoa d''Anta', 'RN'),
+(2686, 20, 'Lagoa d\'Anta', 'RN'),
 (2687, 15, 'Lagoa de Dentro', 'PB'),
 (2688, 17, 'Lagoa de Itaenga', 'PE'),
 (2689, 20, 'Lagoa de Pedras', 'RN'),
@@ -2773,7 +2773,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2732, 13, 'Lajinha', 'MG'),
 (2733, 5, 'Lamarão', 'BA'),
 (2734, 13, 'Lambari', 'MG'),
-(2735, 11, 'Lambari D''Oeste', 'MT'),
+(2735, 11, 'Lambari D\'Oeste', 'MT'),
 (2736, 13, 'Lamim', 'MG'),
 (2737, 18, 'Landri Sales', 'PI'),
 (2738, 16, 'Lapa', 'PR'),
@@ -2880,7 +2880,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2839, 2, 'Maceió', 'AL'),
 (2840, 13, 'Machacalis', 'MG'),
 (2841, 21, 'Machadinho', 'RS'),
-(2842, 22, 'Machadinho D''Oeste', 'RO'),
+(2842, 22, 'Machadinho D\'Oeste', 'RO'),
 (2843, 13, 'Machado', 'MG'),
 (2844, 17, 'Machados', 'PE'),
 (2845, 24, 'Macieira', 'SC'),
@@ -2890,7 +2890,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (2849, 18, 'Madeiro', 'PI'),
 (2850, 5, 'Madre de Deus', 'BA'),
 (2851, 13, 'Madre de Deus de Minas', 'MG'),
-(2852, 15, 'Mãe d''Água', 'PB'),
+(2852, 15, 'Mãe d\'Água', 'PB'),
 (2853, 14, 'Mãe do Rio', 'PA'),
 (2854, 5, 'Maetinga', 'BA'),
 (2855, 24, 'Mafra', 'SC'),
@@ -3134,7 +3134,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3093, 25, 'Mirante do Paranapanema', 'SP'),
 (3094, 16, 'Miraselva', 'PR'),
 (3095, 25, 'Mirassol', 'SP'),
-(3096, 11, 'Mirassol d''Oeste', 'MT'),
+(3096, 11, 'Mirassol d\'Oeste', 'MT'),
 (3097, 25, 'Mirassolândia', 'SP'),
 (3098, 13, 'Miravânia', 'MG'),
 (3099, 24, 'Mirim Doce', 'SC'),
@@ -3339,7 +3339,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3298, 13, 'Nova Belém', 'MG'),
 (3299, 21, 'Nova Boa Vista', 'RS'),
 (3300, 11, 'Nova Brasilândia', 'MT'),
-(3301, 22, 'Nova Brasilândia D''Oeste', 'RO'),
+(3301, 22, 'Nova Brasilândia D\'Oeste', 'RO'),
 (3302, 21, 'Nova Bréscia', 'RS'),
 (3303, 25, 'Nova Campina', 'SP');
 INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`) VALUES
@@ -3473,14 +3473,14 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3431, 3, 'Oiapoque', 'AP'),
 (3432, 13, 'Olaria', 'MG'),
 (3433, 25, 'Óleo', 'SP'),
-(3434, 15, 'Olho d''Água', 'PB'),
-(3435, 10, 'Olho d''Água das Cunhãs', 'MA'),
-(3436, 2, 'Olho d''Água das Flores', 'AL'),
-(3437, 2, 'Olho d''Água do Casado', 'AL'),
-(3438, 18, 'Olho D''Água do Piauí', 'PI'),
-(3439, 2, 'Olho d''Água Grande', 'AL'),
-(3440, 20, 'Olho-d''Água do Borges', 'RN'),
-(3441, 13, 'Olhos-d''Água', 'MG'),
+(3434, 15, 'Olho d\'Água', 'PB'),
+(3435, 10, 'Olho d\'Água das Cunhãs', 'MA'),
+(3436, 2, 'Olho d\'Água das Flores', 'AL'),
+(3437, 2, 'Olho d\'Água do Casado', 'AL'),
+(3438, 18, 'Olho D\'Água do Piauí', 'PI'),
+(3439, 2, 'Olho d\'Água Grande', 'AL'),
+(3440, 20, 'Olho-d\'Água do Borges', 'RN'),
+(3441, 13, 'Olhos-d\'Água', 'MG'),
 (3442, 25, 'Olímpia', 'SP'),
 (3443, 13, 'Olímpio Noronha', 'MG'),
 (3444, 17, 'Olinda', 'PE'),
@@ -3575,7 +3575,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3533, 24, 'Palmeira', 'SC'),
 (3534, 21, 'Palmeira das Missões', 'RS'),
 (3535, 18, 'Palmeira do Piauí', 'PI'),
-(3536, 25, 'Palmeira d''Oeste', 'SP'),
+(3536, 25, 'Palmeira d\'Oeste', 'SP'),
 (3537, 2, 'Palmeira dos Índios', 'AL'),
 (3538, 18, 'Palmeirais', 'PI'),
 (3539, 10, 'Palmeirândia', 'MA'),
@@ -3693,9 +3693,9 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3651, 20, 'Patu', 'RN'),
 (3652, 19, 'Paty do Alferes', 'RJ'),
 (3653, 5, 'Pau Brasil', 'BA'),
-(3654, 14, 'Pau D''Arco', 'PA'),
-(3655, 27, 'Pau D''Arco', 'TO'),
-(3656, 18, 'Pau D''Arco do Piauí', 'PI'),
+(3654, 14, 'Pau D\'Arco', 'PA'),
+(3655, 27, 'Pau D\'Arco', 'TO'),
+(3656, 18, 'Pau D\'Arco do Piauí', 'PI'),
 (3657, 20, 'Pau dos Ferros', 'RN'),
 (3658, 17, 'Paudalho', 'PE'),
 (3659, 4, 'Pauini', 'AM'),
@@ -3792,7 +3792,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3750, 10, 'Peritoró', 'MA'),
 (3751, 16, 'Perobal', 'PR'),
 (3752, 16, 'Pérola', 'PR'),
-(3753, 16, 'Pérola d''Oeste', 'PR'),
+(3753, 16, 'Pérola d\'Oeste', 'PR'),
 (3754, 9, 'Perolândia', 'GO'),
 (3755, 25, 'Peruíbe', 'SP'),
 (3756, 13, 'Pescador', 'MG'),
@@ -3837,7 +3837,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (3795, 25, 'Pindorama', 'SP'),
 (3796, 27, 'Pindorama do Tocantins', 'TO'),
 (3797, 6, 'Pindoretama', 'CE'),
-(3798, 13, 'Pingo-d''Água', 'MG'),
+(3798, 13, 'Pingo-d\'Água', 'MG'),
 (3799, 16, 'Pinhais', 'PR'),
 (3800, 21, 'Pinhal', 'RS'),
 (3801, 21, 'Pinhal da Serra', 'RS'),
@@ -4139,7 +4139,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4097, 16, 'Ramilândia', 'PR'),
 (4098, 25, 'Rancharia', 'SP'),
 (4099, 16, 'Rancho Alegre', 'PR'),
-(4100, 16, 'Rancho Alegre D''Oeste', 'PR'),
+(4100, 16, 'Rancho Alegre D\'Oeste', 'PR'),
 (4101, 24, 'Rancho Queimado', 'SC'),
 (4102, 10, 'Raposa', 'MA'),
 (4103, 13, 'Raposos', 'MG'),
@@ -4391,7 +4391,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4349, 14, 'Santa Bárbara do Pará', 'PA'),
 (4350, 21, 'Santa Bárbara do Sul', 'RS'),
 (4351, 13, 'Santa Bárbara do Tugúrio', 'MG'),
-(4352, 25, 'Santa Bárbara d''Oeste', 'SP'),
+(4352, 25, 'Santa Bárbara d\'Oeste', 'SP'),
 (4353, 25, 'Santa Branca', 'SP'),
 (4354, 5, 'Santa Brígida', 'BA'),
 (4355, 11, 'Santa Carmem', 'MT'),
@@ -4400,7 +4400,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4358, 16, 'Santa Cecília do Pavão', 'PR'),
 (4359, 21, 'Santa Cecília do Sul', 'RS'),
 (4360, 21, 'Santa Clara do Sul', 'RS'),
-(4361, 25, 'Santa Clara d''Oeste', 'SP'),
+(4361, 25, 'Santa Clara d\'Oeste', 'SP'),
 (4362, 15, 'Santa Cruz', 'PB'),
 (4363, 17, 'Santa Cruz', 'PE'),
 (4364, 20, 'Santa Cruz', 'RN'),
@@ -4462,7 +4462,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4420, 2, 'Santa Luzia do Norte', 'AL'),
 (4421, 14, 'Santa Luzia do Pará', 'PA'),
 (4422, 10, 'Santa Luzia do Paruá', 'MA'),
-(4423, 22, 'Santa Luzia D''Oeste', 'RO'),
+(4423, 22, 'Santa Luzia D\'Oeste', 'RO'),
 (4424, 13, 'Santa Margarida', 'MG'),
 (4425, 21, 'Santa Margarida do Sul', 'RS'),
 (4426, 20, 'Santa Maria', 'RN'),
@@ -4501,7 +4501,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4459, 13, 'Santa Rita do Sapucaí', 'MG'),
 (4460, 27, 'Santa Rita do Tocantins', 'TO'),
 (4461, 11, 'Santa Rita do Trivelato', 'MT'),
-(4462, 25, 'Santa Rita d''Oeste', 'SP'),
+(4462, 25, 'Santa Rita d\'Oeste', 'SP'),
 (4463, 21, 'Santa Rosa', 'RS'),
 (4464, 13, 'Santa Rosa da Serra', 'MG'),
 (4465, 9, 'Santa Rosa de Goiás', 'GO'),
@@ -4547,7 +4547,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4505, 2, 'Santana do Ipanema', 'AL'),
 (4506, 16, 'Santana do Itararé', 'PR'),
 (4507, 13, 'Santana do Jacaré', 'MG'),
-(4508, 21, 'Sant''Ana do Livramento', 'RS'),
+(4508, 21, 'Sant\'Ana do Livramento', 'RS'),
 (4509, 13, 'Santana do Manhuaçu', 'MG'),
 (4510, 10, 'Santana do Maranhão', 'MA'),
 (4511, 20, 'Santana do Matos', 'RN'),
@@ -4663,7 +4663,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4621, 13, 'São Domingos do Prata', 'MG'),
 (4622, 21, 'São Domingos do Sul', 'RS'),
 (4623, 5, 'São Felipe', 'BA'),
-(4624, 22, 'São Felipe D''Oeste', 'RO'),
+(4624, 22, 'São Felipe D\'Oeste', 'RO'),
 (4625, 5, 'São Félix', 'BA'),
 (4626, 10, 'São Félix de Balsas', 'MA'),
 (4627, 13, 'São Félix de Minas', 'MG'),
@@ -4735,7 +4735,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4693, 18, 'São João da Serra', 'PI'),
 (4694, 21, 'São João da Urtiga', 'RS'),
 (4695, 18, 'São João da Varjota', 'PI'),
-(4696, 9, 'São João d''Aliança', 'GO'),
+(4696, 9, 'São João d\'Aliança', 'GO'),
 (4697, 25, 'São João das Duas Pontes', 'SP'),
 (4698, 13, 'São João das Missões', 'MG'),
 (4699, 25, 'São João de Iracema', 'SP'),
@@ -4757,7 +4757,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4715, 13, 'São João do Pacuí', 'MG'),
 (4716, 10, 'São João do Paraíso', 'MA'),
 (4717, 13, 'São João do Paraíso', 'MG'),
-(4718, 25, 'São João do Pau d''Alho', 'SP'),
+(4718, 25, 'São João do Pau d\'Alho', 'SP'),
 (4719, 18, 'São João do Piauí', 'PI'),
 (4720, 21, 'São João do Polêsine', 'RS'),
 (4721, 15, 'São João do Rio do Peixe', 'PB'),
@@ -4776,7 +4776,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (4734, 21, 'São Jorge', 'RS'),
 (4735, 16, 'São Jorge do Ivaí', 'PR'),
 (4736, 16, 'São Jorge do Patrocínio', 'PR'),
-(4737, 16, 'São Jorge d''Oeste', 'PR'),
+(4737, 16, 'São Jorge d\'Oeste', 'PR'),
 (4738, 24, 'São José', 'SC'),
 (4739, 13, 'São José da Barra', 'MG'),
 (4740, 25, 'São José da Bela Vista', 'SP'),
@@ -5102,7 +5102,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (5059, 16, 'Siqueira Campos', 'PR'),
 (5060, 17, 'Sirinhaém', 'PE'),
 (5061, 26, 'Siriri', 'SE'),
-(5062, 9, 'Sítio d''Abadia', 'GO'),
+(5062, 9, 'Sítio d\'Abadia', 'GO'),
 (5063, 5, 'Sítio do Mato', 'BA'),
 (5064, 5, 'Sítio do Quinto', 'BA'),
 (5065, 10, 'Sítio Novo', 'MA'),
@@ -5181,7 +5181,7 @@ INSERT INTO `app_cidades` (`cidade_id`, `estado_id`, `cidade_nome`, `cidade_uf`)
 (5138, 11, 'Tangará da Serra', 'MT'),
 (5139, 19, 'Tanguá', 'RJ'),
 (5140, 5, 'Tanhaçu', 'BA'),
-(5141, 2, 'Tanque d''Arca', 'AL'),
+(5141, 2, 'Tanque d\'Arca', 'AL'),
 (5142, 18, 'Tanque do Piauí', 'PI'),
 (5143, 5, 'Tanque Novo', 'BA'),
 (5144, 5, 'Tanquinho', 'BA'),
@@ -5690,6 +5690,22 @@ CREATE TABLE `areaatuacao` (
   `descricaoProfissao` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `areaatuacao`
+--
+
+INSERT INTO `areaatuacao` (`idAreaAtuacao`, `nomeProfissao`, `descricaoProfissao`) VALUES
+(1, 'Barbeiro', 'Barbeiro'),
+(2, 'Manicure', 'Manicure'),
+(3, 'Acupuntura', 'Acupuntura'),
+(4, 'cabelereiro', 'Cabelereiro'),
+(6, 'podologia', 'Podologia'),
+(7, 'maquiagem', 'Maquiagem'),
+(8, 'depilacao', 'Depilação'),
+(9, 'beleza-afro', 'Beleza Afro'),
+(10, 'teste', 'teste'),
+(11, 'nome', 'teste');
+
 -- --------------------------------------------------------
 
 --
@@ -5701,6 +5717,31 @@ CREATE TABLE `contato` (
   `dddContato` int(11) DEFAULT NULL,
   `numeroContato` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `enderecousuario`
+--
+
+CREATE TABLE `enderecousuario` (
+  `idEndereco` int(3) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `cep` varchar(9) NOT NULL,
+  `logradouro` varchar(50) NOT NULL,
+  `numero` int(3) NOT NULL,
+  `complemento` varchar(50) DEFAULT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cidade` varchar(50) NOT NULL,
+  `estado` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `enderecousuario`
+--
+
+INSERT INTO `enderecousuario` (`idEndereco`, `idUsuario`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
+(3, 27, '04011-002', 'Rua Estela', 515, 'Bl F 171', 'Vila Mariana', 'São Paulo', 'SP');
 
 -- --------------------------------------------------------
 
@@ -5751,6 +5792,14 @@ CREATE TABLE `tipousuario` (
   `nomeTipoUsuario` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tipousuario`
+--
+
+INSERT INTO `tipousuario` (`idTipoUsuario`, `nomeTipoUsuario`) VALUES
+(1, 'Empresário'),
+(2, 'Profissional');
+
 -- --------------------------------------------------------
 
 --
@@ -5761,12 +5810,24 @@ CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
   `idTipoUsuario` int(11) DEFAULT NULL,
   `apelidoUsuario` varchar(50) DEFAULT NULL,
-  `ImagemUsuario` varchar(50) DEFAULT NULL,
-  `nomeUsuario` varchar(50) DEFAULT NULL,
-  `dataNascimento` datetime DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `senha` varchar(50) DEFAULT NULL
+  `senha` varchar(50) DEFAULT NULL,
+  `nomeUsuario` varchar(50) DEFAULT NULL,
+  `sobrenomeUsuario` varchar(60) DEFAULT NULL,
+  `sexoUsuario` varchar(20) DEFAULT NULL,
+  `cpfUsuario` varchar(14) DEFAULT NULL,
+  `dataNascimento` varchar(10) DEFAULT NULL,
+  `descricao` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`) VALUES
+(26, 1, NULL, 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', NULL, NULL, NULL, ''),
+(27, 2, 'Rafinha', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', NULL, '42659336881', NULL, 'Um rapaz super legal!'),
+(33, 1, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -5799,16 +5860,10 @@ CREATE TABLE `ws_categories` (
 --
 
 INSERT INTO `ws_categories` (`category_id`, `category_parent`, `category_name`, `category_title`, `category_content`, `category_date`) VALUES
-(1, NULL, 'video-aula', 'Video Aula', 'Teste de cadastro', '2016-10-12 23:50:57'),
-(2, NULL, 'video-aulas', 'Vídeo Aulas', 'teste 2', '2016-10-13 02:24:16'),
-(3, NULL, 'video-aula', 'Video aula-1', 'teste 3', '2016-10-13 02:24:28'),
-(4, 1, 'teste', 'teste', 'teste 2', '2016-10-13 03:30:15'),
-(5, 1, 'teste', 'teste-1', 'teste 3', '2016-10-13 03:37:55'),
-(6, 1, 'teste', 'teste-1', 'teste5', '2016-10-13 03:40:26'),
-(7, NULL, 'teste-sec', 'teste sec', 'teste sec', '2016-10-13 04:30:06'),
-(8, 1, 'teste6', 'teste6-1', 'teste6', '2016-10-13 04:05:28'),
-(9, 1, 'cat', 'cat', 'cat', '2016-10-13 04:31:12'),
-(10, 1, 'teste', 'teste-1', 'aaa', '2016-10-13 04:35:04');
+(1, 1, 'sexo', 'Sexo-1', 'Sexo anal', '2016-10-17 23:10:37'),
+(2, 1, 'amor', 'amor', 'testes', '2016-10-21 13:36:51'),
+(3, 1, 'marcelo', 'marcelo-1', 'marcelo', '2016-10-21 23:16:30'),
+(4, NULL, 'teste', 'teste', 'testando update', '2016-10-24 01:30:56');
 
 -- --------------------------------------------------------
 
@@ -5910,7 +5965,8 @@ CREATE TABLE `ws_users` (
 --
 
 INSERT INTO `ws_users` (`user_id`, `user_name`, `user_lastname`, `user_email`, `user_password`, `user_registration`, `user_lastupdate`, `user_level`) VALUES
-(1, 'Marcelo', 'Lima', 'marcelo@cwwci.com.br', 'e10adc3949ba59abbe56e057f20f883e', '2016-09-18 19:19:23', '2016-09-20 22:03:09', 3);
+(1, 'Marcelo', 'Lima', 'marcelo@cwwci.com.br', 'e10adc3949ba59abbe56e057f20f883e', '2016-09-18 19:19:23', '2016-09-20 22:03:09', 3),
+(2, 'Rafael', 'Borges Milaré', 'rafael@moshe.com.br', '25f9e794323b453885f5181f1b624d0b', '2016-09-18 22:19:23', '2017-02-12 18:54:22', 3);
 
 --
 -- Indexes for dumped tables
@@ -5947,6 +6003,13 @@ ALTER TABLE `contato`
   ADD PRIMARY KEY (`idContato`);
 
 --
+-- Indexes for table `enderecousuario`
+--
+ALTER TABLE `enderecousuario`
+  ADD PRIMARY KEY (`idEndereco`),
+  ADD KEY `FK_usuario` (`idUsuario`);
+
+--
 -- Indexes for table `habilidadeusuario`
 --
 ALTER TABLE `habilidadeusuario`
@@ -5978,6 +6041,7 @@ ALTER TABLE `tipousuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`),
+  ADD UNIQUE KEY `cpfUsuario` (`cpfUsuario`),
   ADD KEY `fk_usuario` (`idTipoUsuario`);
 
 --
@@ -6049,37 +6113,22 @@ ALTER TABLE `app_empresas`
 -- AUTO_INCREMENT for table `areaatuacao`
 --
 ALTER TABLE `areaatuacao`
-  MODIFY `idAreaAtuacao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAreaAtuacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `contato`
+-- AUTO_INCREMENT for table `enderecousuario`
 --
-ALTER TABLE `contato`
-  MODIFY `idContato` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `portfolio`
---
-ALTER TABLE `portfolio`
-  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `redesocial`
---
-ALTER TABLE `redesocial`
-  MODIFY `idRedeSocial` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tipousuario`
---
-ALTER TABLE `tipousuario`
-  MODIFY `idTipoUsuario` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `enderecousuario`
+  MODIFY `idEndereco` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `ws_categories`
 --
 ALTER TABLE `ws_categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `ws_posts`
 --
@@ -6109,43 +6158,7 @@ ALTER TABLE `ws_siteviews_online`
 -- AUTO_INCREMENT for table `ws_users`
 --
 ALTER TABLE `ws_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- Constraints for dumped tables
---
-
---
--- Limitadores para a tabela `habilidadeusuario`
---
-ALTER TABLE `habilidadeusuario`
-  ADD CONSTRAINT `fk_HabilidadeUsuario` FOREIGN KEY (`idAreaAtuacao`) REFERENCES `areaatuacao` (`idAreaAtuacao`),
-  ADD CONSTRAINT `fk_HabilidadeUsuario2` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Limitadores para a tabela `portfolio`
---
-ALTER TABLE `portfolio`
-  ADD CONSTRAINT `FK_Portfolio` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Limitadores para a tabela `redesocial`
---
-ALTER TABLE `redesocial`
-  ADD CONSTRAINT `Fk_RedeSocial` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Limitadores para a tabela `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`idTipoUsuario`) REFERENCES `tipousuario` (`idTipoUsuario`);
-
---
--- Limitadores para a tabela `usuariocontato`
---
-ALTER TABLE `usuariocontato`
-  ADD CONSTRAINT `FK_UsuarioContato` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `fk_UsarioContato2` FOREIGN KEY (`idContato`) REFERENCES `contato` (`idContato`);
-
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

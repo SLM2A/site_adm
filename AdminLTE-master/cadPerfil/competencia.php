@@ -65,7 +65,7 @@ endif;
 
  <header class="main-header">
     <!-- Logo -->
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -354,7 +354,7 @@ endif;
 		<?php
                 echo '
 		<li class="active treeview/">
-			<a href="index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -445,11 +445,12 @@ endif;
 						<span aria-hidden="true">&laquo;</span>
 					  </a>
 					</li>
-					<li><a href="sobremim.html">Sobre Mim</a></li>
-					<li><a href="perfil.html">Perfil</a></li>
-					<li><a href="experiencia.html">Experiências</a></li>
-					<li><a href="certificacao.html">Certificados</a></li>
-					<li><a href="#">Competências</a></li>
+						<li><a href="#">Sobre Mim</a></li>
+						<li><a href="perfil.php">Perfil</a></li>
+						<li><a href="endereco.php">Localização</a></li>
+						<li><a href="experiencia.php">Experiências</a></li>
+						<li><a href="certificacao.php">Certificados</a></li>
+						<li><a href="competencia.php">Competências</a></li>
 					<li>
 					  <a href="#" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>

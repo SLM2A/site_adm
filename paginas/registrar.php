@@ -12,7 +12,7 @@ require('../_app/Config.inc.php');
                 unset($data['SendPostForm']);   
                 $data['senha'] = md5($data['senha']);
                 require '../admin/_models/SiteRegistrar.class.php';
-                $cadastra = new AdminProfissional;
+                $cadastra = new SiteRegistrar;
                 $cadastra->ExeCreate($data);
                 
                 if (!$cadastra->getResult()):

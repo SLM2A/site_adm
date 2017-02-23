@@ -43,8 +43,7 @@ class SiteRegistrar{
         if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
             $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar o cliente, preencha todos os campos!", WS_ALERT];
-        else:
-            $this->setData();        
+        else:       
             $this->Update();
         endif;        
     }
@@ -61,7 +60,7 @@ class SiteRegistrar{
     private function setData() {
         $this->Data = array_map('strip_tags', $this->Data); //limpar array
         $this->Data = array_map('trim', $this->Data); //limpar array
-        $this->Data ['cpfUsuario'] = Check::Name($this->Data['cpfUsuario']);//criar o nome da categoria para o titulo
+        $this->Data ['nomeUsuario'] = Check::Name($this->Data['nomeUsuario']);//criar o nome da categoria para o titulo
         }
     
     private function setName() {

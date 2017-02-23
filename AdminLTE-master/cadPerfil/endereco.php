@@ -2,6 +2,8 @@
 session_start();
 require('../../_app/Config.inc.php');
 
+
+
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
 $getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
@@ -12,12 +14,44 @@ if (!$login->CheckLogin()):
 else:
     $userlogin = $_SESSION['userlogin'];
 endif;
-    
+
 if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
 endif;
 
+//        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
+//        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
+//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
+
+
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+if (!empty($data['SendPostForm'])):
+    unset($data['SendPostForm']);
+
+    $data['idUsuario'] = $userlogin['idUsuario'];
+  
+    require '../../admin/_models/AdminEndereco.php';
+    $cadastra = new AdminEndereco;
+    $readEndereco = new Read;
+
+    $readEndereco->ExeRead('enderecousuario', "WHERE idUsuario = :t", "t={$userlogin['idUsuario']}");
+    
+    if ($readEndereco->getResult()):
+        $idEndereco = (int) $readEndereco->getResult()[0]['idEndereco'];
+        $cadastra->ExeUpdate($idEndereco, $data);
+    else:
+        $cadastra->ExeCreate($data);
+    endif;
+
+
+
+    if (!$cadastra->getResult()):
+        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    else:
+        header('Location: experiencia.php');
+    endif;
+endif;
 ?>
 
 <!DOCTYPE html>
@@ -28,29 +62,30 @@ endif;
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
+   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../plugins/iCheck/all.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="../plugins/colorpicker/bootstrap-colorpicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../plugins/select2/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="../plugins/iCheck/flat/blue.css">
-  <!-- Morris chart -->
-  <link rel="stylesheet" href="../plugins/morris/morris.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-  <!-- Date Picker -->
-  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
-  <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,11 +96,10 @@ endif;
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -342,7 +376,7 @@ endif;
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i> 
                 </button>
               </span>
         </div>
@@ -354,7 +388,7 @@ endif;
 		<?php
                 echo '
 		<li class="active treeview/">
-			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -399,127 +433,81 @@ endif;
     <!-- Content Header (Page header) -->
     <section class="content-header">
      
-   
+    </section>
 
     <!-- Main content -->
     <section class="content">
-	
-			<section class="col-lg-3 connectedSortable">
-			<!-- Profile Image -->
-				  <div class="box box-primary">
-					<div class="box-body box-profile">
-					  <img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture">
+    <form role="form" action="" method="post" class="login-form">
+        <section class="col-lg-12 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+                <ul class="nav nav-tabs pull-right">                  
+                    <li class="pull-left header"><i class="ion-person"></i> Quem é você?</li>
+                </ul>
+                <div class="tab-content no-padding">
+                    <!-- Morris chart - Sales -->
+                    <br>
+                    <div ></div>
+                    <div class="box-body box-profile" id="sales-chart" >
+                     
+                        <div class="form-group">
+                            <section class="col-lg-12 connectedSortable">
+                                
+                                <label>CEP:</label>
+                                <input type="text" id="cep" class="form-control" name="cep" value="<?php if (isset($data)) echo $data['cep']; ?>" required>
+                                <label>Endereço:</label>
+                                <input type="text" id="rua" class="form-control" name="logradouro" value="<?php if (isset($data)) echo $data['logradouro']; ?>" >
+                                <label>Número:</label>
+                                <input type="text"  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
+                                <label>Complemento:</label>
+                                <input type="text" class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
+                                <label>Bairro:</label>
+                                <input type="text" id="bairro" class="form-control" name="bairro" value="<?php if (isset($data)) echo $data['bairro']; ?>" >
+                                <label>Cidade:</label>
+                                <input type="text" id="cidade" class="form-control" name="cidade" value="<?php if (isset($data)) echo $data['cidade']; ?>" >
+                                <label>Estado:</label>
+                                <input type="text" id="uf"  class="form-control" name="estado" value="<?php if (isset($data)) echo $data['estado']; ?>" >
+                            </section>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>        
+        </section>
+    
+        
 
-					  <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
-					  <hr>
-						<strong><i class="fa fa-pencil margin-r-5"></i>Áreas de Atuação</strong>
-						<p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
-						<hr>
-					</div>
-					<!-- /.box-body -->
-				  </div>
-				  <!-- /.box -->
-			</section>
-			<!-- Fim Profile Image -->
-	
-			<!-- About Me Box -->
-			<section class="col-lg-9 connectedSortable">   
-				<div class="box box-primary">
-					<div class="box-header with-border">
-					  <h3 class="box-title"><i class="ion-person"></i> Sobre Mim</h3>
-					</div>
-					<!-- /.box-header -->
-					<div class="box-body">
-						  <strong><i class="fa fa-book margin-r-5"></i> O que acho sobre mim</strong>
+            <section class="col-lg-12 connectedSortable ">
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+            </section>
+        </form>
+		
+				  <center> 
+		 <nav aria-label="Page navigation">
+				  <ul class="pagination">
+					<li>
+					  <a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					  </a>
+					</li>
+					<li><a href="#">Sobre Mim</a></li>
+					<li><a href="perfil.php">Perfil</a></li>
+					<li><a href="endereco.php">Localização</a></li>
+					<li><a href="experiencia.php">Experiências</a></li>
+					<li><a href="certificacao.php">Certificados</a></li>
+					<li><a href="competencia.php">Competências</a></li>
+					<li>
+					  <a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					  </a>
+					</li>
+				  </ul>
+		</nav>
+		</center>
+		
+    </section>
 
-						  <p class="text-muted">
-						   <?= $userlogin['descricao']; ?>
-						  </p>
-						  <hr>
-						  <strong><i class="fa fa-pencil margin-r-5"></i> Competências</strong>
-						  <p>
-							<span class="label label-danger">Pigmentação</span>
-							<span class="label label-success">Navalhado</span>
-						  </p>
-						  <hr>						  
-						  <strong><i class="fa fa-map-marker margin-r-5"></i> Localidade</strong>
-						  <p class="text-muted">São Paulo, Brasil</p>
-						  
-					</div>
-				</div>
-			</section>
-			<!-- Fim About Me Box -->	
-			
-			<!-- Inicio Minhas Experiências -->	
-		<section class="col-md-12">	
-          <div class="box">
-				<div class="box-header">
-				  <h3 class="box-title"><i class="ion-briefcase"></i> Minhas Experiências</h3>
-
-				  <div class="box-tools">
-					<div class="input-group input-group-sm" style="width: 150px;">
-					  <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
-
-					  <div class="input-group-btn">
-						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				
-				<div class="box-body table-responsive no-padding">
-				  <table class="table table-hover">
-					<tr>
-					  <th>Cargo</th>
-					  <th>Empresa</th>
-					  <th>Localização</th>
-					  <th>De</th>
-					  <th>Até</th>
-					  <th>Descrição</th>
-					</tr>
-				   
-				  </table>
-				</div>
-			</div>
-		</section> 
-			<!-- Fim Minhas Experiências -->	
-			
-					<!-- Inicio Minhas Experiências -->	
-		<section class="col-md-12">	
-          <div class="box">
-				<div class="box-header">
-				  <h3 class="box-title"><i class="ion-ios-bookmarks"></i> Meus Certificados</h3>
-
-				  <div class="box-tools">
-					<div class="input-group input-group-sm" style="width: 150px;">
-					  <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
-
-					  <div class="input-group-btn">
-						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				
-				<div class="box-body table-responsive no-padding">
-				  <table class="table table-hover">
-					<tr>
-					  <th>Instituição</th>
-					  <th>Curso</th>
-					  <th>Nível</th>
-					  <th>Duração</th>
-					  <th>Ano de ínicio</th>
-					  <th>Ano de conclusão</th>
-					</tr>
-				   
-				  </table>
-				</div>
-			</div>
-		</section> 
-			<!-- Fim Minhas Experiências -->	
-			
-			
-	</section>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -746,5 +734,79 @@ endif;
 <script src="../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<!-- Consulta endereço -->
+<script src="../dist/js/pages/endereco.js"></script>
+<!-- Page script -->
+<script>
+    
+   
+  $(function () {
+    //Initialize Select2 Elements           
+              
+    
+        
+    //Datemask dd/mm/yyyy
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    //Datemask2 mm/dd/yyyy
+    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+    //Money Euro
+    $("[data-mask]").inputmask();
+    //CEP
+    $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+    //Date range picker
+    $('#reservation').daterangepicker();
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+        {
+          ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate: moment()
+        },
+        function (start, end) {
+          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+    );
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue'
+    });
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass: 'iradio_minimal-red'
+    });
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass: 'iradio_flat-green'
+    });
+
+    //Colorpicker
+    $(".my-colorpicker1").colorpicker();
+    //color picker with addon
+    $(".my-colorpicker2").colorpicker();
+
+    //Timepicker
+    $(".timepicker").timepicker({
+      showInputs: false
+    });
+  });
+</script>
 </body>
 </html>

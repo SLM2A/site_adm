@@ -25,9 +25,11 @@ endif;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>Rental Easy | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Logo short cut -->
+  <link rel="shortcut icon" href="../img/rent.png" >
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -494,22 +496,22 @@ endif;
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Sobre você</b> <a href="cadPerfil/sobremim.html" class="pull-right">editar</a>
+                  <b>Sobre você</b> <a href="cadPerfil/sobremim.php" class="pull-right">editar</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Perfil</b> <a href="cadPerfil/perfil.html" class="pull-right">editar</a>
+                  <b>Perfil</b> <a href="cadPerfil/perfil.php" class="pull-right">editar</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Experiências</b> <a href="cadPerfil/experiencia.html" class="pull-right">editar</a>
+                  <b>Experiências</b> <a href="cadPerfil/experiencia.php" class="pull-right">editar</a>
 				</li> 
 				<li class="list-group-item">
-                  <b>Certificados</b> <a href="cadPerfil/certificacao.html" class="pull-right">editar</a>
+                  <b>Certificados</b> <a href="cadPerfil/certificacao.php" class="pull-right">editar</a>
 				</li>
 				<li class="list-group-item">
-                  <b>Competências</b> <a href="cadPerfil/competencia.html" class="pull-right">editar</a>
+                  <b>Competências</b> <a href="cadPerfil/competencia.php" class="pull-right">editar</a>
                 </li>
 								<br>
-					<a href="cadPerfil/perfilpublico.html" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
+					<a href="cadPerfil/perfilpublico.php" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
 			  </div>
 
             </div>
@@ -531,7 +533,7 @@ endif;
               <div ></div>
               <div ></div>
               <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 300px;">
-                    <a href="cadPerfil/sobremim.html"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
+                    <a href="cadPerfil/sobremim.php"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
                     <?php
                     if ($userlogin['idTipoUsuario']==2):
                     echo '

@@ -37,7 +37,11 @@ if (!empty($data['SendPostForm'])):
     $cadastra = new SiteRegistrar();
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
 
-    WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    if (!$cadastra->getResult()):
+        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    else:
+        header('Location: endereco.php');
+    endif;
 endif;
 
 
@@ -90,7 +94,7 @@ endif;
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -379,7 +383,7 @@ endif;
 		<?php
                 echo '
 		<li class="active treeview/">
-			<a href="index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -389,7 +393,7 @@ endif;
                 if ($userlogin['idTipoUsuario']==2):
                     echo '
                     <li class="treeview">
-			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+			<a href="../procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
                     </li> 
                     
                      ';
@@ -429,7 +433,7 @@ endif;
     <!-- Main content -->
     <section class="content">
     <form role="form" action="" method="post" class="login-form">
-        <section class="col-lg-6 connectedSortable">
+        <section class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
             <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
@@ -451,51 +455,47 @@ endif;
                                 <label>CPF:</label>
                                 <input type="text" class="form-control" name="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>">
                             </section>
+                            <label>O que penso sobre mim:</label>
+                            <div class="box-body pad">
+                                    <textarea input class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                              name="descricao" value="<?php if (isset($data)) echo $data['descricao']; ?>"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>        
         </section>
-    </form>
+    
         
-        <form method="get" action="."> 
-            <section class="col-lg-6 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
-                <div class="nav-tabs-custom">
-                    <!-- Tabs within a box -->
-                    <ul class="nav nav-tabs pull-right">                  
-                        <li class="pull-left header"><i class="ion-location"></i> Como te encontramos?</li>
-                    </ul>
-                    <div class="tab-content no-padding">
-                        <!-- Morris chart - Sales -->
-                        <br>
-                        <div ></div>
-                        <div class="box-body box-profile" id="sales-chart" >
-                            <div class="form-group">
-                                <label>CEP:</label>
-                                <input type="text" id="cep" class="form-control" >
-                                <label>Endereço:</label>
-                                <input type="text" id="rua"class="form-control" >
-                                <label>Número:</label>
-                                <input type="text" class="form-control" >
-                                <label>Complemento:</label>
-                                <input type="text" class="form-control" >
-                                <label>Bairro:</label>
-                                <input type="text" id="bairro" class="form-control" >
-                                <label>Cidade:</label>
-                                <input type="text" id="cidade" class="form-control" >
-                                <label>Estado:</label>
-                                <input type="text" id="uf" class="form-control" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section class="col-lg-6 connectedSortable">
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+            <section class="col-lg-12 connectedSortable ">
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar e Ir para localização</button>
             </section>
         </form>
+		
+				  <center> 
+		 <nav aria-label="Page navigation">
+				  <ul class="pagination">
+					<li>
+					  <a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					  </a>
+					</li>
+					<li><a href="#">Sobre Mim</a></li>
+					<li><a href="perfil.php">Perfil</a></li>
+					<li><a href="endereco.php">Localização</a></li>
+					<li><a href="experiencia.php">Experiências</a></li>
+					<li><a href="certificacao.php">Certificados</a></li>
+					<li><a href="competencia.php">Competências</a></li>
+					<li>
+					  <a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					  </a>
+					</li>
+				  </ul>
+		</nav>
+		</center>
+		
     </section>
 
 
