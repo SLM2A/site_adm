@@ -24,7 +24,9 @@ endif;
 //        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
 //        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
 
-
+ 
+    //Initialize Select2 Elements           
+     
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 //$userlogin['idUsuario'] = filter_input(INPUT_GET, 'idUsuario', FILTER_VALIDATE_INT);
 
@@ -449,11 +451,11 @@ endif;
                         <div class="form-group">
                             <section class="col-lg-6 connectedSortable">
                                 <label>Apelido:</label>
-                                <input type="text" class="form-control" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>">
+                                <input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>">
                             </section>
                             <section class="col-lg-6 connectedSortable">
                                 <label>CPF:</label>
-                                <input type="text" class="form-control" name="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>">
+                                <input type="text" class="form-control" name="cpfUsuario" id="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>">
                             </section>
                             <label>O que penso sobre mim:</label>
                             <div class="box-body pad">
@@ -728,12 +730,11 @@ endif;
 <script src="../dist/js/pages/endereco.js"></script>
 <!-- Page script -->
 <script>
-    
-   
   $(function () {
     //Initialize Select2 Elements           
-              
-    
+     var apelidoUsuario = "<? $userlogin['apelidoUsuario'] ?>" ;
+     
+    $("#cpfUsuario").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"}).val(apelidoUsuario);
         
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});

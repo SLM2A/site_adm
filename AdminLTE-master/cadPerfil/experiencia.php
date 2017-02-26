@@ -12,12 +12,45 @@ if (!$login->CheckLogin()):
 else:
     $userlogin = $_SESSION['userlogin'];
 endif;
-    
+
 if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
 endif;
-	
+
+
+
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (!empty($data['SendPostForm'])):
+    unset($data['SendPostForm']);
+    
+    require '../../admin/_models/AdminExperiencia.php';
+    $cadastra = new AdminExperiencia;
+        
+    $cadastra->ExeCreate($data);
+    $readEndereco = new Read;
+
+    $readEndereco->FullRead("SELECT MAX(idExperiencia) FROM experienciaprofissionalusuario");
+    $idExperiencia = $readEndereco->getResult()[0]['MAX(idExperiencia)'];
+    
+   
+    $ExperienciaUsuario['idExperiencia'] = $idExperiencia;
+    $ExperienciaUsuario['idUsuario'] = $userlogin['idUsuario'];
+    
+    
+    $cadastra->InsereRelacao($ExperienciaUsuario);
+    
+    
+    if (!$cadastra->getResult()):
+        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    else:
+        header('Location: experiencia.php');
+    endif;
+endif;
+
+
 ?>
 
 
@@ -402,166 +435,163 @@ endif;
 
     <!-- Main content -->
     <section class="content">
-	
-	<h1> <i class="ion-briefcase"></i> Experiências</h1> 
-	
-	
-	 <!-- INICIO-->
-	       <!-- Default box -->
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title"><i class="ion-edit"></i> Cadastrar Experiência</h3>
+        <form role="form" action="" method="post" class="login-form">
+            <h1> <i class="ion-briefcase"></i> Experiências</h1> 
 
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
-              <i class="fa fa-minus"></i></button>
-            
-          </div>
-        </div>
-        <div class="box-body">
-          <section class="col-lg-6 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-person"></i> Dados da empresa</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-			  <br>
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" >
-			  	<div class="form-group">
-                  <label>Cargo:</label>
-                  <select class="form-control">
-					<option></option>
-                    <option>Cabelereiro</option>
-                    <option>Manicure</option>
-					<option>ETC</option>
-                  </select>
-				  <label>Empresa:</label>
-                  <input type="text" class="form-control" >
-				  <label>Estado:</label>
-                  <input type="text" class="form-control" >
-				   
-                </div>
-			</div>
-          </div>
-		 </div>
-		</section>
-		
-		 <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-6 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-           <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-plus"></i> Sobre</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-			  <br>
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" >
-			  	<div class="form-group">
-				<label>De:</label>
-                  <select class="form-control">
-					<option></option>
-                    <option>2015</option>
-                    <option>2016</option>
-					<option>2017</option>
-                  </select>
-                  <label>Até</label>
-                  <select class="form-control">
-					<option></option>
-                    <option>2015</option>
-                    <option>2016</option>
-					<option>2017</option>
-                  </select>
-				  <label>Descrição:</label>
-                  <input type="text" class="form-control" >
-                </div>
-			  </div>
-            </div>
-			
-          </div>
-		</section>
-		
-		<section class="col-lg-12 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">                  
-              <li class="pull-left header"><i class="ion-person"></i> Sobre a Experiência</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
 
-              <div ></div>
-              <div class="box-body box-profile" id="sales-chart" >
-				<div class="box-body pad">
-				  <form>
-					<textarea class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-				  </form>
-				</div>
-		
-			  			
-              </div>
+            <!-- INICIO-->
+            <!-- Default box -->
              
-			  </div>
+            <div class="box">
+             
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="ion-plus"></i> Cadastrar Experiência</h3>
 
-            </div>
-		  </section>
-		
-		<button type="button" class="btn btn-block btn-primary btn-lg"><i class="ion-plus"></i>  Adicionar Experiências</button>
-        </div>
-        <!-- /.box-body -->
-        
-      </div>
-      <!-- /.box -->
-	 
-	  <!-- FIM -->
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
+                            <i class="fa fa-minus"></i></button>
 
-	
-	<div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Minhas Experiências</h3>
-
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
+                    </div>
                 </div>
+                <div class="box-body">
+                    <section class="col-lg-6 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right">                  
+                                <li class="pull-left header"><i class="ion-person"></i> Dados da empresa</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <!-- Morris chart - Sales -->
+
+                                <div class="box-body box-profile" id="sales-chart" >
+                                    <div class="form-group">
+                                        <label>Cargo:</label>
+                                        <select class="form-control" name="cargoExperiencia">
+                                            <option></option>
+                                            <option value="Cabelereiro">Cabelereiro</option>
+                                            <option value="Manicure">Manicure</option>
+                                        </select>
+                                        <?php if (isset($data)) echo $data['cargoExperiencia']; ?>
+                                        <label>Empresa:</label>
+                                        <input type="text" class="form-control" name="empresaExperiencia" id="empresaExperiencia" value="<?php if (isset($data)) echo $data['empresaExperiencia']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-6 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right">                  
+                                <li class="pull-left header"><i class="ion-calendar"></i> Periodo</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <!-- Morris chart - Sales -->
+
+                                <div class="box-body box-profile" id="sales-chart" >
+                                    <div class="form-group">
+                                        <label>De:</label>
+                                        <select class="form-control" name="deExperiencia">
+                                            <option></option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017">2017</option>
+                                        </select>
+                                        <?php if (isset($data)) echo $data['deExperiencia']; ?>
+
+                                        <label>Até</label>
+                                        <select class="form-control" name="ateExperiencia">
+                                            <option></option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017">2017</option>
+                                        </select>
+                                        <?php if (isset($data)) echo $data['ateExperiencia']; ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="col-lg-12 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right">                  
+                                <li class="pull-left header"><i class="ion-edit"></i> Sobre a Experiência</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <!-- Morris chart - Sales -->
+
+                                <div ></div>
+                                <div class="box-body box-profile" id="sales-chart" >
+                                    <div class="box-body pad">
+                                        <textarea class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                  name="descricao" value="<?php if (isset($data)) echo $data['descricao']; ?>"></textarea>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar e Ir para localização</button>
+                </div>
+                <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+        </form>
+
+  <!-- FIM -->
+
+
+  <div class="row">
+      <div class="col-xs-12">
+          <div class="box">
+              <div class="box-header">
+                  <h3 class="box-title">Minhas Experiências</h3>
+
+                  <div class="box-tools">
+                      <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
+
+                          <div class="input-group-btn">
+                              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>Cargo</th>
-                  <th>Empresa</th>
-                  <th>Localização</th>
-                  <th>De</th>
-                  <th>Até</th>
-				  <th>Descrição</th>
-                </tr>
-               
-              </table>
-            </div>
-            <!-- /.box-body -->
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                  <table class="table table-hover">
+                      <tr>
+                          <th>Cargo</th>
+                          <th>Empresa</th>
+                          <th>Localização</th>
+                          <th>De</th>
+                          <th>Até</th>
+                          <th>Descrição</th>
+                      </tr>
+
+                  </table>
+              </div>
+              <!-- /.box-body -->
           </div>
           <!-- /.box -->
-        </div>
       </div>
-	  
+  </div>
 
-	</section>
+
+  </section>
 
 <center>	
 		 <nav aria-label="Page navigation">

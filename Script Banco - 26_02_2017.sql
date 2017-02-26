@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Fev-2017 às 21:55
+-- Generation Time: 26-Fev-2017 às 22:08
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5709,6 +5709,49 @@ INSERT INTO `areaatuacao` (`idAreaAtuacao`, `nomeProfissao`, `descricaoProfissao
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `certificadoprofissionalusuario`
+--
+
+CREATE TABLE `certificadoprofissionalusuario` (
+  `idCertificado` int(11) NOT NULL,
+  `instituicaoCertificado` varchar(50) DEFAULT NULL,
+  `cursoCertificado` varchar(50) DEFAULT NULL,
+  `nivelCertificado` varchar(50) DEFAULT NULL,
+  `duracaoCertificado` varchar(50) DEFAULT NULL,
+  `anoInicioCertificado` varchar(4) DEFAULT NULL,
+  `anoConclusaoCertificado` varchar(4) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `certificadoprofissionalusuario`
+--
+
+INSERT INTO `certificadoprofissionalusuario` (`idCertificado`, `instituicaoCertificado`, `cursoCertificado`, `nivelCertificado`, `duracaoCertificado`, `anoInicioCertificado`, `anoConclusaoCertificado`) VALUES
+(1, 'r', 'a', 'Técnico', '3 meses', '2016', '2015'),
+(2, 'tes', 'tes', 'Bacharelado', '3 meses', '2016', '2015');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `certificadousuario`
+--
+
+CREATE TABLE `certificadousuario` (
+  `idCertificado` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `certificadousuario`
+--
+
+INSERT INTO `certificadousuario` (`idCertificado`, `idUsuario`) VALUES
+(1, 27),
+(2, 27);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `contato`
 --
 
@@ -5741,7 +5784,48 @@ CREATE TABLE `enderecousuario` (
 --
 
 INSERT INTO `enderecousuario` (`idEndereco`, `idUsuario`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
-(3, 27, '04011-002', 'Rua Estela', 515, 'Bl F 171', 'Vila Mariana', 'São Paulo', 'SP');
+(3, 27, '04011-002', 'Rua Estela', 515, 'Bl F', 'Vila Mariana', 'São Paulo', 'SP');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `experienciaprofissionalusuario`
+--
+
+CREATE TABLE `experienciaprofissionalusuario` (
+  `idExperiencia` int(3) NOT NULL,
+  `cargoExperiencia` varchar(50) DEFAULT NULL,
+  `empresaExperiencia` varchar(50) DEFAULT NULL,
+  `localizacaoExperiencia` varchar(50) DEFAULT NULL,
+  `deExperiencia` varchar(10) DEFAULT NULL,
+  `ateExperiencia` varchar(10) DEFAULT NULL,
+  `descricao` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `experienciaprofissionalusuario`
+--
+
+INSERT INTO `experienciaprofissionalusuario` (`idExperiencia`, `cargoExperiencia`, `empresaExperiencia`, `localizacaoExperiencia`, `deExperiencia`, `ateExperiencia`, `descricao`) VALUES
+(27, 'Cabelereiro', 'Moshe Informática', NULL, '2016', '2017', 'Hair Design');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `experienciausuario`
+--
+
+CREATE TABLE `experienciausuario` (
+  `idExperiencia` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `experienciausuario`
+--
+
+INSERT INTO `experienciausuario` (`idExperiencia`, `idUsuario`) VALUES
+(27, 27);
 
 -- --------------------------------------------------------
 
@@ -5826,7 +5910,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`) VALUES
 (26, 1, NULL, 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', NULL, NULL, NULL, ''),
-(27, 2, 'Rafinha', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', NULL, '42659336881', NULL, 'Um rapaz super legal!'),
+(27, 2, 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', NULL, '084.242.998-09', NULL, 'Profissional'),
 (33, 1, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
@@ -5997,6 +6081,19 @@ ALTER TABLE `areaatuacao`
   ADD PRIMARY KEY (`idAreaAtuacao`);
 
 --
+-- Indexes for table `certificadoprofissionalusuario`
+--
+ALTER TABLE `certificadoprofissionalusuario`
+  ADD PRIMARY KEY (`idCertificado`);
+
+--
+-- Indexes for table `certificadousuario`
+--
+ALTER TABLE `certificadousuario`
+  ADD KEY `idUsuario` (`idUsuario`),
+  ADD KEY `idCertificado` (`idCertificado`);
+
+--
 -- Indexes for table `contato`
 --
 ALTER TABLE `contato`
@@ -6008,6 +6105,19 @@ ALTER TABLE `contato`
 ALTER TABLE `enderecousuario`
   ADD PRIMARY KEY (`idEndereco`),
   ADD KEY `FK_usuario` (`idUsuario`);
+
+--
+-- Indexes for table `experienciaprofissionalusuario`
+--
+ALTER TABLE `experienciaprofissionalusuario`
+  ADD PRIMARY KEY (`idExperiencia`);
+
+--
+-- Indexes for table `experienciausuario`
+--
+ALTER TABLE `experienciausuario`
+  ADD KEY `fk_experiencia` (`idExperiencia`),
+  ADD KEY `fk_usuario` (`idUsuario`);
 
 --
 -- Indexes for table `habilidadeusuario`
@@ -6115,10 +6225,20 @@ ALTER TABLE `app_empresas`
 ALTER TABLE `areaatuacao`
   MODIFY `idAreaAtuacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
+-- AUTO_INCREMENT for table `certificadoprofissionalusuario`
+--
+ALTER TABLE `certificadoprofissionalusuario`
+  MODIFY `idCertificado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `enderecousuario`
 --
 ALTER TABLE `enderecousuario`
   MODIFY `idEndereco` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `experienciaprofissionalusuario`
+--
+ALTER TABLE `experienciaprofissionalusuario`
+  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
