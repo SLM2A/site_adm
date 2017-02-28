@@ -1,22 +1,22 @@
 <?php
 
 /**
- * AdminCertificado.class [MODEL ADMIN]
- * Responsavel por gerenciar os certificados do usuario do Rental Easy!
+ * AdminSalao.class [MODEL ADMIN]
+ * Responsavel por cadastrar os salões dos Empresarios!
  * 
  * @copyright (c) 2017, Rafael Milaré
  */
-class AdminCertificado {
+class AdminSalao {
 
     private $Data;
-    private $CertificadoUsuario;
+    private $SalaoEmpresario;
     private $CadID;
     private $Error;
     private $Result;
 
     //Nome da tabela no banco de dados!
-    const ENTITY = 'certificadoprofissionalusuario';
-    const salaoempresario = 'certificadousuario';
+    const ENTITY = 'salao';
+    const salaoempresario = 'salaoempresario';
 
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
@@ -32,15 +32,15 @@ class AdminCertificado {
         endif;
     }
 
-    public function InsereRelacao(array $CertificadoUsuario) {
+    public function InsereRelacao(array $SalaoEmpresario) {
 
-        $this->CertificadoUsuario = $CertificadoUsuario;
+        $this->SalaoEmpresario = $SalaoEmpresario;
 
-        if (in_array('', $this->CertificadoUsuario))://Verifica se a algum campo em branco na array
+        if (in_array('', $this->SalaoEmpresario))://Verifica se a algum campo em branco na array
             $this->Result = false;
             $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', WS_ALERT];
         else:
-            $this->setDataExp();
+            $this->setDataSalao();
             $this->CreateExperiencia();
         endif;
     }
@@ -71,12 +71,12 @@ class AdminCertificado {
     private function setData() {
         $this->Data = array_map('strip_tags', $this->Data); //limpar array
         $this->Data = array_map('trim', $this->Data); //limpar array
-        $this->Data ['instituicaoCertificado'] = Check::Name($this->Data ['instituicaoCertificado']); //criar o nome da categoria para o titu
+        $this->Data ['nomeSalao'] = Check::Name($this->Data ['nomeSalao']); //criar o nome da categoria para o titu
     }
 
-    private function setDataExp() {
-        $this->CertificadoUsuario = array_map('strip_tags', $this->CertificadoUsuario); //limpar array
-        $this->CertificadoUsuario = array_map('trim', $this->CertificadoUsuario); //limpar array
+    private function setDataSalao() {
+        $this->SalaoEmpresario = array_map('strip_tags', $this->SalaoEmpresario); //limpar array
+        $this->SalaoEmpresario = array_map('trim', $this->SalaoEmpresario); //limpar array
     }
 
 //    private function setName() {
@@ -101,7 +101,7 @@ class AdminCertificado {
     // Adiciona a relação Experiencia com o Usuario
     private function CreateExperiencia() {
         $Create = new Create;
-        $Create->ExeCreate(self::salaoempresario, $this->CertificadoUsuario);
+        $Create->ExeCreate(self::salaoempresario, $this->SalaoEmpresario);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
             $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];

@@ -37,6 +37,8 @@ if (!empty($data['SendPostForm'])):
 
     $readEndereco->ExeRead('enderecousuario', "WHERE idUsuario = :t", "t={$userlogin['idUsuario']}");
     
+    
+   //verifica se existe um endereço cadastrado para o usuario, se existir ele atualiza, se nao existir cria um novo.
     if ($readEndereco->getResult()):
         $idEndereco = (int) $readEndereco->getResult()[0]['idEndereco'];
         $cadastra->ExeUpdate($idEndereco, $data);
