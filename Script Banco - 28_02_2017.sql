@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 26-Fev-2017 às 22:08
+-- Generation Time: 01-Mar-2017 às 00:16
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5868,6 +5868,54 @@ CREATE TABLE `redesocial` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `salao`
+--
+
+CREATE TABLE `salao` (
+  `idSalao` int(11) NOT NULL,
+  `nomeSalao` varchar(50) DEFAULT NULL,
+  `cnpjSalao` varchar(50) DEFAULT NULL,
+  `categoriaSalao` varchar(50) DEFAULT NULL,
+  `descricaoSalao` text,
+  `cep` varchar(10) DEFAULT NULL,
+  `logradouro` varchar(50) DEFAULT NULL,
+  `numero` varchar(50) DEFAULT NULL,
+  `complemento` varchar(50) DEFAULT NULL,
+  `bairro` varchar(50) DEFAULT NULL,
+  `cidade` varchar(50) DEFAULT NULL,
+  `estado` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `salao`
+--
+
+INSERT INTO `salao` (`idSalao`, `nomeSalao`, `cnpjSalao`, `categoriaSalao`, `descricaoSalao`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
+(1, 'Moshe', '05.653.724/0001-58', 'Barbearia', 'Uma barbearia diferente', '04011-002', 'Rua Estela', '515', 'Bloco F Cj 171', 'Vila Mariana', 'São Paulo', 'SP'),
+(2, 'Tricostyl-Modas', '11.111.111/1111-11', 'Salão', 'Salao legal', '02218-100', 'Rua Álvaro Cavalcante', '61', 'Casa 1', 'Vila Medeiros', 'São Paulo', 'SP');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `salaoempresario`
+--
+
+CREATE TABLE `salaoempresario` (
+  `idSalao` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `salaoempresario`
+--
+
+INSERT INTO `salaoempresario` (`idSalao`, `idUsuario`) VALUES
+(1, 26),
+(2, 26);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `tipousuario`
 --
 
@@ -6141,6 +6189,19 @@ ALTER TABLE `redesocial`
   ADD KEY `Fk_RedeSocial` (`idUsuario`);
 
 --
+-- Indexes for table `salao`
+--
+ALTER TABLE `salao`
+  ADD PRIMARY KEY (`idSalao`);
+
+--
+-- Indexes for table `salaoempresario`
+--
+ALTER TABLE `salaoempresario`
+  ADD KEY `idUsuario` (`idUsuario`),
+  ADD KEY `idSalao` (`idSalao`);
+
+--
 -- Indexes for table `tipousuario`
 --
 ALTER TABLE `tipousuario`
@@ -6239,6 +6300,11 @@ ALTER TABLE `enderecousuario`
 --
 ALTER TABLE `experienciaprofissionalusuario`
   MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+--
+-- AUTO_INCREMENT for table `salao`
+--
+ALTER TABLE `salao`
+  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `usuario`
 --

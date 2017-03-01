@@ -375,7 +375,7 @@ endif;
                         <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
                     </li>
                     <li class="treeview">
-                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                        <a href="cadEmpresa/cadVaga/EscolhaTipoVaga.php"><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
                     </li>
                     ';
                 endif;
@@ -542,7 +542,7 @@ endif;
                     else :
                         echo '
                         <a href="cadEmpresa/minhaempresa.html"><button type="button" class="btn btn-block btn-warning btn-lg"><i class="fa fa-building"></i> Meus Salões</button></a>
-                        <a href="cadEmpresa/minhaempresa.html"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
+                        <a href="cadEmpresa/cadVaga/EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
                         ';
                     endif;
 

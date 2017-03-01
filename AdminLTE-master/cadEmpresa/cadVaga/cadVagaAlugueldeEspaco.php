@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../../_app/Config.inc.php');
+require('../../../_app/Config.inc.php');
 
 
 
@@ -65,28 +65,28 @@ endif;
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- daterange picker -->
-        <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
         <!-- bootstrap datepicker -->
-        <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+        <link rel="stylesheet" href="../../plugins/datepicker/datepicker3.css">
         <!-- iCheck for checkboxes and radio inputs -->
-        <link rel="stylesheet" href="../plugins/iCheck/all.css">
+        <link rel="stylesheet" href="../../plugins/iCheck/all.css">
         <!-- Bootstrap Color Picker -->
-        <link rel="stylesheet" href="../plugins/colorpicker/bootstrap-colorpicker.min.css">
+        <link rel="stylesheet" href="../../plugins/colorpicker/bootstrap-colorpicker.min.css">
         <!-- Bootstrap time Picker -->
-        <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
+        <link rel="stylesheet" href="../../plugins/timepicker/bootstrap-timepicker.min.css">
         <!-- Select2 -->
-        <link rel="stylesheet" href="../plugins/select2/select2.min.css">
+        <link rel="stylesheet" href="../../plugins/select2/select2.min.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -130,7 +130,7 @@ endif;
                                             <li><!-- start message -->
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Support Team
@@ -143,7 +143,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         AdminLTE Design Team
@@ -155,7 +155,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Developers
@@ -167,7 +167,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Sales Department
@@ -179,7 +179,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Reviewers
@@ -312,13 +312,13 @@ endif;
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                     <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                         <p>
                                             <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
@@ -346,7 +346,7 @@ endif;
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="../../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -366,7 +366,7 @@ endif;
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
                             <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
@@ -440,80 +440,46 @@ endif;
                 <!-- Main content -->
                 <section class="content">
                     <form role="form" action="" method="post" class="login-form">
-
                         <section class="col-lg-6 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
                                 <!-- Tabs within a box -->
                                 <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-person"></i> Dados da empresa</li>
+                                    <li class="pull-left header"><i class="fa fa-building"></i> Escolha o Salão ao qual a vaga pertence:</li>
                                 </ul>
                                 <div class="tab-content no-padding">
-
-                                    <br>
-                                    <div ></div>
                                     <div class="box-body box-profile" id="sales-chart" >
                                         <div class="form-group">
-                                            <label>Nome da Empresa:</label>
-                                            <input type="text" class="form-control" name="nomeSalao" value="<?php if (isset($data)) echo $data['nomeSalao']; ?>" >
-                                            <label>CNPJ:</label>
-                                            <input type="text" id="cnpj" class="form-control" name="cnpjSalao" value="<?php if (isset($data)) echo $data['cnpjSalao']; ?>" >
-                                            <label>Categoria:</label>
-                                            <select class="form-control" name="categoriaSalao">
-                                                <option></option>
-                                                <option>Salão</option>
-                                                <option>Barbearia</option>
+                                            
+                                            <select class="form-control">
+                                                <option disabled selected> Escolha o salão</option>
+
+                                                <?php
+                                                $readSes = new Read;
+
+                                                $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                                                if (!$readSes->getResult()):
+                                                    echo '<option disabled="disabled" value="null"> Cadastre antes um Salão! </option>';
+                                                else:
+                                                    foreach ($readSes->getResult() as $ses):
+                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+                                                        if ($ses['idSalao'] == $data['idSalao']):
+                                                            echo ' selected="selected" ';
+                                                        endif;
+
+                                                        echo "> {$ses['nomeSalao']} </option>";
+                                                    endforeach;
+                                                endif;
+                                               ?>
                                             </select>
-                                            <?php if (isset($data)) echo $data['categoriaSalao']; ?>
-                                            <div class="box-body pad">
-                                                <textarea input class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                          name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-
-                        <section class="col-lg-6 connectedSortable">
-                            <!-- Custom tabs (Charts with tabs)-->
-                            <div class="nav-tabs-custom">
-                                <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-person"></i> Quem é você?</li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <!-- Morris chart - Sales -->
-                                    <br>
-                                    <div ></div>
-                                    <div class="box-body box-profile" id="sales-chart" >
-
-                                        <div class="form-group">
-                                            <section class="col-lg-12 connectedSortable">
-
-                                                <label>CEP:</label>
-                                                <input type="text" id="cep" class="form-control" name="cep" value="<?php if (isset($data)) echo $data['cep']; ?>" required>
-                                                <label>Endereço:</label>
-                                                <input type="text" id="rua" class="form-control" name="logradouro" value="<?php if (isset($data)) echo $data['logradouro']; ?>" >
-                                                <label>Número:</label>
-                                                <input type="text"  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
-                                                <label>Complemento:</label>
-                                                <input type="text" class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
-                                                <label>Bairro:</label>
-                                                <input type="text" id="bairro" class="form-control" name="bairro" value="<?php if (isset($data)) echo $data['bairro']; ?>" >
-                                                <label>Cidade:</label>
-                                                <input type="text" id="cidade" class="form-control" name="cidade" value="<?php if (isset($data)) echo $data['cidade']; ?>" >
-                                                <label>Estado:</label>
-                                                <input type="text" id="uf"  class="form-control" name="estado" value="<?php if (isset($data)) echo $data['estado']; ?>" >
-                                            </section>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>        
-                        </section>
-
-
+                           
+                        
 
                         <section class="col-lg-12 connectedSortable ">
                             <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
@@ -722,36 +688,36 @@ endif;
             <!-- ./wrapper -->
 
             <!-- jQuery 2.2.3 -->
-            <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+            <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
             <!-- Bootstrap 3.3.6 -->
-            <script src="../bootstrap/js/bootstrap.min.js"></script>
+            <script src="../../bootstrap/js/bootstrap.min.js"></script>
             <!-- Select2 -->
-            <script src="../plugins/select2/select2.full.min.js"></script>
+            <script src="../../plugins/select2/select2.full.min.js"></script>
             <!-- InputMask -->
-            <script src="../plugins/input-mask/jquery.inputmask.js"></script>
-            <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-            <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+            <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
+            <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+            <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
             <!-- date-range-picker -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-            <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+            <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
             <!-- bootstrap datepicker -->
-            <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
+            <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
             <!-- bootstrap color picker -->
-            <script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+            <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
             <!-- bootstrap time picker -->
-            <script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+            <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
             <!-- SlimScroll 1.3.0 -->
-            <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+            <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
             <!-- iCheck 1.0.1 -->
-            <script src="../plugins/iCheck/icheck.min.js"></script>
+            <script src="../../plugins/iCheck/icheck.min.js"></script>
             <!-- FastClick -->
-            <script src="../plugins/fastclick/fastclick.js"></script>
+            <script src="../../plugins/fastclick/fastclick.js"></script>
             <!-- AdminLTE App -->
-            <script src="../dist/js/app.min.js"></script>
+            <script src="../../dist/js/app.min.js"></script>
             <!-- AdminLTE for demo purposes -->
-            <script src="../dist/js/demo.js"></script>
+            <script src="../../dist/js/demo.js"></script>
             <!-- Consulta endereço -->
-            <script src="../dist/js/pages/endereco.js"></script>
+            <script src="../../dist/js/pages/endereco.js"></script>
             <!-- Page script -->
             <script>
 
