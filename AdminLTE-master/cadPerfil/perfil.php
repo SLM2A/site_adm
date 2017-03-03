@@ -28,8 +28,6 @@ endif;
     //Initialize Select2 Elements           
      
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-//$userlogin['idUsuario'] = filter_input(INPUT_GET, 'idUsuario', FILTER_VALIDATE_INT);
-
 
 
 if (!empty($data['SendPostForm'])):
@@ -38,17 +36,18 @@ if (!empty($data['SendPostForm'])):
     require '../../admin/_models/SiteRegistrar.class.php';
     $cadastra = new SiteRegistrar();
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
-
-    if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        header('Location: endereco.php');
+    
+        ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
+else:
+        $read = new Read();
+        $read->ExeRead("usuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+        if(!$read->getResult()):
+                    header('Location: ..index.php');
+        else:
+            $data = $read->getResult()[0];
     endif;
 endif;
-
-
-
-
+        
 ?>
 
 <!DOCTYPE html>
@@ -433,8 +432,10 @@ endif;
     </section>
 
     <!-- Main content -->
+    
     <section class="content">
-    <form role="form" action="" method="post" class="login-form">
+             
+      <form role="form" action="" method="post" class="login-form">
         <section class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
             <div class="nav-tabs-custom">
@@ -449,19 +450,43 @@ endif;
                     <div class="box-body box-profile" id="sales-chart" >
                       
                         <div class="form-group">
-                            <section class="col-lg-6 connectedSortable">
-                                <label>Apelido:</label>
-                                <input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>">
-                            </section>
-                            <section class="col-lg-6 connectedSortable">
+                            <section class="col-lg-6 connectedSortable">                           
+                                <label>Nome:</label>
+                                <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
                                 <label>CPF:</label>
-                                <input type="text" class="form-control" name="cpfUsuario" id="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>">
+                                <input type="text" class="form-control" name="cpfUsuario" id="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
+                                <label>Apelido:</label>
+                                <input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required>   
                             </section>
+                            <section class="col-lg-6 connectedSortable">
+                                <label>Sobrenome:</label>
+                                <input type="text" class="form-control" id="sobrenomeUsuario" name="sobrenomeUsuario" value="<?php if (isset($data)) echo $data['sobrenomeUsuario']; ?>" required>
+                                <label>Sexo:</label>
+                                <select class="form-control" id="sexoUsuario" name="sexoUsuario" required>
+                                    <option selected><?php if (isset($data)) echo $data['sexoUsuario']; ?></option>
+                                    <?php 
+                                          if($data['sexoUsuario']=='Feminino'):
+                                            echo '<option>Masculino</option>';
+                                          elseif($data['sexoUsuario']=='Masculino'):
+                                            echo '<option>Feminino</option>'; 
+                                          else:
+                                             echo '<option>Masculino</option>'; 
+                                             echo '<option>Feminino</option>'; 
+                                    endif;
+                                     ?>
+                                </select>
+                                                                <label>Data de Nascimento:</label>
+                                <input type="text" class="form-control" id="dataNascimento" name="dataNascimento" value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" required>
+                            </section>
+                            <section class="col-lg-12 connectedSortable">
+                                <br>
                             <label>O que penso sobre mim:</label>
                             <div class="box-body pad">
-                                    <textarea input class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                              name="descricao" value="<?php if (isset($data)) echo $data['descricao']; ?>"></textarea>
+                                <textarea input type="text" class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                          name="descricao" id="descricao" required><?php if (isset($data)) echo $data['descricao']; ?></textarea>
+                           
                             </div>
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -471,7 +496,7 @@ endif;
         
 
             <section class="col-lg-12 connectedSortable ">
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar e Ir para localização</button>
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar</button>
             </section>
         </form>
 		
@@ -732,9 +757,9 @@ endif;
 <script>
   $(function () {
     //Initialize Select2 Elements           
-     var apelidoUsuario = "<? $userlogin['apelidoUsuario'] ?>" ;
+    
      
-    $("#cpfUsuario").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"}).val(apelidoUsuario);
+    $("#cpfUsuario").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"});
         
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});

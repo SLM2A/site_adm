@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 01-Mar-2017 às 00:16
+-- Generation Time: 03-Mar-2017 às 00:28
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5728,7 +5728,8 @@ CREATE TABLE `certificadoprofissionalusuario` (
 
 INSERT INTO `certificadoprofissionalusuario` (`idCertificado`, `instituicaoCertificado`, `cursoCertificado`, `nivelCertificado`, `duracaoCertificado`, `anoInicioCertificado`, `anoConclusaoCertificado`) VALUES
 (1, 'r', 'a', 'Técnico', '3 meses', '2016', '2015'),
-(2, 'tes', 'tes', 'Bacharelado', '3 meses', '2016', '2015');
+(2, 'tes', 'tes', 'Bacharelado', '3 meses', '2016', '2015'),
+(3, 'Teste', 'Teste', 'Técnico', '6 meses', '2016', '2017');
 
 -- --------------------------------------------------------
 
@@ -5747,7 +5748,8 @@ CREATE TABLE `certificadousuario` (
 
 INSERT INTO `certificadousuario` (`idCertificado`, `idUsuario`) VALUES
 (1, 27),
-(2, 27);
+(2, 27),
+(3, 26);
 
 -- --------------------------------------------------------
 
@@ -5807,7 +5809,8 @@ CREATE TABLE `experienciaprofissionalusuario` (
 --
 
 INSERT INTO `experienciaprofissionalusuario` (`idExperiencia`, `cargoExperiencia`, `empresaExperiencia`, `localizacaoExperiencia`, `deExperiencia`, `ateExperiencia`, `descricao`) VALUES
-(27, 'Cabelereiro', 'Moshe Informática', NULL, '2016', '2017', 'Hair Design');
+(27, 'Cabelereiro', 'Moshe Informática', NULL, '2016', '2017', 'Hair Design'),
+(28, 'Cabelereiro', 'Testando', NULL, '2016', '2017', 'Teste');
 
 -- --------------------------------------------------------
 
@@ -5825,6 +5828,7 @@ CREATE TABLE `experienciausuario` (
 --
 
 INSERT INTO `experienciausuario` (`idExperiencia`, `idUsuario`) VALUES
+(28, 26),
 (27, 27);
 
 -- --------------------------------------------------------
@@ -5892,7 +5896,8 @@ CREATE TABLE `salao` (
 
 INSERT INTO `salao` (`idSalao`, `nomeSalao`, `cnpjSalao`, `categoriaSalao`, `descricaoSalao`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
 (1, 'Moshe', '05.653.724/0001-58', 'Barbearia', 'Uma barbearia diferente', '04011-002', 'Rua Estela', '515', 'Bloco F Cj 171', 'Vila Mariana', 'São Paulo', 'SP'),
-(2, 'Tricostyl-Modas', '11.111.111/1111-11', 'Salão', 'Salao legal', '02218-100', 'Rua Álvaro Cavalcante', '61', 'Casa 1', 'Vila Medeiros', 'São Paulo', 'SP');
+(2, 'Tricostyl-Modas', '11.111.111/1111-11', 'Salão', 'Salao legal', '02218-100', 'Rua Álvaro Cavalcante', '61', 'Casa 1', 'Vila Medeiros', 'São Paulo', 'SP'),
+(3, 'Onix-Hair', '42.659.339/8181-81', 'Barbearia', 'O salão do seu jeito', '04011-002', 'Rua Estela', '515', '2', 'Vila Mariana', 'São Paulo', 'SP');
 
 -- --------------------------------------------------------
 
@@ -5911,7 +5916,8 @@ CREATE TABLE `salaoempresario` (
 
 INSERT INTO `salaoempresario` (`idSalao`, `idUsuario`) VALUES
 (1, 26),
-(2, 26);
+(2, 26),
+(3, 26);
 
 -- --------------------------------------------------------
 
@@ -5949,7 +5955,7 @@ CREATE TABLE `usuario` (
   `sexoUsuario` varchar(20) DEFAULT NULL,
   `cpfUsuario` varchar(14) DEFAULT NULL,
   `dataNascimento` varchar(10) DEFAULT NULL,
-  `descricao` text NOT NULL
+  `descricao` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -5957,9 +5963,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`) VALUES
-(26, 1, NULL, 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', NULL, NULL, NULL, ''),
+(26, 1, 'Marcelo', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '17/12/1994', 'Sou empresario!!!!!'),
 (27, 2, 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', NULL, '084.242.998-09', NULL, 'Profissional'),
-(33, 1, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, '');
+(33, 1, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, ''),
+(34, 1, 'Teste', 'marcelo@rental.com.br', '995bf053c4694e1e353cfd42b94e4447', 'Marcelo', 'Lima', 'Feminino', '456.789.545-67', '17/12/1994', 'Gay');
 
 -- --------------------------------------------------------
 
@@ -6289,7 +6296,7 @@ ALTER TABLE `areaatuacao`
 -- AUTO_INCREMENT for table `certificadoprofissionalusuario`
 --
 ALTER TABLE `certificadoprofissionalusuario`
-  MODIFY `idCertificado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCertificado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `enderecousuario`
 --
@@ -6299,17 +6306,17 @@ ALTER TABLE `enderecousuario`
 -- AUTO_INCREMENT for table `experienciaprofissionalusuario`
 --
 ALTER TABLE `experienciaprofissionalusuario`
-  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `salao`
 --
 ALTER TABLE `salao`
-  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `ws_categories`
 --
