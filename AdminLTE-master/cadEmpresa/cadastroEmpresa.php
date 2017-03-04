@@ -390,7 +390,7 @@ endif;
                         <?php
                         echo '
 		<li class="active treeview/">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -480,7 +480,7 @@ endif;
                             <div class="nav-tabs-custom">
                                 <!-- Tabs within a box -->
                                 <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-person"></i> Quem é você?</li>
+                                    <li class="pull-left header"><i class="ion-person"></i> Localidade</li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <!-- Morris chart - Sales -->
@@ -516,7 +516,7 @@ endif;
 
 
                         <section class="col-lg-12 connectedSortable ">
-                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Salão</button>
                         </section>
                     </form>
 

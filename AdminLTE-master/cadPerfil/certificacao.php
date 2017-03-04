@@ -386,7 +386,7 @@ endif;
 <?php
 echo '
 		<li class="active treeview/">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">

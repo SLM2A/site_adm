@@ -38,12 +38,12 @@ if (!empty($data['SendPostForm'])):
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
     
         ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
+    
+    
 else:
         $read = new Read();
         $read->ExeRead("usuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
-        if(!$read->getResult()):
-                    header('Location: ..index.php');
-        else:
+        if($read->getResult()):
             $data = $read->getResult()[0];
     endif;
 endif;
@@ -384,7 +384,7 @@ endif;
 		<?php
                 echo '
 		<li class="active treeview/">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -455,8 +455,11 @@ endif;
                                 <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
                                 <label>CPF:</label>
                                 <input type="text" class="form-control" name="cpfUsuario" id="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
-                                <label>Apelido:</label>
-                                <input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required>   
+								<label>Apelido:</label>
+                                <div class="input-group">
+									<span class="input-group-addon">@</span>
+									<input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required> 
+								</div>								
                             </section>
                             <section class="col-lg-6 connectedSortable">
                                 <label>Sobrenome:</label>
@@ -753,6 +756,8 @@ endif;
 <script src="../dist/js/demo.js"></script>
 <!-- Consulta endereço -->
 <script src="../dist/js/pages/endereco.js"></script>
+<!-- Msgs -->
+<script src="../plugins/Toastr/msg.js"></script>
 <!-- Page script -->
 <script>
   $(function () {

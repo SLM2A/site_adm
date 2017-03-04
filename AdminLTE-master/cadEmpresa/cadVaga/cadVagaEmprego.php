@@ -31,27 +31,17 @@ $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
-    require '../../admin/_models/AdminSalao.php';
-    $cadastra = new AdminSalao;
+    require '../../../admin/_models/AdminVagaEmprego.php';
+    $cadastra = new AdminVagaEmprego;
 
     $cadastra->ExeCreate($data);
-    $readSalao = new Read;
 
-    $readSalao->FullRead("SELECT MAX(idSalao) FROM salao");
-    $idSalao = $readSalao->getResult()[0]['MAX(idSalao)'];
-
-
-    $SalaoEmpresario['idSalao'] = $idSalao;
-    $SalaoEmpresario['idUsuario'] = $userlogin['idUsuario'];
-
-
-    $cadastra->InsereRelacao($SalaoEmpresario);
-
+    ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
 
     if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+        ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
     else:
-        header('Location: minhaempresa.html');
+        header('Location: cadVagaEmprego.php');
     endif;
 endif;
 ?>
@@ -101,7 +91,7 @@ endif;
 
             <header class="main-header">
                 <!-- Logo -->
-                <a href="../index.php" class="logo">
+                <a href="../../index.php" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>R</b>E</span>
                     <!-- logo for regular state and mobile devices -->
@@ -390,7 +380,7 @@ endif;
                         <?php
                         echo '
 		<li class="active treeview/">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -434,9 +424,28 @@ endif;
             <div class="content-wrapper">
                 <!-- Main content -->
                 <section class="content">
-                    <h3> <i class="ion-briefcase"></i> Vaga de Emprego</h3> 
-                   
+
                     <form role="form" action="" method="post" class="login-form">
+                        
+                        <section class="col-lg-12 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">                  
+                                    <li class="pull-left header"><i class="ion-compose"></i><b> ANÚNCIO DE VAGA DE EMPREGO</b></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="box-body box-profile" id="sales-chart" >
+                                        <div class="form-group">
+                                            <label>Titulo do Anúncio:</label>
+                                            <input type="text" class="form-control" placeholder="Escreva um título bem legal! :)" name="tituloVaga" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['tituloVaga']; ?>" required>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </section> 
+                        
                         <section class="col-lg-6 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
@@ -448,7 +457,7 @@ endif;
                                     <div class="box-body box-profile" id="sales-chart" >
                                         <div class="form-group">
                                             <label>Escolha o Salão ao qual a vaga pertence:</label>
-                                            <select class="form-control">
+                                            <select class="form-control" name="idSalao" required>
                                                 <option disabled selected> Escolha o salão</option>
 
                                                 <?php
@@ -476,18 +485,18 @@ endif;
                                                 <div class="col-md-9">    
 
                                                     <label>Profissão</label>
-                                                    <select class="form-control" name="categoriaSalao">
+                                                    <select class="form-control" name="profissao" required>
                                                         <option></option>
                                                         <option>Acupunturista</option>
                                                         <option>Barbeiro</option>
                                                     </select>
-                                                    <?php if (isset($data)) echo $data['nomeSalao']; ?>
+<?php if (isset($data)) echo $data['profissao']; ?>
 
                                                 </div>
                                                 <div class="col-md-3">    
                                                     <div class="form-group" >
                                                         <label>Nível</label>
-                                                        <select class="form-control" name="categoriaSalao">
+                                                        <select class="form-control" name="nivel" required>
                                                             <option></option>
                                                             <option>Aprendiz</option>
                                                             <option>Estágio</option>
@@ -502,43 +511,45 @@ endif;
                                                             <option>Gerente</option>
                                                             <option>Diretor</option>
                                                         </select>
-                                                        <?php if (isset($data)) echo $data['nomeSalao']; ?>
+<?php if (isset($data)) echo $data['nivel']; ?>
 
                                                     </div>
                                                 </div>
                                                 <p>
                                                 <div class="form-group">
                                                     <p>
+                                                        <label>Vinculo Empregatício:</label>
+                                                    <p>
                                                         <label>
-                                                            <input type="radio" name="r1" value="Registro CLT" class="flat-red" checked>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Registro CLT" class="flat-red" checked required>
                                                             Registro CLT
                                                         </label>
-                                                    <p>
-                                                        <label>
-                                                            <input type="radio" name="r1" value="Registro PJ" class="flat-red">
+                                                    <label>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Registro PJ" class="flat-red" required>
                                                             Registro PJ
                                                         </label>
-                                                    <p>
+                                                   
                                                         <label>
-                                                            <input type="radio" name="r1" value="Estágio" class="flat-red">
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Estágio" class="flat-red" required>
                                                             Estágio
                                                         </label>
-                                                    <p>
+                                                    
                                                         <label>
-                                                            <input type="radio" name="r1" value="Freelancer" class="flat-red" >
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Freelancer" class="flat-red" required >
                                                             Freelancer
                                                         </label>
+<?php if (isset($data)) echo $data['vinculoEmpregaticio']; ?>
                                                 </div>
-                                                
-                                           </section>
+
+                                            </section>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                        
-                        
+
+
 
                         <section class="col-lg-6 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
@@ -549,27 +560,39 @@ endif;
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="box-body box-profile" id="sales-chart" >
-                                        <div class="form-group">
-                                                <label>Número de Vagas:</label>
-                                                <input type="text" class="form-control" name="numeroVagas" value="<?php if (isset($data)) echo $data['']; ?>" required>
-                                               <label>Faixa de Remuneração:</label>
-                                                    <select class="form-control" name="categoriaSalao">
-                                                        <option></option>
-                                                        <option>Não Divulgada</option>
-                                                        <option>de R$ 788,00 à R$ 1.500,00</option>
-                                                        <option>de R$ 1.500,00 à R$ 3.000,00</option>
-                                                        <option>acima de R$ 3.000,00</option>
-                                                    </select>
-                                                    <?php if (isset($data)) echo $data['nomeSalao']; ?>
-                                               <label>Descrição da Oportunidade:</label>   
-                                                <textarea input class="textarea" placeholder="Descreva como será a rotina desse emprego" style="width: 100%; height: 136px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                          name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
-                                        </div>
+                                        
+                                            <label>Número de Vagas:</label>
+                                            <input type="text" class="form-control" name="numeroVagas" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
+
+                                          
+                                             
+                                            <div class="col-md-8">
+                                                <label>Faixa de Remuneração:</label>
+                                                <select class="form-control" name="faixaRemuneracao" required>
+                                                    <option></option>
+                                                    <option>Não Divulgada</option>
+                                                    <option>de R$ 788,00 à R$ 1.500,00</option>
+                                                    <option>de R$ 1.500,00 à R$ 3.000,00</option>
+                                                    <option>acima de R$ 3.000,00</option>
+                                                </select>
+<?php if (isset($data)) echo $data['faixaRemuneracao']; ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Comissão:</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Seja Justo :)" id="comissao" name="comissao" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required> 
+                                                    <span class="input-group-addon">%</span>
+                                                </div>	
+                                            </div>
+                                        
+                                        <label>Descrição da Oportunidade:</label>   
+                                        <textarea input class="textarea" placeholder="Descreva como será a rotina desse emprego" style="width: 100%; height: 75px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                  name="descricaoOportunidade" value="<?php if (isset($data)) echo $data['descricaoOportunidade']; ?>"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        
+
                         <section class="col-lg-12 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
@@ -580,24 +603,22 @@ endif;
                                 <div class="tab-content no-padding">
                                     <div class="box-body box-profile" id="sales-chart" >
                                         <div class="form-group">
-                                                <label>Requisitos do candidato:</label>   
-                                                <textarea input class="textarea" placeholder="Quais conhecimentos o candidato precisa ter?" style="width: 100%; height: 50px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                          name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
-                                               <label>Diferencial:</label>   
-                                                <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se o candidato tivesse" style="width: 100%; height: 50px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                          name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
-                                                    <?php if (isset($data)) echo $data['nomeSalao']; ?>
-                                               <label>Benefícios:</label>   
-                                                <textarea input class="textarea" placeholder="Quais os benefícios que seu funcionario terá?" style="width: 100%; height: 50px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                          name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
-                                                    <?php if (isset($data)) echo $data['nomeSalao']; ?>
-                                               
+                                            <label>Requisitos do candidato:</label>   
+                                            <textarea input class="textarea" placeholder="Quais conhecimentos o candidato precisa ter?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                      name="requisitoCandidato" value="<?php if (isset($data)) echo $data['requisitoCandidato']; ?>"></textarea>
+                                            <label>Diferencial:</label>   
+                                            <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se o candidato tivesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                      name="diferencialCandidato" value="<?php if (isset($data)) echo $data['diferencialCandidato']; ?>"></textarea>
+                                            <label>Benefícios:</label>   
+                                            <textarea input class="textarea" placeholder="Quais os benefícios que seu funcionario terá?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                      name="beneficioCandidato" value="<?php if (isset($data)) echo $data['beneficioCandidato']; ?>"></textarea>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        
+
 
                         <section class="col-lg-12 connectedSortable ">
                             <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
@@ -802,111 +823,111 @@ endif;
                 <div class="control-sidebar-bg"></div>
             </div>
             <!-- ./wrapper -->
-
-            <!-- jQuery 2.2.3 -->
-            <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-            <!-- Bootstrap 3.3.6 -->
-            <script src="../../bootstrap/js/bootstrap.min.js"></script>
-            <!-- Select2 -->
-            <script src="../../plugins/select2/select2.full.min.js"></script>
-            <!-- InputMask -->
-            <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-            <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-            <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-            <!-- date-range-picker -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-            <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
-            <!-- bootstrap datepicker -->
-            <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
-            <!-- bootstrap color picker -->
-            <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-            <!-- bootstrap time picker -->
-            <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
-            <!-- SlimScroll 1.3.0 -->
-            <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-            <!-- iCheck 1.0.1 -->
-            <script src="../../plugins/iCheck/icheck.min.js"></script>
-            <!-- FastClick -->
-            <script src="../../plugins/fastclick/fastclick.js"></script>
-            <!-- AdminLTE App -->
-            <script src="../../dist/js/app.min.js"></script>
-            <!-- AdminLTE for demo purposes -->
-            <script src="../../dist/js/demo.js"></script>
-            <!-- Consulta endereço -->
-            <script src="../../dist/js/pages/endereco.js"></script>
-            <!-- Page script -->
-            <script>
-
-
-                $(function () {
-                    //Initialize Select2 Elements           
+        </div>
+        <!-- jQuery 2.2.3 -->
+        <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="../../bootstrap/js/bootstrap.min.js"></script>
+        <!-- Select2 -->
+        <script src="../../plugins/select2/select2.full.min.js"></script>
+        <!-- InputMask -->
+        <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
+        <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+        <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+        <!-- date-range-picker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap datepicker -->
+        <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
+        <!-- bootstrap color picker -->
+        <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <!-- bootstrap time picker -->
+        <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+        <!-- SlimScroll 1.3.0 -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- iCheck 1.0.1 -->
+        <script src="../../plugins/iCheck/icheck.min.js"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../../dist/js/app.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="../../dist/js/demo.js"></script>
+        <!-- Consulta endereço -->
+        <script src="../../dist/js/pages/endereco.js"></script>
+        <!-- Page script -->
+        <script>
 
 
+            $(function () {
+                //Initialize Select2 Elements           
 
-                    //Datemask dd/mm/yyyy
-                    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-                    //Datemask2 mm/dd/yyyy
-                    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-                    //Money Euro
-                    $("[data-mask]").inputmask();
-                    //CEP
-                    $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
-                    //CNPJ
-                    $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
-                    //Date range picker
-                    $('#reservation').daterangepicker();
-                    //Date range picker with time picker
-                    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-                    //Date range as a button
-                    $('#daterange-btn').daterangepicker(
-                            {
-                                ranges: {
-                                    'Today': [moment(), moment()],
-                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                                },
-                                startDate: moment().subtract(29, 'days'),
-                                endDate: moment()
+
+
+                //Datemask dd/mm/yyyy
+                $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+                //Datemask2 mm/dd/yyyy
+                $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+                //Money Euro
+                $("[data-mask]").inputmask();
+                //CEP
+                $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+                //CNPJ
+                $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
+                //Date range picker
+                $('#reservation').daterangepicker();
+                //Date range picker with time picker
+                $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+                //Date range as a button
+                $('#daterange-btn').daterangepicker(
+                        {
+                            ranges: {
+                                'Today': [moment(), moment()],
+                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                             },
-                            function (start, end) {
-                                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                            }
-                    );
+                            startDate: moment().subtract(29, 'days'),
+                            endDate: moment()
+                        },
+                        function (start, end) {
+                            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                        }
+                );
 
-                    //Date picker
-                    $('#datepicker').datepicker({
-                        autoclose: true
-                    });
-
-                    //iCheck for checkbox and radio inputs
-                    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                        checkboxClass: 'icheckbox_minimal-blue',
-                        radioClass: 'iradio_minimal-blue'
-                    });
-                    //Red color scheme for iCheck
-                    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                        checkboxClass: 'icheckbox_minimal-red',
-                        radioClass: 'iradio_minimal-red'
-                    });
-                    //Flat red color scheme for iCheck
-                    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                        checkboxClass: 'icheckbox_flat-green',
-                        radioClass: 'iradio_flat-green'
-                    });
-
-                    //Colorpicker
-                    $(".my-colorpicker1").colorpicker();
-                    //color picker with addon
-                    $(".my-colorpicker2").colorpicker();
-
-                    //Timepicker
-                    $(".timepicker").timepicker({
-                        showInputs: false
-                    });
+                //Date picker
+                $('#datepicker').datepicker({
+                    autoclose: true
                 });
-            </script>
+
+                //iCheck for checkbox and radio inputs
+                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                    checkboxClass: 'icheckbox_minimal-blue',
+                    radioClass: 'iradio_minimal-blue'
+                });
+                //Red color scheme for iCheck
+                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                    checkboxClass: 'icheckbox_minimal-red',
+                    radioClass: 'iradio_minimal-red'
+                });
+                //Flat red color scheme for iCheck
+                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+
+                //Colorpicker
+                $(".my-colorpicker1").colorpicker();
+                //color picker with addon
+                $(".my-colorpicker2").colorpicker();
+
+                //Timepicker
+                $(".timepicker").timepicker({
+                    showInputs: false
+                });
+            });
+        </script>
     </body>
 </html>

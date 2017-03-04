@@ -31,27 +31,17 @@ $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
-    require '../../admin/_models/AdminSalao.php';
-    $cadastra = new AdminSalao;
+    require '../../../admin/_models/AdminVagaEmprego.php';
+    $cadastra = new AdminVagaEmprego;
 
     $cadastra->ExeCreate($data);
-    $readSalao = new Read;
 
-    $readSalao->FullRead("SELECT MAX(idSalao) FROM salao");
-    $idSalao = $readSalao->getResult()[0]['MAX(idSalao)'];
-
-
-    $SalaoEmpresario['idSalao'] = $idSalao;
-    $SalaoEmpresario['idUsuario'] = $userlogin['idUsuario'];
-
-
-    $cadastra->InsereRelacao($SalaoEmpresario);
-
+    ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
 
     if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+        ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
     else:
-        header('Location: minhaempresa.html');
+        header('Location: cadVagaEmprego.php');
     endif;
 endif;
 ?>
@@ -101,7 +91,7 @@ endif;
 
             <header class="main-header">
                 <!-- Logo -->
-                <a href="../index.php" class="logo">
+                <a href="../../index.php" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>R</b>E</span>
                     <!-- logo for regular state and mobile devices -->
@@ -390,7 +380,7 @@ endif;
                         <?php
                         echo '
 		<li class="active treeview/">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -432,26 +422,43 @@ endif;
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-
-                </section>
-
                 <!-- Main content -->
+                
                 <section class="content">
+                     
+
                     <form role="form" action="" method="post" class="login-form">
+                        <section class="col-lg-12 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">                  
+                                    <li class="pull-left header"><i class="ion-compose"></i><b> ANÚNCIO DE ESPAÇO PARA ALUGUEL</b></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="box-body box-profile" id="sales-chart" >
+                                        <div class="form-group">
+                                            <label>Titulo do Anúncio:</label>
+                                            <input type="text" class="form-control" placeholder="Escreva um título bem legal! :)" name="numeroVagas" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        
                         <section class="col-lg-6 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
                                 <!-- Tabs within a box -->
                                 <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="fa fa-building"></i> Escolha o Salão ao qual a vaga pertence:</li>
+                                    <li class="pull-left header"><i class="ion-compose"></i> Dados Principais</li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="box-body box-profile" id="sales-chart" >
                                         <div class="form-group">
-                                            
-                                            <select class="form-control">
+                                            <label>Escolha o Salão ao qual o espaço pertence:</label>
+                                            <select class="form-control" name="idSalao" required>
                                                 <option disabled selected> Escolha o salão</option>
 
                                                 <?php
@@ -471,22 +478,145 @@ endif;
                                                         echo "> {$ses['nomeSalao']} </option>";
                                                     endforeach;
                                                 endif;
-                                               ?>
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            
+                                                   
+
+                                                    <label>Quais profissões podem utilizar o espaço?</label>
+                                                    <select class="form-control" name="profissao" required>
+                                                        <option></option>
+                                                        <option>Acupunturista</option>
+                                                        <option>Barbeiro</option>
+                                                    </select>
+<?php if (isset($data)) echo $data['profissao']; ?>
+                                                    <br>
+                                                    <label> Forma de Aluguel:</label>
+                                                    
+                                                <div class="form-group">
+                                                   
+                                                        <label>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Registro CLT" class="flat-red" checked required>
+                                                            Por Hora       
+                                                        </label>
+                                                    
+                                                        <label>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Registro PJ" class="flat-red" required>
+                                                            Por Dia
+                                                        </label>
+                                                    
+                                                        <label>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Estágio" class="flat-red" required>
+                                                            Por Semana
+                                                        </label>
+                                                    
+                                                        <label>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Freelancer" class="flat-red" required >
+                                                            Por Mês
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="vinculoEmpregaticio" value="Freelancer" class="flat-red" required >
+                                                            À Combinar
+                                                        </label>
+<?php if (isset($data)) echo $data['vinculoEmpregaticio']; ?>
+                                                </div>
+
+                                              
+                                                <label>Preço:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">R$</span>
+                                                    <input type="text" class="form-control" placeholder="Seja Justo :)" id="comissao" name="comissao" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required> 
+                                                    
+                                                </div>	
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+
+
+                        <section class="col-lg-6 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">                  
+                                    <li class="pull-left header"><i class="ion-ios-settings-strong"></i> Datalhes</li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="box-body box-profile" id="sales-chart" >
+                                        <div class="form-group">
+                                            <label>O que você está alugando:</label>
+                                            <select class="form-control" name="profissao" required>
+                                                <option></option>
+                                                <option>Cadeira para serviços</option>
+                                                <option>Sala com cama para serviços</option>
+                                                <option>Estação de trabalho sem equipamentos</option>
+                                                <option>Estação de trabalho completa</option>
+                                            </select>
+                                         
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tamanho (m²):</label>
+                                            <input type="text" class="form-control" name="numeroVagas" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
+
+                                        </div>   
+                                        <div class="form-group">
+                                            <label>Dias de Funcionamento:</label>
+                                            <select class="form-control" name="profissao" required>
+                                                <option></option>
+                                                <option>Segunda à Sexta</option>
+                                                <option>Segunda à Sábado</option>
+                                                <option>Todos os dias da semana</option>
+                                                <option>À disposição do contratante</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Horário de Funcionamento:</label>
+                                            <select class="form-control" name="profissao" required>
+                                                <option></option>
+                                                <option>Horário Comercial</option>
+                                                <option>Horário Flexível</option>
+                                                <option>À disposição do contratante</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                           
-                        
+
+                        <section class="col-lg-12 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">                  
+                                    <li class="pull-left header"><i class="ion-person"></i> Candidato e Benefícios</li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="box-body box-profile" id="sales-chart" >
+                                        <div class="form-group">
+                                            <label>Caracteristica:</label>
+                                            <textarea input class="textarea" placeholder="Escreva coisas que deixe seu anuncio mais atrativo! :)" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                  name="descricaoOportunidade" value="<?php if (isset($data)) echo $data['descricaoOportunidade']; ?>"></textarea>
+                                            <label>Diferenciais do seu espaço:</label>   
+                                            <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se você preenchesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                      name="diferencialCandidato" value="<?php if (isset($data)) echo $data['diferencialCandidato']; ?>"></textarea>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
 
                         <section class="col-lg-12 connectedSortable ">
                             <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
                         </section>
                     </form>
-
-
 
                 </section>
 
@@ -686,111 +816,111 @@ endif;
                 <div class="control-sidebar-bg"></div>
             </div>
             <!-- ./wrapper -->
-
-            <!-- jQuery 2.2.3 -->
-            <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-            <!-- Bootstrap 3.3.6 -->
-            <script src="../../bootstrap/js/bootstrap.min.js"></script>
-            <!-- Select2 -->
-            <script src="../../plugins/select2/select2.full.min.js"></script>
-            <!-- InputMask -->
-            <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-            <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-            <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-            <!-- date-range-picker -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-            <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
-            <!-- bootstrap datepicker -->
-            <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
-            <!-- bootstrap color picker -->
-            <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-            <!-- bootstrap time picker -->
-            <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
-            <!-- SlimScroll 1.3.0 -->
-            <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-            <!-- iCheck 1.0.1 -->
-            <script src="../../plugins/iCheck/icheck.min.js"></script>
-            <!-- FastClick -->
-            <script src="../../plugins/fastclick/fastclick.js"></script>
-            <!-- AdminLTE App -->
-            <script src="../../dist/js/app.min.js"></script>
-            <!-- AdminLTE for demo purposes -->
-            <script src="../../dist/js/demo.js"></script>
-            <!-- Consulta endereço -->
-            <script src="../../dist/js/pages/endereco.js"></script>
-            <!-- Page script -->
-            <script>
-
-
-                $(function () {
-                    //Initialize Select2 Elements           
+        </div>
+        <!-- jQuery 2.2.3 -->
+        <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="../../bootstrap/js/bootstrap.min.js"></script>
+        <!-- Select2 -->
+        <script src="../../plugins/select2/select2.full.min.js"></script>
+        <!-- InputMask -->
+        <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
+        <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+        <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+        <!-- date-range-picker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap datepicker -->
+        <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
+        <!-- bootstrap color picker -->
+        <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <!-- bootstrap time picker -->
+        <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+        <!-- SlimScroll 1.3.0 -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- iCheck 1.0.1 -->
+        <script src="../../plugins/iCheck/icheck.min.js"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../../dist/js/app.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="../../dist/js/demo.js"></script>
+        <!-- Consulta endereço -->
+        <script src="../../dist/js/pages/endereco.js"></script>
+        <!-- Page script -->
+        <script>
 
 
+            $(function () {
+                //Initialize Select2 Elements           
 
-                    //Datemask dd/mm/yyyy
-                    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-                    //Datemask2 mm/dd/yyyy
-                    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-                    //Money Euro
-                    $("[data-mask]").inputmask();
-                    //CEP
-                    $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
-                    //CNPJ
-                    $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
-                    //Date range picker
-                    $('#reservation').daterangepicker();
-                    //Date range picker with time picker
-                    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-                    //Date range as a button
-                    $('#daterange-btn').daterangepicker(
-                            {
-                                ranges: {
-                                    'Today': [moment(), moment()],
-                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                                },
-                                startDate: moment().subtract(29, 'days'),
-                                endDate: moment()
+
+
+                //Datemask dd/mm/yyyy
+                $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+                //Datemask2 mm/dd/yyyy
+                $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+                //Money Euro
+                $("[data-mask]").inputmask();
+                //CEP
+                $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+                //CNPJ
+                $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
+                //Date range picker
+                $('#reservation').daterangepicker();
+                //Date range picker with time picker
+                $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+                //Date range as a button
+                $('#daterange-btn').daterangepicker(
+                        {
+                            ranges: {
+                                'Today': [moment(), moment()],
+                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                             },
-                            function (start, end) {
-                                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                            }
-                    );
+                            startDate: moment().subtract(29, 'days'),
+                            endDate: moment()
+                        },
+                        function (start, end) {
+                            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                        }
+                );
 
-                    //Date picker
-                    $('#datepicker').datepicker({
-                        autoclose: true
-                    });
-
-                    //iCheck for checkbox and radio inputs
-                    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                        checkboxClass: 'icheckbox_minimal-blue',
-                        radioClass: 'iradio_minimal-blue'
-                    });
-                    //Red color scheme for iCheck
-                    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                        checkboxClass: 'icheckbox_minimal-red',
-                        radioClass: 'iradio_minimal-red'
-                    });
-                    //Flat red color scheme for iCheck
-                    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                        checkboxClass: 'icheckbox_flat-green',
-                        radioClass: 'iradio_flat-green'
-                    });
-
-                    //Colorpicker
-                    $(".my-colorpicker1").colorpicker();
-                    //color picker with addon
-                    $(".my-colorpicker2").colorpicker();
-
-                    //Timepicker
-                    $(".timepicker").timepicker({
-                        showInputs: false
-                    });
+                //Date picker
+                $('#datepicker').datepicker({
+                    autoclose: true
                 });
-            </script>
+
+                //iCheck for checkbox and radio inputs
+                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                    checkboxClass: 'icheckbox_minimal-blue',
+                    radioClass: 'iradio_minimal-blue'
+                });
+                //Red color scheme for iCheck
+                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                    checkboxClass: 'icheckbox_minimal-red',
+                    radioClass: 'iradio_minimal-red'
+                });
+                //Flat red color scheme for iCheck
+                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+
+                //Colorpicker
+                $(".my-colorpicker1").colorpicker();
+                //color picker with addon
+                $(".my-colorpicker2").colorpicker();
+
+                //Timepicker
+                $(".timepicker").timepicker({
+                    showInputs: false
+                });
+            });
+        </script>
     </body>
 </html>

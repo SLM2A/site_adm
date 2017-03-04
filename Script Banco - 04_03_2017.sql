@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 03-Mar-2017 às 00:28
+-- Generation Time: 04-Mar-2017 às 21:22
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5786,7 +5786,8 @@ CREATE TABLE `enderecousuario` (
 --
 
 INSERT INTO `enderecousuario` (`idEndereco`, `idUsuario`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
-(3, 27, '04011-002', 'Rua Estela', 515, 'Bl F', 'Vila Mariana', 'São Paulo', 'SP');
+(3, 27, '04011-002', 'Rua Estela', 515, 'Bl F', 'Vila Mariana', 'São Paulo', 'SP'),
+(4, 26, '02218-100', 'Rua Álvaro Cavalcante', 61, '', 'Vila Medeiros', 'São Paulo', 'SP');
 
 -- --------------------------------------------------------
 
@@ -5810,7 +5811,8 @@ CREATE TABLE `experienciaprofissionalusuario` (
 
 INSERT INTO `experienciaprofissionalusuario` (`idExperiencia`, `cargoExperiencia`, `empresaExperiencia`, `localizacaoExperiencia`, `deExperiencia`, `ateExperiencia`, `descricao`) VALUES
 (27, 'Cabelereiro', 'Moshe Informática', NULL, '2016', '2017', 'Hair Design'),
-(28, 'Cabelereiro', 'Testando', NULL, '2016', '2017', 'Teste');
+(28, 'Cabelereiro', 'Testando', NULL, '2016', '2017', 'Teste'),
+(29, 'Cabelereiro', 'Trem das Onze', NULL, '2015', '2016', 'Cortava cabelo');
 
 -- --------------------------------------------------------
 
@@ -5828,6 +5830,7 @@ CREATE TABLE `experienciausuario` (
 --
 
 INSERT INTO `experienciausuario` (`idExperiencia`, `idUsuario`) VALUES
+(29, 26),
 (28, 26),
 (27, 27);
 
@@ -5897,7 +5900,7 @@ CREATE TABLE `salao` (
 INSERT INTO `salao` (`idSalao`, `nomeSalao`, `cnpjSalao`, `categoriaSalao`, `descricaoSalao`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
 (1, 'Moshe', '05.653.724/0001-58', 'Barbearia', 'Uma barbearia diferente', '04011-002', 'Rua Estela', '515', 'Bloco F Cj 171', 'Vila Mariana', 'São Paulo', 'SP'),
 (2, 'Tricostyl-Modas', '11.111.111/1111-11', 'Salão', 'Salao legal', '02218-100', 'Rua Álvaro Cavalcante', '61', 'Casa 1', 'Vila Medeiros', 'São Paulo', 'SP'),
-(3, 'Onix-Hair', '42.659.339/8181-81', 'Barbearia', 'O salão do seu jeito', '04011-002', 'Rua Estela', '515', '2', 'Vila Mariana', 'São Paulo', 'SP');
+(4, 'Trem-das-Onzes', '51.561.561/6516-51', 'Barbearia', 'Trem das onze', '02202-020', 'Rua Silva Guimarães', '688', '1', 'Vila Ede', 'São Paulo', 'SP');
 
 -- --------------------------------------------------------
 
@@ -5917,7 +5920,7 @@ CREATE TABLE `salaoempresario` (
 INSERT INTO `salaoempresario` (`idSalao`, `idUsuario`) VALUES
 (1, 26),
 (2, 26),
-(3, 26);
+(4, 26);
 
 -- --------------------------------------------------------
 
@@ -5963,7 +5966,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`) VALUES
-(26, 1, 'Marcelo', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '17/12/1994', 'Sou empresario!!!!!'),
+(26, 1, 'Empresario', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '123.456.789-09', '17/12/1994', 'Sou empresario!!!!!!'),
 (27, 2, 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', NULL, '084.242.998-09', NULL, 'Profissional'),
 (33, 1, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, ''),
 (34, 1, 'Teste', 'marcelo@rental.com.br', '995bf053c4694e1e353cfd42b94e4447', 'Marcelo', 'Lima', 'Feminino', '456.789.545-67', '17/12/1994', 'Gay');
@@ -5978,6 +5981,37 @@ CREATE TABLE `usuariocontato` (
   `idUsuario` int(11) DEFAULT NULL,
   `idContato` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `vagaemprego`
+--
+
+CREATE TABLE `vagaemprego` (
+  `idVagaEmprego` int(11) NOT NULL,
+  `idSalao` int(11) NOT NULL,
+  `tituloVaga` varchar(50) DEFAULT NULL,
+  `profissao` varchar(50) DEFAULT NULL,
+  `nivel` varchar(50) DEFAULT NULL,
+  `vinculoEmpregaticio` varchar(50) DEFAULT NULL,
+  `numeroVagas` varchar(50) DEFAULT NULL,
+  `faixaRemuneracao` varchar(50) DEFAULT NULL,
+  `comissao` varchar(50) DEFAULT NULL,
+  `descricaoOportunidade` text,
+  `requisitoCandidato` text,
+  `diferencialCandidato` text,
+  `beneficioCandidato` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `vagaemprego`
+--
+
+INSERT INTO `vagaemprego` (`idVagaEmprego`, `idSalao`, `tituloVaga`, `profissao`, `nivel`, `vinculoEmpregaticio`, `numeroVagas`, `faixaRemuneracao`, `comissao`, `descricaoOportunidade`, `requisitoCandidato`, `diferencialCandidato`, `beneficioCandidato`) VALUES
+(1, 1, NULL, 'Acupunturista', 'Estágio', 'Registro CLT', '1', 'de R$ 788,00 à R$ 1.500,00', '50', 'aaaa', 'aa', 'aa', 'aa'),
+(3, 2, NULL, 'Barbeiro', 'Estágio', 'Registro PJ', '2', 'de R$ 788,00 à R$ 1.500,00', '50', 'Testando', 'Testando', 'Testando', 'Testando'),
+(4, 2, 'Teste', 'Acupunturista', 'Assistente', 'Estágio', '1', 'de R$ 1.500,00 à R$ 3.000,00', '50', 'Teste', 'Teste', 'Teste', 'Teste');
 
 -- --------------------------------------------------------
 
@@ -6230,6 +6264,13 @@ ALTER TABLE `usuariocontato`
   ADD KEY `fk_UsarioContato2` (`idContato`);
 
 --
+-- Indexes for table `vagaemprego`
+--
+ALTER TABLE `vagaemprego`
+  ADD PRIMARY KEY (`idVagaEmprego`),
+  ADD KEY `idSalao` (`idSalao`);
+
+--
 -- Indexes for table `ws_categories`
 --
 ALTER TABLE `ws_categories`
@@ -6301,22 +6342,27 @@ ALTER TABLE `certificadoprofissionalusuario`
 -- AUTO_INCREMENT for table `enderecousuario`
 --
 ALTER TABLE `enderecousuario`
-  MODIFY `idEndereco` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEndereco` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `experienciaprofissionalusuario`
 --
 ALTER TABLE `experienciaprofissionalusuario`
-  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `salao`
 --
 ALTER TABLE `salao`
-  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+--
+-- AUTO_INCREMENT for table `vagaemprego`
+--
+ALTER TABLE `vagaemprego`
+  MODIFY `idVagaEmprego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `ws_categories`
 --

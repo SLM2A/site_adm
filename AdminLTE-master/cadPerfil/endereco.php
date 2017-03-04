@@ -2,57 +2,51 @@
 session_start();
 require('../../_app/Config.inc.php');
 
-
-
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
 $getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
 
 if (!$login->CheckLogin()):
-    unset($_SESSION['userlogin']);
-    header('Location: index.php?exe=restrito');
+unset($_SESSION['userlogin']);
+header('Location: index.php?exe=restrito');
 else:
-    $userlogin = $_SESSION['userlogin'];
+$userlogin = $_SESSION['userlogin'];
 endif;
 
 if ($logoff):
-    unset($_SESSION['userlogin']);
-    header('Location: index.php?exe=logoff');
+unset($_SESSION['userlogin']);
+header('Location: index.php?exe=logoff');
 endif;
-
-//        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
-//        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
-//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
 
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);
+unset($data['SendPostForm']);
 
-    $data['idUsuario'] = $userlogin['idUsuario'];
-  
-    require '../../admin/_models/AdminEndereco.php';
-    $cadastra = new AdminEndereco;
-    $readEndereco = new Read;
+$data['idUsuario'] = $userlogin['idUsuario'];
 
-    $readEndereco->ExeRead('enderecousuario', "WHERE idUsuario = :t", "t={$userlogin['idUsuario']}");
-    
-    
-   //verifica se existe um endereço cadastrado para o usuario, se existir ele atualiza, se nao existir cria um novo.
-    if ($readEndereco->getResult()):
-        $idEndereco = (int) $readEndereco->getResult()[0]['idEndereco'];
-        $cadastra->ExeUpdate($idEndereco, $data);
-    else:
-        $cadastra->ExeCreate($data);
-    endif;
+require '../../admin/_models/AdminEndereco.php';
+$cadastra = new AdminEndereco;
+$readEndereco = new Read;
+$readEndereco->ExeRead('enderecousuario', "WHERE idUsuario = :t", "t={$userlogin['idUsuario']}");
 
+//verifica se existe um endereço cadastrado para o usuario, se existir ele atualiza, se nao existir cria um novo.
+if ($readEndereco->getResult()):
+$idEndereco = (int) $readEndereco->getResult()[0]['idEndereco'];
+$cadastra->ExeUpdate($idEndereco, $data);
+else:
+$cadastra->ExeCreate($data);
+endif;
 
+//WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
 
-    if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        header('Location: experiencia.php');
-    endif;
+else:
+$readEndereco = new Read;
+$readEndereco->ExeRead("enderecousuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+if($readEndereco->getResult()):
+$data = $readEndereco->getResult()[0];
+
+endif;
 endif;
 ?>
 
@@ -390,7 +384,7 @@ endif;
 		<?php
                 echo '
 		<li class="active treeview/">
-			<a href="../index.html"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">

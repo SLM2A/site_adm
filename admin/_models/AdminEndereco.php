@@ -23,17 +23,12 @@ class AdminEndereco{
         $this->Create();      
     }
     
-    public function ExeUpdate($CategoryId, array $Data) {
-        $this->CadID = (int) $CategoryId;
+    public function ExeUpdate($EnderecoId, array $Data) {
+        $this->CadID = (int) $EnderecoId;
         $this->Data = $Data;
-        
-        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
-        else:
-            $this->setData();        
+                  $this->setData();        
             $this->Update();
-        endif;        
+           
     }
     
     function getResult() {
@@ -65,7 +60,7 @@ class AdminEndereco{
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idEndereco = :cadId", "cadId={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+        $this->Error = ["<b>Sucesso:</b>, o endereco foi atualizado no sistema!",WS_ACCEPT];
         endif;
     }
 }
