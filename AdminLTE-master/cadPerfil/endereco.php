@@ -428,7 +428,7 @@ endif;
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-     
+     <h1> <i class="fa fa-map-marker"></i> Localização</h1> 
     </section>
 
     <!-- Main content -->
@@ -438,13 +438,10 @@ endif;
             <!-- Custom tabs (Charts with tabs)-->
             <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
-                <ul class="nav nav-tabs pull-right">                  
-                    <li class="pull-left header"><i class="ion-person"></i> Quem é você?</li>
-                </ul>
+                
                 <div class="tab-content no-padding">
                     <!-- Morris chart - Sales -->
-                    <br>
-                    <div ></div>
+                   
                     <div class="box-body box-profile" id="sales-chart" >
                      
                         <div class="form-group">
@@ -479,28 +476,29 @@ endif;
             </section>
         </form>
 		
-				  <center> 
-		 <nav aria-label="Page navigation">
-				  <ul class="pagination">
-					<li>
-					  <a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					  </a>
-					</li>
-					<li><a href="#">Sobre Mim</a></li>
-					<li><a href="perfil.php">Perfil</a></li>
-					<li><a href="endereco.php">Localização</a></li>
-					<li><a href="experiencia.php">Experiências</a></li>
-					<li><a href="certificacao.php">Certificados</a></li>
-					<li><a href="competencia.php">Competências</a></li>
-					<li>
-					  <a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					  </a>
-					</li>
-				  </ul>
-		</nav>
-		</center>
+        <center> 
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="redeSocial.php" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li><a href="perfil.php"><i class="ion-person"></i> Perfil</a></li>
+                    <li><a href="redeSocial.php"><i class="fa fa-commenting-o"></i> Redes Sociais</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i> Localização</a></li>
+                    <li><a href="experiencia.php"><i class="ion-briefcase"></i> Experiências</a></li>
+                    <li><a href="certificacao.php"><i class="fa fa-graduation-cap"></i> Certificados</a></li>
+                    <li><a href="competencia.php"><i class="fa fa-toggle-off"></i> Competências</a></li>
+                    <li>
+                        <a href="experiencia.php" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </center>
 		
     </section>
 

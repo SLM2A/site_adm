@@ -430,13 +430,14 @@ endif;
 					<textarea class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 				  </form>
 				</div>
-				
+                                
 			  <div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-instagram"></i></span>
 				<input type="email" class="form-control" placeholder="Instagram">
+                          
 				<span class="input-group-addon"><i class="fa fa-facebook"></i></span>
 				<input type="email" class="form-control" placeholder="Facebook">
-			  </div>
+			 
 			  <br>
 			  <div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-twitter"></i></span>

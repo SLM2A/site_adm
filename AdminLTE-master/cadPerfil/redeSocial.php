@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../../../_app/Config.inc.php');
+require('../../_app/Config.inc.php');
 
 
 
@@ -23,27 +23,36 @@ endif;
 //        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
 //        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
 //        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
-
+//Initialize Select2 Elements           
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
 if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);
+unset($data['SendPostForm']);
 
-    require '../../../admin/_models/AdminVagaAluguel.php';
-    $cadastra = new AdminVagaAluguel;
+$data['idUsuario'] = $userlogin['idUsuario'];
 
-    $cadastra->ExeCreate($data);
+require '../../admin/_models/AdminRedeSocial.php';
+$cadastra = new AdminRedeSocial;
+$readSocial = new Read;
+$readSocial->ExeRead('redesocial', "WHERE idUsuario = :t", "t={$userlogin['idUsuario']}");
 
-    
+//verifica se existe um endereço cadastrado para o usuario, se existir ele atualiza, se nao existir cria um novo.
+if ($readSocial->getResult()):
+$idSocial = (int) $readSocial->getResult()[0]['idRedeSocial'];
+$cadastra->ExeUpdate($idSocial, $data);
+else:
+$cadastra->ExeCreate($data);
+endif;
 
-    if (!$cadastra->getResult()):
-        ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        ErroRental($cadastra->getError()[0], $cadastra->getError()[1]);
-        header('Location: cadVagaEmprego.php');
-    endif;
+//WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+
+else:
+$readSocial = new Read;
+$readSocial->ExeRead("redesocial", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+if($readSocial->getResult()):
+$data = $readSocial->getResult()[0];
+
+endif;
 endif;
 ?>
 
@@ -56,28 +65,28 @@ endif;
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- daterange picker -->
-        <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
         <!-- bootstrap datepicker -->
-        <link rel="stylesheet" href="../../plugins/datepicker/datepicker3.css">
+        <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
         <!-- iCheck for checkboxes and radio inputs -->
-        <link rel="stylesheet" href="../../plugins/iCheck/all.css">
+        <link rel="stylesheet" href="../plugins/iCheck/all.css">
         <!-- Bootstrap Color Picker -->
-        <link rel="stylesheet" href="../../plugins/colorpicker/bootstrap-colorpicker.min.css">
+        <link rel="stylesheet" href="../plugins/colorpicker/bootstrap-colorpicker.min.css">
         <!-- Bootstrap time Picker -->
-        <link rel="stylesheet" href="../../plugins/timepicker/bootstrap-timepicker.min.css">
+        <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
         <!-- Select2 -->
-        <link rel="stylesheet" href="../../plugins/select2/select2.min.css">
+        <link rel="stylesheet" href="../plugins/select2/select2.min.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -92,7 +101,7 @@ endif;
 
             <header class="main-header">
                 <!-- Logo -->
-                <a href="../../index.php" class="logo">
+                <a href="../index.php" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>R</b>E</span>
                     <!-- logo for regular state and mobile devices -->
@@ -121,7 +130,7 @@ endif;
                                             <li><!-- start message -->
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Support Team
@@ -134,7 +143,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         AdminLTE Design Team
@@ -146,7 +155,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Developers
@@ -158,7 +167,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Sales Department
@@ -170,7 +179,7 @@ endif;
                                             <li>
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
                                                         Reviewers
@@ -303,16 +312,16 @@ endif;
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                    <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                     <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                         <p>
-                                            <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
+<?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                                             <small>Membro desde Nov. 2016</small>
                                         </p>
                                     </li>
@@ -337,7 +346,7 @@ endif;
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="../../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -357,7 +366,7 @@ endif;
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
                             <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
@@ -378,25 +387,25 @@ endif;
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="header">Navegação Principal</li>
-                        <?php
-                        echo '
+<?php
+echo '
 		<li class="active treeview/">
-			<a href="../../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
 			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
 		</li>
                 ';
-                        if ($userlogin['idTipoUsuario'] == 2):
-                            echo '
+if ($userlogin['idTipoUsuario'] == 2):
+    echo '
                     <li class="treeview">
 			<a href="../procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
                     </li> 
                     
                      ';
-                        else :
-                            echo '
+else :
+    echo '
                     <li class="treeview">
                         <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
                     </li>
@@ -404,9 +413,9 @@ endif;
                         <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
                     </li>
                     ';
-                        endif;
+endif;
 
-                        echo '              
+echo '              
                  <li class="treeview">
                     <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
 		</li>
@@ -414,7 +423,7 @@ endif;
                    <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
 		</li>
                    ';
-                        ?>
+?>
 
                     </ul>
                 </section>
@@ -424,202 +433,81 @@ endif;
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Main content -->
-                
+                <section class="content-header">
+                    <h1> <i class="fa fa-commenting-o"></i> Redes Sociais</h1>  
+                </section>
+
                 <section class="content">
-                     
 
                     <form role="form" action="" method="post" class="login-form">
-                        <section class="col-lg-12 connectedSortable">
-                            <!-- Custom tabs (Charts with tabs)-->
-                            <div class="nav-tabs-custom">
-                                <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-compose"></i><b> ANÚNCIO DE ESPAÇO PARA ALUGUEL</b></li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <div class="box-body box-profile" id="sales-chart" >
-                                        <div class="form-group">
-                                            <label>Titulo do Anúncio:</label>
-                                            <input type="text" class="form-control" placeholder="Escreva um título bem legal! :)" name="nomeAnuncio" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['nomeAnuncio']; ?>" required>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
                         
-                        <section class="col-lg-6 connectedSortable">
+                        <section class="col-lg-12 connectedSortable center">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
                                 <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-compose"></i> Dados Principais</li>
-                                </ul>
+                                
                                 <div class="tab-content no-padding">
+                                    <!-- Morris chart - Sales -->
+                                   
                                     <div class="box-body box-profile" id="sales-chart" >
-                                        <div class="form-group">
-                                            <label>Escolha o Salão ao qual o espaço pertence:</label>
-                                            <select class="form-control" name="idSalao" required>
-                                                <option disabled selected> Escolha o salão</option>
-
-                                                <?php
-                                                $readSes = new Read;
-
-                                                $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
-                                                if (!$readSes->getResult()):
-                                                    echo '<option disabled="disabled" value="null"> Cadastre antes um Salão! </option>';
-                                                else:
-                                                    foreach ($readSes->getResult() as $ses):
-                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-                                                        if ($ses['idSalao'] == $data['idSalao']):
-                                                            echo ' selected="selected" ';
-                                                        endif;
-
-                                                        echo "> {$ses['nomeSalao']} </option>";
-                                                    endforeach;
-                                                endif;
-                                                ?>
-                                            </select>
+                                        <label><i class="fa fa-instagram"></i> Instagram</label> 
+                                        <div class="input-group">
+                                            
+                                            <span class="input-group-addon">@</i></span>
+                                            <input type="text" class="form-control" placeholder="nome_usuario" id="instagram" name="instagram" value="<?php if (isset($data)) echo $data['instagram']; ?>">
+                                         </div>   
+                                        
+                                        <label><i class="fa fa-facebook-official"></i> Facebook</label> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon">www.facebook.com/</i></span>
+                                            <input type="text" class="form-control" placeholder="seu_perfil" id="facebook" name="facebook" value="<?php if (isset($data)) echo $data['facebook']; ?>">
                                         </div>
-                                        <div class="form-group">
-                                            
-                                                   
-
-                                                    <label>Quais profissões podem utilizar o espaço?</label>
-                                                    <select class="form-control" name="profissao" required>
-                                                        <option></option>
-                                                        <option>Acupunturista</option>
-                                                        <option>Barbeiro</option>
-                                                    </select>
-<?php if (isset($data)) echo $data['profissao']; ?>
-                                                    <br>
-                                                    <label> Forma de Aluguel:</label>
-                                                    
-                                                <div class="form-group">
-                                                   
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Hora" class="flat-red" checked required>
-                                                            Por Hora       
-                                                        </label>
-                                                    
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Dia" class="flat-red" required>
-                                                            Por Dia
-                                                        </label>
-                                                    
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Semana" class="flat-red" required>
-                                                            Por Semana
-                                                        </label>
-                                                    
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Mês" class="flat-red" required >
-                                                            Por Mês
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="À Combinar" class="flat-red" required >
-                                                            À Combinar
-                                                        </label>
-<?php if (isset($data)) echo $data['formaAluguel']; ?>
-                                                </div>
-
-                                              
-                                                <label>Preço:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">R$</span>
-                                                    <input type="text" class="form-control" placeholder="Seja Justo :)" id="preco" name="preco" value="<?php if (isset($data)) echo $data['preco']; ?>" required> 
-                                                    
-                                                </div>	
-                                            
-                                            
+                                        <label><i class="fa fa-twitter"></i> Twitter</label> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon">@</span>
+                                            <input type="text" class="form-control" placeholder="seu_perfil" id="twitter" name="twitter" value="<?php if (isset($data)) echo $data['twitter']; ?>">
+                                        </div> 
+                                        <label><i class="fa fa-whatsapp"></i> WhatsApp</label> 
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            <input type="text" id="whatsapp" class="form-control" placeholder="(__)_____-____" id="whatsapp" name="whatsapp" value="<?php if (isset($data)) echo $data['whatsapp']; ?>">
                                         </div>
+
                                     </div>
                                 </div>
-                            </div>
+                            </div>        
                         </section>
-
-
-
-
-                        <section class="col-lg-6 connectedSortable">
-                            <!-- Custom tabs (Charts with tabs)-->
-                            <div class="nav-tabs-custom">
-                                <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-ios-settings-strong"></i> Datalhes</li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <div class="box-body box-profile" id="sales-chart" >
-                                        <div class="form-group">
-                                            <label>O que você está alugando:</label>
-                                            <select class="form-control" name="itemAlugado" required>
-                                                <option></option>
-                                                <option>Cadeira para serviços</option>
-                                                <option>Sala com cama para serviços</option>
-                                                <option>Estação de trabalho sem equipamentos</option>
-                                                <option>Estação de trabalho completa</option>
-                                            </select>
-                                         <?php if (isset($data)) echo $data['itemAlugado']; ?>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tamanho (m²):</label>
-                                            <input type="text" class="form-control" name="tamanho" value="<?php if (isset($data)) echo $data['tamanho']; ?>" required>
-
-                                        </div>   
-                                        <div class="form-group">
-                                            <label>Dias de Funcionamento:</label>
-                                            <select class="form-control" name="diaFuncionamento" required>
-                                                <option></option>
-                                                <option>Segunda à Sexta</option>
-                                                <option>Segunda à Sábado</option>
-                                                <option>Todos os dias da semana</option>
-                                                <option>À disposição do contratante</option>
-                                            </select>
-                                            <?php if (isset($data)) echo $data['diaFuncionamento']; ?>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Horário de Funcionamento:</label>
-                                            <select class="form-control" name="horarioFuncionamento" required>
-                                                <option></option>
-                                                <option>Horário Comercial</option>
-                                                <option>Horário Flexível</option>
-                                                <option>À disposição do contratante</option>
-                                            </select>
-                                            <?php if (isset($data)) echo $data['horarioFuncionamento']; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section class="col-lg-12 connectedSortable">
-                            <!-- Custom tabs (Charts with tabs)-->
-                            <div class="nav-tabs-custom">
-                                <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-person"></i> Candidato e Benefícios</li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <div class="box-body box-profile" id="sales-chart" >
-                                        <div class="form-group">
-                                            <label>Caracteristica:</label>
-                                            <textarea input class="textarea" placeholder="Escreva coisas que deixe seu anuncio mais atrativo! :)" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                  name="caracteristica" value="<?php if (isset($data)) echo $data['caracteristica']; ?>"></textarea>
-                                            <label>Diferenciais do seu espaço:</label>   
-                                            <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se você preenchesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                      name="diferencial" value="<?php if (isset($data)) echo $data['diferencial']; ?>"></textarea>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-
+                            
+                        
+                        
                         <section class="col-lg-12 connectedSortable ">
-                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar</button>
                         </section>
                     </form>
+
+                    <center> 
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="perfil.php" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                
+                                <li><a href="perfil.php"><i class="ion-person"></i> Perfil</a></li>
+                                <li><a href="#"><i class="fa fa-commenting-o"></i> Redes Sociais</a></li>
+                                <li><a href="endereco.php"><i class="fa fa-map-marker"></i> Localização</a></li>
+                                <li><a href="experiencia.php"><i class="ion-briefcase"></i> Experiências</a></li>
+                                <li><a href="certificacao.php"><i class="fa fa-graduation-cap"></i> Certificados</a></li>
+                                <li><a href="competencia.php"><i class="fa fa-toggle-off"></i> Competências</a></li>
+                                <li>
+                                    <a href="endereco.php" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </center>
 
                 </section>
 
@@ -821,44 +709,46 @@ endif;
             <!-- ./wrapper -->
         </div>
         <!-- jQuery 2.2.3 -->
-        <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
         <!-- Bootstrap 3.3.6 -->
-        <script src="../../bootstrap/js/bootstrap.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
         <!-- Select2 -->
-        <script src="../../plugins/select2/select2.full.min.js"></script>
+        <script src="../plugins/select2/select2.full.min.js"></script>
         <!-- InputMask -->
-        <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-        <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-        <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+        <script src="../plugins/input-mask/jquery.inputmask.js"></script>
+        <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+        <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
         <!-- date-range-picker -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-        <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="../plugins/daterangepicker/daterangepicker.js"></script>
         <!-- bootstrap datepicker -->
-        <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
         <!-- bootstrap color picker -->
-        <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
         <!-- bootstrap time picker -->
-        <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+        <script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
         <!-- SlimScroll 1.3.0 -->
-        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!-- iCheck 1.0.1 -->
-        <script src="../../plugins/iCheck/icheck.min.js"></script>
+        <script src="../plugins/iCheck/icheck.min.js"></script>
         <!-- FastClick -->
-        <script src="../../plugins/fastclick/fastclick.js"></script>
+        <script src="../plugins/fastclick/fastclick.js"></script>
         <!-- AdminLTE App -->
-        <script src="../../dist/js/app.min.js"></script>
+        <script src="../dist/js/app.min.js"></script>
         <!-- AdminLTE for demo purposes -->
-        <script src="../../dist/js/demo.js"></script>
+        <script src="../dist/js/demo.js"></script>
         <!-- Consulta endereço -->
-        <script src="../../dist/js/pages/endereco.js"></script>
+        <script src="../dist/js/pages/endereco.js"></script>
+        <!-- Msgs -->
+        <script src="../plugins/Toastr/msg.js"></script>
         <!-- Page script -->
         <script>
-
-
             $(function () {
                 //Initialize Select2 Elements           
 
 
+                $("#cpfUsuario").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"});
+                $("#whatsapp").inputmask("(99) 99999-9999");
 
                 //Datemask dd/mm/yyyy
                 $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
@@ -866,10 +756,7 @@ endif;
                 $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
                 //Money Euro
                 $("[data-mask]").inputmask();
-                //CEP
-                $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
-                //CNPJ
-                $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
+
                 //Date range picker
                 $('#reservation').daterangepicker();
                 //Date range picker with time picker
