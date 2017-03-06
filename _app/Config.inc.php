@@ -1,5 +1,5 @@
 <?php
-define('HOME', 'http://localhost/cursos/ws_php/modulos/08-classes-auxiliares');
+//define('HOME', 'http://localhost/cursos/ws_php/modulos/08-classes-auxiliares');
 
 // CONFIGRAÇÕES DO SITE ####################
 define('HOST', 'localhost');

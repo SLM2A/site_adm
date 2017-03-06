@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('_app/Config.inc.php');
+require '_app/Includes.php';
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +52,7 @@ require('_app/Config.inc.php');
             </div>
             
             <?php
-                
+                require '_app/Models/LoginSite.class.php';
                 $login = new LoginSite(0);
                 
                 if($login->CheckLogin()):
