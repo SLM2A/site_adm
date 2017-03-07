@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('../_app/Config.inc.php');
+require '../_app/Includes.php';
 
            
 //        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
