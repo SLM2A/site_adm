@@ -1,7 +1,8 @@
 <?php
 session_start();
 require('_app/Config.inc.php');
-require '_app/Includes.php';
+require '_app/Includes.php'; 
+
 ?>
 
 <!DOCTYPE html>
