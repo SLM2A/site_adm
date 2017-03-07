@@ -10,6 +10,6 @@ require 'Helpers/Session.class.php';
 require 'Helpers/Upload.class.php';
 require 'Helpers/View.class.php';
 
-require './Models/LoginSite.class.php';
+require 'Models/LoginSite.class.php';
 
 ?>

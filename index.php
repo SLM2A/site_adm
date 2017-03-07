@@ -53,7 +53,7 @@ require '_app/Includes.php';
             </div>
             
             <?php
-                require '_app/Models/LoginSite.class.php';
+                
                 $login = new LoginSite(0);
                 
                 if($login->CheckLogin()):
