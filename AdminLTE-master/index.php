@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('../_app/Config.inc.php');
+require('../_app/Includes.php');
 
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
@@ -287,7 +288,7 @@ endif;
 
                         echo '              
                  <li class="treeview">
-                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+                    <a href="cadPerfil/perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
 		</li>
                 <li class="treeview">
                    <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
@@ -421,7 +422,7 @@ endif;
                                     <div ></div>
                                     <div ></div>
                                     <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 220px">
-                                        <a href="cadPerfil/sobremim.php"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
+                                        <a href="cadPerfil/perfil.php"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
                                         <?php
                                         if ($userlogin['idTipoUsuario'] == 2):
                                             echo '

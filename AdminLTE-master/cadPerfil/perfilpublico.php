@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('../../_app/Config.inc.php');
+require('../../_app/Includes.php');
 
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
