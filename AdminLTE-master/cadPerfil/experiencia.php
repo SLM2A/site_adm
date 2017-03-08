@@ -576,15 +576,37 @@ endif;
               <!-- /.box-header -->
               <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
+                     <thead> 
                       <tr>
                           <th>Cargo</th>
                           <th>Empresa</th>
-                          <th>Localização</th>
                           <th>De</th>
                           <th>Até</th>
                           <th>Descrição</th>
                       </tr>
+                     </thead>
+                     <tbody>
+                       
+                         <?php
+                                                $readSes = new Read;
 
+                                                $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                                                     foreach ($readSes->getResult() as $ses):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+
+                                                        echo "<tr><td> {$ses['cargoExperiencia']} </td>
+                                                              <td> {$ses['empresaExperiencia']} </td>
+                                                              
+                                                              <td> {$ses['deExperiencia']} </td>
+                                                              <td> {$ses['ateExperiencia']} </td>
+                                                              <td> {$ses['descricao']} </td></tr>
+                                                        ";                                                        
+                                                        
+                                                    endforeach;
+                                               
+                                                ?>
+                        </tbody>  
                   </table>
               </div>
               <!-- /.box-body -->
