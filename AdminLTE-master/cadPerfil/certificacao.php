@@ -553,6 +553,7 @@ echo '
                                 <!-- /.box-header -->
                                 <div class="box-body table-responsive no-padding">
                                     <table class="table table-hover">
+                                       <thead>
                                         <tr>
                                             <th>Instituição</th>
                                             <th>Curso</th>
@@ -561,7 +562,29 @@ echo '
                                             <th>Ano de ínicio</th>
                                             <th>Ano de conclusão</th>
                                         </tr>
+                                         </thead>    
+                                        <tbody>
+                                                                     <?php
+                                                $readSes = new Read;
 
+                                                $readSes->FullRead("select * from certificadoprofissionalusuario cpu inner join certificadousuario cu on cpu.idCertificado = cu.idCertificado where cu.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                                                     foreach ($readSes->getResult() as $ses):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+
+                                                        echo "<tr><td> {$ses['instituicaoCertificado']} </td>
+                                                              <td> {$ses['cursoCertificado']} </td>
+                                                              
+                                                              <td> {$ses['nivelCertificado']} </td>
+                                                              <td> {$ses['duracaoCertificado']} </td>
+                                                              <td> {$ses['anoInicioCertificado']} </td>
+                                                              <td> {$ses['anoConclusaoCertificado']} </td></tr>
+                                                        ";                                                        
+                                                        
+                                                    endforeach;
+                                               
+                                                ?>
+                                        <tbody>
                                     </table>
                                 </div>
                                 <!-- /.box-body -->

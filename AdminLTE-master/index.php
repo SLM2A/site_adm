@@ -360,7 +360,7 @@ endif;
                                 <div class="icon">
                                     <i class="ion ion-camera"></i>
                                 </div>
-                                <a href="portfolio.html" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="portfolio.php" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->

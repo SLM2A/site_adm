@@ -1,3 +1,28 @@
+<?php
+session_start();
+require('../_app/Config.inc.php');
+
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (isset($post) && $post['SendPostForm']):
+    $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL );
+    unset($post['SendPostForm']);
+    require('../admin/_models/AdminGaleria.class.php');
+    $sendGallery = new AdminGaleria;
+    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'].'-'.$_SESSION['userlogin']['sobrenomeUsuario']);
+    
+    //$sendGallery->gbSend();        
+    
+    //WSErro("Imagem inserida com suecesso!", WS_ACCEPT);
+    
+    //if(!isset($_FILES)):
+    //    WSErro("Selecione uma imagem para ser inserida",WS_ALERT);
+    //endif;
+endif;
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -371,8 +396,11 @@
       <h1>
         Meu Book
       </h1>
+        <form name="PostForm" method="POST" enctype="multipart/form-data">        
+            <input type="file" multiple name="portfolio[]" id="exampleInputFile"/>
+        <input type="submit" value="+ Adicionar Fotos" name="SendPostForm" button type="button" class="btn btn-block btn-primary btn-lg"/>
+        </form>
      <small>Adicione fotos de seus trabolhos para que outros curtam e comentem</small>
-	 <button type="button" class="btn btn-block btn-primary btn-lg">+ Adicionar Fotos</button>
     </section>
 
     <!-- Main content -->
