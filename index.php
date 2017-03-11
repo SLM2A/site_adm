@@ -67,7 +67,7 @@ require '_app/Includes.php';
                     if(!$login->getResult()):
                             WSErro ($login->getError ()[0], $login->getError ()[1]);
                     else:
-                            header('Location: AdminLTE-master/index.php ');
+                            header('Location: AdminLTE-master/paginas/index.php ');
                     endif;
                 endif;
                 

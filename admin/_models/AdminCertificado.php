@@ -24,7 +24,7 @@ class AdminCertificado {
 
         if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
-            $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', WS_ALERT];
+            $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', RENTAL_ALERT];
         else:
             $this->setData();
 //          $this->setName();
@@ -38,7 +38,7 @@ class AdminCertificado {
 
         if (in_array('', $this->CertificadoUsuario))://Verifica se a algum campo em branco na array
             $this->Result = false;
-            $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', WS_ALERT];
+            $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', RENTAL_ALERT];
         else:
             $this->setDataExp();
             $this->CreateExperiencia();
@@ -51,7 +51,7 @@ class AdminCertificado {
 
         if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
+            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", RENTAL_ALERT];
         else:
             $this->setData();
 //            $this->setName();
@@ -94,7 +94,7 @@ class AdminCertificado {
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
@@ -104,7 +104,6 @@ class AdminCertificado {
         $Create->ExeCreate(self::salaoempresario, $this->CertificadoUsuario);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
         endif;
     }
 
@@ -113,7 +112,7 @@ class AdminCertificado {
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
         if ($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!", WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 

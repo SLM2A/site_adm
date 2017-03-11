@@ -97,7 +97,7 @@ class SiteRegistrar{
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idUsuario = :cadId", "cadId={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b>  a categoria foi atualizada no sistema!",WS_ACCEPT];
+        $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!",RENTAL_ACCEPT];
         endif;
     }
 }

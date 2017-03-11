@@ -4,7 +4,6 @@ require('../../../_app/Config.inc.php');
 require('../../../_app/Includes.php');
 
 
-
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
 $getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
@@ -21,40 +20,15 @@ if ($logoff):
     header('Location: index.php?exe=logoff');
 endif;
 
-//        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
-//        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
-//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
+
+//var_dump($_GET);
+
+$idVaga = $_GET['id'];
+
+$readSes = new Read;
+$readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao=s.idSalao where idVagaAluguel = :id", "id={$idVaga}");
 
 
-$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);
-
-    require '../../admin/_models/AdminSalao.php';
-    $cadastra = new AdminSalao;
-
-    $cadastra->ExeCreate($data);
-    $readSalao = new Read;
-
-    $readSalao->FullRead("SELECT MAX(idSalao) FROM salao");
-    $idSalao = $readSalao->getResult()[0]['MAX(idSalao)'];
-
-
-    $SalaoEmpresario['idSalao'] = $idSalao;
-    $SalaoEmpresario['idUsuario'] = $userlogin['idUsuario'];
-
-
-    $cadastra->InsereRelacao($SalaoEmpresario);
-
-
-    if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        header('Location: minhaempresa.html');
-    endif;
-endif;
 ?>
 
 <!DOCTYPE html>
@@ -435,49 +409,116 @@ endif;
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-
+  
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
-                    <form role="form" action="" method="post" class="login-form">
+                    <section class="col-lg-12 connectedSortable">
+                            <!-- Profile Image -->
+                            <div class="box box-primary">
+                                <div class="box-body box-profile">
+                                    <img class="profile-user-img img-responsive img-circle" src="../../dist/img/salao_default.jpg" alt="User profile picture">
 
-                        <h3>Escolha o salão que onde a vaga fica:</h3>
-                        <div class="form-group">
-                            <select class="form-control">
-                                <option disabled selected> Escolha o salão</option>
-                                 
-                                <?php
-                                $readSes = new Read;
-                                
-                                $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
-                                if (!$readSes->getResult()):
-                                    echo '<option disabled="disabled" value="null"> Cadastre antes um Salão! </option>';
-                                else:
-                                    foreach ($readSes->getResult() as $ses):
-                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-                                        if ($ses['idSalao'] == $data['idSalao']):
-                                            echo ' selected="selected" ';
-                                        endif;
-
-                                        echo "> {$ses['nomeSalao']} </option>";
-                                    endforeach;
-                                endif;
-                                var_dump($readSes->getResult());
-                                ?>
-                                
-                            </select>
-                        </div>
-
-
-                        <section class="col-lg-12 connectedSortable ">
-                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+                                    <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['nomeAnuncio'] ?></h3>
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
                         </section>
-                    </form>
+                        <!-- Fim Profile Image -->
 
+                        <!-- About Me Box -->
+                        <section class="col-lg-6 connectedSortable">   
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="ion-person"></i> Sobre a Vaga</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <strong><i class="fa fa-book margin-r-5"></i>Profissão</strong>
 
+                                    <p>
+                                       <?php echo $readSes->getResult()[0]['profissao'] ?>
+                                    </p>
+                                    <hr>
+                                    <strong><i class="fa fa-pencil margin-r-5"></i> Forma de Aluguel</strong>
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['formaAluguel'] ?>
+                                        
+                                    </p>
+                                    <hr>						  
+                                    <strong><i class="fa fa-map-marker margin-r-5"></i> Preço do Aluguel</strong>
+                                    <p>
+                                    R$ <?php echo $readSes->getResult()[0]['preco'] ?>,00
+                                    </p>
+                                    <hr>
+                                    <strong><i class="fa fa-book margin-r-5"></i> O que está sendo alugado</strong>
 
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['itemAlugado'] ?>
+                                    </p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Fim About Me Box -->	
+                         <section class="col-lg-6 connectedSortable">   
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-building"></i> Sobre o Salão</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <strong><i class="fa fa-book margin-r-5"></i> Salão</strong>
+
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['nomeSalao'] ?>
+                                    </p>
+                                    <hr>
+                                    <strong><i class="fa fa-pencil margin-r-5"></i> Tamanho do Espaço</strong>
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['tamanho'] ?>
+                                    </p>
+                                    <hr>						  
+                                    <strong><i class="fa fa-map-marker margin-r-5"></i> Dias de Funcionamento</strong>
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['diaFuncionamento'] ?>
+                                    </p>        
+                                    <hr>
+                                    <strong><i class="fa fa-book margin-r-5"></i> Horário de funcionamento</strong>
+                                    <p>                                        
+                                        <?php echo $readSes->getResult()[0]['horarioFuncionamento'] ?>
+                                    </p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Inicio Minhas Experiências -->	
+                        <section class="col-lg-12 connectedSortable">   
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="ion-person"></i> Informações Gerais</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <strong><i class="fa fa-book margin-r-5"></i> Características</strong>
+
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['caracteristica'] ?>
+                                    </p>
+                                    <hr>
+                                    <strong><i class="fa fa-pencil margin-r-5"></i> Diferencial</strong>
+                                    <p>
+                                        <?php echo $readSes->getResult()[0]['diferencial'] ?>                                      
+                                    </p>
+                                    
+                                </div>
+                            </div>
+                        </section>
+                    
+                    
                 </section>
 
 
@@ -675,112 +716,111 @@ endif;
                      immediately after the control sidebar -->
                 <div class="control-sidebar-bg"></div>
             </div>
-            <!-- ./wrapper -->
-
-            <!-- jQuery 2.2.3 -->
-            <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-            <!-- Bootstrap 3.3.6 -->
-            <script src="../../bootstrap/js/bootstrap.min.js"></script>
-            <!-- Select2 -->
-            <script src="../../plugins/select2/select2.full.min.js"></script>
-            <!-- InputMask -->
-            <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-            <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-            <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-            <!-- date-range-picker -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-            <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
-            <!-- bootstrap datepicker -->
-            <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
-            <!-- bootstrap color picker -->
-            <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-            <!-- bootstrap time picker -->
-            <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
-            <!-- SlimScroll 1.3.0 -->
-            <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-            <!-- iCheck 1.0.1 -->
-            <script src="../../plugins/iCheck/icheck.min.js"></script>
-            <!-- FastClick -->
-            <script src="../../plugins/fastclick/fastclick.js"></script>
-            <!-- AdminLTE App -->
-            <script src="../../dist/js/app.min.js"></script>
-            <!-- AdminLTE for demo purposes -->
-            <script src="../../dist/js/demo.js"></script>
-            <!-- Consulta endereço -->
-            <script src="../../dist/js/pages/endereco.js"></script>
-            <!-- Page script -->
-            <script>
-
-
-                $(function () {
-                    //Initialize Select2 Elements           
+        </div>
+        <!-- jQuery 2.2.3 -->
+        <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="../../bootstrap/js/bootstrap.min.js"></script>
+        <!-- Select2 -->
+        <script src="../../plugins/select2/select2.full.min.js"></script>
+        <!-- InputMask -->
+        <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
+        <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+        <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+        <!-- date-range-picker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap datepicker -->
+        <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
+        <!-- bootstrap color picker -->
+        <script src="../../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <!-- bootstrap time picker -->
+        <script src="../../plugins/timepicker/bootstrap-timepicker.min.js"></script>
+        <!-- SlimScroll 1.3.0 -->
+        <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- iCheck 1.0.1 -->
+        <script src="../../plugins/iCheck/icheck.min.js"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../../dist/js/app.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="../../dist/js/demo.js"></script>
+        <!-- Consulta endereço -->
+        <script src="../../dist/js/pages/endereco.js"></script>
+        <!-- Page script -->
+        <script>
 
 
+            $(function () {
+                //Initialize Select2 Elements           
 
-                    //Datemask dd/mm/yyyy
-                    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-                    //Datemask2 mm/dd/yyyy
-                    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-                    //Money Euro
-                    $("[data-mask]").inputmask();
-                    //CEP
-                    $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
-                    //CNPJ
-                    $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
-                    //Date range picker
-                    $('#reservation').daterangepicker();
-                    //Date range picker with time picker
-                    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-                    //Date range as a button
-                    $('#daterange-btn').daterangepicker(
-                            {
-                                ranges: {
-                                    'Today': [moment(), moment()],
-                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                                },
-                                startDate: moment().subtract(29, 'days'),
-                                endDate: moment()
+
+
+                //Datemask dd/mm/yyyy
+                $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+                //Datemask2 mm/dd/yyyy
+                $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+                //Money Euro
+                $("[data-mask]").inputmask();
+                //CEP
+                $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+                //CNPJ
+                $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
+                //Date range picker
+                $('#reservation').daterangepicker();
+                //Date range picker with time picker
+                $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+                //Date range as a button
+                $('#daterange-btn').daterangepicker(
+                        {
+                            ranges: {
+                                'Today': [moment(), moment()],
+                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                             },
-                            function (start, end) {
-                                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                            }
-                    );
+                            startDate: moment().subtract(29, 'days'),
+                            endDate: moment()
+                        },
+                        function (start, end) {
+                            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                        }
+                );
 
-                    //Date picker
-                    $('#datepicker').datepicker({
-                        autoclose: true
-                    });
-
-                    //iCheck for checkbox and radio inputs
-                    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                        checkboxClass: 'icheckbox_minimal-blue',
-                        radioClass: 'iradio_minimal-blue'
-                    });
-                    //Red color scheme for iCheck
-                    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                        checkboxClass: 'icheckbox_minimal-red',
-                        radioClass: 'iradio_minimal-red'
-                    });
-                    //Flat red color scheme for iCheck
-                    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                        checkboxClass: 'icheckbox_flat-green',
-                        radioClass: 'iradio_flat-green'
-                    });
-
-                    //Colorpicker
-                    $(".my-colorpicker1").colorpicker();
-                    //color picker with addon
-                    $(".my-colorpicker2").colorpicker();
-
-                    //Timepicker
-                    $(".timepicker").timepicker({
-                        showInputs: false
-                    });
+                //Date picker
+                $('#datepicker').datepicker({
+                    autoclose: true
                 });
-            </script>
+
+                //iCheck for checkbox and radio inputs
+                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                    checkboxClass: 'icheckbox_minimal-blue',
+                    radioClass: 'iradio_minimal-blue'
+                });
+                //Red color scheme for iCheck
+                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                    checkboxClass: 'icheckbox_minimal-red',
+                    radioClass: 'iradio_minimal-red'
+                });
+                //Flat red color scheme for iCheck
+                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+
+                //Colorpicker
+                $(".my-colorpicker1").colorpicker();
+                //color picker with addon
+                $(".my-colorpicker2").colorpicker();
+
+                //Timepicker
+                $(".timepicker").timepicker({
+                    showInputs: false
+                });
+            });
+        </script>
     </body>
 </html>

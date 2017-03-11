@@ -1,7 +1,7 @@
 <?php
 session_start();
-require('../../_app/Config.inc.php');
-require('../../_app/Includes.php');
+require('../_app/Config.inc.php');
+require('../_app/Includes.php');
 
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
@@ -25,32 +25,34 @@ endif;
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>AdminLTE 2 | Dashboard</title>
+        <title>Rental Easy | Dashboard</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Logo short cut -->
+        <link rel="shortcut icon" href="../img/rent.png" >
         <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
         <!-- iCheck -->
-        <link rel="stylesheet" href="../plugins/iCheck/flat/blue.css">
+        <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
         <!-- Morris chart -->
-        <link rel="stylesheet" href="../plugins/morris/morris.css">
+        <link rel="stylesheet" href="plugins/morris/morris.css">
         <!-- jvectormap -->
-        <link rel="stylesheet" href="../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
         <!-- Date Picker -->
-        <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+        <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
         <!-- Daterange picker -->
-        <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
         <!-- bootstrap wysihtml5 - text editor -->
-        <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+        <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,7 +63,6 @@ endif;
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
-
 
             <header class="main-header">
                 <!-- Logo -->
@@ -87,71 +88,24 @@ endif;
                                     <span class="label label-success">1</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="header">Você tem 4 mensagens</li>
+                                    <li class="header">Você tem 1 mensagens</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
                                             <li><!-- start message -->
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                                     </div>
                                                     <h4>
-                                                        Support Team
+                                                        Marcelo Lima
                                                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                                     </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
+                                                    <p>Olá, tudo bem?</p>
                                                 </a>
                                             </li>
                                             <!-- end message -->
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        AdminLTE Design Team
-                                                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        Developers
-                                                        <small><i class="fa fa-clock-o"></i> Today</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        Sales Department
-                                                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        Reviewers
-                                                        <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
+
                                         </ul>
                                     </li>
                                     <li class="footer"><a href="#">Ver todas as mensagens</a></li>
@@ -161,37 +115,19 @@ endif;
                             <li class="dropdown notifications-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-bell-o"></i>
-                                    <span class="label label-warning">10</span>
+                                    <span class="label label-warning">1
+
+
+                                    </span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="header">Você tem 10 notificações</li>
+                                    <li class="header">Você tem 1 notificação</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
                                             <li>
                                                 <a href="#">
-                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                                    page and may cause design problems
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-users text-red"></i> 5 new members joined
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-user text-red"></i> You changed your username
+                                                    <i class="fa fa-users text-aqua"></i> 2 pessoas visualizaram sua página
                                                 </a>
                                             </li>
                                         </ul>
@@ -203,17 +139,17 @@ endif;
                             <li class="dropdown tasks-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-flag-o"></i>
-                                    <span class="label label-danger">9</span>
+                                    <span class="label label-danger">3</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="header">Você tem 9 tarefas</li>
+                                    <li class="header">Conquistas</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
                                             <li><!-- Task item -->
                                                 <a href="#">
                                                     <h3>
-                                                        Design some buttons
+                                                        Perfil Completo
                                                         <small class="pull-right">20%</small>
                                                     </h3>
                                                     <div class="progress xs">
@@ -227,7 +163,7 @@ endif;
                                             <li><!-- Task item -->
                                                 <a href="#">
                                                     <h3>
-                                                        Create a nice theme
+                                                        Cadastrar Salão
                                                         <small class="pull-right">40%</small>
                                                     </h3>
                                                     <div class="progress xs">
@@ -241,7 +177,7 @@ endif;
                                             <li><!-- Task item -->
                                                 <a href="#">
                                                     <h3>
-                                                        Some task I need to do
+                                                        Cadastrar vaga
                                                         <small class="pull-right">60%</small>
                                                     </h3>
                                                     <div class="progress xs">
@@ -252,37 +188,24 @@ endif;
                                                 </a>
                                             </li>
                                             <!-- end task item -->
-                                            <li><!-- Task item -->
-                                                <a href="#">
-                                                    <h3>
-                                                        Make beautiful transitions
-                                                        <small class="pull-right">80%</small>
-                                                    </h3>
-                                                    <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">80% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
                                             <!-- end task item -->
                                         </ul>
                                     </li>
                                     <li class="footer">
-                                        <a href="#">View all tasks</a>
+                                        <a href="#">Ver todas</a>
                                     </li>
                                 </ul>
                             </li>
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                    <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                     <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                         <p>
                                             <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
@@ -290,27 +213,11 @@ endif;
                                         </p>
                                     </li>
                                     <!-- Menu Body -->
-                                    <li class="user-body">
-                                        <div class="row">
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Followers</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Sales</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Friends</a>
-                                            </div>
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
+
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                        </div>
                                         <div class="pull-right">
-                                            <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sair</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -330,7 +237,7 @@ endif;
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
                             <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
@@ -354,7 +261,7 @@ endif;
                         <?php
                         echo '
 		<li class="active treeview/">
-			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -364,24 +271,27 @@ endif;
                         if ($userlogin['idTipoUsuario'] == 2):
                             echo '
                     <li class="treeview">
-			<a href="../procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
                     </li> 
                     
                      ';
                         else :
                             echo '
                     <li class="treeview">
-                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                        <a href="cadEmpresa/cadastroEmpresa.php"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
                     </li>
                     <li class="treeview">
-                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                        <a href="cadEmpresa/cadVaga/EscolhaTipoVaga.php"><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href="cadEmpresa/cadVaga/minhasVagas.php"><i class="fa fa-plus"></i> <span>Minhas Vagas</span></a>	
                     </li>
                     ';
                         endif;
 
                         echo '              
                  <li class="treeview">
-                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+                    <a href="cadPerfil/perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
 		</li>
                 <li class="treeview">
                    <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
@@ -398,179 +308,152 @@ endif;
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
+                    <h1>
+                        Dashboard
+                        <small>Informações</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Dashboard</li>
+                    </ol>
+                </section>
 
+                <!-- Main content -->
+                <section class="content">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>0</h3>
 
-
-                    <!-- Main content -->
-                    <section class="content">
-
-                        <section class="col-lg-3 connectedSortable">
-                            <!-- Profile Image -->
-                            <div class="box box-primary">
-                                <div class="box-body box-profile">
-                                    <img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture">
-
-                                    <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
-                                    <hr>
-                                    <strong><i class="fa fa-pencil margin-r-5"></i>Áreas de Atuação</strong>
-                                    <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
-                                    <hr>
+                                    <p>Visualizações</p>
                                 </div>
-                                <!-- /.box-body -->
+                                <div class="icon">
+                                    <i class="ion ion-eye"></i>
+                                </div>
+                                <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                            <!-- /.box -->
-                        </section>
-                        <!-- Fim Profile Image -->
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>0<sup style="font-size: 20px"></sup></h3>
 
-                        <!-- About Me Box -->
-                        <section class="col-lg-9 connectedSortable">   
-                            <div class="box box-primary">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="ion-person"></i> Sobre Mim</h3>
+                                    <p>Candidaturas</p>
                                 </div>
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <strong><i class="fa fa-book margin-r-5"></i> O que acho sobre mim</strong>
-
-                                    <p class="text-muted">
-                                        <?= $userlogin['descricao']; ?>
-                                    </p>
-                                    <hr>
-                                    <strong><i class="fa fa-pencil margin-r-5"></i> Competências</strong>
-                                    <p>
-                                        <span class="label label-danger">Pigmentação</span>
-                                        <span class="label label-success">Navalhado</span>
-                                    </p>
-                                    <hr>						  
-                                    <strong><i class="fa fa-map-marker margin-r-5"></i> Localidade</strong>
-                                    <p class="text-muted">São Paulo, Brasil</p>
-
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
                                 </div>
+                                <a href="candidaturas.html" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </section>
-                        <!-- Fim About Me Box -->	
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>0</h3>
 
-                        <!-- Inicio Minhas Experiências -->	
-                        <section class="col-md-12">	
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title"><i class="ion-briefcase"></i> Minhas Experiências</h3>
+                                    <p>Fotos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-camera"></i>
+                                </div>
+                                <a href="portfolio.php" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h3>0</h3>
 
-                                    <div class="box-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
+                                    <p>Medalhas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-ribbon-a"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                     
+                    <div class="row">
+                        <!-- Left col -->
+                        <section class="col-lg-6 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">                  
+                                    <li class="pull-left header"><i class="ion-person"></i> Meus Dados</li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <!-- Morris chart - Sales -->
+                                    <br>
+                                    <div ><img class="profile-user-img img-responsive img-circle" src="dist/img/user2-160x160.jpg" alt="User profile picture"></div>
+                                    <div class="box-body box-profile" id="sales-chart" style="position: relative;">
+                                        <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
 
-                                            <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
+                                        <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
+
+                                        <a href="cadPerfil/perfilpublico.php" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
                                     </div>
-                                </div>
 
-                                <div class="box-body table-responsive no-padding">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Cargo</th>
-                                                <th>Empresa</th>
-                                                <th>De</th>
-                                                <th>Até</th>
-                                                <th>Descrição</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <?php
-                                            $readSes = new Read;
-
-                                            $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
-                                            foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-
-                                                echo "<tr><td> {$ses['cargoExperiencia']} </td>
-                                                              <td> {$ses['empresaExperiencia']} </td>
-                                                              
-                                                              <td> {$ses['deExperiencia']} </td>
-                                                              <td> {$ses['ateExperiencia']} </td>
-                                                              <td> {$ses['descricao']} </td></tr>
-                                                        ";
-
-                                            endforeach;
-                                            ?>
-                                        </tbody>  
-
-                                    </table>
                                 </div>
                             </div>
-                        </section> 
-                        <!-- Fim Minhas Experiências -->	
+                        </section>
 
-                        <!-- Inicio Minhas Experiências -->	
-                        <section class="col-md-12">	
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title"><i class="ion-ios-bookmarks"></i> Meus Certificados</h3>
+                        <!-- /.Left col -->
+                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                        <section class="col-lg-6 connectedSortable">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">                  
+                                    <li class="pull-left header"><i class="ion-paper-airplane"></i> Funções</li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <!-- Morris chart - Sales -->
+                                    <br>
+                                    <div ></div>
+                                    <div ></div>
+                                    <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 220px">
+                                        <a href="cadPerfil/perfil.php"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
+                                        <?php
+                                        if ($userlogin['idTipoUsuario'] == 2):
+                                            echo '
+                        <a href="procurarvaga.html"><button type="submit" class="btn btn-block btn-success btn-lg"><i class="fa fa-search"></i> Procurar Vagas</button></a>
+                     ';
+                                        else :
+                                            echo '
+                        <a href="cadEmpresa/cadastroEmpresa.php"><button type="button" class="btn btn-block btn-warning btn-lg"><i class="fa fa-building"></i> Meus Salões</button></a>
+                        <a href="cadEmpresa/cadVaga/EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
+                        ';
+                                        endif;
+                                        ?>      
+                                        <button type="button" class="btn btn-block btn-primary btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
 
-                                    <div class="box-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Buscar">
-
-                                            <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="box-body table-responsive no-padding">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Instituição</th>
-                                                <th>Curso</th>
-                                                <th>Nível</th>
-                                                <th>Duração</th>
-                                                <th>Ano de ínicio</th>
-                                                <th>Ano de conclusão</th>
-                                            </tr>
-                                        </thead>    
-                                        <tbody>
-<?php
-$readSes = new Read;
-
-$readSes->FullRead("select * from certificadoprofissionalusuario cpu inner join certificadousuario cu on cpu.idCertificado = cu.idCertificado where cu.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
-foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-
-    echo "<tr><td> {$ses['instituicaoCertificado']} </td>
-                                                              <td> {$ses['cursoCertificado']} </td>
-                                                              
-                                                              <td> {$ses['nivelCertificado']} </td>
-                                                              <td> {$ses['duracaoCertificado']} </td>
-                                                              <td> {$ses['anoInicioCertificado']} </td>
-                                                              <td> {$ses['anoConclusaoCertificado']} </td></tr>
-                                                        ";
-
-endforeach;
-?>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
-                        </section> 
-                        <!-- Fim Minhas Experiências -->	
+                        </section>
 
-
-                    </section>
+                    </div>
 
                     <!-- Control Sidebar -->
                     <aside class="control-sidebar control-sidebar-dark">
                         <!-- Create the tabs -->
                         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                             <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                            <li><a href="#control-sidebar-settings-tab" data-toggle="tab" disabled><i class="fa fa-gears"></i></a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -758,37 +641,46 @@ endforeach;
                     <!-- Add the sidebar's background. This div must be placed
                          immediately after the control sidebar -->
                     <div class="control-sidebar-bg"></div>
+                </section>
             </div>
             <!-- ./wrapper -->
         </div>
-            <!-- jQuery 2.2.3 -->
-            <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-            <!-- Bootstrap 3.3.6 -->
-            <script src="../bootstrap/js/bootstrap.min.js"></script>
-            <!-- Select2 -->
-            <script src="../plugins/select2/select2.full.min.js"></script>
-            <!-- InputMask -->
-            <script src="../plugins/input-mask/jquery.inputmask.js"></script>
-            <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-            <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-            <!-- date-range-picker -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-            <script src="../plugins/daterangepicker/daterangepicker.js"></script>
-            <!-- bootstrap datepicker -->
-            <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
-            <!-- bootstrap color picker -->
-            <script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-            <!-- bootstrap time picker -->
-            <script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
-            <!-- SlimScroll 1.3.0 -->
-            <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-            <!-- iCheck 1.0.1 -->
-            <script src="../plugins/iCheck/icheck.min.js"></script>
-            <!-- FastClick -->
-            <script src="../plugins/fastclick/fastclick.js"></script>
-            <!-- AdminLTE App -->
-            <script src="../dist/js/app.min.js"></script>
-            <!-- AdminLTE for demo purposes -->
-            <script src="../dist/js/demo.js"></script>
+        <!-- jQuery 2.2.3 -->
+        <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <!-- Morris.js charts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="plugins/morris/morris.min.js"></script>
+        <!-- Sparkline -->
+        <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+        <!-- jvectormap -->
+        <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <!-- jQuery Knob Chart -->
+        <script src="plugins/knob/jquery.knob.js"></script>
+        <!-- daterangepicker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- datepicker -->
+        <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+        <!-- Bootstrap WYSIHTML5 -->
+        <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+        <!-- Slimscroll -->
+        <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="plugins/fastclick/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="dist/js/app.min.js"></script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="dist/js/pages/dashboard.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="dist/js/demo.js"></script>
     </body>
 </html>

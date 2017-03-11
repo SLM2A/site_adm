@@ -32,7 +32,8 @@ class AdminGaleria {
             $this->Create();
             
             if($this->getResult()):
-                WSErro("<b>Sucesso:</b> a imagem foi inserida com sucesso!", WS_ACCEPT);
+                //WSErro("<b>Sucesso:</b> a imagem foi inserida com sucesso!", WS_ACCEPT);
+                RentalErro("<b>Sucesso:</b> a imagem foi inserida com sucesso!", RENTAL_ERROR);
             else:
                 WSErro("<b>Sucesso:</b> a imagem não pode ser inserida!", WS_ERROR);
             endif;                      

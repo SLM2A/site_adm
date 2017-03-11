@@ -1,3 +1,28 @@
+<?php
+session_start();
+require('../_app/Config.inc.php');
+
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (isset($post) && $post['SendPostForm']):
+    $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL );
+    unset($post['SendPostForm']);
+    require('../admin/_models/AdminGaleria.class.php');
+    $sendGallery = new AdminGaleria;
+    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'].'-'.$_SESSION['userlogin']['sobrenomeUsuario']);
+    
+    //$sendGallery->gbSend();        
+    
+    //WSErro("Imagem inserida com suecesso!", WS_ACCEPT);
+    
+    //if(!isset($_FILES)):
+    //    WSErro("Selecione uma imagem para ser inserida",WS_ALERT);
+    //endif;
+endif;
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -369,301 +394,119 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Procurar Vaga
-       
+        Meu Book
       </h1>
-     
+        <form name="PostForm" method="POST" enctype="multipart/form-data">        
+            <input type="file" multiple name="portfolio[]" id="exampleInputFile"/>
+        <input type="submit" value="+ Adicionar Fotos" name="SendPostForm" button type="button" class="btn btn-block btn-primary btn-lg"/>
+        </form>
+     <small>Adicione fotos de seus trabolhos para que outros curtam e comentem</small>
     </section>
 
     <!-- Main content -->
     <section class="content">
 		
-		  <div class="col-md-12">
-              <div class="form-group">
-                <select class="form-control select2" multiple="multiple" data-placeholder="O que você procura?" style="width: 100%;">
-                  <option>Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
-			  
-
-     
-			<!-- Começo da ordenação dos resultados-->
-						
-					  <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-		
-     			<!-- Segunda linha da ordenação dos resultados-->
-						
-					    <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-	 
-	 			<!-- Terceira linha da ordenação dos resultados-->
-						
-					   <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-				  
-				  			<!-- Quarta linha da ordenação dos resultados-->
-						
-					   <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-	 
-	 
-
+		  <section class="no-padding" id="portfolio">
+        <div class="container-fluid">
+            <div class="row no-gutter popup-gallery">
+                <div class="col-lg-4 col-sm-6">
+                    <a href="..\dist\img\portfolio\fullsize\1.jpg" class="portfolio-box">
+                        <img src="..\dist\img\portfolio\fullsize\1.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Fenix Cabeleireiro
+                                </div>
+                                <div class="project-name">
+                                    Corte verão
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="..\img/portfolio/fullsize/2.jpg" class="portfolio-box">
+                        <img src="..\dist\img\portfolio\fullsize\2.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Onix Studio
+                                </div>
+                                <div class="project-name">
+                                    Undercurt
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="..\img/portfolio/fullsize/3.jpg" class="portfolio-box">
+                        <img src="..\dist\img\portfolio\fullsize\3.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Espaço Milaré
+                                </div>
+                                <div class="project-name">
+                                    Corte 3
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="..\dist\img\portfolio\fullsize\4.jpg" class="portfolio-box">
+                        <img src="..\dist\img\portfolio\fullsize\4.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Espaço Farias
+                                </div>
+                                <div class="project-name">
+                                    Corte 4
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="../img/portfolio/fullsize/5.jpg" class="portfolio-box">
+                        <img src="..\dist\img\portfolio\fullsize\5.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Portela Studio
+                                </div>
+                                <div class="project-name">
+                                    Corte 5
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="../img/portfolio/fullsize/6.jpg" class="portfolio-box">
+                        <img src="..\dist\img\portfolio\fullsize\6.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    Dadalto Cortes
+                                </div>
+                                <div class="project-name">
+                                    Corte 6
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
+    <!-- /.content -->
+	 
+	 
+
+    </section>	
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

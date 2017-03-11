@@ -1,6 +1,9 @@
 <?php
 session_start();
 require('../../_app/Config.inc.php');
+require('../../_app/Includes.php');
+
+
 
 $login = new LoginSite(0);
 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
@@ -12,13 +15,50 @@ if (!$login->CheckLogin()):
 else:
     $userlogin = $_SESSION['userlogin'];
 endif;
-    
+
 if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
 endif;
-	
+
+//        WSErro("<b>Erro ao cadastrar:</b> Existem campos ogrigatórios sem preencher.", WS_ALERT);
+//        WSErro("<b>Erro ao cadastrar:</b> A logo da empresa deve ser em JPG ou PNG e ter exatamente 578x288px", WS_ALERT);
+//        WSErro("<b>Sucesso:</b> Empresa cadastrada com sucesso. <a target=\"_blank\" href=\"../empresa/nome_empresa\">Ver Empresa no Site</a>", WS_ACCEPT);        
+
+
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (!empty($data['SendPostForm'])):
+    unset($data['SendPostForm']);
+
+    require '../../admin/_models/AdminSalao.php';
+    $cadastra = new AdminSalao;
+
+    $cadastra->ExeCreate($data);
+    $readSalao = new Read;
+
+    $readSalao->FullRead("SELECT MAX(idSalao) FROM salao");
+    $idSalao = $readSalao->getResult()[0]['MAX(idSalao)'];
+
+
+    $SalaoEmpresario['idSalao'] = $idSalao;
+    $SalaoEmpresario['idUsuario'] = $userlogin['idUsuario'];
+
+
+    $cadastra->InsereRelacao($SalaoEmpresario);
+
+
+    if (!$cadastra->getResult()):
+        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    else:
+        header('Location: minhaempresa.html');
+    endif;
+endif;
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -64,7 +104,7 @@ endif;
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -93,7 +133,7 @@ endif;
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -106,7 +146,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         AdminLTE Design Team
@@ -118,7 +158,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Developers
@@ -130,7 +170,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Sales Department
@@ -142,7 +182,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Reviewers
@@ -275,13 +315,13 @@ endif;
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
@@ -329,7 +369,7 @@ endif;
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
@@ -353,7 +393,7 @@ endif;
 		<?php
                 echo '
 		<li class="active treeview/">
-			<a href="index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
@@ -363,7 +403,7 @@ endif;
                 if ($userlogin['idTipoUsuario']==2):
                     echo '
                     <li class="treeview">
-			<a href="procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+			<a href="../procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
                     </li> 
                     
                      ';
@@ -395,9 +435,173 @@ endif;
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+     <h1> <i class="ion-briefcase"></i> Experiências</h1>  
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form role="form" action="" method="post" class="login-form">
+            
+
+
+            <!-- INICIO-->
+            <!-- Default box -->
+             
+            <div class="box" closet>
+             
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="ion-plus"></i> Cadastrar Salão</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Maximizar">
+                            <i class="fa fa-plus"></i></button>
+
+                    </div>
+                </div>
+                <div class="box-body" style="display: none;">
+                    <section class="col-lg-6 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right">                  
+                                <li class="pull-left header"><i class="fa fa-list-alt"></i> Dados</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <!-- Morris chart - Sales -->
+
+                                <div class="box-body box-profile" id="sales-chart" >
+                                    <div class="form-group">
+                                        <label>Nome da Empresa:</label>
+                                        <input type="text" class="form-control" name="nomeSalao" value="<?php if (isset($data)) echo $data['nomeSalao']; ?>" >
+                                        <label>CNPJ:</label>
+                                        <input type="text" id="cnpj" class="form-control" name="cnpjSalao" value="<?php if (isset($data)) echo $data['cnpjSalao']; ?>" >
+                                        <label>Categoria:</label>
+                                        <select class="form-control" name="categoriaSalao">
+                                            <option></option>
+                                            <option>Salão</option>
+                                            <option>Barbearia</option>
+                                        </select>
+                                        <?php if (isset($data)) echo $data['categoriaSalao']; ?>
+                                        <div class="box-body pad">
+                                            <textarea input class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                                      name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-6 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right">                  
+                                <li class="pull-left header"><i class="fa fa-map-marker"></i> Localização</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <!-- Morris chart - Sales -->
+
+                                <div class="box-body box-profile" id="sales-chart" >
+                                    <div class="form-group">
+                                            <section class="col-lg-12 connectedSortable">
+
+                                                <label>CEP:</label>
+                                                <input type="text" id="cep" class="form-control" name="cep" value="<?php if (isset($data)) echo $data['cep']; ?>" required>
+                                                <label>Endereço:</label>
+                                                <input type="text" id="rua" class="form-control" name="logradouro" value="<?php if (isset($data)) echo $data['logradouro']; ?>" >
+                                                <label>Número:</label>
+                                                <input type="text"  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
+                                                <label>Complemento:</label>
+                                                <input type="text" class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
+                                                <label>Bairro:</label>
+                                                <input type="text" id="bairro" class="form-control" name="bairro" value="<?php if (isset($data)) echo $data['bairro']; ?>" >
+                                                <label>Cidade:</label>
+                                                <input type="text" id="cidade" class="form-control" name="cidade" value="<?php if (isset($data)) echo $data['cidade']; ?>" >
+                                                <label>Estado:</label>
+                                                <input type="text" id="uf"  class="form-control" name="estado" value="<?php if (isset($data)) echo $data['estado']; ?>" >
+                                            </section>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                   
+
+                    <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
+                </div>
+                <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+        </form>
+
+  <!-- FIM -->
+
+
+  <div class="row">
+      <div class="col-xs-12">
+          <div class="box">
+              <div class="box-header">
+                  <h3 class="box-title"><i class="fa fa-building"></i> Meus Salões</h3>
+
+                  
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Nome</th>
+                          <th>CNPJ</th>
+                          <th>Categoria:</th>
+                          <th>Endereço</th>
+                          <th></th>
+                        </tr>
+                       </thead>
+                     <tbody>
+                       
+                         <?php
+                                                $readSes = new Read;
+
+                                                $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                                                     foreach ($readSes->getResult() as $ses):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+
+                                                        echo "<tr><td> {$ses['nomeSalao']} </td>
+                                                              <td> {$ses['cnpjSalao']} </td>
+                                                              
+                                                              <td> {$ses['categoriaSalao']} </td>
+                                                              <td> {$ses['logradouro']} {$ses['numero']}</td>
+                                                                                                                                <td>   <div class=\"btn-group\">
+                                                                    <button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
+                                                                    <button type=\"button\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                                    
+                                                                  </div></td></tr>
+                                                        ";                                                        
+                                                        
+                                                    endforeach;
+                                               
+                                                ?>
+                        </tbody>  
+                  </table>
+              </div>
+              <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+      </div>
   </div>
 
-   
+
+  </section>
+
+  
+  
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -597,40 +801,103 @@ endif;
 
 <!-- jQuery 2.2.3 -->
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="../plugins/morris/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="../plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="../plugins/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="../plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
+<!-- PACE -->
+<script src="../plugins/pace/pace.min.js"></script>
+<!-- SlimScroll -->
 <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<!-- InputMask -->
+            <script src="../plugins/input-mask/jquery.inputmask.js"></script>
+            <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+            <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+<!-- Consulta endereço -->
+ <script src="../dist/js/pages/endereco.js"></script>
+<!-- Page script -->
+ <script>
+
+
+                $(function () {
+                    //Initialize Select2 Elements           
+
+                    $(document).ajaxStart(function() { Pace.restart(); });
+                        $('.ajax').click(function(){
+                            $.ajax({url: '#', success: function(result){
+                                $('.ajax-content').html('<hr>Ajax Request Completed !');
+                            }});
+                        });
+
+                    //Datemask dd/mm/yyyy
+                    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+                    //Datemask2 mm/dd/yyyy
+                    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+                    //Money Euro
+                    $("[data-mask]").inputmask();
+                    //CEP
+                    $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+                    //CNPJ
+                    $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___.____/__"});
+                    //Date range picker
+                    $('#reservation').daterangepicker();
+                    //Date range picker with time picker
+                    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+                    //Date range as a button
+                    $('#daterange-btn').daterangepicker(
+                            {
+                                ranges: {
+                                    'Today': [moment(), moment()],
+                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                },
+                                startDate: moment().subtract(29, 'days'),
+                                endDate: moment()
+                            },
+                            function (start, end) {
+                                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                            }
+                    );
+
+                    //Date picker
+                    $('#datepicker').datepicker({
+                        autoclose: true
+                    });
+
+                    //iCheck for checkbox and radio inputs
+                    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                        checkboxClass: 'icheckbox_minimal-blue',
+                        radioClass: 'iradio_minimal-blue'
+                    });
+                    //Red color scheme for iCheck
+                    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                        checkboxClass: 'icheckbox_minimal-red',
+                        radioClass: 'iradio_minimal-red'
+                    });
+                    //Flat red color scheme for iCheck
+                    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                        checkboxClass: 'icheckbox_flat-green',
+                        radioClass: 'iradio_flat-green'
+                    });
+
+                    //Colorpicker
+                    $(".my-colorpicker1").colorpicker();
+                    //color picker with addon
+                    $(".my-colorpicker2").colorpicker();
+
+                    //Timepicker
+                    $(".timepicker").timepicker({
+                        showInputs: false
+                    });
+                });
+            </script>
 </body>
 </html>

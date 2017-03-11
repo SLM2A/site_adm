@@ -1,26 +1,23 @@
 <?php
 session_start();
-require('../_app/Config.inc.php');
+require('../../_app/Config.inc.php');
+require('../../_app/Includes.php');
 
-$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$login = new LoginSite(0);
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+$getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
 
-if (isset($post) && $post['SendPostForm']):
-    $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL );
-    unset($post['SendPostForm']);
-    require('../admin/_models/AdminGaleria.class.php');
-    $sendGallery = new AdminGaleria;
-    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'].'-'.$_SESSION['userlogin']['sobrenomeUsuario']);
-    
-    //$sendGallery->gbSend();        
-    
-    //WSErro("Imagem inserida com suecesso!", WS_ACCEPT);
-    
-    //if(!isset($_FILES)):
-    //    WSErro("Selecione uma imagem para ser inserida",WS_ALERT);
-    //endif;
+if (!$login->CheckLogin()):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=restrito');
+else:
+    $userlogin = $_SESSION['userlogin'];
 endif;
 
-
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php?exe=logoff');
+endif;
 ?>
 
 <!DOCTYPE html>
@@ -28,32 +25,33 @@ endif;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Blank Page</title>
+  <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+   <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="plugins/iCheck/all.css">
+  <link rel="stylesheet" href="../plugins/iCheck/all.css">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="../plugins/colorpicker/bootstrap-colorpicker.min.css">
   <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+  <link rel="stylesheet" href="../plugins/timepicker/bootstrap-timepicker.min.css">
   <!-- Select2 -->
-  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="../plugins/select2/select2.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,12 +61,11 @@ endif;
   <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<!-- Site wrapper -->
 <div class="wrapper">
 
-<header class="main-header">
+  <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>R</b>E</span>
       <!-- logo for regular state and mobile devices -->
@@ -97,7 +94,7 @@ endif;
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -110,7 +107,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         AdminLTE Design Team
@@ -122,7 +119,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Developers
@@ -134,7 +131,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Sales Department
@@ -146,7 +143,7 @@ endif;
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Reviewers
@@ -279,16 +276,16 @@ endif;
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Rafael Milaré</span>
+              <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Rafael Milaré - Profissional
+                  <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                   <small>Membro desde Nov. 2016</small>
                 </p>
               </li>
@@ -313,7 +310,7 @@ endif;
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="../index.php?logoff=true" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -333,10 +330,10 @@ endif;
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Rafael Milaré</p>
+          <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -345,7 +342,7 @@ endif;
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i> 
                 </button>
               </span>
         </div>
@@ -354,177 +351,218 @@ endif;
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">Navegação Principal</li>
-		
-		<li class="active treeview">
-			<a href="index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+		<?php
+                echo '
+		<li class="active treeview/">
+			<a href="../index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
-			<a href="pages/examples/profile.html"><i class="fa fa-user"></i> <span>Perfil</span></a>	
-		</li>	
-	
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Exemplos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Compra</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Perfil</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Registro</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Tela de Bloqueio</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Erro 404</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Erro 500</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>             
+			<a href="cadPerfil/perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
+		</li>
+                ';
+                if ($userlogin['idTipoUsuario']==2):
+                    echo '
+                    <li class="treeview">
+			<a href="../procurarvaga.html"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+                    </li> 
+                    
+                     ';
+                else :
+                    echo '
+                    <li class="treeview">
+                        <a href="cadEmpresa/minhaEmpresa.html"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
+                    </li>
+                    <li class="treeview">
+                        <a href=""><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
+                    </li>
+                    ';
+                endif;
+             
+                echo '              
+                 <li class="treeview">
+                    <a href="cadPerfil/sobremim.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+		</li>
+                <li class="treeview">
+                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+		</li>
+                   ';     
+		?>
+            
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
 
-  <!-- =============================================== -->
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Meu Book
-      </h1>
-        <form name="PostForm" method="POST" enctype="multipart/form-data">        
-            <input type="file" multiple name="portfolio[]" id="exampleInputFile"/>
-        <input type="submit" value="+ Adicionar Fotos" name="SendPostForm" button type="button" class="btn btn-block btn-primary btn-lg"/>
-        </form>
-     <small>Adicione fotos de seus trabolhos para que outros curtam e comentem</small>
+        <h1> <i class="ion-person"></i> Nome do Salão</h1>  
     </section>
 
     <!-- Main content -->
+    
     <section class="content">
+             
+      <section class="col-lg-3 connectedSortable">
+                            <!-- Profile Image -->
+                            <div class="box box-primary">
+                                <div class="box-body box-profile">
+                                    <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
+
+                                    <h3 class="profile-username text-center">Nome Salão</h3>
+                                    <hr>
+                                    <strong><i class="fa fa-pencil margin-r-5"></i>Categoria</strong>
+                                    <p class="text-muted text-center">Cabelereiro</p>
+                                    <hr>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </section>
+                        <!-- Fim Profile Image -->
+
+                        <!-- About Me Box -->
+                        <section class="col-lg-9 connectedSortable">   
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="ion-person"></i> Sobre o Salão</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <strong><i class="fa fa-book margin-r-5"></i> Descrição</strong>
+
+                                    <p class="text-muted">
+                                        Aqui vai a descrição do Salão
+                                    </p>
+                                    <hr>
+                                    <strong><i class="fa fa-pencil margin-r-5"></i> Nome do Proprietário</strong>
+                                    <p>
+                                        <span class="label label-danger">Rafael Milare</span>
+                                        
+                                    </p>
+                                    <hr>						  
+                                    <strong><i class="fa fa-map-marker margin-r-5"></i> Localidade</strong>
+                                    <p class="text-muted">São Paulo, Brasil</p>
+
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Fim About Me Box -->	
+
+                        <!-- Inicio Minhas Experiências -->	
+                        <section class="col-md-12">	
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title"><i class="ion-briefcase"></i> Vagas de Aluguel Disponíveis </h3>
+
+                                        
+                                </div>
+
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                            <thead> 
+                                                <tr>
+                                                    <th>Nome do Anúncio</th>
+                                                    <th>Profissão</th>
+                                                    <th>Forma de Aluguel</th>
+                                                    <th>Preço</th>
+                                                    <th>Salão</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <?php
+                                                $readSes = new Read;
+
+                                                $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao" , "catid={$userlogin['idUsuario']}");
+                                                foreach ($readSes->getResult() as $ses):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+
+                                                    echo "<tr><td> {$ses['nomeAnuncio']} </td>
+                                                              <td> {$ses['profissao']} </td>
+                                                              <td> {$ses['formaAluguel']} </td>
+                                                              <td> {$ses['preco']} </td>
+                                                              <td> {$ses['nomeSalao']} </td>
+                                                                  <td>   <div class=\"btn-group\">
+                                                                    <button type=\"button\" class=\"btn btn-info\">Ir Para Vaga</button>
+                                                                    
+                                                                    
+                                                                  </div></td></tr>
+                                                        ";
+
+                                                endforeach;
+                                                ?>
+                                            </tbody>  
+                                        </table>
+                                </div>
+                            </div>
+                        </section> 
+                        <!-- Fim Minhas Experiências -->	
+
+                        <!-- Inicio Minhas Experiências -->	
+                        <section class="col-md-12">	
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title"><i class="ion-ios-bookmarks"></i> Vagas de Emprego Disponíveis</h3>
+
+
+                                </div>
+
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                            <thead> 
+                                                <tr>
+                                                    <th>Nome do Anúncio</th>
+                                                    <th>Profissão</th>
+                                                    <th>Nível</th>
+                                                    <th>Contratação</th>
+                                                    <th>Nº Vagas</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <?php
+                                                $readSes = new Read;
+
+                                                $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao", "catid={$userlogin['idUsuario']}");
+                                                foreach ($readSes->getResult() as $ses):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+                                                    
+                                                    echo "<tr><td> {$ses['tituloVaga']} </td>
+                                                              <td> {$ses['profissao']} </td>
+                                                              <td> {$ses['nivel']} </td>
+                                                              <td> {$ses['vinculoEmpregaticio']} </td>
+                                                              <td> {$ses['numeroVagas']} </td>
+                                                                  <td>   <div class=\"btn-group\">
+                                                                    <button type=\"button\" class=\"btn btn-info\">Ir Para Vaga</button>
+                                                                    
+                                                                    
+                                                                  </div></td></tr>
+                                                        ";
+
+                                                    
+                                                endforeach;
+                                                ?>
+                                            </tbody>  
+                                        </table>
+                                </div>
+                            </div>
+                        </section> 
+                        <!-- Fim Minhas Experiências -->
+
 		
-		  <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter popup-gallery">
-                <div class="col-lg-4 col-sm-6">
-                    <a href="dist\img\portfolio\fullsize\1.jpg" class="portfolio-box">
-                        <img src="dist\img\portfolio\fullsize\1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Fenix Cabeleireiro
-                                </div>
-                                <div class="project-name">
-                                    Corte verão
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
-                        <img src="dist\img\portfolio\fullsize\2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Onix Studio
-                                </div>
-                                <div class="project-name">
-                                    Undercurt
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
-                        <img src="dist\img\portfolio\fullsize\3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Espaço Milaré
-                                </div>
-                                <div class="project-name">
-                                    Corte 3
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="dist\img\portfolio\fullsize\4.jpg" class="portfolio-box">
-                        <img src="dist\img\portfolio\fullsize\4.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Espaço Farias
-                                </div>
-                                <div class="project-name">
-                                    Corte 4
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
-                        <img src="dist\img\portfolio\fullsize\5.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Portela Studio
-                                </div>
-                                <div class="project-name">
-                                    Corte 5
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
-                        <img src="dist\img\portfolio\fullsize\6.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Dadalto Cortes
-                                </div>
-                                <div class="project-name">
-                                    Corte 6
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
     </section>
-    <!-- /.content -->
-	 
-	 
 
-    </section>	
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.3.11
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-  </footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-
       <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
     </ul>
     <!-- Tab panes -->
@@ -715,42 +753,54 @@ endif;
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
-!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Versão</b> 1.0.00
+    </div>
+    <strong>Copyright &copy; 2017 <a href="">slm2a</a>.</strong> Todos os direitos reservados.
+   
+  </footer>
+<!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
 <!-- Select2 -->
-<script src="plugins/select2/select2.full.min.js"></script>
+<script src="../plugins/select2/select2.full.min.js"></script>
 <!-- InputMask -->
-<script src="plugins/input-mask/jquery.inputmask.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <!-- date-range-picker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- bootstrap datepicker -->
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- bootstrap color picker -->
-<script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 <!-- bootstrap time picker -->
-<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <!-- SlimScroll 1.3.0 -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- iCheck 1.0.1 -->
-<script src="plugins/iCheck/icheck.min.js"></script>
+<script src="../plugins/iCheck/icheck.min.js"></script>
 <!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
+<script src="../plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+<script src="../dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+<script src="../dist/js/demo.js"></script>
+<!-- Consulta endereço -->
+<script src="../dist/js/pages/endereco.js"></script>
+<!-- Msgs -->
+<script src="../plugins/Toastr/msg.js"></script>
 <!-- Page script -->
 <script>
   $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2();
-
+    //Initialize Select2 Elements           
+    
+     
+    $("#cpfUsuario").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"});
+        
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
     //Datemask2 mm/dd/yyyy

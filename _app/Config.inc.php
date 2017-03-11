@@ -26,12 +26,18 @@ function __autoload($Class) {
     endif;
 }
 
-// TRATAMENTO DE ERROS #####################
-//CSS constantes :: Mensagens de Erro
+// TRATAMENTO DE ERROS WSPHP #####################
+//CSS constantes :: Mensagens de WSErro
 define('WS_ACCEPT', 'accept');
 define('WS_INFOR', 'infor');
 define('WS_ALERT', 'alert');
 define('WS_ERROR', 'error');
+
+//CSS constantes :: Mensagens de RentalErro
+define('RENTAL_ACCEPT', 'alert-success');
+define('RENTAL_INFOR', 'alert-info');
+define('RENTAL_ALERT', 'alert-warning');
+define('RENTAL_ERROR', 'alert-danger');
 
 //WSErro :: Exibe erros lançados :: Front
 function WSErro($ErrMsg, $ErrNo, $ErrDie = null) {
@@ -44,14 +50,18 @@ function WSErro($ErrMsg, $ErrNo, $ErrDie = null) {
 }
 
 //Rental :: Exibe erros lançados :: Front
-function ErroRental ($ErrMsg, $ErrNo, $ErrDie = null) {
-    $CssClass = ($ErrNo == E_USER_NOTICE ? WS_INFOR : ($ErrNo == E_USER_WARNING ? WS_ALERT : ($ErrNo == E_USER_ERROR ? WS_ERROR : $ErrNo)));
-    //echo "<p class=\"trigger {$CssClass}\">{$ErrMsg}<span class=\"ajax_close\"></span></p>";
-    echo "<div class=\"alert alert-success alert-dismissible\">
-                <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>
-                <h4><i class=\"icon fa fa-check\"></i> Sucesso</h4>
-                {$ErrMsg}
-              </div>";
+function RentalErro ($ErrMsg, $ErrNo, $ErrDie = null) {
+    $tipoIcon = ($ErrNo == RENTAL_ACCEPT) ? "fa-check" : ($ErrNo == RENTAL_INFOR ? "fa-info" : ($ErrNo == RENTAL_ALERT ? "fa-warning" : "fa-ban"));
+    $tipoErro = ($ErrNo == RENTAL_ACCEPT) ? "Sucesso" : ($ErrNo == RENTAL_INFOR ? "Atenção" : ($ErrNo == RENTAL_ALERT ? "Cuidado" : "Erro"));
+    echo "
+            <div class=\"box-body\">
+                <div class=\"alert {$ErrNo} alert-dismissible\">
+                    <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>
+                    <h4><i class=\"icon fa {$tipoIcon}\"></i> {$tipoErro}</h4>
+                    {$ErrMsg}
+                </div>
+            </div>
+         ";
     if ($ErrDie):
         die;
     endif;
@@ -69,5 +79,11 @@ function PHPErro($ErrNo, $ErrMsg, $ErrFile, $ErrLine) {
         die;
     endif;
 }
+// TRATAMENTO DE ERROS RENTAL #####################
+//CASE constantes :: Mensagens de Erro
+
+
+
+
 
 set_error_handler('PHPErro');
