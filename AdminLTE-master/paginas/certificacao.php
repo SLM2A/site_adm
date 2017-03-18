@@ -101,7 +101,6 @@ endif;
                                         <div class="tab-content no-padding">
                                             <!-- Morris chart - Sales -->
                                             <br>
-                                            <div ></div>
                                             <div class="box-body box-profile" id="sales-chart" >
                                                 <div class="form-group">
                                                     <label>Duração:</label>
@@ -112,7 +111,10 @@ endif;
                                                         <option>12 meses</option>
                                                         <option>15 meses</option>
                                                         <option>18 meses</option>
-                                                        <option>24 meses</option>
+                                                        <option>2 anos</option>
+                                                        <option>3 anos</option>
+                                                        <option>4 anos</option>
+                                                        <option>5 anos</option>
                                                     </select>
                                                     <?php if (isset($data)) echo $data['duracaoCertificado'];?>
                                                     <label>Ano de Inicio:</label>

@@ -75,8 +75,24 @@ endif;
                                     <label>Cargo:</label>
                                     <select class="form-control" name="cargoExperiencia">
                                         <option></option>
-                                        <option value="Cabelereiro">Cabelereiro</option>
-                                        <option value="Manicure">Manicure</option>
+                                        <?php
+                                                $readAreaAtuacao = new Read;
+
+                                                $readAreaAtuacao->FullRead("select * from areaatuacao");
+                                                if (!$readAreaAtuacao->getResult()):
+                                                    echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                else:
+                                                    foreach ($readAreaAtuacao->getResult() as $area):
+                                                        echo "<option value=\"{$area['nomeProfissao']}\" ";
+
+                                                        if ($area['idAreaAtuacao'] == $data['idAreaAtuacao']):
+                                                            echo ' selected="selected" ';
+                                                        endif;
+
+                                                        echo "> {$area['nomeProfissao']} </option>";
+                                                    endforeach;
+                                                endif;
+                                                ?>
                                     </select>
 <?php if (isset($data)) echo $data['cargoExperiencia']; ?>
                                     <label>Empresa:</label>

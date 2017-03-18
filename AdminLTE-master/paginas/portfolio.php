@@ -11,9 +11,25 @@ if (isset($post) && $post['SendPostForm']):
     require('../../admin/_models/AdminGaleria.class.php');
     $sendGallery = new AdminGaleria;
     $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'].'-'.$_SESSION['userlogin']['sobrenomeUsuario']);
-    
+
+    if (!$sendGallery->getResult()):
+        RentalErro($sendGallery->getError()[0], $sendGallery->getError()[1]);
+    else:
+        echo "<script>location.href='portfolio.php';</script>";
+    endif;
+
+
+else:
+    $read = new Read();
+    $read->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+    if($read->getResult()):
+    $data = $read->getResult();
+    endif;
 endif;
+
+
 ?>
+<link rel='stylesheet' href='package/unitegallery/css/unite-gallery.css' type='text/css' />
 
 <section class="content-header">
       <h1>
@@ -36,104 +52,118 @@ endif;
         <p>
         <p>
         <p>
-        <section class="no-padding" id="portfolio">
-            <div class="container-fluid">
-                <div class="row no-gutter popup-gallery">
-                    <div class="col-lg-4 col-sm-6">
-                        <a href="..\dist\img\portfolio\fullsize\1.jpg" class="portfolio-box">
-                            <img src="..\dist\img\portfolio\fullsize\1.jpg" class="img-responsive" alt="">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        Fenix Cabeleireiro
-                                    </div>
-                                    <div class="project-name">
-                                        Corte verão
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
-                            <img src="..\dist\img\portfolio\fullsize\2.jpg" class="img-responsive" alt="">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        Onix Studio
-                                    </div>
-                                    <div class="project-name">
-                                        Undercurt
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
-                            <img src="..\dist\img\portfolio\fullsize\3.jpg" class="img-responsive" alt="">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        Espaço Milaré
-                                    </div>
-                                    <div class="project-name">
-                                        Corte 3
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a href="..\dist\img\portfolio\fullsize\4.jpg" class="portfolio-box">
-                            <img src="..\dist\img\portfolio\fullsize\4.jpg" class="img-responsive" alt="">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        Espaço Farias
-                                    </div>
-                                    <div class="project-name">
-                                        Corte 4
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
-                            <img src="..\dist\img\portfolio\fullsize\5.jpg" class="img-responsive" alt="">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        Portela Studio
-                                    </div>
-                                    <div class="project-name">
-                                        Corte 5
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
-                            <img src="..\dist\img\portfolio\fullsize\6.jpg" class="img-responsive" alt="">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        Dadalto Cortes
-                                    </div>
-                                    <div class="project-name">
-                                        Corte 6
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+
+        <!-- INICIO form imagem -->
+        <form role="form" action="" method="post" class="login-form">
+
+            <!-- INICIO-->
+            <!-- Default box -->
+
+            <div class="box" closet>
+
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="ion-plus"></i> Dados da Imagem </h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Maximizar">
+                            <i class="fa fa-plus"></i></button>
+
                     </div>
                 </div>
+                <div class="box-body" style="display: none;">
+                    <section class="col-lg-6 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+
+                                    <div id="gallery2" style="display:none;">
+
+                                        <a href="http://unitegallery.net" >
+                                            <img alt="Lemon Slice"
+                                                 src="package/images/thumbs/tile1.jpg"
+                                                 data-image="package/images/big/tile1.jpg"
+                                                 data-description="This is a Lemon Slice"
+                                                 style="display:none">
+                                        </a>
+
+                                    </div>
+
+
+                        </div>
+                    </section>
+
+                    <section class="col-lg-6 connectedSortable">
+                        <label>Titulo:</label>
+                        <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario"  required>
+                        <label>Descrição:</label>
+                        <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario"  required>
+                    </section>
+
+                    <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar e Ir para localização</button>
+                </div>
+                <!-- /.box-body -->
             </div>
-        </section>
-        <!-- /.content -->
+            <!-- /.box -->
+        </form>
+        <!-- Fechamento form imagem -->
+
+        <div id="gallery" style="display:none;">
+    <?php
+
+
+
+          foreach ($read->getResult() as $fotos):
+
+            echo   " <a href=\"portfolio.php?id={$fotos['idPortfolio']}\" onclick=\"teste()\">
+                    <img alt=\"Lemon Slice\"
+                     src=\"../uploads/{$fotos['portfolioImagem']}\"
+                     data-image=\"../uploads/{$fotos['portfolioImagem']}\"
+                     data-description=\"This is a Lemon Slice\"
+                     style=\"display:none\">
+                    </a> ";
+          endforeach;
+            ?>
+
+        </div>
     </section>
 
 <div class="row">
 <?php include 'menuFooter.php'; ?>
+    <script type='text/javascript' src='package/unitegallery/js/unitegallery.js'></script>
+    <script type='text/javascript' src='package/unitegallery/themes/tilesgrid/ug-theme-tilesgrid.js'></script>
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function(){
+
+            jQuery("#gallery").unitegallery({
+                theme_navigation_type:"arrows",
+                tile_enable_textpanel:true,
+                tile_textpanel_title_text_align: "center",
+                tile_enable_icons: false,
+                tile_enable_action:	false,
+            });
+
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function(){
+
+            jQuery("#gallery2").unitegallery({
+                theme_navigation_type:"arrows",
+                tile_enable_textpanel:true,
+                tile_textpanel_title_text_align: "center",
+                textpanel_enable_description: true,
+            });
+
+        });
+
+        function teste(){
+
+        }
+
+    </script>
+

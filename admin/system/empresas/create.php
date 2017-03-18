@@ -50,7 +50,7 @@
                         $readState = new Read;
                         $readState->ExeRead("app_estados", "ORDER BY estado_nome ASC");
                         foreach ($readState->getResult() as $estado):
-                            extract($estado);
+                            extract($estado);                             
                             echo "<option value=\"{$estado_id}\"> {$estado_uf} / {$estado_nome} </option>";
                         endforeach;
                         ?>                        

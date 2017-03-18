@@ -251,9 +251,32 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <script src="../dist/js/pages/endereco.js"></script>
+<style>
+    .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
+
+    .example-modal .modal {
+      background: transparent !important;
+    }
+  </style>
 <!-- Page script -->
 <script>
   $(function () {
+      
+    $('#openModal').click(function() {
+     $('#myModal').modal('show');
+    });
+    
+    
+ 
+      
     //Initialize Select2 Elements           
     $(".select2").select2();
     //Datemask dd/mm/yyyy
@@ -319,5 +342,6 @@
     });
   });
 </script>
+
 </body>
 </html>

@@ -6,12 +6,35 @@ include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
+if (!empty($data['SendPostForm'])):
+    unset($data['SendPostForm']);
+
+    require '../../admin/_models/SiteRegistrar.class.php';
+    $cadastra = new SiteRegistrar();
+
+
+
+    $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
+
+    RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
+
+
+else:
+    $read = new Read();
+    $read->ExeRead("usuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+    if($read->getResult()):
+        $data = $read->getResult()[0];
+    endif;
+endif;
 
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
     require '../../admin/_models/SiteRegistrar.class.php';
     $cadastra = new SiteRegistrar();
+    
+     
+    
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
     
     RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
@@ -37,9 +60,11 @@ endif;
     <!-- Main content -->
     
     <section class="content">
-       
+      
              
       <form role="form" action="" method="post" class="login-form">
+
+     
         <section class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
             <div class="nav-tabs-custom">
@@ -102,7 +127,7 @@ endif;
         
 
             <section class="col-lg-12 connectedSortable ">
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar</button>
+                 <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i>Salvar</button>
             </section>
         </form>
 		

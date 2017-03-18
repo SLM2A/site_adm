@@ -32,6 +32,7 @@
                             </div>
                         </div>
                         <!-- ./col -->
+                       
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
                             <div class="small-box bg-green">
@@ -46,6 +47,8 @@
                                 <a href="candidatura.php" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
+                       
+                        
                         <!-- ./col -->
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
@@ -93,14 +96,14 @@
                                     <!-- Morris chart - Sales -->
                                     <br>
                                     <div ><img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture"></div>
-                                    <div class="box-body box-profile" id="sales-chart" style="position: relative;">
+                                    <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 130px;">
                                         <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
 
                                         <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
 
                                         <a href="perfilpublico.php" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
                                     </div>
-
+                                    
                                 </div>
                             </div>
                         </section>
@@ -116,24 +119,24 @@
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <!-- Morris chart - Sales -->
-                                    <br>
-                                    <div ></div>
-                                    <div ></div>
-                                    <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 220px">
+                                
+                                    <div class="box-body box-profile" id="sales-chart" style="position: relative; ">
                                         <a href="perfil.php"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
                                         <?php
                                         if ($userlogin['idTipoUsuario'] == 2):
                                             echo '
-                        <a href="procurarvaga.html"><button type="submit" class="btn btn-block btn-success btn-lg"><i class="fa fa-search"></i> Procurar Vagas</button></a>
+                        <a href="procurarvaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-search"></i> Procurar Vagas</button></a>
+                        
                      ';
                                         else :
                                             echo '
                         <a href="cadastroEmpresa.php"><button type="button" class="btn btn-block btn-warning btn-lg"><i class="fa fa-building"></i> Meus Salões</button></a>
                         <a href="EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
+                        <a href="procurarprofissional.php"><button type="button" class="btn btn-block btn-primary btn-lg"><i class="fa fa-search"></i> Procurar Profissional</button></a>
                         ';
                                         endif;
                                         ?>      
-                                        <button type="button" class="btn btn-block btn-primary btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
+                                        <button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
 
                                     </div>
 

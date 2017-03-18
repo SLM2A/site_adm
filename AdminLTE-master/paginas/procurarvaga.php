@@ -3,6 +3,8 @@
 require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
+
+
 ?>
 
 <section class="content-header">
@@ -19,13 +21,24 @@ include 'menuHeader.php';
 		  <div class="col-md-12">
               <div class="form-group">
                 <select class="form-control select2" multiple="multiple" data-placeholder="O que você procura?" style="width: 100%;">
-                  <option>Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
+                  <?php
+                                                $readAreaAtuacao = new Read;
+
+                                                $readAreaAtuacao->FullRead("select * from areaatuacao");
+                                                if (!$readAreaAtuacao->getResult()):
+                                                    echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                else:
+                                                    foreach ($readAreaAtuacao->getResult() as $area):
+                                                        echo "<option value=\"{$area['nomeProfissao']}\" ";
+
+//                                                        if ($area['idAreaAtuacao'] == $data['idAreaAtuacao']):
+//                                                            echo ' selected="selected" ';
+//                                                        endif;
+
+                                                        echo "> {$area['nomeProfissao']} </option>";
+                                                    endforeach;
+                                                endif;
+                                                ?>
                 </select>
               </div>
 			  
@@ -33,10 +46,23 @@ include 'menuHeader.php';
       <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Cidade</label>
+                  <div class="form-group">
+                <label>Estado</label>
                 <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
+                  <option value="" disabled selected> Selecione o estado </option>
+                        <?php
+                        $readState = new Read;
+                        $readState->ExeRead("app_estados", "ORDER BY estado_nome ASC");
+                        foreach ($readState->getResult() as $estado):
+                            extract($estado);                             
+                            echo "<option value=\"{$estado_id}\"> {$estado_uf} / {$estado_nome} </option>";
+                        endforeach;                        
+                        ?> 
+                </select>
+              </div>
+                <label>Categoria</label>
+                <select class="form-control select2" style="width: 100%;">
+                 <option>Alaska</option>
                   <option>California</option>
                   <option>Delaware</option>
                   <option>Tennessee</option>
@@ -45,32 +71,26 @@ include 'menuHeader.php';
                 </select>
               </div>
               <!-- /.form-group -->
-              <div class="form-group">
-                <label>Estado</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
+              
               <!-- /.form-group -->
             </div>
             <!-- /.col -->
             <div class="col-md-6">
               <div class="form-group">
-                <label>Categoria</label>
+                <label>Cidade</label>
                 <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
+                  <?php 
+                      $readCityes = new Read;
+                      $readCityes->ExeRead("app_cidades", "WHERE estado_id = :uf", "uf={$idEstado}");
+
+                      sleep(1);
+
+                      echo "<option value=\"\" disabled selected> Selecione a cidade </option>";
+                      foreach ($readCityes->getResult() as $cidades):
+                          extract($cidades);
+                          echo "<option value=\"{$cidade_id}\"> {$cidade_nome} </option>";
+                      endforeach;
+                  ?>
                 </select>
               </div>
               <!-- /.form-group -->
@@ -91,275 +111,67 @@ include 'menuHeader.php';
 
 			<!-- Começo da ordenação dos resultados-->
 						
-					  <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-		
-     			<!-- Segunda linha da ordenação dos resultados-->
-						
-					    <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-	 
-	 			<!-- Terceira linha da ordenação dos resultados-->
-						
-					   <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-				  
-				  			<!-- Quarta linha da ordenação dos resultados-->
-						
-					   <div class="row">
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-					  <!-- small box -->
-					  <div class="small-box bg-aqua">
-						<div class="inner">
-						  <h2>Cabelereiro</h2>
-						  <p> Impacta Cortes</p>
-						  <p>Barra Funda, São Paulo/SP</p>
-						</div>
-						<div class="icon">
-						  <i class="ion ion-camera"></i>
-						</div>
-						<a href="#" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-					  </div>
-					</div>
-				
-					<!-- ./col -->
-				  </div>
-				  <!-- /.row -->
-	 
+	<?php
+        
+        $readVaga = new Read();
+     
+        $readVaga->FullRead("Select * From vagaaluguel");
+//        var_dump($readVaga->getResult());
+        
+        foreach ($readVaga->getResult() as $vagas):
+
+            echo "      <section class=\"col-lg-3 connectedSortable\">
+                            <!-- Profile Image -->
+                            <div class=\"box box-primary\">
+                                <div class=\"box-body box-profile\">
+                                    <img class=\"profile-user-img img-responsive img-circle\" src=\"../dist/img/Aluguel_de_espaco_128x128.jpg\" alt=\"User profile picture\">
+                                    <h3 class=\"profile-username text-center\"\> {$vagas['nomeAnuncio']}</h3>
+                                    <hr>
+                                    <strong><i class=\"fa fa-pencil margin-r-5\"></i>Áreas de Atuação</strong>
+                                    <p>{$vagas['profissao']}</p>
+                                    <hr>
+                                    <a href=\"perfilVagaAluguelPublico.php?id={$vagas['idVagaAluguel']}\" class=\"btn btn-success btn-block\"><b>Ver Vaga</b></a>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </section>
+                  ";
+
+        endforeach;
+        
+        $readVagaEmprego = new Read();
+        $readVagaEmprego->FullRead("Select * From vagaemprego");
+
+//        var_dump($readVagaEmprego->getResult());
+        foreach ($readVagaEmprego->getResult() as $vagasEmprego):
+
+            echo "      <section class=\"col-lg-3 connectedSortable\">
+                            <!-- Profile Image -->
+                            <div class=\"box box-primary\">
+                                <div class=\"box-body box-profile\">
+                                    <img class=\"profile-user-img img-responsive img-circle\" src=\"../dist/img/vaga_de_emprego_128x128.jpg\" alt=\"User profile picture\">
+                                    <h3 class=\"profile-username text-center\"\> {$vagasEmprego['tituloVaga']}</h3>
+                                    <hr>
+                                    <strong><i class=\"fa fa-pencil margin-r-5\"></i>Áreas de Atuação</strong>
+                                    <p>{$vagasEmprego['profissao']}</p>
+                                    <hr>
+                                    <a href=\"perfilVagaEmpregoPublico.php?id={$vagasEmprego['idVagaEmprego']}\" class=\"btn btn-success btn-block\"><b>Ver Vaga</b></a>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </section>
+                  ";
+
+        endforeach;
+  
+        
+        ?>				 
 	 
 
     </section>
 
     <div class="row">
+        
 <?php include 'menuFooter.php'; ?>

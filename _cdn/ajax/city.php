@@ -13,3 +13,4 @@ foreach ($readCityes->getResult() as $cidades):
     extract($cidades);
     echo "<option value=\"{$cidade_id}\"> {$cidade_nome} </option>";
 endforeach;
+?>

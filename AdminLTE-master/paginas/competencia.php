@@ -4,6 +4,35 @@ require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (!empty($data['SendPostForm'])):
+    unset($data['SendPostForm']);
+
+    $data['idUsuario'] = $userlogin['idUsuario'];
+
+
+
+    require '../../admin/_models/AdminCompetencia.class.php';
+    $cadastra = new AdminCompetencia;
+    $cadastra->ExeCreate($data);
+     echo "<script>location.href='competencia.php';</script>";
+
+
+else:
+    $read = new Read();
+    $read->FullRead("select * from habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao WHERE idUsuario = :id" , "id={$userlogin['idUsuario']}");
+    if($read->getResult()):
+        $data = $read->getResult()[0];
+    endif;
+
+
+
+endif;
+
+
+
+
 ?>
 
 <section class="content-header">
@@ -11,19 +40,32 @@ include 'menuHeader.php';
     </section>
     <!-- Main content -->
     <section class="content">
-		
-		
+
+        <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data"  >
 		<h3> Quais serviços e técnicas você oferece?</h3>
 		  <div class="col-md-12">
               <div class="form-group">
-                <select class="form-control select2" multiple="multiple"  style="width: 100%;">
-                  <option>Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
+                <select class="form-control select2" multiple="multiple"  style="width: 100%;" name="idAreaAtuacao[]">
+
+                    <?php
+
+                    $readAreaAtuacao = new Read;
+
+                    $readAreaAtuacao->FullRead("select * from areaatuacao order by nomeProfissao");
+                    if (!$readAreaAtuacao->getResult()):
+                        echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                    else:
+                        foreach ($readAreaAtuacao->getResult() as $area):
+                            echo "<option value=\"{$area['idAreaAtuacao']}\" ";
+
+                                                        if ($area['idAreaAtuacao'] == $data['idAreaAtuacao']."-" ):
+                                                            echo ' selected="selected" ';
+                                                        endif;
+
+                            echo "> {$area['nomeProfissao']} </option>";
+                        endforeach;
+                    endif;
+                    ?>
                 </select>
               </div>
 		</div>
@@ -42,10 +84,12 @@ include 'menuHeader.php';
                 </select>
               </div>
 		</div>
-     
-	 
 
-	
+
+        <section class="col-lg-12 connectedSortable ">
+            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i>Salvar</button>
+        </section>
+        </form>
 	
     <center> 
         <nav aria-label="Page navigation">
