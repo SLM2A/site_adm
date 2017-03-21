@@ -4,7 +4,7 @@
  * Pager.class [ HELPER ]
  * Realização a gestão e a paginação de resultados do sistema!
  * 
- * @copyright (c) 2014, Robson V. Leite UPINSIDE TECNOLOGIA
+ * @copyright (c) 2017, SLM2A
  */
 class Pager {
 

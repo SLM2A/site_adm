@@ -4,7 +4,7 @@
  * Check.class [ HELPER ]
  * Classe responável por manipular e validade dados do sistema!
  * 
- * @copyright (c) 2014, Robson V. Leite UPINSIDE TECNOLOGIA
+ * @copyright (c) 2017, SLM2A
  */
 class Check {
 

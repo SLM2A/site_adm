@@ -46,6 +46,10 @@ class AdminCompetencia{
 
      private function Create() {
         $Create = new Create;
+         $Delet = new Delete();
+
+         $Delet->ExeDelete(self::ENTITY, "Where idUsuario = :id", "id={$this->Data['idUsuario']}");
+
          $qntAreaAtuacao = count($this->Data['idAreaAtuacao']);
 
          for($i = 0; $i < $qntAreaAtuacao; $i++):

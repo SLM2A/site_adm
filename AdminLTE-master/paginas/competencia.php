@@ -19,19 +19,20 @@ if (!empty($data['SendPostForm'])):
      echo "<script>location.href='competencia.php';</script>";
 
 
+
+
 else:
     $read = new Read();
-    $read->FullRead("select * from habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao WHERE idUsuario = :id" , "id={$userlogin['idUsuario']}");
+    $read->FullRead("select * from habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao WHERE idUsuario = :id order by aa.nomeProfissao" , "id={$userlogin['idUsuario']}");
     if($read->getResult()):
-        $data = $read->getResult()[0];
+        foreach ($read->getResult() as $area):
+            $array[] = $area['idAreaAtuacao'];
+        endforeach;
     endif;
 
 
 
 endif;
-
-
-
 
 ?>
 
@@ -48,23 +49,33 @@ endif;
                 <select class="form-control select2" multiple="multiple"  style="width: 100%;" name="idAreaAtuacao[]">
 
                     <?php
-
+                    $i=0;
                     $readAreaAtuacao = new Read;
 
                     $readAreaAtuacao->FullRead("select * from areaatuacao order by nomeProfissao");
+
+
                     if (!$readAreaAtuacao->getResult()):
                         echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                     else:
+
                         foreach ($readAreaAtuacao->getResult() as $area):
+                            $atuacao = $array[$i];
                             echo "<option value=\"{$area['idAreaAtuacao']}\" ";
 
-                                                        if ($area['idAreaAtuacao'] == $data['idAreaAtuacao']."-" ):
+                                                        if ($area['idAreaAtuacao'] == $atuacao ):
                                                             echo ' selected="selected" ';
+                                                            $i++;
+                                                        else:
+                                                            echo "> {$area['nomeProfissao']} </option>";
                                                         endif;
 
                             echo "> {$area['nomeProfissao']} </option>";
                         endforeach;
                     endif;
+
+
+
                     ?>
                 </select>
               </div>

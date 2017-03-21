@@ -4,7 +4,7 @@
  * <b>Create.class:</b>
  * Classe responsável por cadastros genéticos no banco de dados!
  * 
- * @copyright (c) 2013, Robson V. Leite UPINSIDE TECNOLOGIA
+ * @copyright (c) 2013, SLM2A
  */
 class Create extends Conn {
 

@@ -4,7 +4,7 @@
  * <b>Update.class:</b>
  * Classe responsável por atualizações genéticas no banco de dados!
  * 
- * @copyright (c) 2014, Robson V. Leite UPINSIDE TECNOLOGIA
+ * @copyright (c) 2017, SLM2A
  */
 class Update extends Conn {
 
