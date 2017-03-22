@@ -82,7 +82,7 @@ endif;
                                 <label>Nome:</label>
                                 <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
                                 <label>CPF:</label>
-                                <input type="text" class="form-control" name="cpfUsuario" id="cpfUsuario" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
+                                <input type="text" class="form-control" name="cpfUsuario" id="cpf" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
 								<label>Apelido:</label>
                                 <div class="input-group">
 									<span class="input-group-addon">@</span>
@@ -107,7 +107,7 @@ endif;
                                      ?>
                                 </select>
                                                                 <label>Data de Nascimento:</label>
-                                <input type="text" class="form-control" id="dataNascimento" name="dataNascimento" value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" required>
+                                <input type="text" class="form-control" id="data" name="dataNascimento" value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" required>
                             </section>
                             <section class="col-lg-12 connectedSortable">
                                 <br>

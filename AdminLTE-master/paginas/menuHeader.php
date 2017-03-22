@@ -10,6 +10,7 @@ $getexe = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
 if (!$login->CheckLogin()):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=restrito');
+
     
 else:
     $userlogin = $_SESSION['userlogin'];
@@ -18,7 +19,8 @@ endif;
 if ($logoff):
     unset($_SESSION['userlogin']);
     header('Location: index.php?exe=logoff');
-   
+
+
 endif;
 ?>
 

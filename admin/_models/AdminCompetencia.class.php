@@ -12,7 +12,7 @@ class AdminCompetencia{
     private $CadID;
     private $File = Array();
     private $Error;
-    private $Result;
+    private $Result = false;
 
     //Nome da tabela no banco de dados!
     const ENTITY = 'habilidadeusuario';
@@ -55,7 +55,11 @@ class AdminCompetencia{
          for($i = 0; $i < $qntAreaAtuacao; $i++):
             $idArray = ['idAreaAtuacao'=>  $this->Data['idAreaAtuacao'][$i], 'idUsuario' => $this->Data['idUsuario']];
             $Create->ExeCreate(self::ENTITY, $idArray);
-         endfor;
+          endfor;
+         $this->Result = TRUE;
+         if($Create->getResult()):
+             $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
+         endif;
     }
 
     private function Update() {

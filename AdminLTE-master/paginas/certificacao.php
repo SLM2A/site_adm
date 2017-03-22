@@ -25,14 +25,9 @@ if (!empty($data['SendPostForm'])):
 
 
     $cadastra->InsereRelacao($CertificadoUsuario);
-    
-    
 
-   if (!$cadastra->getResult()):
-       RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-   else:
-       echo "<script>location.href='certificacao.php';</script>";
-    endif;
+
+
 endif;
 
 ?>
@@ -83,7 +78,7 @@ endif;
                                                         <option>Especialização</option>
                                                         <option>Bacharelado</option>
                                                     </select>
-                                                    <?php if (isset($data)) echo $data['nivelCertificado'];?>
+                                                    <?php if (isset($data)) $data['nivelCertificado'];?>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +111,7 @@ endif;
                                                         <option>4 anos</option>
                                                         <option>5 anos</option>
                                                     </select>
-                                                    <?php if (isset($data)) echo $data['duracaoCertificado'];?>
+                                                    <?php if (isset($data)) $data['duracaoCertificado'];?>
                                                     <label>Ano de Inicio:</label>
                                                     <select class="form-control" required name="anoInicioCertificado">
                                                         <option></option>
@@ -124,7 +119,7 @@ endif;
                                                         <option>2016</option>
                                                         <option>2017</option>
                                                     </select>
-                                                     <?php if (isset($data)) echo $data['anoInicioCertificado'];?>
+                                                     <?php if (isset($data)) $data['anoInicioCertificado'];?>
                                                     <label>Ano de Conclusão:</label>
                                                     <select class="form-control" required name="anoConclusaoCertificado">
                                                         <option></option>
@@ -132,7 +127,7 @@ endif;
                                                         <option>2016</option>
                                                         <option>2017</option>
                                                     </select>
-                                                     <?php if (isset($data)) echo $data['anoConclusaoCertificado'];?>
+                                                     <?php if (isset($data)) $data['anoConclusaoCertificado'];?>
                                                 </div>
                                             </div>
                                         </div>

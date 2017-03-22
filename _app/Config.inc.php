@@ -4,7 +4,7 @@
 // CONFIGRAÇÕES DO SITE ####################
 define('HOST', 'localhost');
 define('USER', 'root');
-define('PASS', '');
+define('PASS', 'slm2@');
 define('DBSA', 'wsphp');
 
 // AUTO LOAD DE CLASSES ####################

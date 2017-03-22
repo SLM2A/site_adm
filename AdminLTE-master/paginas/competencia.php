@@ -5,6 +5,7 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$msg = false;
 
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
@@ -16,12 +17,10 @@ if (!empty($data['SendPostForm'])):
     require '../../admin/_models/AdminCompetencia.class.php';
     $cadastra = new AdminCompetencia;
     $cadastra->ExeCreate($data);
-     echo "<script>location.href='competencia.php';</script>";
+    RentalErro("<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT);
+   // echo "<script>location.href='competencia.php';</script>";
 
-
-
-
-else:
+endif;
     $read = new Read();
     $read->FullRead("select * from habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao WHERE idUsuario = :id order by aa.nomeProfissao" , "id={$userlogin['idUsuario']}");
     if($read->getResult()):
@@ -29,10 +28,6 @@ else:
             $array[] = $area['idAreaAtuacao'];
         endforeach;
     endif;
-
-
-
-endif;
 
 ?>
 
@@ -43,7 +38,7 @@ endif;
     <section class="content">
 
         <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data"  >
-		<h3> Quais serviços e técnicas você oferece?</h3>
+		<h3> Quais são suas áreas de atuação?</h3>
 		  <div class="col-md-12">
               <div class="form-group">
                 <select class="form-control select2" multiple="multiple"  style="width: 100%;" name="idAreaAtuacao[]">

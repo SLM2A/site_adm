@@ -287,6 +287,10 @@
     $("[data-mask]").inputmask();
     //CEP
     $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+    //CPF
+    $("#cpf").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"});
+    //data
+    $("#data").inputmask("99/99/9999", {"placeholder": "__/__/____"});
     //Date range picker
     $('#reservation').daterangepicker();
     //Date range picker with time picker

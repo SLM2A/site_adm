@@ -10,9 +10,32 @@ $readProfissional = new Read;
 $readProfissional->FullRead("select * from usuario where idUsuario = :id", "id={$idProfissional}");
 
 
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (!empty($data['SendPostForm'])):
+    unset($data['SendPostForm']);
+
+    $data['idUsuarioEmpresario'] = $userlogin['idUsuario'];
+    $data['idUsuarioProfissional']= $idProfissional;
+
+    require '../../admin/_models/AdminProfissionalConvidar.class.php';
+    $cadastra = new AdminProfissionalConvidar;
+
+    $cadastra->ExeCreate($data);
+    echo "<script>location.href='perfilProfissionalPublico?id={$idProfissional}';</script>";
+
+endif;
+
+$readConvidado = new Read();
+$readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']} and idUsuarioProfissional = {$idProfissional}");
+
+
 ?>
 
+<link rel='stylesheet' href='package/unitegallery/css/unite-gallery.css' type='text/css' />
+
 <section class="content">
+    <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data"  >
              
       <section class="col-lg-3 connectedSortable">
                             <!-- Profile Image -->
@@ -159,7 +182,78 @@ endforeach;
                         </section> 
                         <!-- Fim Minhas Experiências -->
 
-		
+
+    <section class="col-md-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title"><i class="ion-briefcase"></i> Portfolio</h3>
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+
+                    <div id="gallery" style="display:none;">
+
+                        <?php
+
+                        $read = new Read();
+                        $read->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$idProfissional}");
+
+                        foreach ($read->getResult() as $fotos):
+                            echo   " <a href=\"portfolio.php?id={$fotos['idPortfolio']}\" onclick=\"teste()\">
+                            <img alt=\"Lemon Slice\"
+                             src=\"../uploads/{$fotos['portfolioImagem']}\"
+                             data-image=\"../uploads/{$fotos['portfolioImagem']}\"
+                             data-description=\"This is a Lemon Slice\"
+                             style=\"display:none\">
+                            </a> ";
+                        endforeach;
+                        ?>
+
+
+                    </div>
+
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+    <?php
+
+    if(!$readConvidado->getResult()):
+        echo "
+    <div class=\"col-lg-12 connectedSortable\">
+    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Abrir Contato</button>
+    </div>";
+    else:
+        echo "
+    <div class=\"col-lg-12 connectedSortable\">
+    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Aguarde contato do Profissional</button>
+    </div>";
+    endif;
+    ?>
+    </form>
+
     </section>
 <div class="row">
 <?php include 'menuFooter.php'; ?>
+
+    <script type='text/javascript' src='package/unitegallery/js/jquery-11.0.min.js'></script>
+    <script type='text/javascript' src='package/unitegallery/js/unitegallery.min.js'></script>
+    <script type='text/javascript' src='package/unitegallery/themes/tilesgrid/ug-theme-tilesgrid.js'></script>
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function(){
+
+            jQuery("#gallery").unitegallery({
+                theme_navigation_type:"arrows",
+                tile_enable_textpanel:true,
+                tile_textpanel_title_text_align: "center",
+                textpanel_enable_description: true,
+            });
+
+        });
+
+    </script>
