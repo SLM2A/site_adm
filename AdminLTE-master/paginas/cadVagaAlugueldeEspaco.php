@@ -88,42 +88,52 @@ endif;
                                             
                                                    
 
-                                                    <label>Quais profissões podem utilizar o espaço?</label>
+                                                    <label>Vaga destinada à:</label>
                                                     <select class="form-control" name="profissao" required>
                                                         <option></option>
-                                                        <option>Acupunturista</option>
-                                                        <option>Barbeiro</option>
+                                                        <?php
+                                                        $readAreaAtuacao = new Read;
+
+                                                        $readAreaAtuacao->FullRead("select * from areaatuacao");
+                                                        if (!$readAreaAtuacao->getResult()):
+                                                            echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                        else:
+                                                            foreach ($readAreaAtuacao->getResult() as $area):
+                                                                echo "<option value=\"{$area['nomeProfissao']}\" ";
+
+                                                                if ($area['nomeProfissao'] == $data['profissao']):
+                                                                    echo ' selected="selected" ';
+                                                                endif;
+
+                                                                echo "> {$area['nomeProfissao']} </option>";
+                                                            endforeach;
+                                                        endif;
+                                                        ?>
                                                     </select>
 <?php if (isset($data)) echo $data['profissao']; ?>
                                                     <br>
                                                     <label> Forma de Aluguel:</label>
                                                     
                                                 <div class="form-group">
-                                                   
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Hora" class="flat-red" checked required>
-                                                            Por Hora       
-                                                        </label>
-                                                    
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Dia" class="flat-red" required>
-                                                            Por Dia
-                                                        </label>
-                                                    
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Semana" class="flat-red" required>
-                                                            Por Semana
-                                                        </label>
-                                                    
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="Por Mês" class="flat-red" required >
-                                                            Por Mês
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" name="formaAluguel" value="À Combinar" class="flat-red" required >
-                                                            À Combinar
-                                                        </label>
-<?php if (isset($data)) echo $data['formaAluguel']; ?>
+
+                                                    <?php
+                                                    $readFormaAluguel = new Read;
+
+                                                    $readFormaAluguel->FullRead("select * from formaAluguel");
+                                                    if (!$readFormaAluguel->getResult()):
+                                                        echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                    else:
+                                                        foreach ($readFormaAluguel->getResult() as $objeto):
+                                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\" class=\"flat-red\" ";
+
+                                                            if ($objeto['opcao'] == $data['formaAluguel']):
+                                                                echo ' checked';
+                                                            endif;
+                                                            echo "> {$objeto['opcao']} </option></label>";
+                                                        endforeach;
+                                                    endif;
+                                                    ?>
+
                                                 </div>
 
                                               
@@ -157,10 +167,23 @@ endif;
                                             <label>O que você está alugando:</label>
                                             <select class="form-control" name="itemAlugado" required>
                                                 <option></option>
-                                                <option>Cadeira para serviços</option>
-                                                <option>Sala com cama para serviços</option>
-                                                <option>Estação de trabalho sem equipamentos</option>
-                                                <option>Estação de trabalho completa</option>
+                                                <?php
+                                                $readObjeto = new Read;
+
+                                                $readObjeto->FullRead("select * from objetoAlugado");
+                                                if (!$readObjeto->getResult()):
+                                                    echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                else:
+                                                    foreach ($readObjeto->getResult() as $objeto):
+                                                        echo "<option value=\"{$objeto['descricao']}\" ";
+
+                                                        if ($objeto['descricao'] == $data['itemAlugado']):
+                                                            echo ' selected="selected" ';
+                                                        endif;
+                                                        echo "> {$objeto['descricao']} </option>";
+                                                    endforeach;
+                                                endif;
+                                                ?>
                                             </select>
                                          <?php if (isset($data)) echo $data['itemAlugado']; ?>
                                         </div>
@@ -173,22 +196,49 @@ endif;
                                             <label>Dias de Funcionamento:</label>
                                             <select class="form-control" name="diaFuncionamento" required>
                                                 <option></option>
-                                                <option>Segunda à Sexta</option>
-                                                <option>Segunda à Sábado</option>
-                                                <option>Todos os dias da semana</option>
-                                                <option>À disposição do contratante</option>
+                                                <?php
+                                                $readDia = new Read;
+
+                                                $readDia->FullRead("select * from diaFuncionamento");
+                                                if (!$readDia->getResult()):
+                                                    echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                else:
+                                                    foreach ($readDia->getResult() as $dia):
+                                                        echo "<option value=\"{$dia['opcao']}\" ";
+
+                                                        if ($dia['opcao'] == $data['diaFuncionamento']):
+                                                            echo ' selected="selected" ';
+                                                        endif;
+                                                        echo "> {$dia['opcao']} </option>";
+                                                    endforeach;
+                                                endif;
+                                                ?>
                                             </select>
-                                            <?php if (isset($data)) echo $data['diaFuncionamento']; ?>
+
                                         </div>
                                         <div class="form-group">
                                             <label>Horário de Funcionamento:</label>
                                             <select class="form-control" name="horarioFuncionamento" required>
                                                 <option></option>
-                                                <option>Horário Comercial</option>
-                                                <option>Horário Flexível</option>
-                                                <option>À disposição do contratante</option>
+                                                <?php
+                                                $readHorario = new Read;
+
+                                                $readHorario->FullRead("select * from horarioFuncionamento");
+                                                if (!$readHorario->getResult()):
+                                                    echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
+                                                else:
+                                                    foreach ($readHorario->getResult() as $horario):
+                                                        echo "<option value=\"{$horario['opcao']}\" ";
+
+                                                        if ($horario['opcao'] == $data['diaFuncionamento']):
+                                                            echo ' selected="selected" ';
+                                                        endif;
+                                                        echo "> {$horario['opcao']} </option>";
+                                                    endforeach;
+                                                endif;
+                                                ?>
                                             </select>
-                                            <?php if (isset($data)) echo $data['horarioFuncionamento']; ?>
+
                                         </div>
                                     </div>
                                 </div>

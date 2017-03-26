@@ -177,8 +177,8 @@ endif;
                                                               
                                                               <td> {$ses['categoriaSalao']} </td>
                                                               <td> {$ses['logradouro']} {$ses['numero']}</td>
-                                                                                                                                <td>   <div class=\"btn-group\">
-                                                                    <button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
+                                                              <td><div class=\"btn-group\">
+                                                                    <a href=\"editarEmpresa.php?id={$ses['idSalao']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
                                                                     <button type=\"button\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
                                                                     <a href=\"perfilSalaoPublico.php?id={$ses['idSalao']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Salão</button></a>
                                                                   </div></td></tr>

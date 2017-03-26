@@ -20,16 +20,8 @@ class AdminSalao {
 
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
+        $this->Create();
 
-
-        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', WS_ALERT];
-        else:
-            $this->setData();
-//          $this->setName();
-            $this->Create();
-        endif;
     }
 
     public function InsereRelacao(array $SalaoEmpresario) {
@@ -48,15 +40,8 @@ class AdminSalao {
     public function ExeUpdate($CategoryId, array $Data) {
         $this->CadID = (int) $CategoryId;
         $this->Data = $Data;
+        $this->Update();
 
-        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
-        else:
-            $this->setData();
-//            $this->setName();
-            $this->Update();
-        endif;
     }
 
     function getResult() {
@@ -68,26 +53,11 @@ class AdminSalao {
     }
 
     //PRIVATE    
-    private function setData() {
-        $this->Data = array_map('strip_tags', $this->Data); //limpar array
-        $this->Data = array_map('trim', $this->Data); //limpar array
-        $this->Data ['nomeSalao'] = Check::Name($this->Data ['nomeSalao']); //criar o nome da categoria para o titu
-    }
 
     private function setDataSalao() {
         $this->SalaoEmpresario = array_map('strip_tags', $this->SalaoEmpresario); //limpar array
         $this->SalaoEmpresario = array_map('trim', $this->SalaoEmpresario); //limpar array
     }
-
-//    private function setName() {
-//        $Where = ( !empty($this->cadID)?"idExperiencia != {$this->CadID} AND " : ''); //verifica se existir cadID
-//        
-//        $readName = new Read;
-//        $readName->ExeRead(self::ENTITY, "WHERE {$Where} category_title = :t", "t={$this->Data['category_title']}");
-//        if ($readName->getResult()):
-//        $this->Data['category_title'] = $this->Data['category_title'] . '-' . $readName->getRowCount(); 
-//        endif;
-//    }
 
     private function Create() {
         $Create = new Create;
@@ -110,10 +80,10 @@ class AdminSalao {
 
     private function Update() {
         $update = new Update();
-        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
+        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idSalao = :cadId", "cadId={$this->CadID}");
         if ($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!", WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b>, Salão foi atualizado no sistema!", WS_ACCEPT];
         endif;
     }
 

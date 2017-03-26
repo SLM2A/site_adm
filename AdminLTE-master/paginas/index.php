@@ -95,7 +95,7 @@
                                 <div class="tab-content no-padding">
                                     <!-- Morris chart - Sales -->
                                     <br>
-                                    <div ><img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture"></div>
+                                    <div ><img class="profile-user-img img-responsive img-circle" src="../dist/img/userpadrao.png" alt="User profile picture"></div>
                                     <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 130px;">
                                         <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
 

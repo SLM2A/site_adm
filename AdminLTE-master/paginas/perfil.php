@@ -27,28 +27,6 @@ else:
     endif;
 endif;
 
-if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);
-
-    require '../../admin/_models/SiteRegistrar.class.php';
-    $cadastra = new SiteRegistrar();
-    
-     
-    
-    $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
-    
-    RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    
-    
-else:
-        $read = new Read();
-        $read->ExeRead("usuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
-        if($read->getResult()):
-            $data = $read->getResult()[0];
-    endif;
-endif;
- 
-
 
 ?>
 
