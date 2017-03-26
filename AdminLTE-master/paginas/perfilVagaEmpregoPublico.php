@@ -23,7 +23,9 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                                 <div class="box-body box-profile">
                                     <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
 
-                                    <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['tituloVaga'] ?></h3>
+                                    <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['tituloVaga']; echo " ";
+                                            echo"     <a href=\"editarVagaAluguel.php?id={$idVaga}\"><i class=\"fa  fa-pencil\"></i></a>";
+                                            ?></h3>
                                     
                                 </div>
                                 <!-- /.box-body -->
@@ -133,7 +135,6 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                                 </div>
                             </div>
                         </section>
-                    
                     
                 </section>
 <div class="row">

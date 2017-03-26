@@ -21,31 +21,16 @@ class AdminVagaEmprego{
     
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
-        
-        
-        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ['<b>Erro ao cadastrar:</b> Preencha todos os campos!', WS_ALERT];
-        else:
-            $this->setData();        
-//          $this->setName();
-            $this->Create();
-        endif;        
+        $this->setData();        
+         $this->Create();
     }
     
     
     public function ExeUpdate($CategoryId, array $Data) {
         $this->CadID = (int) $CategoryId;
         $this->Data = $Data;
-        
-        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
-        else:
-            $this->setData();        
-//            $this->setName();
-            $this->Update();
-        endif;        
+        $this->setData();        
+        $this->Update();    
     }
     
     function getResult() {
@@ -83,10 +68,10 @@ class AdminVagaEmprego{
 
     private function Update() {
         $update = new Update();
-        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
+        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idVagaEmprego = :cadid", "cadid={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+        $this->Error = ["<b>Sucesso:</b>, a vaga foi atualizada no sistema!",WS_ACCEPT];
         endif;
     }
 }

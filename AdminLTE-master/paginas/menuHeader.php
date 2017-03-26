@@ -304,10 +304,15 @@ endif;
                     <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
 		</li>
                 <li class="treeview">
+                   <a href="caixademensagem.php"><i class="fa fa-envelope-o"></i> <span>Mensagens</span></a>	
+		</li>
+                <li class="treeview">
                    <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
 		</li>
+                
                    ';
                         ?>
+                        
 
                     </ul>
                 </section>

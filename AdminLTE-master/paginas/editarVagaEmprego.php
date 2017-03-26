@@ -3,6 +3,8 @@ require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
+$idVaga = $_GET['id'];
+
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 //$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
@@ -12,14 +14,15 @@ if (!empty($data['SendPostForm'])):
     require '../../admin/_models/AdminVagaEmprego.php';
     $cadastra = new AdminVagaEmprego;
 
-    $cadastra->ExeCreate($data);
-
-    RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-
-    if (!$cadastra->getResult()):
-        RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        echo "<script>location.href='minhasVagas.php';</script>";
+    $cadastra->ExeUpdate($idVaga, $data);
+    
+    echo "<script>location.href='perfilVagaEmpregoPublico.php?id={$idVaga}';</script>";
+    
+else:
+    $readVaga = new Read();
+    $readVaga->FullRead("select * from vagaemprego where idVagaEmprego = :id", "id={$idVaga}");
+    if($readVaga->getResult()):
+        $data = $readVaga->getResult()[0];
     endif;
 endif;
 ?>
@@ -84,7 +87,7 @@ endif;
                         </div>
                         <div class="form-group">
                             <section class="col-lg-12 connectedSortable">
-                                <div class="col-md-9">
+                                <div class="col-md-8">
 
                                     <label>Profissão</label>
                                     <select class="form-control" name="profissao" required>
@@ -111,11 +114,10 @@ endif;
                                     
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group" >
                                         <label>Nível</label>
                                         <select class="form-control" name="nivel" required>
-                                            <option></option>
                                             <?php
                                                         $readnivel = new Read;
 
@@ -135,8 +137,7 @@ endif;
                                                         endif;
                                                         ?>
                                         </select>
-                                        <?php if (isset($data)) echo $data['nivel']; ?>
-
+                                       
                                     </div>
                                 </div>
                                 <p>
@@ -147,7 +148,7 @@ endif;
                                         <?php
                                                     $readvinculoEmpregaticio = new Read;
 
-                                                    $readvinculoEmpregaticio->FullRead("select * from vinculoEmpregaticio order by opcao");
+                                                    $readvinculoEmpregaticio->FullRead("select * from vinculoEmpregaticio");
                                                     if (!$readvinculoEmpregaticio->getResult()):
                                                         echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                                     else:
@@ -228,7 +229,7 @@ endif;
 
                         <label>Descrição da Oportunidade:</label>   
                         <textarea input class="textarea" placeholder="Descreva como será a rotina desse emprego" style="width: 100%; height: 75px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                  name="descricaoOportunidade"><?php if (isset($data)) echo $data['descricaoOportunidade']; ?></textarea>
+                                  name="descricaoOportunidade" ><?php if (isset($data)) echo $data['descricaoOportunidade']; ?></textarea>
                     </div>
                 </div>
             </div>
@@ -246,13 +247,13 @@ endif;
                         <div class="form-group">
                             <label>Requisitos do candidato:</label>   
                             <textarea input class="textarea" placeholder="Quais conhecimentos o candidato precisa ter?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                      name="requisitoCandidato" value="<?php if (isset($data)) echo $data['requisitoCandidato']; ?>"></textarea>
+                                      name="requisitoCandidato"><?php if (isset($data)) echo $data['requisitoCandidato']; ?></textarea>
                             <label>Diferencial:</label>   
                             <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se o candidato tivesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                      name="diferencialCandidato" value="<?php if (isset($data)) echo $data['diferencialCandidato']; ?>"></textarea>
+                                      name="diferencialCandidato"><?php if (isset($data)) echo $data['diferencialCandidato']; ?></textarea>
                             <label>Benefícios:</label>   
                             <textarea input class="textarea" placeholder="Quais os benefícios que seu funcionario terá?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                      name="beneficioCandidato" value="<?php if (isset($data)) echo $data['beneficioCandidato']; ?>"></textarea>
+                                      name="beneficioCandidato" ><?php if (isset($data)) echo $data['beneficioCandidato']; ?></textarea>
 
                         </div>
                     </div>
@@ -262,7 +263,7 @@ endif;
 
 
         <section class="col-lg-12 connectedSortable ">
-            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-save"></i> Salvar Alterações</button>
         </section>
     </form>
 </section>

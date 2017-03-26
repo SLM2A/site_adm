@@ -25,7 +25,7 @@ if (!empty($data['SendPostForm'])):
         RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
     else:
 
-        echo "<script>location.href='minhasVagas.php';</script>";
+        echo "<script>location.href='PerfilVagaAluguelPublico.php?id={$idVaga}';</script>";
     endif;
 else:
     //Busca salão e coloca na Array Data

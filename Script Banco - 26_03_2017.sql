@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 26-Mar-2017 às 02:31
+-- Generation Time: 26-Mar-2017 às 18:32
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5928,6 +5928,27 @@ INSERT INTO `experienciausuario` (`idExperiencia`, `idUsuario`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `faixaremuneracao`
+--
+
+CREATE TABLE `faixaremuneracao` (
+  `idfaixaRemuneracao` int(11) NOT NULL,
+  `opcao` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `faixaremuneracao`
+--
+
+INSERT INTO `faixaremuneracao` (`idfaixaRemuneracao`, `opcao`) VALUES
+(1, 'Não Divulgada'),
+(2, 'de R$ 788,00 à R$ 1.500,00'),
+(3, 'de R$ 1.500,00 à R$ 3.000,00'),
+(4, 'acima de R$ 3.000,00');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `formaaluguel`
 --
 
@@ -5990,6 +6011,35 @@ INSERT INTO `horariofuncionamento` (`idHorario`, `opcao`) VALUES
 (1, 'Horário Comercial'),
 (2, 'Horário Flexível'),
 (3, 'À disposição do contratante');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `nivelvaga`
+--
+
+CREATE TABLE `nivelvaga` (
+  `idNivelVaga` int(11) NOT NULL,
+  `opcao` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `nivelvaga`
+--
+
+INSERT INTO `nivelvaga` (`idNivelVaga`, `opcao`) VALUES
+(1, 'Aprendiz'),
+(2, 'Estágio'),
+(3, 'Auxiliar'),
+(4, 'Assistente'),
+(5, 'Técnico'),
+(6, 'Junior'),
+(7, 'Pleno'),
+(8, 'Sênior'),
+(9, 'Coordenador'),
+(10, 'Supervisor'),
+(11, 'Gerente'),
+(12, 'Diretor');
 
 -- --------------------------------------------------------
 
@@ -6244,11 +6294,11 @@ CREATE TABLE `vagaaluguel` (
 --
 
 INSERT INTO `vagaaluguel` (`idVagaAluguel`, `idSalao`, `nomeAnuncio`, `profissao`, `formaAluguel`, `preco`, `itemAlugado`, `tamanho`, `diaFuncionamento`, `horarioFuncionamento`, `caracteristica`, `diferencial`) VALUES
-(1, 2, 'Teste', 'Acupunturista', 'Por Hora', '515', 'Sala com cama para serviços', '2', 'Segunda à Sexta', 'Horário Comercial', '2', '2'),
+(1, 2, 'Teste', 'Barbeiro', 'Por Hora', '100', 'Sala com cama para serviços', '2', 'Segunda à Sexta', 'Horário Comercial', '2', '2'),
 (2, 5, 'Testando a Listagem', 'Barbeiro', 'Por Mês', '500', 'Cadeira para serviços', '5', 'Segunda à Sexta', 'Horário Flexível', 'Testando listagem', 'Testando listagem'),
 (3, 2, 'Testando a Listagem 2', 'Barbeiro', 'Por Mês', '500', 'Cadeira para serviços', '5', 'Segunda à Sexta', 'Horário Flexível', 'Testando listagem', 'Testando listagem'),
 (4, 2, 'Teste', 'Barbeiro', 'Por Hora', '5005', 'Cadeira para serviços', '60', 'Todos os dias da semana', 'Horário Flexível', 'aaa', 'aaaa'),
-(5, 2, 'Teste', 'Barbeiro', 'Por Hora', '5005', 'Cadeira para serviços', '60', 'Todos os dias da semana', 'Horário Flexível', 'aaa', 'aaaa'),
+(5, 2, 'Teste 2', 'Barbeiro', 'Por Hora', '5005', 'Cadeira para Servicos', '60', 'Todos os dias da semana', 'Horário Comercial', 'aaa', 'aaaa'),
 (6, 5, 'Teste', 'Barbeiro', 'Por Hora', '552552', 'Estação de trabalho sem equipamentos', '2', 'Segunda à Sábado', 'À disposição do contratante', '5252', '2525'),
 (7, 1, 'asdasd', 'Barbeiro', 'Por Hora', '11111', 'Cadeira para serviços', '11', 'Segunda à Sábado', 'Horário Comercial', 'asdasdada', 'ffffff'),
 (8, 2, 'Testando o Item Alugado', 'Barbeiro', 'Por Hora', '50', 'Sala com cama para serviços', '50', 'Segunda à Sábado', 'Horário Flexível', 'a', 'a'),
@@ -6305,7 +6355,10 @@ INSERT INTO `vagaemprego` (`idVagaEmprego`, `idSalao`, `tituloVaga`, `profissao`
 (1, 1, 'Teste', 'Acupunturista', 'Estágio', 'Registro CLT', '1', 'de R$ 788,00 à R$ 1.500,00', '50', 'aaaa', 'aa', 'aa', 'aa'),
 (3, 2, 'Teste 2', 'Barbeiro', 'Estágio', 'Registro PJ', '2', 'de R$ 788,00 à R$ 1.500,00', '50', 'Testando', 'Testando', 'Testando', 'Testando'),
 (4, 2, 'Teste', 'Acupunturista', 'Assistente', 'Estágio', '1', 'de R$ 1.500,00 à R$ 3.000,00', '50', 'Teste', 'Teste', 'Teste', 'Teste'),
-(5, 5, '2525', 'Barbeiro', 'Estágio', 'Registro CLT', '2', 'de R$ 1.500,00 à R$ 3.000,00', '50', '25', '2252', '222', '222');
+(5, 5, '25255', 'Barbeiro', 'Estágio', 'Registro CLT', '2', 'de R$ 1.500,00 à R$ 3.000,00', '50', '25', '2252', '222', '222'),
+(6, 2, 'Teste', 'Barbeiro', 'Estágio', 'Registro CLT', '2', 'de R$ 1.500,00 à R$ 3.000,00', '50', 'a', 'a', 'a', 'a'),
+(7, 5, 'Testando Campos Puxando do Banco', 'Acupuntura', 'Coordenador', 'Freelancer', '1', 'Não Divulgada', '50', 'aaaaaasas', 'asasas', 'asasas', 'asas'),
+(8, 1, 'Testando Link', 'Cabelereiro', 'Assistente', 'Freelancer', '1', 'Não Divulgada', '60', 'sdadas', 'asd', 'ad', 'ad');
 
 -- --------------------------------------------------------
 
@@ -6326,6 +6379,28 @@ CREATE TABLE `vagaempregocandidata` (
 
 INSERT INTO `vagaempregocandidata` (`idVagaEmprego`, `idUsuario`, `data`, `situacao`) VALUES
 (1, 27, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `vinculoempregaticio`
+--
+
+CREATE TABLE `vinculoempregaticio` (
+  `idvinculoEmpregaticio` int(11) NOT NULL,
+  `opcao` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `vinculoempregaticio`
+--
+
+INSERT INTO `vinculoempregaticio` (`idvinculoEmpregaticio`, `opcao`) VALUES
+(1, 'Registro CLT'),
+(2, 'Registro PJ'),
+(3, 'Registro CLT'),
+(4, 'Estágio'),
+(5, 'Freelancer');
 
 -- --------------------------------------------------------
 
@@ -6529,6 +6604,12 @@ ALTER TABLE `experienciausuario`
   ADD KEY `fk_usuario` (`idUsuario`);
 
 --
+-- Indexes for table `faixaremuneracao`
+--
+ALTER TABLE `faixaremuneracao`
+  ADD PRIMARY KEY (`idfaixaRemuneracao`);
+
+--
 -- Indexes for table `formaaluguel`
 --
 ALTER TABLE `formaaluguel`
@@ -6546,6 +6627,12 @@ ALTER TABLE `habilidadeusuario`
 --
 ALTER TABLE `horariofuncionamento`
   ADD PRIMARY KEY (`idHorario`);
+
+--
+-- Indexes for table `nivelvaga`
+--
+ALTER TABLE `nivelvaga`
+  ADD PRIMARY KEY (`idNivelVaga`);
 
 --
 -- Indexes for table `objetoalugado`
@@ -6637,6 +6724,12 @@ ALTER TABLE `vagaempregocandidata`
   ADD KEY `idUsuario` (`idUsuario`);
 
 --
+-- Indexes for table `vinculoempregaticio`
+--
+ALTER TABLE `vinculoempregaticio`
+  ADD PRIMARY KEY (`idvinculoEmpregaticio`);
+
+--
 -- Indexes for table `ws_categories`
 --
 ALTER TABLE `ws_categories`
@@ -6720,6 +6813,11 @@ ALTER TABLE `enderecousuario`
 ALTER TABLE `experienciaprofissionalusuario`
   MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
+-- AUTO_INCREMENT for table `faixaremuneracao`
+--
+ALTER TABLE `faixaremuneracao`
+  MODIFY `idfaixaRemuneracao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `formaaluguel`
 --
 ALTER TABLE `formaaluguel`
@@ -6729,6 +6827,11 @@ ALTER TABLE `formaaluguel`
 --
 ALTER TABLE `horariofuncionamento`
   MODIFY `idHorario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `nivelvaga`
+--
+ALTER TABLE `nivelvaga`
+  MODIFY `idNivelVaga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `objetoalugado`
 --
@@ -6763,7 +6866,12 @@ ALTER TABLE `vagaaluguel`
 -- AUTO_INCREMENT for table `vagaemprego`
 --
 ALTER TABLE `vagaemprego`
-  MODIFY `idVagaEmprego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idVagaEmprego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `vinculoempregaticio`
+--
+ALTER TABLE `vinculoempregaticio`
+  MODIFY `idvinculoEmpregaticio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `ws_categories`
 --

@@ -135,8 +135,8 @@
                         <a href="procurarprofissional.php"><button type="button" class="btn btn-block btn-primary btn-lg"><i class="fa fa-search"></i> Procurar Profissional</button></a>
                         ';
                                         endif;
-                                        ?>      
-                                        <button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
+                                        ?>  
+                                              <button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
 
                                     </div>
 

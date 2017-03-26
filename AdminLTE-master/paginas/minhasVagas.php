@@ -103,7 +103,7 @@ include 'menuHeader.php';
                                                               <td> {$ses['numeroVagas']} </td>
                                                               <td> {$ses['nomeSalao']} </td>
                                                                   <td>   <div class=\"btn-group\">
-                                                                    <button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
+                                                                    <a href=\"editarVagaEmprego.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
                                                                     <button type=\"button\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
                                                                     <a href=\"perfilVagaEmpregoPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                                   </div></td></tr>
