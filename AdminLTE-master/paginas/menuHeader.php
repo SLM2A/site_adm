@@ -278,7 +278,7 @@ endif;
 			<a href="procurarvaga.php"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
                     </li>
                     <li class="treeview">
-			<a href="candidatura.php"><i class="fa fa-search"></i> <span>Vagas candidatadas</span></a>	
+			<a href="vagascandidatadas.php"><i class="fa fa-search"></i> <span>Vagas candidatadas</span></a>	
                     </li>
                     
                      ';
