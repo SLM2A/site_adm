@@ -98,27 +98,48 @@ include 'menuHeader.php';
         $readUsuario->FullRead("Select * From usuario where idTipoUsuario=2");
 //        var_dump($readVaga->getResult());
         
+  
+
+                  
         foreach ($readUsuario->getResult() as $usuarios):
 
-            echo "      <section class=\"col-lg-3 connectedSortable\">
-                            <!-- Profile Image -->
-                            <div class=\"box box-primary\">
-                                <div class=\"box-body box-profile\">
-                                    <img class=\"profile-user-img img-responsive img-circle\" src=\"../dist/img/Aluguel_de_espaco_128x128.jpg\" alt=\"User profile picture\">
-                                    <h3 class=\"profile-username text-center\"\> {$usuarios['nomeUsuario']} {$usuarios['sobrenomeUsuario']}</h3>
-                                    <hr>
-                                    <strong><i class=\"fa fa-pencil margin-r-5\"></i>Descrição</strong>
-                                    <p>{$usuarios['descricao']}</p>
-                                    <hr>
-                                    <a href=\"perfilProfissionalPublico.php?id={$usuarios['idUsuario']}\" class=\"btn btn-success btn-block\"><b>Ver Profissional</b></a>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </section>
-                  ";
+             echo "
+                <div class=\"col-md-4\">
+                  <!-- Widget: user widget style 1 -->
+                  <div class=\"box box-widget widget-user\">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class=\"widget-user-header bg-aqua-active\" style=\"background: url('../dist/img/photo1.png') center center;\">
+                      <h3 class=\"widget-user-username\"><b>{$usuarios['nomeUsuario']} {$usuarios['sobrenomeUsuario']}</b></h3>
+                     
+                    </div>
+                    <div class=\"widget-user-image\">
+                      <img class=\"img-circle\" src=\"../dist/img/userpadrao.png\" alt=\"User Avatar\">
+                    </div>
+                    <div class=\"box-footer\">
+                      <div class=\"row\">
+                        <div class=\"col-sm-12 border-right\">
+                          <div class=\"description-block\">
+                            <span class=\"description-text\">DESCRIÇÃO</span>                    
+                            <h5 class=\"description-header\">{$usuarios['descricao']}</h5>                    
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        
 
-        endforeach;
+                      </div>
+                      <!-- /.row -->
+                    <hr>
+                        <a href=\"perfilProfissionalPublico.php?id={$usuarios['idUsuario']}\" class=\"btn btn-success btn-block\"><b>Ver Profissional</b></a>
+
+                    </div>
+                  </div>
+                  <!-- /.widget-user -->
+                </div>
+                <!-- /.col -->"; 
+        endforeach; 
+
+      
         
         
         

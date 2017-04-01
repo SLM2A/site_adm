@@ -9,11 +9,6 @@ $idProfissional = $_GET['id'];
 $readProfissional = new Read;
 $readProfissional->FullRead("select * from usuario where idUsuario = :id", "id={$idProfissional}");
 
-
-$readConvidado = new Read();
-$readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']} and idUsuarioProfissional = {$idProfissional}");
-
-
 ?>
 
 <link rel='stylesheet' href='package/unitegallery/css/unite-gallery.css' type='text/css' />
@@ -203,20 +198,7 @@ endforeach;
     </section>
 
 
-    <?php
-
-    if(!$readConvidado->getResult()):
-        echo "
-    <div class=\"col-lg-12 connectedSortable\">
-    <a href=\"escolhervaga.php?id={$idProfissional}\"><button type=\"button\" class=\"btn btn-block btn-warning btn-lg\"><i class=\"fa fa-building\"></i> Enviar proposta de emprego</button></a>
-    </div>";
-    else:
-        echo "
-    <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Aguarde contato do Profissional</button>
-    </div>";
-    endif;
-    ?>
+   
     </form>
 
     </section>

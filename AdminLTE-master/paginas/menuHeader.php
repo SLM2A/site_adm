@@ -280,6 +280,9 @@ endif;
                     <li class="treeview">
 			<a href="vagascandidatadas.php"><i class="fa fa-search"></i> <span>Vagas candidatadas</span></a>	
                     </li>
+                    <li class="treeview">
+			<a href="propostarecebida.php"><i class="fa fa-search"></i> <span>Propostas Recebidas</span></a>	
+                    </li>
                     
                      ';
                         else :
@@ -291,10 +294,13 @@ endif;
                         <a href="EscolhaTipoVaga.php"><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
                     </li>
                     <li class="treeview">
-                        <a href="minhasVagas.php"><i class="fa fa-plus"></i> <span>Minhas Vagas</span></a>	
+                        <a href="minhasVagas.php"><i class="fa fa-briefcase"></i> <span>Minhas Vagas</span></a>	
                     </li>
                     <li class="treeview">
 			<a href="procurarprofissional.php"><i class="fa fa-search"></i> <span>Procurar Profissional</span></a>	
+                    </li>
+                    <li class="treeview">
+			<a href="contatoprofissional.php"><i class="fa fa-list"></i> <span>Propostas de emprego</span></a>	
                     </li>
                     ';
                         endif;

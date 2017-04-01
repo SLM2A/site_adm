@@ -47,7 +47,7 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
     <section class="content">
 
         <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data"  >
-        <section class="col-lg-12 connectedSortable">
+        <div class="col-lg-12 connectedSortable">
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
@@ -59,11 +59,11 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
-        </section>
+        </div>
         <!-- Fim Profile Image -->
 
         <!-- About Me Box -->
-        <section class="col-lg-6 connectedSortable">
+        <div class="col-lg-6 connectedSortable">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="ion-person"></i> Sobre a Vaga</h3>
@@ -95,9 +95,9 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                     <hr>
                 </div>
             </div>
-        </section>
+        </div>
         <!-- Fim About Me Box -->
-        <section class="col-lg-6 connectedSortable">
+        <div class="col-lg-6 connectedSortable">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="fa fa-building"></i> Sobre o Salão</h3>
@@ -131,9 +131,9 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                     <hr>
                 </div>
             </div>
-        </section>
+        </div>
         <!-- Inicio Minhas Experiências -->
-        <section class="col-lg-12 connectedSortable">
+        <div class="col-lg-12 connectedSortable">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="ion-person"></i> Informações Gerais</h3>
@@ -162,7 +162,7 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                     </p>
                 </div>
             </div>
-        </section>
+        </div>
 
             <?php
 

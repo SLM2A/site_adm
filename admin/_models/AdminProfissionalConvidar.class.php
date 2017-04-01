@@ -20,22 +20,17 @@ class AdminProfissionalConvidar{
 
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
-        $this->Create();
+        $this->CreateAluguel();
+        $this->CreateEmprego();
     }
 
 
     public function ExeUpdate($CategoryId, array $Data) {
         $this->CadID = (int) $CategoryId;
         $this->Data = $Data;
+    
+            $this->UpdateAluguel();
 
-        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
-        else:
-            $this->setData();
-//            $this->setName();
-            $this->Update();
-        endif;
     }
 
     function getResult() {
@@ -46,21 +41,44 @@ class AdminProfissionalConvidar{
         return $this->Error;
     }
 
-    private function Create() {
+    
+    
+    private function CreateAluguel() {
         $Create = new Create;
-        $Create->ExeCreate(self::ENTITY, $this->Data);
-        if ($Create->getResult()):
-            $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
-        endif;
+        $qntVagaAluguel = count($this->Data['idVagaAluguel']);
+        for($i = 0; $i < $qntVagaAluguel; $i++):
+            $idArray = ['idUsuarioEmpresario' => $this->Data['idUsuarioEmpresario'],  'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i] ];
+            $Create->ExeCreate(self::ENTITY, $idArray);
+          endfor;
+        $this->Result = TRUE;
+         if($Create->getResult()):
+             $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
+         endif;
     }
 
-    private function Update() {
+        private function CreateEmprego() {
+        $Create = new Create;
+        $qntVagaAluguel = count($this->Data['idVagaEmprego']);
+        for($i = 0; $i < $qntVagaAluguel; $i++):
+            $idArray = ['idUsuarioEmpresario' => $this->Data['idUsuarioEmpresario'],  'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaEmprego'=>  $this->Data['idVagaEmprego'][$i]];
+            $Create->ExeCreate(self::ENTITY, $idArray);
+          endfor;
+        $this->Result = TRUE;
+         if($Create->getResult()):
+             $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
+         endif;
+    }
+    
+    private function UpdateAluguel() {
         $update = new Update();
-        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
+        $qntVagaAluguel = count($this->Data['idVagaAluguel']);
+        for($i = 0; $i < $qntVagaAluguel; $i++):
+            $idArray = [ 'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i]];
+            $update->ExeUpdate(self::ENTITY, $idArray , "WHERE idVagaAluguel = {$this->Data['idVagaAluguel'][$i]} and idUsuarioProfissional=:cadid", "cadid={$this->CadID}");
+        endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
         endif;
     }
 }

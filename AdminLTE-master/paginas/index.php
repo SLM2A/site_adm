@@ -33,22 +33,52 @@
                         </div>
                         <!-- ./col -->
                        
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-green">
-                                <div class="inner">
-                                    <h3>0<sup style="font-size: 20px"></sup></h3>
-
-                                    <p>Candidaturas</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                                <a href="candidatura.php" class="small-box-footer">Veja mais <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
+                       <?php 
                        
-                        
+                       if ($userlogin['idTipoUsuario'] == 2):
+                            $readVagasEmprego = new Read();
+                            $readVagasEmprego->FullRead("SELECT * FROM vagaempregocandidata where idUsuario = {$userlogin['idUsuario']}");
+                            $readVagasAluguel = new Read();
+                            $readVagasAluguel->FullRead("SELECT * FROM vagaaluguelcandidatada where idUsuario = {$userlogin['idUsuario']}");
+                            $quantidade = $readVagasEmprego->getRowCount() + $readVagasAluguel->getRowCount();    
+                            echo "  
+                             <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-green\">
+                                     <div class=\"inner\">
+                                         <h3>{$quantidade}<sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Candidaturas</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"ion ion-person-add\"></i>
+                                     </div>
+                                     <a href=\"vagascandidatadas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>";
+                       
+                       else:
+                           $readContato = new Read();
+                           $readContato->FullRead("SELECT * FROM usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']}");
+                           $quantidade = $readContato->getRowCount();
+                           echo " 
+                            <div class=\"col-lg-3 col-xs-6\">
+                            <!-- small box -->
+                            <div class=\"small-box bg-green\">
+                                <div class=\"inner\">
+                                    <h3>{$quantidade}<sup style=\"font-size: 20px\"></sup></h3>
+
+                                    <p>Profissionais Contatados</p>
+                                </div>
+                                <div class=\"icon\">
+                                    <i class=\"ion ion-person-add\"></i>
+                                </div>
+                                <a href=\"contatoprofissional.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                               </div>
+                            </div>";
+                           
+                       endif;
+                        ?>
                         <!-- ./col -->
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
@@ -126,6 +156,7 @@
                                         if ($userlogin['idTipoUsuario'] == 2):
                                             echo '
                         <a href="procurarvaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-search"></i> Procurar Vagas</button></a>
+
                         
                      ';
                                         else :

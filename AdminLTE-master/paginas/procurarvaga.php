@@ -62,7 +62,7 @@ include 'menuHeader.php';
               </div>
                 <label>Categoria</label>
                 <select class="form-control select2" style="width: 100%;">
-                 <option>Alaska</option>
+                 <option></option>
                   <option>California</option>
                   <option>Delaware</option>
                   <option>Tennessee</option>
@@ -79,7 +79,7 @@ include 'menuHeader.php';
               <div class="form-group">
                 <label>Cidade</label>
                 <select class="form-control select2" style="width: 100%;">
-                    <option>Alaska</option>
+                    <option></option>
                     <option>California</option>
                     <option>Delaware</option>
                     <option>Tennessee</option>
@@ -91,7 +91,7 @@ include 'menuHeader.php';
               <div class="form-group">
                 <label>Ordenação</label>
                 <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
+                  <option selected="selected"></option>
                   <option>Alaska</option>
                   <option>California</option>
                   <option>Delaware</option>
@@ -109,54 +109,105 @@ include 'menuHeader.php';
         
         $readVaga = new Read();
      
-        $readVaga->FullRead("Select * From vagaaluguel");
+        $readVaga->FullRead("Select * From vagaaluguel va inner join salao s on va.idSalao = s.idSalao");
 //        var_dump($readVaga->getResult());
         
         foreach ($readVaga->getResult() as $vagas):
 
-            echo "      <section class=\"col-lg-3 connectedSortable\">
-                            <!-- Profile Image -->
-                            <div class=\"box box-primary\">
-                                <div class=\"box-body box-profile\">
-                                    <img class=\"profile-user-img img-responsive img-circle\" src=\"../dist/img/Aluguel_de_espaco_128x128.jpg\" alt=\"User profile picture\">
-                                    <h3 class=\"profile-username text-center\"\> {$vagas['nomeAnuncio']}</h3>
-                                    <hr>
-                                    <strong><i class=\"fa fa-pencil margin-r-5\"></i>Áreas de Atuação</strong>
-                                    <p>{$vagas['profissao']}</p>
-                                    <hr>
-                                    <a href=\"vagaAluguelCandidatar.php?id={$vagas['idVagaAluguel']}\" class=\"btn btn-success btn-block\"><b>Ver Vaga</b></a>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </section>
-                  ";
+             echo "
+                <div class=\"col-md-4\">
+                  <!-- Widget: user widget style 1 -->
+                  <div class=\"box box-widget widget-user\">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class=\"widget-user-header bg-aqua-active\" style=\"background: url('../dist/img/photo1.png') center center;\">
+                      <h3 class=\"widget-user-username\"><b>{$vagas['nomeAnuncio']}</b></h3>
+                      <h5 class=\"widget-user-desc\">Vaga para {$vagas['profissao']}</h5>
+                    </div>
+                    <div class=\"widget-user-image\">
+                      <img class=\"img-circle\" src=\"../dist/img/Aluguel_de_espaco_128x128.jpg\" alt=\"User Avatar\">
+                    </div>
+                    <div class=\"box-footer\">
+                      <div class=\"row\">
+                        <div class=\"col-sm-6 border-right\">
+                          <div class=\"description-block\">
+                            <span class=\"description-text\">SALÃO</span>                    
+                            <h5 class=\"description-header\">{$vagas['nomeSalao']}</h5>                    
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class=\"col-sm-6\">
+                          <div class=\"description-block\">
+                            <span class=\"description-text\">FORMA DE ALUGUEL</span>
+                            <h5 class=\"description-header\">{$vagas['formaAluguel']}</h5>
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
 
-        endforeach;
+                      </div>
+                      <!-- /.row -->
+                    <hr>
+                        <a href=\"vagaAluguelCandidatar.php?id={$vagas['idVagaAluguel']}\" class=\"btn btn-success btn-block\"><b>Ver Vaga</b></a>
+
+                    </div>
+                  </div>
+                  <!-- /.widget-user -->
+                </div>
+                <!-- /.col -->"; 
+        endforeach;    
+            
+            
+            
         
         $readVagaEmprego = new Read();
-        $readVagaEmprego->FullRead("Select * From vagaemprego");
+        $readVagaEmprego->FullRead("Select * From vagaemprego ve inner join salao s on ve.idSalao = s.idSalao");
 
 //        var_dump($readVagaEmprego->getResult());
         foreach ($readVagaEmprego->getResult() as $vagasEmprego):
 
-            echo "      <section class=\"col-lg-3 connectedSortable\">
-                            <!-- Profile Image -->
-                            <div class=\"box box-primary\">
-                                <div class=\"box-body box-profile\">
-                                    <img class=\"profile-user-img img-responsive img-circle\" src=\"../dist/img/vaga_de_emprego_128x128.jpg\" alt=\"User profile picture\">
-                                    <h3 class=\"profile-username text-center\"\> {$vagasEmprego['tituloVaga']}</h3>
-                                    <hr>
-                                    <strong><i class=\"fa fa-pencil margin-r-5\"></i>Áreas de Atuação</strong>
-                                    <p>{$vagasEmprego['profissao']}</p>
-                                    <hr>
-                                    <a href=\"VagaEmpregoCandidatar.php?id={$vagasEmprego['idVagaEmprego']}\" class=\"btn btn-success btn-block\"><b>Ver Vaga</b></a>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </section>
-                  ";
+             echo "
+                <div class=\"col-md-4\">
+                  <!-- Widget: user widget style 1 -->
+                  <div class=\"box box-widget widget-user\">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class=\"widget-user-header bg-aqua-active\" style=\"background: url('../dist/img/photo1.png') center center;\">
+                      <h3 class=\"widget-user-username\"><b>{$vagasEmprego['tituloVaga']}</b></h3>
+                      <h5 class=\"widget-user-desc\">Vaga para {$vagasEmprego['profissao']}</h5>
+                    </div>
+                    <div class=\"widget-user-image\">
+                      <img class=\"img-circle\" src=\"../dist/img/vaga_de_emprego_128x128.jpg\" alt=\"User Avatar\">
+                    </div>
+                    <div class=\"box-footer\">
+                      <div class=\"row\">
+                        <div class=\"col-sm-6 border-right\">
+                          <div class=\"description-block\">
+                            <span class=\"description-text\">SALÃO</span>                    
+                            <h5 class=\"description-header\">{$vagasEmprego['nomeSalao']}</h5>                    
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class=\"col-sm-6\">
+                          <div class=\"description-block\">
+                            <span class=\"description-text\">CONTRATAÇÃO</span>
+                            <h5 class=\"description-header\">{$vagasEmprego['vinculoEmpregaticio']}</h5>
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+
+                      </div>
+                      <!-- /.row -->
+                    <hr>
+                        <a href=\"vagaEmpregoCandidatar.php?id={$vagasEmprego['idVagaEmprego']}\" class=\"btn btn-success btn-block\"><b>Ver Vaga</b></a>
+
+                    </div>
+                  </div>
+                  <!-- /.widget-user -->
+                </div>
+                <!-- /.col -->"; 
+           
 
         endforeach;
 
