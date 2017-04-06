@@ -54,9 +54,9 @@ function RentalErro ($ErrMsg, $ErrNo, $ErrDie = null) {
     $tipoIcon = ($ErrNo == RENTAL_ACCEPT) ? "fa-check" : ($ErrNo == RENTAL_INFOR ? "fa-info" : ($ErrNo == RENTAL_ALERT ? "fa-warning" : "fa-ban"));
     $tipoErro = ($ErrNo == RENTAL_ACCEPT) ? "Sucesso" : ($ErrNo == RENTAL_INFOR ? "Atenção" : ($ErrNo == RENTAL_ALERT ? "Cuidado" : "Erro"));
     echo "
-            <div class=\"box-body\">
+            <div class=\"box-body\" id=\"msg-success\">
                 <div class=\"alert {$ErrNo} alert-dismissible\">
-                    <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>
+                    
                     <h4><i class=\"icon fa {$tipoIcon}\"></i> {$tipoErro}</h4>
                     {$ErrMsg}
                 </div>

@@ -47,7 +47,7 @@ class Upload {
         $this->File = $Image;
         $this->Name = ( (string) $Name ? $Name : substr($Image['name'], 0, strrpos($Image['name'], '.')) );
         $this->Width = ( (int) $Width ? $Width : 1024 );
-        $this->Folder = ( (string) $Folder ? $Folder : 'images' );
+        $this->Folder = ( (string) $Folder ? $Folder : 'Imagens' );
 
         $this->CheckFolder($this->Folder);
         $this->setFileName();
@@ -128,6 +128,14 @@ class Upload {
     }
 
     /**
+     * <b>Retorna o caminho sem o nome do arquivo:</b> Retorna o caminho onde foi arquivado o arquivo apartir da pasta UPLOADS.
+     * @return STRING  = Caminho do arquivo
+     */
+    public function getSend() {
+        return $this->Send;
+    }
+
+    /**
      * <b>Obter Erro:</b> Retorna um array associativo com um code, um title, um erro e um tipo.
      * @return ARRAY $Error = Array associatico com o erro
      */
@@ -160,9 +168,12 @@ class Upload {
     //Verifica e monta o nome dos arquivos tratando a string!
     private function setFileName() {
         $FileName = Check::Name($this->Name) . strrchr($this->File['name'], '.');
-        if (file_exists(self::$BaseDir . $this->Send . $FileName)):
+
+        //Esta parte verifica o nome e se existir e gravado um nome diferente
+        /*if (file_exists(self::$BaseDir . $this->Send . $FileName)):
             $FileName = Check::Name($this->Name) . '-' . time() . strrchr($this->File['name'], '.');
-        endif;
+        endif;*/
+
         $this->Name = $FileName;
     }
 

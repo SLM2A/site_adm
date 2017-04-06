@@ -10,65 +10,131 @@ include 'menuHeader.php';
         <ul class="nav nav-tabs">
             <li class="active"><a href="#enviadas" data-toggle="tab">Propostas Enviadas</a></li>
             <li><a href="#timeline" data-toggle="tab">Propostas aceitas</a></li>
-    
+
         </ul>
         <div class="tab-content">
             <div class="active tab-pane" id="enviadas">
                 <div class="box-footer">
 
 
-<?php
+                    <?php
 //Inicio Busca Candidatura para Vagas de Alguel
-$readProfissional = new Read();
-$readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join usuario u on u.idUsuario = uc.idUsuarioProfissional where uc.idUsuarioEmpresario = {$userlogin['idUsuario']} and situacao=0");
+                    $readProfissional = new Read();
+                    $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaaluguel va on uc.idVagaAluguel=va.idVagaAluguel inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on va.idSalao=s.idSalao where uc.idUsuarioEmpresario= {$userlogin['idUsuario']} and situacao=0 order by nomeAnuncio");
+
 //var_dump($readProfissional->getResult());
 //Fim Busca Candidatura para Vagas de Alguel
-foreach ($readProfissional->getResult() as $profissional):
 
+
+                    echo "
+    <div class=\"box\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Vagas de Aluguel</h3>
+            </div>
+        
+        <div class=\"box-body table-responsive no-padding\">
+            <div class=\"box-body table-responsive no-padding\">
+                                        <table class=\"table table-hover\">
+                                            <thead> 
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Vaga</th>
+                                                    <th>Profissional</th>
+                                                    <th>Profissão</th>
+                                                    <th>Sexo</th>
+                                                    <th>Nome Salão</th>
+                                                    
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody> ";
+
+
+                    foreach ($readProfissional->getResult() as $profissional):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+                        echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$profissional['idVagaAluguel']}\" class=\"flat-red\" ";
+
+                        if ($profissional['idVagaAluguel'] == $profissional['idVagaAluguel']):
+                            echo ' checked';
+                        endif;
+
+                        echo "</td>
+                                                        <td> <a href=\"perfilVagaAluguelPublico.php?id={$profissional['idVagaAluguel']}\">{$profissional['nomeAnuncio']}</a> </td>
+                                                            <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
+                                                              <td> {$profissional['profissao']}</td>
+                                                              
+                                                              <td> {$profissional['sexoUsuario']} </td>
+                                                              
+                                                              <td><a href=\"perfilSalaoPublico.php?id={$profissional['idSalao']}\">{$profissional['nomeSalao']} </td>
+                                                               </tr>
+                                                        ";
+
+                    endforeach;
+                    echo "       
+                                            </tbody>  
+                                        </table>
+                                    </div>
+        </div>
+    </div>
     
-    echo "
-                <div class=\"col-md-4\">
-                  <!-- Widget: user widget style 1 -->
-                  <div class=\"box box-widget widget-user\">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class=\"widget-user-header bg-aqua-active\" style=\"background: url('../dist/img/photo1.png') center center;\">
-                      <h3 class=\"widget-user-username\"><b>{$profissional['apelidoUsuario']}</b></h3>
-                      <h5 class=\"widget-user-desc\">{$profissional['sexoUsuario']}</h5>
-                    </div>
-                    <div class=\"widget-user-image\">
-                      <img class=\"img-circle\" src=\"../dist/img/userpadrao.PNG\" alt=\"User Avatar\">
-                    </div>
-                    <div class=\"box-footer\">
-                      <div class=\"row\">
-                        <div class=\"col-sm-6 border-right\">
-                          <div class=\"description-block\">
-                            <span class=\"description-text\">ÁREAS DE ATUAÇÃO</span>                    
-                            <h5 class=\"description-header\">Profissões</h5>                    
-                          </div>
-                          <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class=\"col-sm-6\">
-                          <div class=\"description-block\">
-                            <span class=\"description-text\">WHATSAPP</span>
-                            <h5 class=\"description-header\">11 97040-3620</h5>
-                          </div>
-                          <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
+    ";
+                    $readEmprego = new Read();
+                    $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioEmpresario= {$userlogin['idUsuario']} and situacao=0 order by tituloVaga");
+                    echo "
+    <div class=\"box\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Vagas de Emprego</h3>
+            </div>
+        
+        <div class=\"box-body table-responsive no-padding\">
+            <div class=\"box-body table-responsive no-padding\">
+                                        <table class=\"table table-hover\">
+                                            <thead> 
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Vaga</th>
+                                                    <th>Profissional</th>
+                                                    <th>Profissão</th>
+                                                    <th>Sexo</th>
+                                                    <th>Nome Salão</th>
+                                                    
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody> ";
 
-                      </div>
-                      <!-- /.row -->
-                    <hr>
-                        <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuarioProfissional']}\" class=\"btn btn-success btn-block\"><b>Ver Perfil do Profissional</b></a>
 
-                    </div>
-                  </div>
-                  <!-- /.widget-user -->
-                </div>
-                <!-- /.col -->";
-endforeach;
-?>	
+                    foreach ($readProfissional->getResult() as $profissional):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+                        echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$profissional['idVagaAluguel']}\" class=\"flat-red\" ";
+
+                        if ($profissional['idVagaAluguel'] == $profissional['idVagaAluguel']):
+                            echo ' checked';
+                        endif;
+
+                        echo "</td>
+                                                        <td> <a href=\"perfilVagaEmpregoPublico.php?id={$profissional['idVagaEmprego']}\">{$profissional['tituloVaga']}</a> </td>
+                                                            <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
+                                                              <td> {$profissional['profissao']}</td>
+                                                              
+                                                              <td> {$profissional['sexoUsuario']} </td>
+                                                              
+                                                              <td><a href=\"perfilSalaoPublico.php?id={$profissional['idSalao']}\">{$profissional['nomeSalao']} </td>
+                                                               </tr>
+                                                        ";
+
+                    endforeach;
+                    echo "       
+                                            </tbody>  
+                                        </table>
+                                    </div>
+        </div>
+    </div>
+    
+    ";
+                    ?>	
 
 
                 </div>
@@ -76,57 +142,106 @@ endforeach;
             <!-- /.tab-pane -->
             <div class="tab-pane" id="timeline">
                 <div class="box-footer">
-                  <?php
+                    <?php
 //Inicio Busca Candidatura para Vagas de Alguel
-$readProfissional = new Read();
-$readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join usuario u on u.idUsuario = uc.idUsuarioProfissional where uc.idUsuarioEmpresario = {$userlogin['idUsuario']} and situacao=1");
+                    $readProfissional = new Read();
+                    $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaaluguel va on uc.idVagaAluguel=va.idVagaAluguel inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on va.idSalao=s.idSalao where uc.idUsuarioEmpresario= {$userlogin['idUsuario']} and situacao=1 order by nomeAnuncio");
 //var_dump($readProfissional->getResult());
 //Fim Busca Candidatura para Vagas de Alguel
-foreach ($readProfissional->getResult() as $profissional):
+                    echo "
+    <div class=\"box\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Vagas de Aluguel</h3>
+            </div>
+        
+        <div class=\"box-body table-responsive no-padding\">
+            <div class=\"box-body table-responsive no-padding\">
+                                        <table class=\"table table-hover\">
+                                            <thead> 
+                                                <tr>
+                                                    
+                                                    <th>Vaga</th>
+                                                    <th>Profissional</th>
+                                                    <th>Profissão</th>
+                                                    <th>Sexo</th>
+                                                    <th>Nome Salão</th>
+                                                    
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody> ";
 
-    echo "
-                <div class=\"col-md-4\">
-                  <!-- Widget: user widget style 1 -->
-                  <div class=\"box box-widget widget-user\">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class=\"widget-user-header bg-aqua-active\" style=\"background: url('../dist/img/photo1.png') center center;\">
-                      <h3 class=\"widget-user-username\"><b>{$profissional['apelidoUsuario']}</b></h3>
-                      <h5 class=\"widget-user-desc\">{$profissional['sexoUsuario']}</h5>
-                    </div>
-                    <div class=\"widget-user-image\">
-                      <img class=\"img-circle\" src=\"../dist/img/userpadrao.PNG\" alt=\"User Avatar\">
-                    </div>
-                    <div class=\"box-footer\">
-                      <div class=\"row\">
-                        <div class=\"col-sm-6 border-right\">
-                          <div class=\"description-block\">
-                            <span class=\"description-text\">ÁREAS DE ATUAÇÃO</span>                    
-                            <h5 class=\"description-header\">Profissões</h5>                    
-                          </div>
-                          <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class=\"col-sm-6\">
-                          <div class=\"description-block\">
-                            <span class=\"description-text\">WHATSAPP</span>
-                            <h5 class=\"description-header\">11 97040-3620</h5>
-                          </div>
-                          <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
 
-                      </div>
-                      <!-- /.row -->
-                    <hr>
-                        <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuarioProfissional']}\" class=\"btn btn-success btn-block\"><b>Ver Perfil do Profissional</b></a>
+                    foreach ($readProfissional->getResult() as $profissional):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                    </div>
-                  </div>
-                  <!-- /.widget-user -->
-                </div>
-                <!-- /.col -->";
-endforeach;
-?>  
+                       
+                        echo "
+                                                            <tr><td style=\"padding-right: 100px;\"> <a href=\"perfilVagaAluguelPublico.php?id={$profissional['idVagaAluguel']}\">{$profissional['nomeAnuncio']}</a> </td>
+                                                            <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
+                                                            <td> {$profissional['profissao']}</td>
+                                                            <td> {$profissional['sexoUsuario']} </td>
+                                                            <td><a href=\"perfilSalaoPublico.php?id={$profissional['idSalao']}\">{$profissional['nomeSalao']} </td></tr>
+                                                        ";
+
+                    endforeach;
+                    echo "       
+                                            </tbody>  
+                                        </table>
+                                    </div>
+        </div>
+    </div>
+    
+    ";
+
+                    $readEmprego = new Read();
+                    $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioEmpresario= {$userlogin['idUsuario']} and situacao=1 order by tituloVaga");
+                    echo "
+    <div class=\"box\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Vagas de Emprego</h3>
+            </div>
+        
+        <div class=\"box-body table-responsive no-padding\">
+            <div class=\"box-body table-responsive no-padding\">
+                                        <table class=\"table table-hover\">
+                                            <thead> 
+                                                <tr>
+                                                    
+                                                    <th>Vaga</th>
+                                                    <th>Profissional</th>
+                                                    <th>Profissão</th>
+                                                    <th>Sexo</th>
+                                                    <th>Nome Salão</th>
+                                                    
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody> ";
+
+
+                    foreach ($readProfissional->getResult() as $profissional):
+//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+
+                        
+                        echo "                              </tr><td style=\"padding-right: 72px;\"><a href=\"perfilVagaEmpregoPublico.php?id={$profissional['idVagaEmprego']}\">{$profissional['tituloVaga']}</a> </td>
+                                                            <td > <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
+                                                            <td> {$profissional['profissao']}</td> 
+                                                            <td> {$profissional['sexoUsuario']} </td>
+                                                            <td><a href=\"perfilSalaoPublico.php?id={$profissional['idSalao']}\">{$profissional['nomeSalao']} </td>
+                                                               </tr>
+                                                        ";
+
+                    endforeach;
+                    echo "       
+                                            </tbody>  
+                                        </table>
+                                    </div>
+        </div>
+    </div>
+    
+    ";
+                    ?>  
 
                 </div>
             </div>

@@ -28,9 +28,15 @@ class AdminProfissionalConvidar{
     public function ExeUpdate($CategoryId, array $Data) {
         $this->CadID = (int) $CategoryId;
         $this->Data = $Data;
-    
-            $this->UpdateAluguel();
-
+        if(empty($this->Data['idVagaAluguel'])):
+        $this->UpdateEmprego();
+        elseif (empty($this->Data['idVagaEmprego'])):
+        $this->UpdateAluguel();
+        else:
+         $this->UpdateAluguel();
+         $this->UpdateEmprego();    
+            
+        endif;
     }
 
     function getResult() {
@@ -73,8 +79,24 @@ class AdminProfissionalConvidar{
         $update = new Update();
         $qntVagaAluguel = count($this->Data['idVagaAluguel']);
         for($i = 0; $i < $qntVagaAluguel; $i++):
-            $idArray = [ 'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i]];
+            $idArray = [ 'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaAluguel' =>  $this->Data['idVagaAluguel'][$i]];
             $update->ExeUpdate(self::ENTITY, $idArray , "WHERE idVagaAluguel = {$this->Data['idVagaAluguel'][$i]} and idUsuarioProfissional=:cadid", "cadid={$this->CadID}");
+        endfor;
+        if($update->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+        endif;
+    }
+    
+    
+        private function UpdateEmprego() {
+        $update = new Update();
+        $qntVagaEmprego = count($this->Data['idVagaEmprego']);
+        for($i = 0; $i < $qntVagaEmprego; $i++):
+            $idArray = [ 'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaEmprego' =>  $this->Data['idVagaEmprego'][$i]];
+            //var_dump($idArray);
+                
+        $update->ExeUpdate(self::ENTITY, $idArray , "WHERE idVagaEmprego = {$this->Data['idVagaEmprego'][$i]} and idUsuarioProfissional=:cadid", "cadid={$this->CadID}");
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;

@@ -7,7 +7,7 @@ include 'menuHeader.php';
 $readVagaAluguel = new Read();
 $readVagaAluguel->FullRead("Select * From vagaaluguelcandidatada vac inner join "
         . "vagaaluguel va on vac.idVagaAluguel=va.idVagaAluguel inner join "
-        . "usuario u on vac.idUsuario=u.idUsuario inner join salao s on va.idSalao = s.idSalao where vac.idUsuario = {$userlogin['idUsuario']}");
+        . "usuario u on vac.idUsuarioProfissional=u.idUsuario inner join salao s on va.idSalao = s.idSalao where vac.idUsuarioProfissional = {$userlogin['idUsuario']}");
 
 //Fim Busca Candidatura para Vagas de Alguel
 

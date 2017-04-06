@@ -10,11 +10,19 @@ if (!empty($data['SendPostForm'])):
    
     $data['idUsuarioProfissional'] = $userlogin['idUsuario'];
     $data['situacao'] = 1;
+    
     require '../../admin/_models/AdminProfissionalConvidar.class.php';
-    $cadastra = new AdminProfissionalConvidar;
+    require '../../admin/_models/AdminCandidatarVaga.class.php';
+    
+    $cadastra = new AdminProfissionalConvidar;   
+    $candidatavaga = new AdminCandidatarVaga;
     
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
-   // echo "<script>location.href='propostarecebida.php';</script>";
+
+    $candidatavaga->ExeCreateArray($data);
+    
+    
+    //echo "<script>location.href='propostarecebida.php';</script>";
 
 endif;
 
@@ -102,7 +110,7 @@ echo "
   //Inicio Busca Candidatura para Vagas de Emprego
 $readEmprego = new Read();
 $readEmprego->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=0 ");
-//var_dump($readProfissional->getResult());
+//var_dump($readEmprego->getResult());
 //Fim Busca Candidatura para Vagas de Alguel
 
 echo "
@@ -131,9 +139,9 @@ echo "
                                                foreach ($readEmprego->getResult() as $vaga):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" ";
+                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaEmprego[]\" value=\"{$vaga['idVagaEmprego']}\" class=\"flat-red\" ";
 
-                                                            if ($vaga['idVagaAluguel'] == $data['idVagaAluguel']):
+                                                            if ($vaga['idVagaEmprego'] == $data['idVagaEmprego']):
                                                                 echo ' checked';
                                                             endif;
                                                                   
@@ -143,7 +151,7 @@ echo "
                                                               <td> {$vaga['comissao']}% </td>
                                                               <td> {$vaga['nomeSalao']} </td>
                                                               <td>  
-                                                              <a href=\"vagaEmpregoCandidatar.php?id={$vaga['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
+                                                              <a href=\"vagaEmpregoCandidatar.php?id={$vaga['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                                   </td></tr>
                                                         ";
 
@@ -215,7 +223,7 @@ echo "
                                                foreach ($readAluguel->getResult() as $vaga):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" ";
+                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" disabled ";
 
                                                             if ($vaga['idVagaAluguel'] == $data['idVagaAluguel']):
                                                                 echo ' checked';
@@ -245,7 +253,7 @@ echo "
     
   //Inicio Busca Candidatura para Vagas de Emprego
 $readEmprego = new Read();
-$readEmprego->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=0 ");
+$readEmprego->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=1 ");
 //var_dump($readProfissional->getResult());
 //Fim Busca Candidatura para Vagas de Alguel
 
@@ -275,7 +283,7 @@ echo "
                                                foreach ($readEmprego->getResult() as $vaga):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" ";
+                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" disabled";
 
                                                             if ($vaga['idVagaAluguel'] == $data['idVagaAluguel']):
                                                                 echo ' checked';
@@ -287,7 +295,7 @@ echo "
                                                               <td> {$vaga['comissao']}% </td>
                                                               <td> {$vaga['nomeSalao']} </td>
                                                               <td>  
-                                                              <a href=\"vagaEmpregoCandidatar.php?id={$vaga['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
+                                                              <a href=\"vagaEmpregoCandidatar.php?id={$vaga['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                                   </td></tr>
                                                         ";
 

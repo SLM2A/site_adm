@@ -13,8 +13,11 @@ class AdminGaleria {
     private $File = Array();
     private $NomeCompletoUsuario;
     private $Post;
-    private $Error;
+    private $Msg;
     private $Result;
+    private $SendFull;
+    private $SendSmall;
+    private $idPortfolio;
 
     //Nome da tabela no banco de dados!
     const ENTITY = 'portfolio';
@@ -25,22 +28,15 @@ class AdminGaleria {
         $this->NomeCompletoUsuario = $NomeCompletoUsuario;
         
         if (in_array('', $this->Data))://Verifica se a algum campo em branco na array            
-            $this->Error = ['<b>Erro ao enviar!</b> Selecione uma ou mais imagens', WS_INFOR];
+            $this->Msg = ['<b>Erro ao enviar!</b> Selecione uma ou mais imagens', RENTAL_INFOR];
             $this->Result = false;
         else:            
             $this->setData();
             $this->Create();
-            
-            if($this->getResult()):
-                //WSErro("<b>Sucesso:</b> a imagem foi inserida com sucesso!", WS_ACCEPT);
-                RentalErro("<b>Sucesso:</b> a imagem foi inserida com sucesso!", RENTAL_ERROR);
-            else:
-                WSErro("<b>Erro:</b> a imagem não pode ser inserida!", WS_ERROR);
-            endif;                      
         endif;
     }
     
-    public function gbSend(array $imagens, $postID, $NomeCompletoUsuario ){
+    /*public function gbSend(array $imagens, $postID, $NomeCompletoUsuario ){
         $this->Post = (int) $postID;
         $this->Data = $imagens;
         
@@ -71,28 +67,26 @@ class AdminGaleria {
             
         
         
-    }
+    }*/
 
-//    public function ExeUpdate($CategoryId, array $Data) {
-//        $this->CadID = (int) $CategoryId;
-//        $this->Data = $Data;
-//
-//        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
-//            $this->Result = false;
-//            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
-//        else:
-//            $this->setData();
-////            $this->setName();
-//            $this->Update();
-//        endif;
-//    }
+    public function ExeUpdate($CategoryId, array $Data) {
+        $this->CadID = (int) $CategoryId;
+        $this->Data = $Data;
+
+        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
+            $this->Result = FALSE;
+            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", RENTAL_ERROR];
+        else:
+            $this->Update();
+        endif;
+    }
 
     function getResult() {
         return $this->Result;
     }
 
-    function getError() {
-        return $this->Error;
+    function getMsg() {
+        return $this->Msg;
     }
     
     
@@ -110,26 +104,86 @@ class AdminGaleria {
     }
 
     private function Create() {
-        $gbSend = new Upload();
-        $i = 0;
+        $ImagemFull = new Upload();
+        $ImagemSmall = new Upload();
         
         foreach ($this->File as $gbUpload):
-            $i++;
-            $ImgName = "{$this->NomeCompletoUsuario}-gb-{$this->Post}-".(substr(md5(time() + $i), 0,5));
-            $gbSend->Image($gbUpload, $ImgName);
-            
-            if ($gbSend->getResult()):
-                $gbImage = $gbSend->getResult();
-                $gbCreate = ["idUsuario" => $this->Post, "portfolioImagem"=> $gbImage, "dataImagem"=> date('Y-m-d H:i:s')];
-                $insertGb = new create();
-                $insertGb->ExeCreate(self::ENTITY, $gbCreate);
-            endif;
+            $ImgNameFull = "temp1";
+            $ImagemFull->Image($gbUpload, $ImgNameFull,null,$this->NomeCompletoUsuario."-".$this->Post);
+            $this->ImagemFull($ImagemFull->getResult(), $ImagemFull->getSend());
+
+           $ImgNameSmall = "temp2";
+           $ImagemSmall->Image($gbUpload, $ImgNameSmall,null,$this->NomeCompletoUsuario."-".$this->Post);
+           $this->ImagemSmall($ImagemSmall->getResult(), $ImagemSmall->getSend());
+
+           if ($ImagemFull->getResult()):
+               $gbCreate = ["idUsuario" => $this->Post, "portfolioImagemFull"=> $this->SendFull, "portfolioImagemSmall"=> $this->SendSmall, "dataImagem"=> date('Y-m-d H:i:s')];
+               $insertGb = new create();
+               $insertGb->ExeCreate(self::ENTITY, $gbCreate);
+               if($insertGb->getResult()):
+                   $this->Result = TRUE;
+                   $this->Msg = ["<b>Sucesso:</b> a(s) imagem(s) imagens foram gravadas com sucesso!",RENTAL_ACCEPT];
+               else:
+                   $this->Result = FALSE;
+                   $this->Msg = ["<b>Erro:</b> a(s) imagem(s) imagens não foram gravadas com sucesso!",RENTAL_ERROR];
+               endif;
+           endif;
         endforeach;
-        
-        if ($insertGb->getResult()):            
-            $this->Result = $insertGb->getResult();
-            
-       endif;
+
+
+    }
+
+    private function Update() {
+        $update = new Update();
+        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
+        if($update->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b>, a imagem foi atualizada com sucesso!",RENTAL_ACCEPT];
+        endif;
+    }
+
+    private function ImagemFull ($Endereço, $Caminho){
+        $rand = rand(5, 30);
+        require_once('../../_app/WideImage/WideImage.php');
+        $img = WideImage::load("../uploads/".$Endereço);
+        $img = $img->resize(800, 600, 'outside');
+        $this->SendFull = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->Post}-FULL-".(substr(md5(time() + $rand), 0,5)).".jpg";
+        $img->saveToFile("../uploads/".$this->SendFull);
+        $img->destroy();
+
+        if(isset($img)):
+            $this->Result = TRUE;
+            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho grande!",RENTAL_ACCEPT];
+        else:
+            $this->Result = FALSE;
+            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho grande!",RENTAL_ERROR];
+        endif;
+    }
+
+    private function ImagemSmall ($Endereço, $Caminho){
+        $rand = rand(5, 30);
+        require_once('../../_app/WideImage/WideImage.php');
+        $img = WideImage::load("../uploads/".$Endereço);
+        $img = $img->resize(1500, 1500, 'outside');
+        $this->SendSmall = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->Post}-SMALL-".(substr(md5(time() + $rand), 0,5)).".jpg";
+        $img->saveToFile("../uploads/".$this->SendSmall);
+        $img->destroy();
+
+        list($width, $height, $type, $attr) = getimagesize("../uploads/".$this->SendSmall);
+        $w = $width / 2;
+        $h = $height / 2;
+        $img = WideImage::load("../uploads/".$this->SendSmall);
+        $img = $img->crop($w/2, $h/2, 1000, 1000);
+        $img->saveToFile("../uploads/".$this->SendSmall);
+        $img->destroy();
+
+        if(isset($img)):
+            $this->Result = TRUE;
+            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho pequeno!",RENTAL_ACCEPT];
+        else:
+            $this->Result = FALSE;
+            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho pequeno!",RENTAL_ERROR];
+        endif;
     }
 
 //    // Adiciona a relação Experiencia com o Usuario

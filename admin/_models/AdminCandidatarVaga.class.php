@@ -21,12 +21,23 @@ class AdminCandidatarVaga{
         $this->Data = $Data;
         $this->CreateAluguel();
     }
+      public function ExeCreateArray(array $Data) {
+        
+         if(empty($this->Data['idVagaAluguel'])):
+        $this->CreateEmpregoArray();
+        elseif (empty($this->Data['idVagaEmprego'])):
+        $this->CreateAluguelArray();
+        else:
+         $this->CreateAluguelArray();
+         $this->CreateEmpregoArray();  
+        endif;
+       }
 
     public function ExeCreateEmprego(array $Data) {
         $this->Data = $Data;
         $this->CreateEmprego();
     }
-
+    
 
     public function ExeUpdate($CategoryId, array $Data) {
         $this->CadID = (int) $CategoryId;
@@ -58,10 +69,36 @@ class AdminCandidatarVaga{
             $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
         endif;
     }
+    
+    private function CreateAluguelArray() {
+        $Create = new Create;
+        $qntVagaAluguel = count($this->Data['idVagaAluguel']);
+        for($i = 0; $i < $qntVagaAluguel; $i++):
+            $idArray = ['idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i]];
+            $Create->ExeCreate(self::ALUGUEL, $idArray);
+         endfor;
+        if ($Create->getResult()):
+            $this->Result = $Create->getResult();
+            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
+        endif;
+    }
 
     private function CreateEmprego() {
         $Create = new Create;
         $Create->ExeCreate(self::EMPREGO, $this->Data);
+        if ($Create->getResult()):
+            $this->Result = $Create->getResult();
+            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
+        endif;
+    }
+    
+    private function CreateEmpregoArray() {
+        $Create = new Create;
+        $qntVagaEmprego = count($this->Data['idVagaEmprego']);
+        for($i = 0; $i < $qntVagaEmprego; $i++):
+            $idArray = ['idUsuario' => $this->Data['idUsuarioProfissional'], 'idVagaEmprego'=>  $this->Data['idVagaEmprego'][$i]];
+            $Create->ExeCreate(self::EMPREGO, $idArray);
+         endfor;
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
             $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];

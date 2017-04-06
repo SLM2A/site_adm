@@ -19,7 +19,7 @@ if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
     $data['idVagaAluguel']= $idVaga;
-    $data['idUsuario'] = $userlogin['idUsuario'];
+    $data['idUsuarioProfissional'] = $userlogin['idUsuario'];
 
     require '../../admin/_models/AdminCandidatarVaga.class.php';
     $cadastra = new AdminCandidatarVaga;
@@ -30,7 +30,7 @@ if (!empty($data['SendPostForm'])):
 endif;
 
 $readVaga = new Read();
-$readVaga->FullRead("Select * From vagaaluguelcandidatada where idVagaAluguel = {$idVaga} and idUsuario = {$userlogin['idUsuario']}");
+$readVaga->FullRead("Select * From vagaaluguelcandidatada where idVagaAluguel = {$idVaga} and idUsuarioProfissional = {$userlogin['idUsuario']}");
 
 $readSes = new Read;
 $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao=s.idSalao where idVagaAluguel = :id", "id={$idVaga}");

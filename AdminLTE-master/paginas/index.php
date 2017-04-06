@@ -39,7 +39,7 @@
                             $readVagasEmprego = new Read();
                             $readVagasEmprego->FullRead("SELECT * FROM vagaempregocandidata where idUsuario = {$userlogin['idUsuario']}");
                             $readVagasAluguel = new Read();
-                            $readVagasAluguel->FullRead("SELECT * FROM vagaaluguelcandidatada where idUsuario = {$userlogin['idUsuario']}");
+                            $readVagasAluguel->FullRead("SELECT * FROM vagaaluguelcandidatada where idUsuarioProfissional = {$userlogin['idUsuario']}");
                             $quantidade = $readVagasEmprego->getRowCount() + $readVagasAluguel->getRowCount();    
                             echo "  
                              <div class=\"col-lg-3 col-xs-6\">

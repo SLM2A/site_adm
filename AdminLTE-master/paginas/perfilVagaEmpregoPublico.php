@@ -24,7 +24,7 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                                     <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
 
                                     <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['tituloVaga']; echo " ";
-                                            echo"     <a href=\"editarVagaAluguel.php?id={$idVaga}\"><i class=\"fa  fa-pencil\"></i></a>";
+                                            echo"     <a href=\"editarVagaEmprego.php?id={$idVaga}\"><i class=\"fa  fa-pencil\"></i></a>";
                                             ?></h3>
                                     
                                 </div>
@@ -56,7 +56,7 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                                     <hr>						  
                                     <strong><i class="fa fa-map-marker margin-r-5"></i> Forma de contratação</strong>
                                     <p>
-                                    R$ <?php echo $readSes->getResult()[0]['vinculoEmpregaticio'] ?>,00
+                                    <?php echo $readSes->getResult()[0]['vinculoEmpregaticio'] ?>
                                     </p>
                                     <hr>
                                     <strong><i class="fa fa-book margin-r-5"></i> Número de Vagas</strong>
