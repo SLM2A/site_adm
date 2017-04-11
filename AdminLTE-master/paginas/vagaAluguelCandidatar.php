@@ -149,12 +149,12 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
     if(!$readVaga->getResult()):
     echo "
     <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i>Candidatar-se</button>
+    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Quero Alugar</button>
     </div>";
     else:
     echo "
     <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Candidatado</button>
+    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Proposta de Aluguel Enviada</button>
     </div>";
     endif;
     ?>

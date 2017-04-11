@@ -23,13 +23,13 @@ class AdminCandidatarVaga{
     }
       public function ExeCreateArray(array $Data) {
         
-         if(empty($this->Data['idVagaAluguel'])):
-        $this->CreateEmpregoArray();
+        if(empty($this->Data['idVagaAluguel'])):
+            $this->CreateEmpregoArray();
         elseif (empty($this->Data['idVagaEmprego'])):
-        $this->CreateAluguelArray();
+            $this->CreateAluguelArray();
         else:
-         $this->CreateAluguelArray();
-         $this->CreateEmpregoArray();  
+            $this->CreateAluguelArray();
+            $this->CreateEmpregoArray();  
         endif;
        }
 

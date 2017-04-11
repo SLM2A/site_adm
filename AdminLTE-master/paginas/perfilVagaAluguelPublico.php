@@ -17,7 +17,7 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
 
                 <!-- Main content -->
                 <section class="content">
-                    <section class="col-lg-12 connectedSortable">
+                    <div class="col-lg-12 connectedSortable">
                             <!-- Profile Image -->
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
@@ -30,11 +30,11 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
-                        </section>
+                        </div>
                         <!-- Fim Profile Image -->
 
                         <!-- About Me Box -->
-                        <section class="col-lg-6 connectedSortable">   
+                        <div class="col-lg-6 connectedSortable">   
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="ion-person"></i> Sobre a Vaga</h3>
@@ -66,9 +66,9 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                                     <hr>
                                 </div>
                             </div>
-                        </section>
+                        </div
                         <!-- Fim About Me Box -->	
-                         <section class="col-lg-6 connectedSortable">   
+                         <div class="col-lg-6 connectedSortable">   
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-building"></i> Sobre o Salão</h3>
@@ -78,7 +78,7 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                                     <strong><i class="fa fa-book margin-r-5"></i> Salão</strong>
 
                                     <p>
-                                        <?php echo $readSes->getResult()[0]['nomeSalao'] ?>
+                                         <?php echo" <a href=\"perfilSalaoPublico.php?id={$readSes->getResult()[0]['idSalao']}\">"; echo $readSes->getResult()[0]['nomeSalao']; echo "</a>"; ?> 
                                     </p>
                                     <hr>
                                     <strong><i class="fa fa-pencil margin-r-5"></i> Tamanho do Espaço</strong>
@@ -98,9 +98,9 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                                     <hr>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                         <!-- Inicio Minhas Experiências -->	
-                        <section class="col-lg-12 connectedSortable">   
+                        <div class="col-lg-12 connectedSortable">   
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="ion-person"></i> Informações Gerais</h3>
@@ -120,9 +120,78 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                                     
                                 </div>
                             </div>
-                        </section>
+                        </div>
+                    <?php
+//Inicio Busca Candidatura para Vagas de Alguel
+                    $readProfissional = new Read();
+                    $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaaluguel va on uc.idVagaAluguel=va.idVagaAluguel inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on va.idSalao=s.idSalao  where va.idVagaAluguel = {$idVaga}");
+                     
+//var_dump($readProfissional->getResult());
+//Fim Busca Candidatura para Vagas de Alguel
+
+
+                    echo "
+                        <div class=\"col-md-12\">
+    <div class=\"box box-primary\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Profissionais ao qual Contatei para essa vaga</h3>
+            </div>
+        
+        <div class=\"box-body table-responsive no-padding\">
+            <div class=\"box-body table-responsive no-padding\">
+                                        <table class=\"table table-hover\">
+                                            <thead> 
+                                                <tr>
+                                                    
+                                                    <th>Profissional</th>
+                                                    <th>Sexo</th>
+                                                    <th>E-mail</th>
+                                                    
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody> ";
+
+
+                    foreach ($readProfissional->getResult() as $profissional):
+//                                                       
+                        echo "</td>
+                                                        
+                                                            <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>";
+                                                           
+                                                            if($profissional['sexoUsuario']==null):
+                                                              echo " <td>Não Informado</td> ";
+                                                            else:
+                                                                echo " <td> {$profissional['sexoUsuario']} </td> ";
+                                                            endif;
+                                                                                                            
+                                                           
+                                                            if($profissional['situacao']==1):
+                                                               echo " <td>{$profissional['email']} </td> ";
+                                                            else:
+                                                                echo "<td>Aguardando aceitação do profissional<td> ";
+                                                            endif;
+                                                            
+                                                            
+                                                            echo "
+                                                           
+                                                               </tr>
+                                                        ";
+
+                    endforeach;
+                    echo "       
+                                            </tbody>  
+                                        </table>
+                                    </div>
+        </div>
+    </div>
+    </div>
+    
+    ";
                     
-                    
+                    ?>
+                        
+                        
                 </section>
 <div class="row">
 <?php include 'menuFooter.php'; ?>

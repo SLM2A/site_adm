@@ -2,17 +2,26 @@
 require_once('../../_app/Config.inc.php');
 require_once('../../_app/Includes.php');
 include 'menuHeader.php';
-
+//var_dump($_SESSION);
 if (!empty($_SESSION['userlogin']['msg'])):
     RentalErro($_SESSION['userlogin']['msg'],$_SESSION['userlogin']['tipoMsg']);
     $_SESSION['userlogin']['msg'] = '';
     $_SESSION['userlogin']['tipoMsg'] = '';
 endif;
 
-$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$update = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+if (!empty($_SESSION['userlogin']['modal_msg'])):
+    RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");
+    $_SESSION['userlogin']['modal_titulo']= "";
+    $_SESSION['userlogin']['modal_msg']= "";
+    $_SESSION['userlogin']['modal_botalDiscordo']= "";
+    $_SESSION['userlogin']['modal_botalAceito']= "";
+    $_SESSION['userlogin']['modal_botalAceito']= "";
+endif;
 
-if (isset($post) && $post['SendPostForm']):
+
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+if (isset($post) && array_key_exists("SendPostForm", $post)):
     $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
     unset($post['SendPostForm']);
     require('../../admin/_models/AdminGaleria.class.php');
@@ -32,20 +41,51 @@ else:
         $data = $read->getResult();
     endif;
 endif;
+if (isset($post) && array_key_exists("UpdatePostForm", $post)):
+    unset($post['UpdatePostForm']);
+    $idPortfolio = $post['idPortfolio'];
+    unset($post['idPortfolio']);
+    require('../../admin/_models/AdminGaleria.class.php');
+    $updateGallery = new AdminGaleria;
+    $updateGallery->ExeUpdate($idPortfolio, $post);
+    
+    if ($updateGallery->getMsg()):
+        $_SESSION['userlogin']['msg']= $updateGallery->getMsg()[0];
+        $_SESSION['userlogin']['tipoMsg']= $updateGallery->getMsg()[1];
+    endif;
 
-if (isset($post) && $post['UpdatePostForm']):
+    echo "<script>location.href='portfolio.php';</script>";
+    
+endif;
 
-var_dump($post);
+if (isset($post) && array_key_exists("DeletePostForm", $post)):
+    require('../../admin/_models/AdminGaleria.class.php');
+    $deleteGallery = new AdminGaleria;
+    $deleteGallery->ExeDelete($post['idPortfolio']);
+        
+    if ($deleteGallery->getMsg()):
+        $_SESSION['userlogin']['msg']= $deleteGallery->getMsg()[0];
+        $_SESSION['userlogin']['tipoMsg']= $deleteGallery->getMsg()[1];
+    endif;
+
+    echo "<script>location.href='portfolio.php';</script>";
+    
+    
+    //var_dump($post);
+    
+//    if (isset($post)):
+//        $_SESSION['userlogin']['modal_titulo']= "Titulo";
+//        $_SESSION['userlogin']['modal_msg']= "Menssagem";
+//        $_SESSION['userlogin']['modal_botalDiscordo']= "Discordo";
+//        $_SESSION['userlogin']['modal_botalAceito']= "Aceito";      
+//        var_dump($_SESSION);
+//    endif;
 endif;
 
 ?>
 
-
-
 <!-- Plugin CSS -->
-<link href="../../vendor/magnific-popup/magnific-popup.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html"
-      xmlns="http://www.w3.org/1999/html">
-
+<link href="../../vendor/magnific-popup/magnific-popup.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 
@@ -54,6 +94,7 @@ endif;
         <i class="ion ion-camera"></i> Minhas Fotos
     </h1>
 </section>
+
 <!-- Main content -->
 <section class="content">
     <form name="PostForm" method="POST" enctype="multipart/form-data">
@@ -100,16 +141,19 @@ endif;
                                         <img src=\"../uploads/{$fotos['portfolioImagemSmall']}\" alt=\"Attachment\" class=\"img-responsive\">
                                     </a>
                                 </span>
-                                <div class=\"input-group\">
+                            <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">
+                                <div class=\"input-group\">                                    
                                     <span class=\"input-group-addon\">Titulo</span>
-                                    <input type=\"text\" class=\"form-control\">
+                                    <input type=\"text\" name=\"tituloImagem\" class=\"form-control\" value=\""; if (isset($fotos)) echo $fotos['tituloImagem']; echo"\">
                                 </div>
-                                <textarea class=\"form-control\" rows=\"3\" placeholder=\"Descrição...\"></textarea>
+                                <textarea class=\"form-control\" name=\"descricaoImagem\" rows=\"3\" placeholder=\"Descrição...\">"; if (isset($fotos)) echo $fotos['descricaoImagem']; echo"</textarea>
                             </div>
-                        <center>
-                            <button input type=\"submit\" class=\"btn btn-app\" name=\"UpdatePostForm\"><i class=\"fa fa-save\"></i> Save </button>
-                            <button input class=\"btn btn-app\"><i class=\"fa fa-trash-o\" name=\"DeletePostForm\"></i> Delete </button>
-                        </center>
+                                <center>
+                                    <input type=\"hidden\" name=\"idPortfolio\" value=\"{$fotos['idPortfolio']}\">
+                                    <button input type=\"submit\" class=\"btn btn-app\" name=\"UpdatePostForm\"><i class=\"fa fa-save\"></i> Save </button>
+                                    <button input class=\"btn btn-app\" name=\"DeletePostForm\"><i class=\"fa fa-trash-o\"></i> Delete </button>
+                                </center>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -177,4 +221,13 @@ endif;
     });
 
     });
+    
+    function Excluir(){
+        location.href="teste.php?id=<?php print $post['idPortfolio'];?>"
+    };
+    
+    function Cancelar(){
+        location.href="teste.php"
+    };
+    
     </script>

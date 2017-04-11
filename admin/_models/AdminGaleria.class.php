@@ -12,19 +12,19 @@ class AdminGaleria {
     private $Data;
     private $File = Array();
     private $NomeCompletoUsuario;
-    private $Post;
+    private $idUsuario;
+    private $idPortfolio;
     private $Msg;
     private $Result;
     private $SendFull;
     private $SendSmall;
-    private $idPortfolio;
 
     //Nome da tabela no banco de dados!
     const ENTITY = 'portfolio';
 
     public function ExeCreate(array $imagens, $postID, $NomeCompletoUsuario ) {
         $this->Data = $imagens;
-        $this->Post = $postID;
+        $this->idUsuario = $postID;
         $this->NomeCompletoUsuario = $NomeCompletoUsuario;
         
         if (in_array('', $this->Data))://Verifica se a algum campo em branco na array            
@@ -69,16 +69,15 @@ class AdminGaleria {
         
     }*/
 
-    public function ExeUpdate($CategoryId, array $Data) {
-        $this->CadID = (int) $CategoryId;
+    public function ExeUpdate($idPortfolio, array $Data) {
+        $this->idPortfolio = (int) $idPortfolio;
         $this->Data = $Data;
-
-        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = FALSE;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", RENTAL_ERROR];
-        else:
-            $this->Update();
-        endif;
+        $this->Update();
+    }
+    
+    public function ExeDelete($idPortfolio) {
+        $this->idPortfolio = (int) $idPortfolio;
+        $this->Delete();
     }
 
     function getResult() {
@@ -109,15 +108,15 @@ class AdminGaleria {
         
         foreach ($this->File as $gbUpload):
             $ImgNameFull = "temp1";
-            $ImagemFull->Image($gbUpload, $ImgNameFull,null,$this->NomeCompletoUsuario."-".$this->Post);
+            $ImagemFull->Image($gbUpload, $ImgNameFull,null,$this->NomeCompletoUsuario."-".$this->idUsuario);
             $this->ImagemFull($ImagemFull->getResult(), $ImagemFull->getSend());
 
            $ImgNameSmall = "temp2";
-           $ImagemSmall->Image($gbUpload, $ImgNameSmall,null,$this->NomeCompletoUsuario."-".$this->Post);
+           $ImagemSmall->Image($gbUpload, $ImgNameSmall,null,$this->NomeCompletoUsuario."-".$this->idUsuario);
            $this->ImagemSmall($ImagemSmall->getResult(), $ImagemSmall->getSend());
 
            if ($ImagemFull->getResult()):
-               $gbCreate = ["idUsuario" => $this->Post, "portfolioImagemFull"=> $this->SendFull, "portfolioImagemSmall"=> $this->SendSmall, "dataImagem"=> date('Y-m-d H:i:s')];
+               $gbCreate = ["idUsuario" => $this->idUsuario, "portfolioImagemFull"=> $this->SendFull, "portfolioImagemSmall"=> $this->SendSmall, "dataImagem"=> date('Y-m-d H:i:s')];
                $insertGb = new create();
                $insertGb->ExeCreate(self::ENTITY, $gbCreate);
                if($insertGb->getResult()):
@@ -138,7 +137,16 @@ class AdminGaleria {
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b>, a imagem foi atualizada com sucesso!",RENTAL_ACCEPT];
+            $this->Msg = ["<b>Sucesso:</b> a imagem foi atualizada com sucesso!",RENTAL_ACCEPT];
+        endif;
+    }
+    
+    private function Delete() {
+        $delete = new Delete();
+        $delete->ExeDelete(self::ENTITY,"WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
+        if($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Msg = ["<b>Sucesso:</b> ao deletar a imagem!",RENTAL_ACCEPT];
         endif;
     }
 
@@ -147,7 +155,7 @@ class AdminGaleria {
         require_once('../../_app/WideImage/WideImage.php');
         $img = WideImage::load("../uploads/".$Endereço);
         $img = $img->resize(800, 600, 'outside');
-        $this->SendFull = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->Post}-FULL-".(substr(md5(time() + $rand), 0,5)).".jpg";
+        $this->SendFull = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-FULL-".(substr(md5(time() + $rand), 0,5)).".jpg";
         $img->saveToFile("../uploads/".$this->SendFull);
         $img->destroy();
 
@@ -165,7 +173,7 @@ class AdminGaleria {
         require_once('../../_app/WideImage/WideImage.php');
         $img = WideImage::load("../uploads/".$Endereço);
         $img = $img->resize(1500, 1500, 'outside');
-        $this->SendSmall = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->Post}-SMALL-".(substr(md5(time() + $rand), 0,5)).".jpg";
+        $this->SendSmall = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-SMALL-".(substr(md5(time() + $rand), 0,5)).".jpg";
         $img->saveToFile("../uploads/".$this->SendSmall);
         $img->destroy();
 

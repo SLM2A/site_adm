@@ -136,6 +136,81 @@ $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSala
                             </div>
                         </section>
                     
+                        <?php
+//Inicio Busca Candidatura para Vagas de Alguel
+                    $readProfissional = new Read();
+                    
+                    $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on ve.idSalao=s.idSalao where ve.idVagaEmprego = {$idVaga}");
+                   
+
+
+//Fim Busca Candidatura para Vagas de Alguel
+
+
+                    echo "
+                        <div class=\"col-md-12\">
+    <div class=\"box box-primary\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Profissionais ao qual Contatei para essa vaga</h3>
+            </div>
+        
+        <div class=\"box-body table-responsive no-padding\">
+            <div class=\"box-body table-responsive no-padding\">
+                                        <table class=\"table table-hover\">
+                                            <thead> 
+                                                <tr>
+                                                    
+                                                    <th>Profissional</th>
+                                                    <th>Sexo</th>
+                                                    <th>E-mail</th>
+                                                   
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody> ";
+
+
+                    foreach ($readProfissional->getResult() as $profissional):
+//                                  
+                        
+                        echo "</td>
+                                                        
+                                                            <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>";
+                                                           
+                                                            if($profissional['sexoUsuario']==null):
+                                                              echo " <td>Não Informado</td> ";
+                                                            else:
+                                                                echo " <td> {$profissional['sexoUsuario']} </td> ";
+                                                            endif;
+                                                                                                            
+                                                           
+                                                            if($profissional['situacao']==1):
+                                                               echo " <td>{$profissional['email']} </td> ";
+                                                            else:
+                                                                echo "<td>Aguardando aceitação do profissional<td> ";
+                                                            endif;
+                                                                                                                     
+                                                            
+                                                            echo "
+                                                           
+                                                               </tr>
+                                                        ";
+
+                    endforeach;
+                    echo "       
+                                            </tbody>  
+                                        </table>
+                                    </div>
+        </div>
+    </div>
+    </div>
+    
+    ";
+                    
+                    ?>
+                        
+                        
+                        
                 </section>
 <div class="row">
 <?php include 'menuFooter.php'; ?>

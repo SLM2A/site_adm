@@ -13,6 +13,9 @@ $readProfissional->FullRead("select * from usuario where idUsuario = :id", "id={
 $readConvidado = new Read();
 $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']} and idUsuarioProfissional = {$idProfissional}");
 
+ $readFoto = new Read();
+ $readFoto->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$idProfissional}");
+
 
 ?>
 
@@ -170,7 +173,7 @@ endforeach;
     <section class="col-md-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"><i class="ion-briefcase"></i> Portfolio</h3>
+                <h3 class="box-title"><i class="ion-camera"></i> Portfolio</h3>
             </div>
 
             <div class="box-body table-responsive no-padding">
@@ -180,14 +183,12 @@ endforeach;
 
                         <?php
 
-                        $read = new Read();
-                        $read->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$idProfissional}");
+                       
 
-                        foreach ($read->getResult() as $fotos):
-                            echo   " <a href=\"portfolio.php?id={$fotos['idPortfolio']}\" onclick=\"teste()\">
-                            <img alt=\"Lemon Slice\"
-                             src=\"../uploads/{$fotos['portfolioImagem']}\"
-                             data-image=\"../uploads/{$fotos['portfolioImagem']}\"
+                        foreach ($readFoto->getResult() as $fotos):
+                            echo   " <img alt=\"Lemon Slice\"
+                             src=\"../uploads/{$fotos['portfolioImagemFull']}\"
+                             data-image=\"../uploads/{$fotos['portfolioImagemFull']}\"
                              data-description=\"This is a Lemon Slice\"
                              style=\"display:none\">
                             </a> ";

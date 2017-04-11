@@ -31,60 +31,8 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
 
 <section class="content">
     <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data">
-    <div class="col-md-6">
-
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title"><i class="ion-ios-bookmarks"></i> Vagas de Aluguel</h3>
-            </div>
-        
-        <div class="box-body table-responsive no-padding">
-            <div class="box-body table-responsive no-padding">
-                                        <table class="table table-hover">
-                                            <thead> 
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Nome do Anúncio</th>
-                                                    <th>Profissão</th>
-                                                    <th>Forma de Aluguel</th>
-                                                    <th>Preço</th>
-                                                    <th>Salão</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <?php
-                                                $readSes = new Read;
-
-                                                $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao" , "catid={$userlogin['idUsuario']}");
-                                                foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$ses['idVagaAluguel']}\" class=\"flat-red\" ";
-
-                                                            if ($ses['idVagaAluguel'] == $data['idVagaAluguel']):
-                                                                echo ' checked';
-                                                            endif;
-                                                                  
-                                                    echo "</td><td> {$ses['nomeAnuncio']} </td>
-                                                              <td> {$ses['profissao']} </td>
-                                                              
-                                                              <td> {$ses['formaAluguel']} </td>
-                                                              <td> {$ses['preco']} </td>
-                                                              <td> {$ses['nomeSalao']} </td>
-                                                                  </tr>
-                                                        ";
-
-                                                endforeach;
-                                                ?>
-                                            </tbody>  
-                                        </table>
-                                    </div>
-        </div>
-    </div>
-    </div>
-        
-    <div class="col-md-6">
+           
+    <div class="col-md-12">
 
         <div class="box">
             <div class="box-header">
@@ -143,7 +91,7 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
     if (!$readConvidado->getResult()):
         echo "
     <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Abrir Contato</button>
+    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Enviar Proposta de Emprego para as Vagas Selecionada</button>
     </div>";
     else:
         echo "

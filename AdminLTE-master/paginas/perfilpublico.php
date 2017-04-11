@@ -4,6 +4,10 @@ require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
+$readFotos = new Read();
+$readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+                        
+
 ?>
 
 <link rel='stylesheet' href='package/unitegallery/css/unite-gallery.css' type='text/css' />
@@ -163,7 +167,7 @@ include 'menuHeader.php';
     <section class="col-md-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"><i class="ion-briefcase"></i> Minhas Experiências</h3>
+                <h3 class="box-title"><i class="ion-camera"></i> Meu Portfólio</h3>
             </div>
 
             <div class="box-body table-responsive no-padding">
@@ -173,14 +177,12 @@ include 'menuHeader.php';
 
                         <?php
 
-                        $read = new Read();
-                        $read->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
-
-                        foreach ($read->getResult() as $fotos):
+                        
+                        foreach ($readFotos->getResult() as $fotos):
                             echo   " <a href=\"portfolio.php?id={$fotos['idPortfolio']}\" onclick=\"teste()\">
                             <img alt=\"Lemon Slice\"
-                             src=\"../uploads/{$fotos['portfolioImagem']}\"
-                             data-image=\"../uploads/{$fotos['portfolioImagem']}\"
+                             src=\"../uploads/{$fotos['portfolioImagemFull']}\"
+                             data-image=\"../uploads/{$fotos['portfolioImagemFull']}\"
                              data-description=\"This is a Lemon Slice\"
                              style=\"display:none\">
                             </a> ";

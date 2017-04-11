@@ -20,7 +20,7 @@ class AdminProfissionalConvidar{
 
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
-        $this->CreateAluguel();
+        //$this->CreateAluguel();
         $this->CreateEmprego();
     }
 
@@ -49,18 +49,18 @@ class AdminProfissionalConvidar{
 
     
     
-    private function CreateAluguel() {
-        $Create = new Create;
-        $qntVagaAluguel = count($this->Data['idVagaAluguel']);
-        for($i = 0; $i < $qntVagaAluguel; $i++):
-            $idArray = ['idUsuarioEmpresario' => $this->Data['idUsuarioEmpresario'],  'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i] ];
-            $Create->ExeCreate(self::ENTITY, $idArray);
-          endfor;
-        $this->Result = TRUE;
-         if($Create->getResult()):
-             $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
-         endif;
-    }
+//    private function CreateAluguel() {
+//        $Create = new Create;
+//        $qntVagaAluguel = count($this->Data['idVagaAluguel']);
+//        for($i = 0; $i < $qntVagaAluguel; $i++):
+//            $idArray = ['idUsuarioEmpresario' => $this->Data['idUsuarioEmpresario'],  'idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'situacao' => $this->Data['situacao'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i] ];
+//            $Create->ExeCreate(self::ENTITY, $idArray);
+//          endfor;
+//        $this->Result = TRUE;
+//         if($Create->getResult()):
+//             $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
+//         endif;
+//    }
 
         private function CreateEmprego() {
         $Create = new Create;

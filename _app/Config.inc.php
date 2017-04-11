@@ -67,6 +67,30 @@ function RentalErro ($ErrMsg, $ErrNo, $ErrDie = null) {
     endif;
 }
 
+//Rental :: Exibe modal lançados :: Front
+function RentalModal ($TituloModal = null, $MsgModal = null, $BotaoDiscordo = null, $BotaoAceito = null, $ParClick = null) {
+    echo "
+           <div class=\"modal\" id=\"myModal\">
+      <div class=\"modal-dialog\">
+        <div class=\"modal-content\">
+            <div class=\"modal-header\">
+            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
+              <span aria-hidden=\"true\">&times;</span></button>
+            <h4 class=\"modal-title\">{$TituloModal}</h4>
+          </div>
+          <div class=\"modal-body\">
+            <p>{$MsgModal}</p>
+          </div>
+          <div class=\"modal-footer\">
+            <button type=\"button\" class=\"btn btn-default pull-right-container\" data-dismiss=\"modal\">{$BotaoDiscordo}</button>
+            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" onClick=\"{$ParClick}()\">{$BotaoAceito}</button>
+          </div>
+        </div>
+      </div>
+    </div> 
+         ";
+}
+
 //PHPErro :: personaliza o gatilho do PHP
 function PHPErro($ErrNo, $ErrMsg, $ErrFile, $ErrLine) {
     $CssClass = ($ErrNo == E_USER_NOTICE ? WS_INFOR : ($ErrNo == E_USER_WARNING ? WS_ALERT : ($ErrNo == E_USER_ERROR ? WS_ERROR : $ErrNo)));

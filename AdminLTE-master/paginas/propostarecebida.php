@@ -17,12 +17,14 @@ if (!empty($data['SendPostForm'])):
     $cadastra = new AdminProfissionalConvidar;   
     $candidatavaga = new AdminCandidatarVaga;
     
-    $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
-
     $candidatavaga->ExeCreateArray($data);
     
+    $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
+
     
-    //echo "<script>location.href='propostarecebida.php';</script>";
+    
+    
+    echo "<script>location.href='propostarecebida.php';</script>";
 
 endif;
 

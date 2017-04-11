@@ -42,8 +42,46 @@ endif;
              
       <form role="form" action="" method="post" class="login-form">
 
-     
-        <section class="col-lg-12 connectedSortable">
+          <?php
+          
+          if($userlogin['idTipoUsuario']==2):
+  echo "     
+      
+     <div class=\"col-lg-12 connectedSortable\">
+            <div class=\"nav-tabs-custom\">
+               
+                <div class=\"box-body box-profile\" >
+                    <center>
+                    <label><h4>Você deseja ter seu curriculum ativo em nosso site?</h4></label>
+                                <div class=\"form-group\">
+                                                                           <input type=\"radio\" name=\"situacao\" value=\"1\" class=\"flat-red\" ";
+
+                                                                            if ($data['situacao'] == 1):
+                                                                                echo ' checked';
+                                                                            endif;
+                                                                            echo "> Sim </option></label>";
+                                                                            echo "<label></label> ";
+                                                                            echo "<input type=\"radio\" name=\"situacao\" value=\"2\" class=\"flat-red\" ";
+                                                                                
+                                                                            if ($data['situacao'] == 2):
+                                                                                echo ' checked';
+                                                                            endif;
+                                                                            echo "> Não </option></label>
+                                                                           
+                                
+                    
+                                </div>
+                    </center>
+                   
+            </div>
+            
+        </div>
+            </div>
+          ";  
+                 endif;
+        ?>
+            
+        <div class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
             <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
@@ -100,7 +138,7 @@ endif;
                     </div>
                 </div>
             </div>        
-        </section>
+        </div>
     
         
 
