@@ -12,6 +12,9 @@ include 'menuHeader.php';
                 <!-- Main content -->
                 <section class="content">
                     <form role="form" action="" method="post" class="login-form">
+                        <section class="col-lg-12 connectedSortable ">
+                         <a href="EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
+                        </section>
                      <!--Tabela listando Vagas de Aluguel-->
                         <div class="row">
                             <div class="col-xs-12">
@@ -119,9 +122,7 @@ include 'menuHeader.php';
                                 <!-- /.box -->
                             </div>
                         </div>
-                        <section class="col-lg-12 connectedSortable ">
-                         <a href="EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
-                        </section>
+                        
                     </form>
                     
                     

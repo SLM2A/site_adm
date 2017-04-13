@@ -36,7 +36,7 @@ endif;
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!-- daterange picker -->
@@ -85,13 +85,18 @@ endif;
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg"><b>Rental</b>Easy</span>
                 </a>
+               
+
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top">
                     <!-- Sidebar toggle button-->
+                    
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                         <span class="sr-only">Toggle navigation</span>
                     </a>
-
+                    
+                    
+                    
                    <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                             <!-- Messages: style can be found in dropdown.less-->
@@ -100,6 +105,7 @@ endif;
                                     <i class="fa fa-envelope-o"></i>
                                     <span class="label label-success">1</span>
                                 </a>
+                                
                                 <ul class="dropdown-menu">
                                     <li class="header">Você tem 1 mensagens</li>
                                     <li>
@@ -242,6 +248,7 @@ endif;
                         </ul>
                     </div>
                 </nav>
+                
             </header>
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="main-sidebar">
@@ -291,16 +298,16 @@ endif;
                         <a href="cadastroEmpresa.php"><i class="fa fa-building"></i> <span>Meus Salões</span></a>	
                     </li>
                     <li class="treeview">
-                        <a href="EscolhaTipoVaga.php"><i class="fa fa-plus"></i> <span>Cadastrar Vaga</span></a>	
-                    </li>
-                    <li class="treeview">
                         <a href="minhasVagas.php"><i class="fa fa-briefcase"></i> <span>Minhas Vagas</span></a>	
                     </li>
                     <li class="treeview">
 			<a href="procurarprofissional.php"><i class="fa fa-search"></i> <span>Procurar Profissional</span></a>	
                     </li>
                     <li class="treeview">
-			<a href="contatoprofissional.php"><i class="fa fa-list"></i> <span>Propostas de emprego</span></a>	
+			<a href="contatoprofissional.php"><i class="fa fa-user-circle"></i> <span>Propostas de emprego</span></a>	
+                    </li>
+                    <li class="treeview">
+			<a href="candidatos.php"><i class="fa fa-user-circle"></i> <span>Candidatos</span></a>	
                     </li>
                     ';
                         endif;

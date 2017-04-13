@@ -1,7 +1,7 @@
 <?php include 'menuHeader.php'; 
 if(array_key_exists('id', $_GET)):
     $id= $_GET['id'];
-    echo RentalModal('TITULO', 'MSG', 'DISCORDO', 'ACEITO','Excluir');
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");
     var_dump($id);
 endif;
 

@@ -2,24 +2,22 @@
 require_once('../../_app/Config.inc.php');
 require_once('../../_app/Includes.php');
 include 'menuHeader.php';
-//var_dump($_SESSION);
+
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+/**
+ * modal retorna* /
+ */
+if (array_key_exists('idPortfolio', $_GET)):
+    $_SESSION['userlogin']['idPortfolio'] = $_GET['idPortfolio'];
+    $_SESSION['userlogin']['ModalPortfolioOk'] = "ok";
+endif;
+
 if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'],$_SESSION['userlogin']['tipoMsg']);
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
     $_SESSION['userlogin']['msg'] = '';
     $_SESSION['userlogin']['tipoMsg'] = '';
 endif;
-
-if (!empty($_SESSION['userlogin']['modal_msg'])):
-    RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");
-    $_SESSION['userlogin']['modal_titulo']= "";
-    $_SESSION['userlogin']['modal_msg']= "";
-    $_SESSION['userlogin']['modal_botalDiscordo']= "";
-    $_SESSION['userlogin']['modal_botalAceito']= "";
-    $_SESSION['userlogin']['modal_botalAceito']= "";
-endif;
-
-
-$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 if (isset($post) && array_key_exists("SendPostForm", $post)):
     $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
@@ -29,8 +27,8 @@ if (isset($post) && array_key_exists("SendPostForm", $post)):
     $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
 
     if ($sendGallery->getMsg()):
-        $_SESSION['userlogin']['msg']= $sendGallery->getMsg()[0];
-        $_SESSION['userlogin']['tipoMsg']= $sendGallery->getMsg()[1];
+        $_SESSION['userlogin']['msg'] = $sendGallery->getMsg()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $sendGallery->getMsg()[1];
     endif;
 
     echo "<script>location.href='portfolio.php';</script>";
@@ -41,38 +39,46 @@ else:
         $data = $read->getResult();
     endif;
 endif;
+
 if (isset($post) && array_key_exists("UpdatePostForm", $post)):
+    var_dump($post);
     unset($post['UpdatePostForm']);
     $idPortfolio = $post['idPortfolio'];
     unset($post['idPortfolio']);
     require('../../admin/_models/AdminGaleria.class.php');
     $updateGallery = new AdminGaleria;
     $updateGallery->ExeUpdate($idPortfolio, $post);
-    
+
     if ($updateGallery->getMsg()):
-        $_SESSION['userlogin']['msg']= $updateGallery->getMsg()[0];
-        $_SESSION['userlogin']['tipoMsg']= $updateGallery->getMsg()[1];
+        $_SESSION['userlogin']['msg'] = $updateGallery->getMsg()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $updateGallery->getMsg()[1];
     endif;
 
-    echo "<script>location.href='portfolio.php';</script>";
-    
+//echo "<script>location.href='portfolio.php';</script>";
+
 endif;
 
 if (isset($post) && array_key_exists("DeletePostForm", $post)):
+    unset($post['DeletePostForm']);
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");
+endif;
+
+if (!empty($_SESSION['userlogin']['ModalPortfolioOk'])):
+    unset($_SESSION['userlogin']['ModalPortfolioOk']);
     require('../../admin/_models/AdminGaleria.class.php');
     $deleteGallery = new AdminGaleria;
-    $deleteGallery->ExeDelete($post['idPortfolio']);
-        
+    $deleteGallery->ExeDelete($_SESSION['userlogin']['idPortfolio']);
+    unset($_SESSION['userlogin']['idPortfolio']);
+
     if ($deleteGallery->getMsg()):
-        $_SESSION['userlogin']['msg']= $deleteGallery->getMsg()[0];
-        $_SESSION['userlogin']['tipoMsg']= $deleteGallery->getMsg()[1];
+        $_SESSION['userlogin']['msg'] = $deleteGallery->getMsg()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteGallery->getMsg()[1];
     endif;
 
     echo "<script>location.href='portfolio.php';</script>";
-    
-    
-    //var_dump($post);
-    
+endif;
+
+//var_dump($post);    
 //    if (isset($post)):
 //        $_SESSION['userlogin']['modal_titulo']= "Titulo";
 //        $_SESSION['userlogin']['modal_msg']= "Menssagem";
@@ -80,8 +86,6 @@ if (isset($post) && array_key_exists("DeletePostForm", $post)):
 //        $_SESSION['userlogin']['modal_botalAceito']= "Aceito";      
 //        var_dump($_SESSION);
 //    endif;
-endif;
-
 ?>
 
 <!-- Plugin CSS -->
@@ -144,9 +148,9 @@ endif;
                             <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">
                                 <div class=\"input-group\">                                    
                                     <span class=\"input-group-addon\">Titulo</span>
-                                    <input type=\"text\" name=\"tituloImagem\" class=\"form-control\" value=\""; if (isset($fotos)) echo $fotos['tituloImagem']; echo"\">
+                                    <input type=\"text\" name=\"tituloImagem\" class=\"form-control\" required value=\""; if (isset($fotos)) echo $fotos['tituloImagem']; echo"\">
                                 </div>
-                                <textarea class=\"form-control\" name=\"descricaoImagem\" rows=\"3\" placeholder=\"Descrição...\">"; if (isset($fotos)) echo $fotos['descricaoImagem']; echo"</textarea>
+                                <textarea class=\"form-control\" name=\"descricaoImagem\" rows=\"3\" placeholder=\"Descrição...\" required>"; if (isset($fotos)) echo $fotos['descricaoImagem']; echo"</textarea>
                             </div>
                                 <center>
                                     <input type=\"hidden\" name=\"idPortfolio\" value=\"{$fotos['idPortfolio']}\">
@@ -222,12 +226,16 @@ endif;
 
     });
     
+    $(document).ready(function () {
+            $('#myModal').modal('show');
+    });    
+    
     function Excluir(){
-        location.href="teste.php?id=<?php print $post['idPortfolio'];?>"
+        location.href="portfolio.php?idPortfolio=<?php print $post['idPortfolio'];?>"
     };
     
     function Cancelar(){
-        location.href="teste.php"
+        location.href="portfolio.php"
     };
     
     </script>
