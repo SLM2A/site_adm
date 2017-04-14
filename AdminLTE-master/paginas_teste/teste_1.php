@@ -54,7 +54,7 @@ if (isset($post) && array_key_exists("UpdatePostForm", $post)):
         $_SESSION['userlogin']['tipoMsg'] = $updateGallery->getMsg()[1];
     endif;
 
-echo "<script>location.href='portfolio.php';</script>";
+//echo "<script>location.href='portfolio.php';</script>";
 
 endif;
 
@@ -117,57 +117,6 @@ endif;
         <input type="submit" value="+ Adicionar Fotos" name="SendPostForm" button type="button" class="btn btn-block btn-primary btn-lg"/>
     </form>
 
-    <small>Adicione fotos de seus trabolhos para que outros curtam e comentem</small>
-
-    <p>
-
-    <p>
-
-    <p>
-
-    <p>
-
-
-    <div class="box-footer">
-        <div class="popup-gallery">
-
-        <?php
-        if(!empty ($read)) {
-            foreach ($read->getResult() as $fotos):
-                $post['idPortfolio'] = $fotos['idPortfolio'];
-                echo "
-                <div class=\"col-lg-3 connectedSortable\">
-                    <div class=\"box box-primary\">
-                        <div class=\"mailbox-attachment-info\">
-                            <div class=\"mailbox-attachment-info\">
-                                <span class=\"mailbox-attachment-icon has-img\">
-                                    <a href=\"../uploads/{$fotos['portfolioImagemFull']}\" class=\"portfolio-box\">
-                                        <img src=\"../uploads/{$fotos['portfolioImagemSmall']}\" alt=\"Attachment\" class=\"img-responsive\">
-                                    </a>
-                                </span>
-                            <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">
-                                <div class=\"input-group\">                                    
-                                    <span class=\"input-group-addon\">Titulo</span>
-                                    <input type=\"text\" name=\"tituloImagem\" class=\"form-control\" required value=\""; if (isset($fotos)) echo $fotos['tituloImagem']; echo"\">
-                                </div>
-                                <textarea class=\"form-control\" name=\"descricaoImagem\" rows=\"3\" placeholder=\"Descrição...\" required>"; if (isset($fotos)) echo $fotos['descricaoImagem']; echo"</textarea>
-                            </div>
-                                <center>
-                                    <input type=\"hidden\" name=\"idPortfolio\" value=\"{$fotos['idPortfolio']}\">
-                                    <button input type=\"submit\" class=\"btn btn-app\" name=\"UpdatePostForm\"><i class=\"fa fa-save\"></i> Save </button>
-                                    <button input class=\"btn btn-app\" name=\"DeletePostForm\"><i class=\"fa fa-trash-o\"></i> Delete </button>
-                                </center>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            ";
-            endforeach;
-        }
-        ?>
-
-        </div>
-    </div>
 
 </section>
 <div class="row">
@@ -179,22 +128,6 @@ endif;
     <script src="../../js/creative.js"></script>
     <!-- GALERIA IMAGEM ABERTA FIM -->
 
-    <script>
-
-        function removeMensagem(){
-            setTimeout(function(){
-                var msg = document.getElementById("msg-success");
-                msg.parentNode.removeChild(msg);
-            }, 3000);
-        }
-        document.onreadystatechange = ($) => {
-            if (document.readyState === 'complete') {
-                // toda vez que a página carregar, vai limpar a mensagem (se houver) após 5 segundos
-                removeMensagem();
-            }
-        };
-
-    </script>
 
 
 <script>
@@ -226,16 +159,6 @@ endif;
 
     });
     
-    $(document).ready(function () {
-            $('#myModal').modal('show');
-    });    
-    
-    function Excluir(){
-        location.href="portfolio.php?idPortfolio=<?php print $post['idPortfolio'];?>"
-    };
-    
-    function Cancelar(){
-        location.href="portfolio.php"
-    };
+
     
     </script>

@@ -18,7 +18,8 @@ class AdminGaleria {
     private $Result;
     private $SendFull;
     private $SendSmall;
-
+    private $SendAvatar;
+    
     //Nome da tabela no banco de dados!
     const ENTITY = 'portfolio';
 
@@ -36,38 +37,19 @@ class AdminGaleria {
         endif;
     }
     
-    /*public function gbSend(array $imagens, $postID, $NomeCompletoUsuario ){
-        $this->Post = (int) $postID;
+     public function ExeCreateAvatar(array $imagens, $postID, $NomeCompletoUsuario ) {
         $this->Data = $imagens;
+        $this->idUsuario = $postID;
+        $this->NomeCompletoUsuario = $NomeCompletoUsuario;
         
-        $gbCont = count($this->Data['tmp_name']);
-        $gbKeys = array_keys($this->Data);
-
-        for($gb = 0; $gb < $gbCont; $gb++):
-            foreach ($gbKeys as $key):
-                $this->File[$gb][$key] = $this->Data[$key][$gb];
-            endforeach;
-        endfor;
-        
-        $gbSend = new Upload();
-        $i = 0;
-        
-        foreach ($this->File as $gbUpload):
-            $i++;
-            $ImgName = "{$NomeCompletoUsuario}-gb-{$this->Post}-".(substr(md5(time() + $i), 0,5));
-            $gbSend->Image($gbUpload, $ImgName);
-            
-            if ($gbSend->getResult()):
-                $gbImage = $gbSend->getResult();
-                $gbCreate = ["idUsuario" => $this->Post, "portfolioImagem"=> $gbImage, "dataImagem"=> date('Y-m-d H:i:s')];
-                $insertGb = new create();
-                $insertGb->ExeCreate(self::ENTITY, $gbCreate);
-            endif;
-        endforeach;
-            
-        
-        
-    }*/
+        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array            
+            $this->Msg = ['<b>Erro ao enviar!</b> Selecione uma ou mais imagens', RENTAL_INFOR];
+            $this->Result = false;
+        else:            
+            $this->setData();
+            $this->CreateAvatar();
+        endif;
+    }    
 
     public function ExeUpdate($idPortfolio, array $Data) {
         $this->idPortfolio = (int) $idPortfolio;
@@ -131,6 +113,26 @@ class AdminGaleria {
 
 
     }
+    
+    private function CreateAvatar() {
+        $ImagemAvatar = new Upload();
+        $ImgNameAvatar = "temp1";
+        $ImagemAvatar->Image($gbUpload, $ImgNameAvatar,null,$this->NomeCompletoUsuario."-".$this->idUsuario);
+        $this->ImagemFull($ImagemAvatar->getResult(), $ImagemAvatar->getSend());
+
+        if ($ImagemAvatar->getResult()):
+            $gbCreate = ["idUsuario" => $this->idUsuario, "portfolioImagemFull"=> $this->SendFull, "portfolioImagemSmall"=> $this->SendSmall, "dataImagem"=> date('Y-m-d H:i:s')];
+            $insertGb = new create();
+            $insertGb->ExeCreate(self::ENTITY, $gbCreate);
+            if($insertGb->getResult()):
+                $this->Result = TRUE;
+                $this->Msg = ["<b>Sucesso:</b> a(s) imagem(s) imagens foram gravadas com sucesso!",RENTAL_ACCEPT];
+            else:
+                $this->Result = FALSE;
+                $this->Msg = ["<b>Erro:</b> a(s) imagem(s) imagens não foram gravadas com sucesso!",RENTAL_ERROR];
+            endif;
+        endif;
+    }
 
     private function Update() {
         $update = new Update();
@@ -193,24 +195,23 @@ class AdminGaleria {
             $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho pequeno!",RENTAL_ERROR];
         endif;
     }
+    
+    private function ImagemAvatar ($Endereço, $Caminho){
+        $rand = rand(5, 30);
+        require_once('../../_app/WideImage/WideImage.php');
+        $img = WideImage::load("../uploads/".$Endereço);
+        $img = $img->resize(300, 100, 'outside');
+        $this->SendAvatar = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-AVATAR-".(substr(md5(time() + $rand), 0,5)).".jpg";
+        $img->saveToFile("../uploads/".$this->SendAvatar);
+        $img->destroy();
 
-//    // Adiciona a relação Experiencia com o Usuario
-//    private function CreateExperiencia() {
-//        $Create = new Create;
-//        $Create->ExeCreate(self::salaoempresario, $this->CertificadoUsuario);
-//        if ($Create->getResult()):
-//            $this->Result = $Create->getResult();
-//            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
-//        endif;
-//    }
-//
-//    private function Update() {
-//        $update = new Update();
-//        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
-//        if ($update->getResult()):
-//            $this->Result = TRUE;
-//            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!", WS_ACCEPT];
-//        endif;
-//    }
+        if(isset($img)):
+            $this->Result = TRUE;
+            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho grande!",RENTAL_ACCEPT];
+        else:
+            $this->Result = FALSE;
+            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho grande!",RENTAL_ERROR];
+        endif;
+    }
 
 }

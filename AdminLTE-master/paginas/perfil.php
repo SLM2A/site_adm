@@ -6,18 +6,25 @@ include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-if (!empty($data['SendPostForm'])):
+if (isset($post) && array_key_exists("SendPostForm", $post)):
     unset($data['SendPostForm']);
+    $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
+    unset($post['SendPostForm']);
 
     require '../../admin/_models/SiteRegistrar.class.php';
     $cadastra = new SiteRegistrar();
-
-
-
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
+    
+    require('../../admin/_models/AdminGaleria.class.php');
+    $sendGallery = new AdminGaleria;
+    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario']);
 
-    RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    if ($sendGallery->getMsg()):
+        $_SESSION['userlogin']['msg'] = $sendGallery->getMsg()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $sendGallery->getMsg()[1];
+    endif;
 
+    echo "<script>location.href='portfolio.php';</script>";
 
 else:
     $read = new Read();
@@ -38,10 +45,33 @@ endif;
     <!-- Main content -->
     
     <section class="content">
-      
+        
+       
              
       <form role="form" action="" method="post" class="login-form">
 
+
+          <div class="col-lg-12">
+              <div class="nav-tabs-custom">
+                  <ul class="nav nav-tabs pull-right">                  
+                      <li class="pull-left header"><i class="ion-camera"></i> Sua Foto de Perfil</li>
+                  </ul>
+                  <div class="tab-content no-padding">
+                      <div class="box-body box-profile">
+                          <div class="input-group">
+                              <label class="input-group-btn">
+                                  <span class="btn btn-primary">
+                                      <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" multiple name="portfolio[]" id="exampleInputFile"/>
+                                  </span>
+                              </label>
+                              <input type="text" class="form-control" readonly/>
+                          </div>
+                      </div>
+                  </div>  
+              </div>  
+          </div>  
+          
+          
           <?php
           
           if($userlogin['idTipoUsuario']==2):
@@ -176,3 +206,36 @@ endif;
 
 <div class="row">
 <?php include 'menuFooter.php'; ?>
+
+    <script>
+    $(function() {
+
+    // We can attach the `fileselect` event to all file inputs on the page
+    $(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+    });
+
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready( function() {
+    $(':file').on('fileselect', function(event, numFiles, label) {
+
+    var input = $(this).parents('.input-group').find(':text'),
+    log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+    if( input.length ) {
+    input.val(log);
+    } else {
+    if( log ) alert(log);
+    }
+
+    });
+    });
+
+    });
+    
+
+    
+    </script>
