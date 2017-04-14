@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Abr-2017 às 00:25
+-- Generation Time: 14-Abr-2017 às 20:29
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5990,7 +5990,9 @@ INSERT INTO `habilidadeusuario` (`idAreaAtuacao`, `idUsuario`) VALUES
 (3, 39),
 (9, 39),
 (3, 26),
-(9, 26);
+(9, 26),
+(1, 27),
+(4, 27);
 
 -- --------------------------------------------------------
 
@@ -6011,6 +6013,35 @@ INSERT INTO `horariofuncionamento` (`idHorario`, `opcao`) VALUES
 (1, 'Horário Comercial'),
 (2, 'Horário Flexível'),
 (3, 'À disposição do contratante');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mensagem`
+--
+
+CREATE TABLE `mensagem` (
+  `idMensagem` int(11) NOT NULL,
+  `idRemetente` int(11) NOT NULL,
+  `idDestinatario` int(11) NOT NULL,
+  `assunto` varchar(100) NOT NULL,
+  `mensagem` varchar(255) NOT NULL,
+  `data` timestamp NULL DEFAULT NULL,
+  `situacaoEnviada` int(10) DEFAULT NULL,
+  `situacaoRecebida` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mensagem`
+--
+
+INSERT INTO `mensagem` (`idMensagem`, `idRemetente`, `idDestinatario`, `assunto`, `mensagem`, `data`, `situacaoEnviada`, `situacaoRecebida`) VALUES
+(1, 26, 38, 'a', 'a', NULL, 1, 0),
+(2, 26, 27, 'Oi', 'Oi, tudo bem?', NULL, 1, 1),
+(3, 27, 26, 'Teste', 'Teste', NULL, 1, 1),
+(4, 26, 27, 'Teste', 'aaaa', NULL, 0, 1),
+(5, 27, 26, 'Oi', 'Tudo bem e você?', NULL, 0, 1),
+(6, 26, 27, 'Oi', 'Também!', NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -6083,14 +6114,9 @@ CREATE TABLE `portfolio` (
 --
 
 INSERT INTO `portfolio` (`idPortfolio`, `idUsuario`, `portfolioImagemFull`, `portfolioImagemSmall`, `dataImagem`, `tituloImagem`, `descricaoImagem`) VALUES
-(30, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-714f0.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-57971.jpg', '2017-04-05 03:18:56', NULL, NULL),
-(31, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-15c56.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-0f051.jpg', '2017-04-05 03:18:57', NULL, NULL),
-(32, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-0e0b8.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-29255.jpg', '2017-04-05 03:18:57', NULL, NULL),
-(33, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-9212d.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-512cc.jpg', '2017-04-05 03:18:58', NULL, NULL),
-(34, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-78444.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-1ec6d.jpg', '2017-04-05 03:22:48', NULL, NULL),
-(35, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-6d465.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-8b52f.jpg', '2017-04-05 03:23:22', NULL, NULL),
-(36, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-233cc.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-4a56f.jpg', '2017-04-05 03:24:27', NULL, NULL),
-(37, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-d3dd1.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-60856.jpg', '2017-04-05 03:24:45', NULL, NULL);
+(40, 27, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-FULL-657fa.jpg', 'Profissional-Teste-27/2017/04//Profissional-Teste-27-SMALL-530ff.jpg', '2017-04-08 22:53:32', NULL, NULL),
+(47, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-21555.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-7a88c.jpg', '2017-04-14 01:42:39', 'aa', 'aaa'),
+(48, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-6db55.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-af728.jpg', '2017-04-14 01:43:09', 'drer', 'erere');
 
 -- --------------------------------------------------------
 
@@ -6112,8 +6138,7 @@ CREATE TABLE `redesocial` (
 --
 
 INSERT INTO `redesocial` (`idRedeSocial`, `idUsuario`, `facebook`, `instagram`, `twitter`, `whatsapp`) VALUES
-(1, 26, 'rafinhamilare1', 'rafinhamilare', 'rafinhamilare', '(11) 97040-3620'),
-(2, 38, 'rafinhamilare', 'rafinhamilare', 'rafinhamilare', '11970403620');
+(4, 27, 'rafinhmilare', 'rafinhamilare', 'rafinhamilare', '11970403620');
 
 -- --------------------------------------------------------
 
@@ -6212,6 +6237,7 @@ INSERT INTO `tipousuario` (`idTipoUsuario`, `nomeTipoUsuario`) VALUES
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
   `idTipoUsuario` int(11) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   `apelidoUsuario` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `senha` varchar(50) DEFAULT NULL,
@@ -6220,23 +6246,25 @@ CREATE TABLE `usuario` (
   `sexoUsuario` varchar(20) DEFAULT NULL,
   `cpfUsuario` varchar(14) DEFAULT NULL,
   `dataNascimento` varchar(10) DEFAULT NULL,
-  `descricao` text
+  `descricao` text,
+  `situacao` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`) VALUES
-(26, 1, 'Empresario2', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '17/12/1995', 'Sou empresario!!!!!!!'),
-(27, 2, 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', NULL, '084.242.998-09', NULL, 'Profissional'),
-(33, 1, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, ''),
-(34, 1, 'Teste', 'marcelo@rental.com.br', '995bf053c4694e1e353cfd42b94e4447', 'Marcelo', 'Lima', 'Feminino', '456.789.545-67', '17/12/1994', 'Gay'),
-(35, 1, 'izamelao', 'iza@melao.com.br', 'bf3fdd34090adbcd4a20e5b19baf0113', 'Iza', 'Melao', 'Feminino', '675.765.675-67', '08031966', 'Teste'),
-(36, 1, NULL, 'elaine@azevedo.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Elaine', 'Azevedo', NULL, NULL, NULL, NULL),
-(37, 1, NULL, 'vinicius@moshe.com.br', '25f9e794323b453885f5181f1b624d0b', 'Vinicius', 'Marques', NULL, NULL, NULL, NULL),
-(38, 2, 'rafinhamilare', 'rafael@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Rafael', 'Milaré', 'Feminino', '345.675.434-56', '17/12/1993', 'asasa'),
-(39, 1, 'Empresario', 'empresario2@empresario.com.br', '80b5951e8a7e58a0707c5b89630bf1d6', 'empresario2', 'sobrenomeEmpresario', 'Masculino', '111.111.111-11', '11/11/1111', 'teste ');
+INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `avatar`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`, `situacao`) VALUES
+(26, 1, NULL, 'Empresario2', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '17/12/1995', 'Sou empresario!!!!!!!', 1),
+(27, 2, NULL, 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', 'Masculino', '084.242.998-09', '17/12/1994', 'Profissional', 1),
+(33, 1, NULL, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, '', NULL),
+(34, 1, NULL, 'Teste', 'marcelo@rental.com.br', '995bf053c4694e1e353cfd42b94e4447', 'Marcelo', 'Lima', 'Feminino', '456.789.545-67', '17/12/1994', 'Gay', NULL),
+(35, 1, NULL, 'izamelao', 'iza@melao.com.br', 'bf3fdd34090adbcd4a20e5b19baf0113', 'Iza', 'Melao', 'Feminino', '675.765.675-67', '08031966', 'Teste', NULL),
+(36, 1, NULL, NULL, 'elaine@azevedo.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Elaine', 'Azevedo', NULL, NULL, NULL, NULL, NULL),
+(37, 1, NULL, NULL, 'vinicius@moshe.com.br', '25f9e794323b453885f5181f1b624d0b', 'Vinicius', 'Marques', NULL, NULL, NULL, NULL, NULL),
+(38, 2, NULL, 'rafinhamilare', 'rafael@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Rafael', 'Milaré', 'Feminino', '345.675.434-56', '17/12/1993', 'asasa', NULL),
+(39, 1, NULL, 'Empresario', 'empresario2@empresario.com.br', '80b5951e8a7e58a0707c5b89630bf1d6', 'empresario2', 'sobrenomeEmpresario', 'Masculino', '111.111.111-11', '11/11/1111', 'teste ', NULL),
+(40, 1, NULL, NULL, 'augusto@teste.com.br', '698dc19d489c4e4db73e28a713eab07b', 'Augusto', 'Costa', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6269,14 +6297,12 @@ CREATE TABLE `usuarioconvidado` (
 --
 
 INSERT INTO `usuarioconvidado` (`idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`, `idVagaAluguel`, `idVagaEmprego`) VALUES
-(26, 38, NULL, 0, 2, NULL),
-(26, 38, NULL, 0, 6, NULL),
-(26, 38, NULL, 0, NULL, 1),
-(26, 38, NULL, 0, NULL, 8),
-(26, 27, NULL, 1, 6, NULL),
-(26, 27, NULL, 1, 7, NULL),
+(26, 27, NULL, 1, NULL, 5),
+(26, 27, NULL, 1, NULL, 7),
+(26, 27, NULL, 1, NULL, 1),
 (26, 27, NULL, 1, NULL, 8),
-(26, 27, NULL, 1, NULL, 3);
+(26, 27, NULL, 1, NULL, 3),
+(26, 27, NULL, 1, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -6333,10 +6359,8 @@ CREATE TABLE `vagaaluguelcandidatada` (
 --
 
 INSERT INTO `vagaaluguelcandidatada` (`idVagaAluguel`, `idUsuarioProfissional`, `data`, `situacao`) VALUES
-(1, 27, NULL, NULL),
-(10, 27, NULL, NULL),
 (6, 27, NULL, NULL),
-(7, 27, NULL, NULL);
+(2, 27, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6643,6 +6667,12 @@ ALTER TABLE `horariofuncionamento`
   ADD PRIMARY KEY (`idHorario`);
 
 --
+-- Indexes for table `mensagem`
+--
+ALTER TABLE `mensagem`
+  ADD PRIMARY KEY (`idMensagem`);
+
+--
 -- Indexes for table `nivelvaga`
 --
 ALTER TABLE `nivelvaga`
@@ -6842,6 +6872,11 @@ ALTER TABLE `formaaluguel`
 ALTER TABLE `horariofuncionamento`
   MODIFY `idHorario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `mensagem`
+--
+ALTER TABLE `mensagem`
+  MODIFY `idMensagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `nivelvaga`
 --
 ALTER TABLE `nivelvaga`
@@ -6855,12 +6890,12 @@ ALTER TABLE `objetoalugado`
 -- AUTO_INCREMENT for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `redesocial`
 --
 ALTER TABLE `redesocial`
-  MODIFY `idRedeSocial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idRedeSocial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `salao`
 --
@@ -6870,7 +6905,7 @@ ALTER TABLE `salao`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `vagaaluguel`
 --
