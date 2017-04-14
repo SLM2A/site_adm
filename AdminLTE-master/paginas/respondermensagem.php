@@ -5,10 +5,10 @@ include 'menuHeader.php';
 
 $idUsuarioEnviando = $_GET['remr'];
 $idUsuarioRecebendo = $_GET['desr'];
+$idMensagem = $_GET['msg'];
 
-$readNaoLida = new Read();
-$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
-//var_dump($readNaoLida->getRowCount());
+$readMensagem = new Read();
+$readMensagem->FullRead("Select * From mensagem where idMensagem=$idMensagem");
 
 $readEnviando = new Read();
 $readEnviando->FullRead("Select * from usuario where idUsuario=:Enviado", "Enviado={$idUsuarioEnviando}");
@@ -26,6 +26,7 @@ if (!empty($data['SendPostForm'])):
 
     $data['idRemetente'] = $idUsuarioEnviando;
     $data['idDestinatario'] = $idUsuarioRecebendo;
+    $data['assunto']= $readMensagem->getResult()[0]['assunto'];
     $data['situacaoEnviada'] = 0;
     $data['situacaoRecebida'] = 0;
     
@@ -51,7 +52,10 @@ endif;
         Caixa de Mensagens
 
     </h1>
-    
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Caixa de Mensagens</li>
+    </ol>
 </section>
 
 <!-- Main content -->
@@ -72,11 +76,7 @@ endif;
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
                             <li><a href="caixademensagem.php><i class="fa fa-inbox"></i> Recebidas
-                                <?php
-                                    if ($readNaoLida->getRowCount() > 0):
-                                        echo "<span class=\"label label-primary pull-right\"> {$readNaoLida->getRowCount()} </span></a></li>";
-                                    endif;
-                                ?>
+                                    <span class="label label-primary pull-right">12</span></a></li>
                             <li><a href="caixademensagemenviada.php"><i class="fa fa-envelope-o"></i> Enviadas</a></li>
 
                         </ul>
@@ -94,18 +94,19 @@ endif;
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="form-group">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="../dist/img/userpadrao.png" class="user-image" alt="User Image" style="width: 30px; height: 30px;">
-                            </a>                 
-                            <label>Destinatario: <h3><?php echo "{$readRecebendo->getResult()[0]['nomeUsuario']}";
+                            <label>Resposta para: <h3><img src="../dist/img/userpadrao.png" class="user-image" alt="User Image" style="width: 30px; height: 30px;"><?php echo "{$readRecebendo->getResult()[0]['nomeUsuario']}";
                                 echo " ";
                                 echo "{$readRecebendo->getResult()[0]['sobrenomeUsuario']}"; ?></h3></label>
+                                
+                                           
+                            
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Assunto"name="assunto" id="assunto" value="<?php if (isset($data)) echo $data['assunto']; ?>">
+                             <label>Assunto: <h4><?php echo "{$readMensagem->getResult()[0]['assunto']}";?></h4></label>
+                            
                         </div>
                         <div class="box-body pad">
-                                    <textarea class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                    <textarea class="textarea" placeholder="Escreva sua mensagem..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                               name="mensagem" value="<?php if (isset($data)) echo $data['mensagem']; ?>"></textarea>
                          </div>
                     </div>

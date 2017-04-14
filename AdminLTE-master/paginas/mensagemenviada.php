@@ -3,6 +3,25 @@
 require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
+
+$idMensagem = $_GET['msg'];
+$idDestinatario =  $_GET['desr'];
+
+$readNaoLida = new Read();
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
+//var_dump($readNaoLida->getRowCount());
+
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$data['situacaoEnviada'] = 1;
+
+ require '../../admin/_models/AdminMensagem.class.php';
+ $cadastra = new AdminMensagem();
+ $cadastra->ExeUpdate($idMensagem, $data);
+
+$readMensagem = new Read();
+$readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDestinatario = u.idUsuario where m.idMensagem = {$idMensagem} and m.idRemetente={$userlogin['idUsuario']} ");
+
+
 ?>
 
 
@@ -31,8 +50,12 @@ include 'menuHeader.php';
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><i class="fa fa-inbox"></i> Recebidas
-                  <span class="label label-primary pull-right">12</span></a></li>
+                  <li><a href="caixademensagem.php"><i class="fa fa-inbox"></i> Recebidas
+                   <?php
+                        if($readNaoLida->getRowCount()>0):
+                         echo "<span class=\"label label-primary pull-right\"> {$readNaoLida->getRowCount()} </span></a></li>";
+                        endif;
+                    ?>
                   <li><a href="caixademensagemenviada.php"><i class="fa fa-envelope-o"></i> Enviadas</a></li>
                 
               </ul>
@@ -45,7 +68,7 @@ include 'menuHeader.php';
         <div class="col-md-9">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Ler mensagem</h3>
+              <h3 class="box-title">Mensagem enviada</h3>
 
               <div class="box-tools pull-right">
                 <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i class="fa fa-chevron-left"></i></a>
@@ -55,29 +78,15 @@ include 'menuHeader.php';
             <!-- /.box-header -->
             <div class="box-body no-padding">
               <div class="mailbox-read-info">
-                <h3>Assunto</h3>
-                <h5>Remetente
+                <h3>Assunto: <?php echo "{$readMensagem->getResult()[0]['assunto']}"; ?></h3>
+                <h5>Destinatário: <?php echo "{$readMensagem->getResult()[0]['nomeUsuario']}"; echo " "; echo "{$readMensagem->getResult()[0]['sobrenomeUsuario']}";?>
                   <span class="mailbox-read-time pull-right">Data Envio</span></h5>
               </div>
               <!-- /.mailbox-read-info -->
-              <div class="mailbox-controls with-border text-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                    <i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                    <i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                    <i class="fa fa-share"></i></button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                  <i class="fa fa-print"></i></button>
-              </div>
+              
               <!-- /.mailbox-controls -->
               <div class="mailbox-read-message">
-                Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem 
-                Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem
-                Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem Mensagem  
+                  <h3><?php echo "{$readMensagem->getResult()[0]['mensagem']}"; ?></h3>
               </div>
               <!-- /.mailbox-read-message -->
             </div>
@@ -86,10 +95,10 @@ include 'menuHeader.php';
             <!-- /.box-footer -->
             <div class="box-footer">
               <div class="pull-right">
-                <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Responder</button>
+                <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Excluir</button>
                
               </div>
-              <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Excluir</button>
+              
 
             </div>
             <!-- /.box-footer -->

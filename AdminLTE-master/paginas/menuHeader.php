@@ -22,6 +22,11 @@ if ($logoff):
 
 
 endif;
+
+$readNaoLida = new Read();
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
+//var_dump($readNaoLida->getre());
+
 ?>
 
 <!DOCTYPE html>
@@ -103,31 +108,46 @@ endif;
                             <li class="dropdown messages-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-envelope-o"></i>
-                                    <span class="label label-success">1</span>
+                                     <?php
+                                         if($readNaoLida->getRowCount()>0):
+                                        echo "<span class=\"label label-success\"> {$readNaoLida->getRowCount()} </span></a>";
+                                        endif;
+                                    ?>
+                                    
                                 </a>
                                 
                                 <ul class="dropdown-menu">
-                                    <li class="header">Você tem 1 mensagens</li>
+                                   
+                                    <li class="header">Você tem <?php echo $readNaoLida->getRowCount() ?> novas mensagens</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
+                                            
+                                            <?php   
+                  
+                                            foreach ($readNaoLida->getResult() as $mensagem):
+                                             
+                                            echo "    
+                                               
                                             <li><!-- start message -->
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                <a href=\"mensagemrecebida.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">
+                                                    <div class=\"pull-left\">
+                                                        <img src=\"../dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">
                                                     </div>
                                                     <h4>
-                                                        Marcelo Lima
-                                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                   {$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}
+                                                        <small><i class=\"fa fa-clock-o\"></i> 5 mins</small>
                                                     </h4>
-                                                    <p>Olá, tudo bem?</p>
+                                                    <p>{$mensagem['assunto']}</p>
                                                 </a>
-                                            </li>
+                                            </li>";
+                                                endforeach;
+                                                    ?>
                                             <!-- end message -->
 
                                         </ul>
                                     </li>
-                                    <li class="footer"><a href="#">Ver todas as mensagens</a></li>
+                                    <li class="footer"><a href="caixademensagem.php">Ver todas as mensagens</a></li>
                                 </ul>
                             </li>
                             <!-- Notifications: style can be found in dropdown.less -->

@@ -3,6 +3,11 @@
 require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
+
+$readNaoLida = new Read();
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
+//var_dump($readNaoLida->getRowCount());
+
 ?>
 
 
@@ -33,9 +38,13 @@ include 'menuHeader.php';
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                  <li class="active"><a href="caixademensagem.php"><i class="fa fa-inbox"></i> Recebidas
-                  <span class="label label-primary pull-right">12</span></a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> Enviadas</a></li>
+                  <li><a href="caixademensagem.php"><i class="fa fa-inbox"></i> Recebidas
+                  <?php
+                        if($readNaoLida->getRowCount()>0):
+                         echo "<span class=\"label label-primary pull-right\"> {$readNaoLida->getRowCount()} </span></a></li>";
+                        endif;
+                        ?>
+                <li class="active"><a href="#"><i class="fa fa-envelope-o"></i> Enviadas</a></li>
                 
               </ul>
             </div>
@@ -82,16 +91,35 @@ include 'menuHeader.php';
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
+                    <thead> 
+                            <tr>
+                                <th></th>
+                                <th>Destinatário</th>
+                                <th>Assunto</th>
+                                <th>Data</th>
+                               
+                            </tr>
+                        </thead>
+                    <?php 
+                        
+                        $readMensagem = new Read();
+                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id  order by m.assunto", "id={$userlogin['idUsuario']}");                    
+                        
+                        ?>
                   <tbody>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                    <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                    </td>
-                    <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                    <td class="mailbox-date">15 days ago</td>
-                  </tr>
+                  <?php   
+                  
+                  foreach ($readMensagem->getResult() as $mensagem):
+                        echo "
+                        <tr>
+                          <td><input type=\"checkbox\" value=\"{$mensagem['idMensagem']}\"></td>
+                          <td class=\"mailbox-name\"><a href=\"mensagemenviada.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">{$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}</a></td>
+                          <td class=\"mailbox-subject\"><b> {$mensagem['assunto']}</b> 
+                          </td>
+                          <td>Pendente Marcelo</td>
+                        </tr>";
+                    endforeach;
+                  ?>
                   </tbody>
                 </table>
                 <!-- /.table -->

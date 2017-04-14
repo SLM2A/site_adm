@@ -24,7 +24,7 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
 <section class="content">
     <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data"  >
              
-      <section class="col-lg-3 connectedSortable">
+             <div class="col-lg-3 connectedSortable">
                             <!-- Profile Image -->
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
@@ -32,14 +32,35 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
 
                                     <h3 class="profile-username text-center"><?php echo $readProfissional->getResult()[0]['nomeUsuario']; echo " "; echo $readProfissional->getResult()[0]['sobrenomeUsuario']; ?></h3>
                                     <hr>
-                                    <strong><i class="fa fa-pencil margin-r-5"></i>Áreas de Atuação</strong>
-                                    <p class="text-muted text-center">Profissão</p>
-                                    <hr>
+                                    
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            
+                            <div class="box box-primary">
+                                <div class="box-body box-profile" style="height: 63px">
+                                    <center>
+                                    <div class="btn-group">
+                                        <p>
+                                        <?php
+                                        if(!$readConvidado->getResult()):
+                                            echo "
+                                        <a href=\"escolhervaga.php?id={$idProfissional}\"><button type=\"button\" class=\"btn btn-success\"><i class=\"fa fa-check\"></i> Ofertar emprego</button></a>";
+                                        else:
+                                             echo "
+                                        <button type=\"button\" class=\"btn btn-success\" disabled><i class=\"fa fa-check\"></i> Proposta Enviada</button>";
+                                         endif;
+                                        
+                                        echo"  
+                                        <a href=\"criarMensagem.php?desr={$idProfissional}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem</button>";
+                                        ?>
+                                    </div>
+                                    </center>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
-                        </section>
+                        </div>
                         <!-- Fim Profile Image -->
 
                         <!-- About Me Box -->
