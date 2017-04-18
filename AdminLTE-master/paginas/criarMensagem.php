@@ -31,7 +31,7 @@ if (!empty($data['SendPostForm'])):
     
     require '../../admin/_models/AdminMensagem.class.php';
     $cadastra = new AdminMensagem();
-
+    $data['data'] = date('Y-m-d H:i:s');     
     $cadastra->ExeCreate($data);
     
     

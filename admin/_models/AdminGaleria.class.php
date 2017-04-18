@@ -6,7 +6,6 @@
  * 
  * @copyright (c) 2017, Marcelo Lima
  */
-
 class AdminGaleria {
 
     private $Data;
@@ -18,45 +17,30 @@ class AdminGaleria {
     private $Result;
     private $SendFull;
     private $SendSmall;
-    private $SendAvatar;
-    
+
     //Nome da tabela no banco de dados!
     const ENTITY = 'portfolio';
 
-    public function ExeCreate(array $imagens, $postID, $NomeCompletoUsuario ) {
+    public function ExeCreate(array $imagens, $postID, $NomeCompletoUsuario) {
         $this->Data = $imagens;
         $this->idUsuario = $postID;
         $this->NomeCompletoUsuario = $NomeCompletoUsuario;
-        
+
         if (in_array('', $this->Data))://Verifica se a algum campo em branco na array            
             $this->Msg = ['<b>Erro ao enviar!</b> Selecione uma ou mais imagens', RENTAL_INFOR];
             $this->Result = false;
-        else:            
+        else:
             $this->setData();
             $this->Create();
         endif;
     }
-    
-     public function ExeCreateAvatar(array $imagens, $postID, $NomeCompletoUsuario ) {
-        $this->Data = $imagens;
-        $this->idUsuario = $postID;
-        $this->NomeCompletoUsuario = $NomeCompletoUsuario;
-        
-        if (in_array('', $this->Data))://Verifica se a algum campo em branco na array            
-            $this->Msg = ['<b>Erro ao enviar!</b> Selecione uma ou mais imagens', RENTAL_INFOR];
-            $this->Result = false;
-        else:            
-            $this->setData();
-            $this->CreateAvatar();
-        endif;
-    }    
 
     public function ExeUpdate($idPortfolio, array $Data) {
         $this->idPortfolio = (int) $idPortfolio;
         $this->Data = $Data;
         $this->Update();
     }
-    
+
     public function ExeDelete($idPortfolio) {
         $this->idPortfolio = (int) $idPortfolio;
         $this->Delete();
@@ -69,15 +53,13 @@ class AdminGaleria {
     function getMsg() {
         return $this->Msg;
     }
-    
-    
 
     //PRIVATE    
     private function setData() {
         $gbCont = count($this->Data['tmp_name']);
         $gbKeys = array_keys($this->Data);
 
-        for($gb = 0; $gb < $gbCont; $gb++):
+        for ($gb = 0; $gb < $gbCont; $gb++):
             foreach ($gbKeys as $key):
                 $this->File[$gb][$key] = $this->Data[$key][$gb];
             endforeach;
@@ -85,132 +67,71 @@ class AdminGaleria {
     }
 
     private function Create() {
-        $ImagemFull = new Upload();
-        $ImagemSmall = new Upload();
-        
+        $ImgFullAndSmall = new Upload();
+
         foreach ($this->File as $gbUpload):
-            $ImgNameFull = "temp1";
-            $ImagemFull->Image($gbUpload, $ImgNameFull,null,$this->NomeCompletoUsuario."-".$this->idUsuario);
-            $this->ImagemFull($ImagemFull->getResult(), $ImagemFull->getSend());
-
-           $ImgNameSmall = "temp2";
-           $ImagemSmall->Image($gbUpload, $ImgNameSmall,null,$this->NomeCompletoUsuario."-".$this->idUsuario);
-           $this->ImagemSmall($ImagemSmall->getResult(), $ImagemSmall->getSend());
-
-           if ($ImagemFull->getResult()):
-               $gbCreate = ["idUsuario" => $this->idUsuario, "portfolioImagemFull"=> $this->SendFull, "portfolioImagemSmall"=> $this->SendSmall, "dataImagem"=> date('Y-m-d H:i:s')];
-               $insertGb = new create();
-               $insertGb->ExeCreate(self::ENTITY, $gbCreate);
-               if($insertGb->getResult()):
-                   $this->Result = TRUE;
-                   $this->Msg = ["<b>Sucesso:</b> a(s) imagem(s) imagens foram gravadas com sucesso!",RENTAL_ACCEPT];
-               else:
-                   $this->Result = FALSE;
-                   $this->Msg = ["<b>Erro:</b> a(s) imagem(s) imagens não foram gravadas com sucesso!",RENTAL_ERROR];
-               endif;
-           endif;
-        endforeach;
-
-
-    }
-    
-    private function CreateAvatar() {
-        $ImagemAvatar = new Upload();
-        $ImgNameAvatar = "temp1";
-        $ImagemAvatar->Image($gbUpload, $ImgNameAvatar,null,$this->NomeCompletoUsuario."-".$this->idUsuario);
-        $this->ImagemFull($ImagemAvatar->getResult(), $ImagemAvatar->getSend());
-
-        if ($ImagemAvatar->getResult()):
-            $gbCreate = ["idUsuario" => $this->idUsuario, "portfolioImagemFull"=> $this->SendFull, "portfolioImagemSmall"=> $this->SendSmall, "dataImagem"=> date('Y-m-d H:i:s')];
-            $insertGb = new create();
-            $insertGb->ExeCreate(self::ENTITY, $gbCreate);
-            if($insertGb->getResult()):
-                $this->Result = TRUE;
-                $this->Msg = ["<b>Sucesso:</b> a(s) imagem(s) imagens foram gravadas com sucesso!",RENTAL_ACCEPT];
-            else:
-                $this->Result = FALSE;
-                $this->Msg = ["<b>Erro:</b> a(s) imagem(s) imagens não foram gravadas com sucesso!",RENTAL_ERROR];
+            $ImgName = "temp1";
+            $ImgFullAndSmall->Image($gbUpload, $ImgName, null, $this->NomeCompletoUsuario . "-" . $this->idUsuario);
+            $this->ImagemFullandSmal($ImgFullAndSmall->getResult(), $ImgFullAndSmall->getSend());
+            if ($ImgFullAndSmall->getResult()):
+                $gbCreate = ["idUsuario" => $this->idUsuario, "portfolioImagemFull" => $this->SendFull, "portfolioImagemSmall" => $this->SendSmall, "dataImagem" => date('Y-m-d H:i:s')];
+                $insertGb = new create();
+                $insertGb->ExeCreate(self::ENTITY, $gbCreate);
+                if ($insertGb->getResult()):
+                    $this->Result = TRUE;
+                    $this->Msg = ["<b>Sucesso:</b> a(s) imagem(s) imagens foram gravadas com sucesso!", RENTAL_ACCEPT];
+                else:
+                    $this->Result = FALSE;
+                    $this->Msg = ["<b>Erro:</b> a(s) imagem(s) imagens não foram gravadas com sucesso!", RENTAL_ERROR];
+                endif;
             endif;
-        endif;
+        endforeach;
     }
 
     private function Update() {
         $update = new Update();
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
-        if($update->getResult()):
+        if ($update->getResult()):
             $this->Result = TRUE;
-            $this->Msg = ["<b>Sucesso:</b> a imagem foi atualizada com sucesso!",RENTAL_ACCEPT];
+            $this->Msg = ["<b>Sucesso:</b> a imagem foi atualizada com sucesso!", RENTAL_ACCEPT];
         endif;
     }
-    
+
     private function Delete() {
         $delete = new Delete();
-        $delete->ExeDelete(self::ENTITY,"WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
-        if($delete->getResult()):
+        $delete->ExeDelete(self::ENTITY, "WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
+        if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Msg = ["<b>Sucesso:</b> ao deletar a imagem!",RENTAL_ACCEPT];
+            $this->Msg = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
         endif;
     }
 
-    private function ImagemFull ($Endereço, $Caminho){
+    private function ImagemFullandSmal($Endereço, $Caminho) {
         $rand = rand(5, 30);
         require_once('../../_app/WideImage/WideImage.php');
-        $img = WideImage::load("../uploads/".$Endereço);
-        $img = $img->resize(800, 600, 'outside');
-        $this->SendFull = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-FULL-".(substr(md5(time() + $rand), 0,5)).".jpg";
-        $img->saveToFile("../uploads/".$this->SendFull);
-        $img->destroy();
-
-        if(isset($img)):
-            $this->Result = TRUE;
-            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho grande!",RENTAL_ACCEPT];
-        else:
-            $this->Result = FALSE;
-            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho grande!",RENTAL_ERROR];
-        endif;
-    }
-
-    private function ImagemSmall ($Endereço, $Caminho){
-        $rand = rand(5, 30);
-        require_once('../../_app/WideImage/WideImage.php');
-        $img = WideImage::load("../uploads/".$Endereço);
-        $img = $img->resize(1500, 1500, 'outside');
-        $this->SendSmall = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-SMALL-".(substr(md5(time() + $rand), 0,5)).".jpg";
-        $img->saveToFile("../uploads/".$this->SendSmall);
-        $img->destroy();
-
-        list($width, $height, $type, $attr) = getimagesize("../uploads/".$this->SendSmall);
+        $imgFull = WideImage::load("../uploads/" . $Endereço);
+        $imgFull = $imgFull->resize(1500, 1500, 'outside');
+        $this->SendFull = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-FULL-" . (substr(md5(time() + $rand), 0, 5)) . ".jpg";
+        $imgFull->saveToFile("../uploads/" . $this->SendFull);
+        $imgFull->destroy();
+        
+        sleep(0.5);
+        
+        list($width, $height, $type, $attr) = getimagesize("../uploads/" . $this->SendFull);
         $w = $width / 2;
         $h = $height / 2;
-        $img = WideImage::load("../uploads/".$this->SendSmall);
-        $img = $img->crop($w/2, $h/2, 1000, 1000);
-        $img->saveToFile("../uploads/".$this->SendSmall);
-        $img->destroy();
+        $imgSmall = WideImage::load("../uploads/" . $this->SendFull);
+        $imgSmall = $imgSmall->crop($w / 2, $h / 2, 1000, 1000);
+        $this->SendSmall = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-SMALL-" . (substr(md5(time() + $rand), 0, 5)) . ".jpg";
+        $imgSmall->saveToFile("../uploads/" . $this->SendSmall);
+        $imgSmall->destroy();
 
-        if(isset($img)):
+        if (isset($imgSmall)):
             $this->Result = TRUE;
-            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho pequeno!",RENTAL_ACCEPT];
+            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho pequeno!", RENTAL_ACCEPT];
         else:
             $this->Result = FALSE;
-            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho pequeno!",RENTAL_ERROR];
-        endif;
-    }
-    
-    private function ImagemAvatar ($Endereço, $Caminho){
-        $rand = rand(5, 30);
-        require_once('../../_app/WideImage/WideImage.php');
-        $img = WideImage::load("../uploads/".$Endereço);
-        $img = $img->resize(300, 100, 'outside');
-        $this->SendAvatar = "{$Caminho}/{$this->NomeCompletoUsuario}-{$this->idUsuario}-AVATAR-".(substr(md5(time() + $rand), 0,5)).".jpg";
-        $img->saveToFile("../uploads/".$this->SendAvatar);
-        $img->destroy();
-
-        if(isset($img)):
-            $this->Result = TRUE;
-            $this->Msg = ["<b>Sucesso:</b> a imagem foi convertida para tamanho grande!",RENTAL_ACCEPT];
-        else:
-            $this->Result = FALSE;
-            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho grande!",RENTAL_ERROR];
+            $this->Msg = ["<b>Erro:</b> a imagem não foi convertida para tamanho pequeno!", RENTAL_ERROR];
         endif;
     }
 

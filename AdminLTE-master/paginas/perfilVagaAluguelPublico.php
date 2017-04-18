@@ -24,9 +24,10 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                                     <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
 
                                     <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['nomeAnuncio'] ; echo " ";
-                                            echo"     <a href=\"editarVagaAluguel.php?id={$idVaga}\"><i class=\"fa  fa-pencil\"></i></a>";?></h3>
-                                    
-                                </div>
+                                            echo" <a href=\"editarVagaAluguel.php?id={$idVaga}\"><i class=\"fa  fa-pencil\"></i></a></h3>";
+                                            
+                                                ?>
+                                            </div>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->

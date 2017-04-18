@@ -32,7 +32,7 @@ if (!empty($data['SendPostForm'])):
     
     require '../../admin/_models/AdminMensagem.class.php';
     $cadastra = new AdminMensagem();
-
+    $data['data'] = date('Y-m-d H:i:s'); 
     $cadastra->ExeCreate($data);
     
     
@@ -74,13 +74,18 @@ endif;
                         </div>
                     </div>
                     <div class="box-body no-padding">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li><a href="caixademensagem.php><i class="fa fa-inbox"></i> Recebidas
-                                    <span class="label label-primary pull-right">12</span></a></li>
-                            <li><a href="caixademensagemenviada.php"><i class="fa fa-envelope-o"></i> Enviadas</a></li>
-
-                        </ul>
-                    </div>
+              <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href=""><i class="fa fa-inbox"></i> Recebidas
+                  
+                        <?php
+                        if($readNaoLida->getRowCount()>0):
+                         echo "<span class=\"label label-primary pull-right\"> {$readNaoLida->getRowCount()} </span></a></li>";
+                        endif;
+                        ?>
+                  <li><a href="caixademensagemenviada.php"><i class="fa fa-envelope-o"></i> Enviadas</a></li>
+                
+              </ul>
+            </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /. box -->

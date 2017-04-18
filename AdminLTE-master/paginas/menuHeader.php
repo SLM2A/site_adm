@@ -23,9 +23,13 @@ if ($logoff):
 
 endif;
 
+
 $readNaoLida = new Read();
 $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
 //var_dump($readNaoLida->getre());
+$readUsuario= new Read();
+$readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
+
 
 ?>
 
@@ -104,6 +108,18 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                     
                    <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
+<!--                            <li class="dropdown notifications-menu" style="margin-top: 7px; margin-right: 10px; width: 950px" >
+                                
+                                <div class="input-group input-groups">
+                                    <input type="text" class="form-control">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info btn-flat"><i class="fa fa-search"></i> Buscar</button>
+                                    </span>
+                                </div>
+                     
+                                
+                            </li>-->
+                            
                             <!-- Messages: style can be found in dropdown.less-->
                             <li class="dropdown messages-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -117,6 +133,9 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                                 </a>
                                 
                                 <ul class="dropdown-menu">
+                                    
+                                      
+
                                    
                                     <li class="header">Você tem <?php echo $readNaoLida->getRowCount() ?> novas mensagens</li>
                                     <li>
@@ -174,6 +193,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                                     <li class="footer"><a href="#">Ver todas</a></li>
                                 </ul>
                             </li>
+                            
                             <!-- Tasks: style can be found in dropdown.less -->
                             <li class="dropdown tasks-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -238,13 +258,13 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="../dist/img/userpadrao.png" class="user-image" alt="User Image">
+                                   <?php echo " <img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"user-image\" alt=\"User Image\"> "; ?>
                                     <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="../dist/img/userpadrao.png" class="img-circle" alt="User Image">
+                                     <?php echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">"; ?>
 
                                         <p>
                                             <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
@@ -277,7 +297,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="../dist/img/userpadrao.png" class="img-circle" alt="User Image">
+                            <?php echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">"; ?>
                         </div>
                         <div class="pull-left info">
                             <p>
@@ -286,6 +306,33 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                         </div>
                     </div>
                     
+                    <?php 
+                    if ($userlogin['idTipoUsuario'] == 2):
+                      echo " 
+                            <form action=\"#\" method=\"get\" class=\"sidebar-form\">
+                                <div class=\"input-group\">
+                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque Salões e Vagas\">
+                                      <span class=\"input-group-btn\">
+                                        <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
+                                        </button>
+                                      </span>
+                                </div>
+                            </form> ";
+                      else:
+                        echo " 
+                              <form action=\"#\" method=\"get\" class=\"sidebar-form\">
+                                  <div class=\"input-group\">
+                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busca de Profissionais\">
+                                        <span class=\"input-group-btn\">
+                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
+                                          </button>
+                                        </span>
+                                  </div>
+                              </form> "; 
+                          
+                      endif;
+                      ?>        
+                            
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="header">Navegação Principal</li>

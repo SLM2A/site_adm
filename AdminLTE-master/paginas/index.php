@@ -1,4 +1,7 @@
-<?php include 'menuHeader.php'; ?>
+<?php include 'menuHeader.php'; 
+$readUsuario= new Read();
+$readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
+?>
             
            <!-- Content Wrapper. Contains page content -->
                 <!-- Content Header (Page header) -->
@@ -125,7 +128,7 @@
                                 <div class="tab-content no-padding">
                                     <!-- Morris chart - Sales -->
                                     <br>
-                                    <div ><img class="profile-user-img img-responsive img-circle" src="../dist/img/userpadrao.png" alt="User profile picture"></div>
+                                    <div ><?php echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User profile picture\">"; ?></div>
                                     <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 130px;">
                                         <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
 

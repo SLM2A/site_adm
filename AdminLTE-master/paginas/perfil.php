@@ -6,25 +6,33 @@ include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-if (isset($post) && array_key_exists("SendPostForm", $post)):
+//Mostra menssagem de sucesso ou erro se necessario.
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+//Cadastra e atualiza informações e vatar do perfil
+if (isset($data) && array_key_exists("SendPostForm", $data)):
     unset($data['SendPostForm']);
-    $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
-    unset($post['SendPostForm']);
+    $data['avatar'] = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
+
+    require('../../admin/_models/AdminAvatar.class.php');
+    $sendAvatar = new AdminAvatar();
+    $sendAvatar->ExeCreate($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+    $data['avatar'] = ($sendAvatar->getSendAvatar());
 
     require '../../admin/_models/SiteRegistrar.class.php';
     $cadastra = new SiteRegistrar();
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
-    
-    require('../../admin/_models/AdminGaleria.class.php');
-    $sendGallery = new AdminGaleria;
-    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario']);
 
-    if ($sendGallery->getMsg()):
-        $_SESSION['userlogin']['msg'] = $sendGallery->getMsg()[0];
-        $_SESSION['userlogin']['tipoMsg'] = $sendGallery->getMsg()[1];
-    endif;
+    if ($sendAvatar->getMsg()):
+        $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+endif;
 
-    echo "<script>location.href='portfolio.php';</script>";
+    echo "<script>location.href='perfil.php';</script>";
 
 else:
     $read = new Read();
@@ -34,8 +42,8 @@ else:
     endif;
 endif;
 
-
 ?>
+
 
 <section class="content-header">
      
@@ -45,15 +53,12 @@ endif;
     <!-- Main content -->
     
     <section class="content">
-        
-       
-             
-      <form role="form" action="" method="post" class="login-form">
 
+    <form enctype="multipart/form-data" role="form" action="" method="post" class="login-form">
 
           <div class="col-lg-12">
               <div class="nav-tabs-custom">
-                  <ul class="nav nav-tabs pull-right">                  
+                  <ul class="nav nav-tabs pull-right">
                       <li class="pull-left header"><i class="ion-camera"></i> Sua Foto de Perfil</li>
                   </ul>
                   <div class="tab-content no-padding">
@@ -61,25 +66,25 @@ endif;
                           <div class="input-group">
                               <label class="input-group-btn">
                                   <span class="btn btn-primary">
-                                      <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" multiple name="portfolio[]" id="exampleInputFile"/>
+                                      <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" name="portfolio" id="exampleInputFile"/>
                                   </span>
                               </label>
                               <input type="text" class="form-control" readonly/>
                           </div>
                       </div>
-                  </div>  
-              </div>  
-          </div>  
-          
-          
+                  </div>
+              </div>
+          </div>
+
+
           <?php
-          
+
           if($userlogin['idTipoUsuario']==2):
-  echo "     
-      
+  echo "
+
      <div class=\"col-lg-12 connectedSortable\">
             <div class=\"nav-tabs-custom\">
-               
+
                 <div class=\"box-body box-profile\" >
                     <center>
                     <label><h4>Você deseja ter seu curriculum ativo em nosso site?</h4></label>
@@ -92,39 +97,39 @@ endif;
                                                                             echo "> Sim </option></label>";
                                                                             echo "<label></label> ";
                                                                             echo "<input type=\"radio\" name=\"situacao\" value=\"2\" class=\"flat-red\" ";
-                                                                                
+
                                                                             if ($data['situacao'] == 2):
                                                                                 echo ' checked';
                                                                             endif;
                                                                             echo "> Não </option></label>
-                                                                           
-                                
-                    
+
+
+
                                 </div>
                     </center>
-                   
+
             </div>
-            
+
         </div>
             </div>
-          ";  
+          ";
                  endif;
         ?>
-            
+
         <div class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
             <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
-                <ul class="nav nav-tabs pull-right">                  
+                <ul class="nav nav-tabs pull-right">
                     <li class="pull-left header"><i class="ion-person"></i> Quem é você?</li>
                 </ul>
                 <div class="tab-content no-padding">
                     <!-- Morris chart - Sales -->
-                    
+
                     <div class="box-body box-profile" id="sales-chart" >
-                      
+
                         <div class="form-group">
-                            <section class="col-lg-6 connectedSortable">                           
+                            <section class="col-lg-6 connectedSortable">
                                 <label>Nome:</label>
                                 <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
                                 <label>CPF:</label>
@@ -132,8 +137,8 @@ endif;
 								<label>Apelido:</label>
                                 <div class="input-group">
 									<span class="input-group-addon">@</span>
-									<input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required> 
-								</div>								
+									<input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required>
+								</div>
                             </section>
                             <section class="col-lg-6 connectedSortable">
                                 <label>Sobrenome:</label>
@@ -141,14 +146,14 @@ endif;
                                 <label>Sexo:</label>
                                 <select class="form-control" id="sexoUsuario" name="sexoUsuario" required>
                                     <option selected><?php if (isset($data)) echo $data['sexoUsuario']; ?></option>
-                                    <?php 
+                                    <?php
                                           if($data['sexoUsuario']=='Feminino'):
                                             echo '<option>Masculino</option>';
                                           elseif($data['sexoUsuario']=='Masculino'):
-                                            echo '<option>Feminino</option>'; 
+                                            echo '<option>Feminino</option>';
                                           else:
-                                             echo '<option>Masculino</option>'; 
-                                             echo '<option>Feminino</option>'; 
+                                             echo '<option>Masculino</option>';
+                                             echo '<option>Feminino</option>';
                                     endif;
                                      ?>
                                 </select>
@@ -161,23 +166,23 @@ endif;
                             <div class="box-body pad">
                                 <textarea input type="text" class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                           name="descricao" id="descricao" required><?php if (isset($data)) echo $data['descricao']; ?></textarea>
-                           
+
                             </div>
                             </section>
                         </div>
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
-    
-        
+
+
 
             <section class="col-lg-12 connectedSortable ">
                  <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i>Salvar</button>
             </section>
         </form>
-		
-        <center> 
+
+        <center>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li>
@@ -206,7 +211,6 @@ endif;
 
 <div class="row">
 <?php include 'menuFooter.php'; ?>
-
     <script>
     $(function() {
 
