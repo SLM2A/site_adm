@@ -1,8 +1,8 @@
 <?php include 'menuHeader.php'; 
 $readUsuario= new Read();
 $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
-?>
-            
+                      ?>        
+                        
            <!-- Content Wrapper. Contains page content -->
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
@@ -22,7 +22,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     <div class="row">
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
-                            <div class="small-box bg-aqua">
+                            <div class="small-box bg-primary">
                                 <div class="inner">
                                     <h3>0</h3>
 
@@ -47,7 +47,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                             echo "  
                              <div class=\"col-lg-3 col-xs-6\">
                                  <!-- small box -->
-                                 <div class=\"small-box bg-green\">
+                                 <div class=\"small-box bg-primary\">
                                      <div class=\"inner\">
                                          <h3>{$quantidade}<sup style=\"font-size: 20px\"></sup></h3>
 
@@ -67,7 +67,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                            echo " 
                             <div class=\"col-lg-3 col-xs-6\">
                             <!-- small box -->
-                            <div class=\"small-box bg-green\">
+                            <div class=\"small-box bg-primary\">
                                 <div class=\"inner\">
                                     <h3>{$quantidade}<sup style=\"font-size: 20px\"></sup></h3>
 
@@ -82,12 +82,17 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                            
                        endif;
                         ?>
+                        
+                        <?php 
+                        $readFotos = new Read();
+                        $readFotos->FullRead("Select * from portfolio where idUsuario=:id", "id={$userlogin['idUsuario']}");
+                        ?>
                         <!-- ./col -->
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
-                            <div class="small-box bg-yellow">
+                            <div class="small-box bg-primary">
                                 <div class="inner">
-                                    <h3>0</h3>
+                                    <h3><?php echo "{$readFotos->getRowCount()}"?></h3>
 
                                     <p>Fotos</p>
                                 </div>
@@ -100,7 +105,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         <!-- ./col -->
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
-                            <div class="small-box bg-red">
+                            <div class="small-box bg-primary">
                                 <div class="inner">
                                     <h3>0</h3>
 
@@ -128,7 +133,13 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                 <div class="tab-content no-padding">
                                     <!-- Morris chart - Sales -->
                                     <br>
-                                    <div ><?php echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User profile picture\">"; ?></div>
+                                    <div >
+                                    <?php
+                                    if($readUsuario->getResult()[0]['avatar']==null):
+                                        echo "<img src=\"../dist/img/userpadrao.png\" class=\"profile-user-img img-responsive img-circle\" alt=\"User profile picture\"> ";  
+                                    else:
+                                        echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User profile picture\">"; 
+                                    endif;?></div>
                                     <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 130px;">
                                         <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
 

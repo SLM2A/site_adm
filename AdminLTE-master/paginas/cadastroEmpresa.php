@@ -36,7 +36,7 @@ endif;
 ?>
 
 <section class="content-header">
-     <h1> <i class="ion-briefcase"></i> Experiências</h1>  
+     <h1> <i class="fa fa-building"></i> Meus Salões</h1>  
     </section>
 
     <!-- Main content -->
@@ -60,6 +60,25 @@ endif;
                     </div>
                 </div>
                 <div class="box-body" style="display: none;">
+                    <div class="col-lg-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs pull-right">
+                                <li class="pull-left header"><i class="ion-camera"></i> Logo do Salão</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <div class="box-body box-profile">
+                                    <div class="input-group">
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-primary">
+                                                <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" name="portfolio" id="exampleInputFile"/>
+                                            </span>
+                                        </label>
+                                        <input type="text" class="form-control" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <section class="col-lg-6 connectedSortable">
                         <!-- Custom tabs (Charts with tabs)-->
                         <div class="nav-tabs-custom">
@@ -84,7 +103,7 @@ endif;
                                         </select>
                                         <?php if (isset($data)) echo $data['categoriaSalao']; ?>
                                         <div class="box-body pad">
-                                            <textarea input class="textarea" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                            <textarea input class="textarea" placeholder="Escreva sobre o salão..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                                       name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
                                         </div>
                                     </div>
@@ -201,3 +220,35 @@ endif;
 
 
 <?php include 'menuFooter.php'; ?>
+<script>
+    $(function() {
+
+    // We can attach the `fileselect` event to all file inputs on the page
+    $(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+    });
+
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready( function() {
+    $(':file').on('fileselect', function(event, numFiles, label) {
+
+    var input = $(this).parents('.input-group').find(':text'),
+    log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+    if( input.length ) {
+    input.val(log);
+    } else {
+    if( log ) alert(log);
+    }
+
+    });
+    });
+
+    });
+    
+
+    
+    </script>

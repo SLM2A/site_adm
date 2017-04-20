@@ -258,14 +258,24 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                   <?php echo " <img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"user-image\" alt=\"User Image\"> "; ?>
+                                   <?php 
+                                      if($readUsuario->getResult()[0]['avatar']==null):
+                                       echo "<img src=\"../dist/img/userpadrao.png\" class=\"user-image\" alt=\"User Image\"> ";  
+                                      else:
+                                       echo " <img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"user-image\" alt=\"User Image\"> "; 
+                                      endif; ?>
+                                      
                                     <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                     <?php echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">"; ?>
-
+                                     <?php 
+                                      if($readUsuario->getResult()[0]['avatar']==null):
+                                        echo "<img src=\"../dist/img/userpadrao.png\" class=\"img-circle\" alt=\"User Image\"> ";
+                                     else:
+                                        echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">";
+                                     endif; ?>
                                         <p>
                                             <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
                                             <small>Membro desde Nov. 2016</small>
@@ -297,7 +307,12 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <?php echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">"; ?>
+                            <?php 
+                            if($readUsuario->getResult()[0]['avatar']==null):
+                                echo "<img src=\"../dist/img/userpadrao.png\" class=\"img-circle\" alt=\"User Image\"> ";  
+                            else:
+                                echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">";
+                            endif;?>
                         </div>
                         <div class="pull-left info">
                             <p>
@@ -311,7 +326,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                       echo " 
                             <form action=\"#\" method=\"get\" class=\"sidebar-form\">
                                 <div class=\"input-group\">
-                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque Salões e Vagas\">
+                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque por Vagas\">
                                       <span class=\"input-group-btn\">
                                         <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
                                         </button>
@@ -320,9 +335,9 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                             </form> ";
                       else:
                         echo " 
-                              <form action=\"#\" method=\"get\" class=\"sidebar-form\">
+                              <form action=\"buscaempresario.php\" method=\"get\" class=\"sidebar-form\">
                                   <div class=\"input-group\">
-                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busca de Profissionais\">
+                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque por Profissão\">
                                         <span class=\"input-group-btn\">
                                           <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
                                           </button>
@@ -357,6 +372,9 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     <li class="treeview">
 			<a href="propostarecebida.php"><i class="fa fa-search"></i> <span>Propostas Recebidas</span></a>	
                     </li>
+                    <li class="treeview">
+                        <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Curriculo</span></a>	
+                    </li>
                     
                      ';
                         else :
@@ -376,12 +394,15 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     <li class="treeview">
 			<a href="candidatos.php"><i class="fa fa-user-circle"></i> <span>Candidatos</span></a>	
                     </li>
+                    <li class="treeview">
+                        <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+                    </li>
                     ';
                         endif;
 
                         echo '              
-                 <li class="treeview">
-                    <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+                <li class="treeview">
+                   <a href="portfolio.php"><i class="fa fa-camera"></i> <span> Portfólio</span></a>	
 		</li>
                 <li class="treeview">
                    <a href="caixademensagem.php"><i class="fa fa-envelope-o"></i> <span>Mensagens</span></a>	
@@ -401,3 +422,28 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
+ <?php if ($userlogin['idTipoUsuario'] == 2):
+                      echo " 
+                            <form action=\"#\" method=\"get\">
+                                <div class=\"input-group\">
+                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque vagas por profissão\">
+                                      <span class=\"input-group-btn\">
+                                        <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
+                                        </button>
+                                      </span>
+                                </div>
+                            </form> ";
+                      else:
+                        echo " 
+                              <form action=\"buscaempresario.php\" method=\"get\" >
+                                  <div class=\"input-group\">
+                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque profissionais por profissão\">
+                                        <span class=\"input-group-btn\">
+                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
+                                          </button>
+                                        </span>
+                                  </div>
+                              </form> "; 
+                          
+                      endif;
+                      ?>  

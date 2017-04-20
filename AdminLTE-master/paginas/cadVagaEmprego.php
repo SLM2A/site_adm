@@ -27,7 +27,25 @@ endif;
 <section class="content">
 
     <form role="form" action="" method="post" class="login-form">
-
+        <div class="col-lg-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                    <li class="pull-left header"><i class="ion-camera"></i> Fotos da Vaga</li>
+                </ul>
+                <div class="tab-content no-padding">
+                    <div class="box-body box-profile">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-primary">
+                                    <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" name="portfolio" id="exampleInputFile"/>
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <section class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->

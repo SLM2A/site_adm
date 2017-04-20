@@ -52,7 +52,7 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
                                          endif;
                                         
                                         echo"  
-                                        <a href=\"criarMensagem.php?desr={$idProfissional}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem</button>";
+                                        <a href=\"criarMensagem.php?desr={$idProfissional}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem</button></a>";
                                         ?>
                                     </div>
                                     </center>

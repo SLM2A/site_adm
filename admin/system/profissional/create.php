@@ -111,7 +111,7 @@
                            value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" required/>
                 </label>
             </div>
-<!--            <label class="label">
+            <label class="label">
                 <span class="field">CEP</span>
                 <input type="text" name="pinto" required />
             </label>
@@ -157,7 +157,7 @@
                     </select>
                 </label>
 
-            </div>/line-->
+            </div>/line
 
 
             <div class="gbform"></div>

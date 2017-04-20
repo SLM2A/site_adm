@@ -48,13 +48,15 @@ include 'menuHeader.php';
               <div class="form-group">
                 <label>Estado</label>
                 <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
+                  <option selected="selected">Selecione um Estado</option>
+                  <?php
+                        $readState = new Read;
+                        $readState->ExeRead("app_estados", "ORDER BY estado_nome ASC");
+                        foreach ($readState->getResult() as $estado):
+                            extract($estado);                             
+                            echo "<option value=\"{$estado_id}\"> {$estado_uf} / {$estado_nome} </option>";
+                        endforeach;                        
+                        ?> 
                 </select>
               </div>
               <!-- /.form-group -->

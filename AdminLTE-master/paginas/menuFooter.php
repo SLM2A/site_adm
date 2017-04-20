@@ -251,6 +251,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <script src="../dist/js/pages/endereco.js"></script>
+
 <style>
     .example-modal .modal {
         position: relative;
@@ -289,6 +290,7 @@
         $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
         //CPF
         $("#cpf").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"});
+        $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___/___-__"});
         //data
         $("#data").inputmask("99/99/9999", {"placeholder": "__/__/____"});
         //Date range picker
@@ -350,6 +352,38 @@
         var msg = document.getElementById("msg-success");
         msg.parentNode.removeChild(msg);
     }, 3000);
-</script>
+
+    $(function() {
+
+    // We can attach the `fileselect` event to all file inputs on the page
+    $(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+    });
+
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready( function() {
+    $(':file').on('fileselect', function(event, numFiles, label) {
+
+    var input = $(this).parents('.input-group').find(':text'),
+    log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+    if( input.length ) {
+    input.val(log);
+    } else {
+    if( log ) alert(log);
+    }
+
+    });
+    });
+
+    });
+    
+
+    
+    </script>
+
 </body>
 </html>
