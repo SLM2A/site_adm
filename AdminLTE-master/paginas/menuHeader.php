@@ -324,7 +324,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     <?php 
                     if ($userlogin['idTipoUsuario'] == 2):
                       echo " 
-                            <form action=\"#\" method=\"get\" class=\"sidebar-form\">
+                            <form action=\"procurarvaga.php\" method=\"get\" class=\"sidebar-form\">
                                 <div class=\"input-group\">
                                   <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque por Vagas\">
                                       <span class=\"input-group-btn\">
@@ -424,7 +424,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
             <div class="content-wrapper">
  <?php if ($userlogin['idTipoUsuario'] == 2):
                       echo " 
-                            <form action=\"#\" method=\"get\">
+                            <form action=\"procurarvaga.php\" method=\"get\">
                                 <div class=\"input-group\">
                                   <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque vagas por profissão\">
                                       <span class=\"input-group-btn\">
@@ -437,9 +437,9 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         echo " 
                               <form action=\"buscaempresario.php\" method=\"get\" >
                                   <div class=\"input-group\">
-                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque profissionais por profissão\">
+                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque profissionais por profissão\" >
                                         <span class=\"input-group-btn\">
-                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
+                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\" ></i>
                                           </button>
                                         </span>
                                   </div>

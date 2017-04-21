@@ -5,23 +5,9 @@ include 'menuHeader.php';
 
 $termos = $_GET['q'];
 
-//$termos_separados = explode(" ", $_GET['q']);
-//var_dump($termos_separados);
-
 $readProfissional = new Read();
 $readProfissional->FullRead("Select * From usuario u inner join enderecousuario en on u.idUsuario=en.idUsuario inner join habilidadeusuario hu on u.idUsuario=hu.idUsuario inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao where  (u.idTipoUsuario=2 and aa.descricaoProfissao like '%{$termos}%' and u.situacao=1) or (u.idTipoUsuario=2 and aa.nomeProfissao like '%{$termos}%' and u.situacao=1 )");
 
-//$readTermos = new Read();
-//
-//$tamanho = count($termos_separados);
-//$i=0;
-//
-//while($i<$tamanho):
-//    $separado = $termos_separados[$i];
-//    $readTermos->FullRead("Select * From usuario u inner join enderecousuario en on u.idUsuario=en.idUsuario inner join habilidadeusuario hu on u.idUsuario=hu.idUsuario inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao where  (u.idTipoUsuario=2 and aa.descricaoProfissao like '%{$separado}%') or ( u.idTipoUsuario=2 and u.nomeUsuario like '%{$separado}%') or (u.idTipoUsuario=2 and sobrenomeUsuario like '%{$separado}%') or (u.idTipoUsuario=2 and en.cidade like '%{$separado}%')");
-//    $i++;
-//endwhile;
-//var_dump($readProfissional->getResult());
 ?>
 
 
@@ -32,9 +18,36 @@ $readProfissional->FullRead("Select * From usuario u inner join enderecousuario 
 </section>
 
 <section class="content">
-
-
-
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Estado</label>
+                <select class="form-control select2" style="width: 100%;" disabled="">
+                    <option selected disabled>São Paulo</option>
+                    
+                </select>
+            </div>
+        </div>
+        <form>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Cidade</label>
+                
+                <select class="form-control select2 j_loadcity" style="width: 100%;">
+                    <option selected="selected" disabled="">Escolha a Cidade</option>
+                    <?php
+                        $readState = new Read;
+                        $readState->ExeRead("app_cidades", "WHERE estado_id=25 ORDER BY cidade_nome ASC");
+                        foreach ($readState->getResult() as $estado):
+                            extract($estado);
+                            echo "<option value=\"{$cidade_id}\"> {$cidade_nome} </option>";
+                        endforeach;
+                        ?>  
+                </select>
+            </div>
+        </div>
+        </form>
+    </div>
 <?php
 foreach ($readProfissional->getResult() as $usuarios):
 
@@ -95,3 +108,27 @@ endforeach;
 
 <div class="row">
 <?php include 'menuFooter.php'; ?>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $.(#cidade).keyup(function(){
+                    $('form').submit(function(){
+                        var dados = $(this).serialize();
+                        $.ajax({
+                            url: 'processa.php',
+                            type: 'POST',
+                            dataType: 'html',
+                            data: dados,
+                            success: function (data) {
+                                $('resultado').empty().html(data);
+                        }
+                            
+                        });
+                        return false;
+                    });
+                    $('form').trigger('submit');
+                });
+                
+        )}; 
+        
+    </script>

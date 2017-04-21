@@ -1,4 +1,8 @@
 <?php include 'menuHeader.php'; 
+
+echo RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");
+
+
 if(array_key_exists('id', $_GET)):
     $id= $_GET['id'];
     echo RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");
@@ -59,7 +63,7 @@ echo '<button type="button" class="btn btn-default pull-right-container" data-di
 
 
 
-include 'menuFooter.php'; ?>
+  include 'menuFooter.php'; ?>
 
 <script>
     $(document).ready(function () {

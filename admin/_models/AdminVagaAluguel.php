@@ -11,6 +11,7 @@ class AdminVagaAluguel{
     
     private $Data;
     private $CadID;
+    private $idDelete;
     private $Error;
     private $Result;
     
@@ -21,9 +22,7 @@ class AdminVagaAluguel{
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
             $this->setData();
-
             $this->Create();
-
     }
 
 
@@ -36,6 +35,14 @@ class AdminVagaAluguel{
         $this->Update();
 
     }
+   
+    public function ExeDelete($CadastroId) {
+          
+        $this->idDelete = (int) $CadastroId;
+      
+        $this->Delete();
+    }
+    
     function getResult() {
         return $this->Result;
     }
@@ -77,4 +84,17 @@ class AdminVagaAluguel{
         $this->Error = ["<b>Sucesso:</b>, a vaga foi atualizada no sistema!",WS_ACCEPT];
         endif;
     }
+    
+      private function Delete() {
+        $delete = new Delete();
+       
+        $delete->ExeDelete(self::ENTITY, "WHERE idVagaAluguel = :idVaAluguel", "idVaAluguel={$this->idDelete}");
+        
+      
+        if ($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+        endif;
+    }
+    
 }

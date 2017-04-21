@@ -134,7 +134,7 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
                         <th>Duração</th>
                         <th>Ano de ínicio</th>
                         <th>Ano de conclusão</th>
-                        <th>Ferramentas</th>
+                        
                     </tr>
                     </thead>
                     <tbody>
@@ -180,10 +180,10 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
                         
                         foreach ($readFotos->getResult() as $fotos):
                             echo   " <a href=\"portfolio.php?id={$fotos['idPortfolio']}\" onclick=\"teste()\">
-                            <img alt=\"Lemon Slice\"
+                            <img alt=\"{$fotos['tituloImagem']}\"
                              src=\"../uploads/{$fotos['portfolioImagemFull']}\"
                              data-image=\"../uploads/{$fotos['portfolioImagemFull']}\"
-                             data-description=\"This is a Lemon Slice\"
+                             data-description=\"{$fotos['descricaoImagem']}\"
                              style=\"display:none\">
                             </a> ";
                         endforeach;

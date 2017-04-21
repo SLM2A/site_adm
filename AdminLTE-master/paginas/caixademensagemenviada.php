@@ -96,14 +96,14 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                                 <th></th>
                                 <th>Destinatário</th>
                                 <th>Assunto</th>
-                                <th>Data</th>
+                                <th>Data e Horário</th>
                                
                             </tr>
                         </thead>
                     <?php 
                         
                         $readMensagem = new Read();
-                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id  order by m.assunto", "id={$userlogin['idUsuario']}");                    
+                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id  order by m.data", "id={$userlogin['idUsuario']}");                    
                         
                         ?>
                   <tbody>
@@ -116,7 +116,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                           <td class=\"mailbox-name\"><a href=\"mensagemenviada.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">{$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}</a></td>
                           <td class=\"mailbox-subject\"><b> {$mensagem['assunto']}</b> 
                           </td>
-                          <td>Pendente Marcelo</td>
+                          <td>";echo TimeStampParaData($mensagem['data']); echo"</td>
                         </tr>";
                     endforeach;
                   ?>
@@ -158,4 +158,11 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
       <!-- /.row -->
     </section>
 <div class="row">
-<?php include 'menuFooter.php'; ?>
+<?php 
+
+ function TimeStampParaData($timeStamp){
+        $date = new DateTime($timeStamp);
+        return $date->format('d/m/Y H:i:s');
+    }
+
+include 'menuFooter.php'; ?>

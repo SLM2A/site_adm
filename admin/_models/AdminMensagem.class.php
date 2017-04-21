@@ -27,9 +27,10 @@ class AdminMensagem{
         $this->CadID = (int) $idUsuario;
         $this->Data = $Data;
        
-            $this->Update();
-                
+            $this->Update();                
     }
+    
+      
     
     function getResult() {
         return $this->Result;
@@ -58,5 +59,7 @@ class AdminMensagem{
         $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!",RENTAL_ACCEPT];
         endif;
     }
+    
+  
 }
 

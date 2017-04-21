@@ -5,11 +5,14 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $readMensagem = new Read();
-$readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id  order by m.assunto", "id={$userlogin['idUsuario']}");                    
+$readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id  order by m.data", "id={$userlogin['idUsuario']}");                    
                        
 $readNaoLida = new Read();
-$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0 order by m.data", "id={$userlogin['idUsuario']}");
 //var_dump($readNaoLida->getRowCount());
+
+
+    
 ?>
 
 
@@ -96,7 +99,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                                 <th></th>
                                 <th>Remetente</th>
                                 <th>Assunto</th>
-                                <th>Data</th>
+                                <th>Data e Horario </th>
                                
                             </tr>
                         </thead>
@@ -113,7 +116,8 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                                   <td class=\"mailbox-name\"><a href=\"mensagemrecebida.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">{$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}</a></td>
                                   <td class=\"mailbox-subject\">{$mensagem['assunto']} 
                                   </td>
-                                  <td>Pendente Marcelo</td>
+                                  <td>";echo TimeStampParaData($mensagem['data']); echo"</td>
+                                      
                                 </tr>";                      
                           else:
                             echo "
@@ -121,7 +125,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                                   <td><b><input type=\"checkbox\" value=\"{$mensagem['idMensagem']}\"></b></td>
                                   <td class=\"mailbox-name\"><b><a href=\"mensagemrecebida.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">{$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}</a></b></td>
                                   <td class=\"mailbox-subject\"><b> {$mensagem['assunto']}</b></td>
-                                  <td><b>Pendente Marcelo</b></td>
+                                  <td><b>"; echo TimeStampParaData($mensagem['data']); echo "</b></td>
                                 </tr>";
                           endif;
                       
@@ -166,4 +170,11 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
       <!-- /.row -->
     </section>
 <div class="row">
-<?php include 'menuFooter.php'; ?>
+<?php 
+ function TimeStampParaData($timeStamp){
+        $date = new DateTime($timeStamp);
+        return $date->format('d/m/Y H:i:s');
+    }
+    
+include 'menuFooter.php';
+?>

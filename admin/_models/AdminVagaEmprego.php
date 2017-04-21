@@ -11,6 +11,7 @@ class AdminVagaEmprego{
     
     private $Data;
     private $CadID;
+    private $idDelete;
     private $Error;
     private $Result;
     
@@ -31,6 +32,13 @@ class AdminVagaEmprego{
         $this->Data = $Data;
         $this->setData();        
         $this->Update();    
+    }
+    
+      public function ExeDelete($CadastroId) {
+          
+        $this->idDelete = (int) $CadastroId;
+      
+        $this->Delete();
     }
     
     function getResult() {
@@ -72,6 +80,18 @@ class AdminVagaEmprego{
         if($update->getResult()):
         $this->Result = TRUE;
         $this->Error = ["<b>Sucesso:</b>, a vaga foi atualizada no sistema!",WS_ACCEPT];
+        endif;
+    }
+    
+    private function Delete() {
+        $delete = new Delete();
+       
+        $delete->ExeDelete(self::ENTITY, "WHERE idVagaEmprego = :idVagaEmprego", "idVagaEmprego={$this->idDelete}");
+        
+      
+        if ($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
         endif;
     }
 }

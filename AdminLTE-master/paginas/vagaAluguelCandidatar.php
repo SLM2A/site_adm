@@ -47,7 +47,7 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                 <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
 
                 <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['nomeAnuncio'] ?></h3>
-                <?php echo "<a href=\"criarMensagem.php?desr={$readVaga->getResult()[0]['idUsuario']}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem para o proprietário</button></a>";?>
+                <?php echo "<a href=\"criarMensagem.php?desr={$readSes->getResult()[0]['idUsuario']}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem para o proprietário</button></a>";?>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
