@@ -48,6 +48,11 @@ class SiteRegistrar{
         endif;        
     }
     
+     public function ExeDelete($CadastroId) {
+        $this->idDelete = (int) $CadastroId;
+        $this->Delete();
+    }
+    
     function getResult() {
         return $this->Result;
     }
@@ -100,5 +105,17 @@ class SiteRegistrar{
         $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!",RENTAL_ACCEPT];
         endif;
     }
+    
+    private function Delete() {
+        $delete = new Delete();
+        
+        $delete->ExeDelete(self::ENTITY, "WHERE idUsuario = :idUsuario", "idUsuario={$this->idDelete}");        
+        
+        if ($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+        endif;
+    }
+
 }
 

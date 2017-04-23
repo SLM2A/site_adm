@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../../_app/Config.inc.php');
 require_once('../../_app/Includes.php');
 include 'menuHeader.php';
@@ -22,12 +22,11 @@ endif;
 /**
  * Condição * /
  */
-
 if (array_key_exists('id', $_GET)):
-    if(isset($_SESSION['userlogin']['DeleteAluguel'])):       
-       $CadastroId = $_GET['id'];        
+    if (isset($_SESSION['userlogin']['DeleteAluguel'])):
+        $CadastroId = $_GET['id'];
     elseif (isset($_SESSION['userlogin']['DeleteEmprego'])):
-       $CadastroId = $_GET['id'];
+        $CadastroId = $_GET['id'];
     endif;
 endif;
 
@@ -41,18 +40,16 @@ endif;
 /**
  * DELETAR MENSSAGEM* /
  */
-
-
 //Se na modal for clicado em excluir executa o bloco abaixo 
 if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteAluguel'])):
     unset($_SESSION['userlogin']['DeleteAluguel']);
     require('../../admin/_models/AdminVagaAluguel.php');
-    
-    $deleteAluguel = new AdminVagaAluguel();    
+
+    $deleteAluguel = new AdminVagaAluguel();
     $deleteAluguel->ExeDelete($CadastroId);
-    
+
     unset($_SESSION['userlogin']['$this->CadID']);
-   
+
     if ($deleteAluguel->getError()):
         $_SESSION['userlogin']['msg'] = $deleteAluguel->getError()[0];
         $_SESSION['userlogin']['tipoMsg'] = $deleteAluguel->getError()[1];
@@ -64,12 +61,12 @@ endif;
 if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteEmprego'])):
     unset($_SESSION['userlogin']['DeleteEmprego']);
     require('../../admin/_models/AdminVagaEmprego.php');
-    
+
     $deleteEmprego = new AdminVagaEmprego();
     $deleteEmprego->ExeDelete($CadastroId);
-   
+
     unset($_SESSION['userlogin']['$this->CadID']);
-   
+
     if ($deleteEmprego->getError()):
         $_SESSION['userlogin']['msg'] = $deleteEmprego->getError()[0];
         $_SESSION['userlogin']['tipoMsg'] = $deleteEmprego->getError()[1];
@@ -77,50 +74,59 @@ if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteEmprego'])):
 
     echo "<script>location.href='minhasVagas.php';</script>";
 endif;
-
-
 ?>
 
+
+
 <section class="content-header">
-                    <h1> <i class="ion-briefcase"></i> Minhas Vagas</h1>  
-                </section>
+    <h1> <i class="ion-briefcase"></i> Minhas Vagas</h1>  
+</section>
 
-                <!-- Main content -->
-                <section class="content">
+<!-- Main content -->
+<section class="content">
+    <section class="col-lg-12 connectedSortable ">
+        <a href="EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
+    </section> 
+    <div class="col-md-12">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#aluguel" data-toggle="tab">Vaga de Aluguel</a></li>
+                <li><a href="#emprego" data-toggle="tab">Vaga de Emprego</a></li>
 
-                        <section class="col-lg-12 connectedSortable ">
-                         <a href="EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
-                        </section>
-                     <!--Tabela listando Vagas de Aluguel-->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="box">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Vagas de Aluguel</h3>
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body table-responsive no-padding">
-                                        <table class="table table-hover">
-                                            <thead> 
-                                                <tr>
-                                                    <th>Nome do Anúncio</th>
-                                                    <th>Profissão</th>
-                                                    <th>Forma de Aluguel</th>
-                                                    <th>Preço</th>
-                                                    <th>Salão</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="aluguel">
+                    <div class="box-footer">
 
-                                                <?php
-                                                $readSes = new Read;
-                                                $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao" , "catid={$userlogin['idUsuario']}");
-                                                foreach ($readSes->getResult() as $ses):
-                                                    echo "<tr><td> {$ses['nomeAnuncio']} </td>
+
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Vagas de Aluguel</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <thead> 
+                                            <tr>
+                                                <th>Nome do Anúncio</th>
+                                                <th>Profissão</th>
+                                                <th>Forma de Aluguel</th>
+                                                <th>Preço</th>
+                                                <th>Salão</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+<?php
+$readSes = new Read;
+$readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao", "catid={$userlogin['idUsuario']}");
+foreach ($readSes->getResult() as $ses):
+    echo "<tr><td> {$ses['nomeAnuncio']} </td>
                                                               <td> {$ses['profissao']} </td>                                                              
                                                               <td> {$ses['formaAluguel']} </td>
                                                               <td> {$ses['preco']} </td>
-                                                              <td> {$ses['idVagaAluguel']} </td>
+                                                              <td> {$ses['nomeSalao']} </td>
                                                               <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">    
                                                               <td><a href=\"editarVagaAluguel.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa fa-pencil\"></i></button></a>
                                                                   <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaAluguel']}\">
@@ -131,49 +137,52 @@ endif;
                                                               </form>
                                                         ";
 
-                                                endforeach;
-                                                ?>
-                                            </tbody>  
-                                        </table>
-                                    </div>
-                                    <!-- /.box-body -->
+endforeach;
+?>
+                                        </tbody>  
+                                    </table>
                                 </div>
-                                <!-- /.box -->
+                                <!-- /.box-body -->
                             </div>
+                            <!-- /.box -->
                         </div>
-                        
-                        <!--Tabela listando Vagas de Emprego-->
-                         <div class="row">
-                            <div class="col-xs-12">
-                                <div class="box">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Vagas de Emprego</h3>
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body table-responsive no-padding">
-                                        <table class="table table-hover">
-                                            <thead> 
-                                                <tr>
-                                                    <th>Nome do Anúncio</th>
-                                                    <th>Profissão</th>
-                                                    <th>Nível</th>
-                                                    <th>Contratação</th>
-                                                    <th>Nº Vagas</th>
-                                                    <th>Salão</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
 
-                                                <?php
-                                                $readSes = new Read;
 
-                                                $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao", "catid={$userlogin['idUsuario']}");
-                                                foreach ($readSes->getResult() as $ses):
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="emprego">
+                    <div class="box-footer">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Vagas de Emprego</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <thead> 
+                                            <tr>
+                                                <th>Nome do Anúncio</th>
+                                                <th>Profissão</th>
+                                                <th>Nível</th>
+                                                <th>Contratação</th>
+                                                <th>Nº Vagas</th>
+                                                <th>Salão</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+<?php
+$readSes = new Read;
+
+$readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao", "catid={$userlogin['idUsuario']}");
+foreach ($readSes->getResult() as $ses):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
 
-                                                    echo "<tr><td> {$ses['tituloVaga']} </td>
+    echo "<tr><td> {$ses['tituloVaga']} </td>
                                                               <td> {$ses['profissao']} </td>
                                                               <td> {$ses['nivel']} </td>
                                                               <td> {$ses['vinculoEmpregaticio']} </td>
@@ -192,34 +201,50 @@ endif;
 
                                                         ";
 
-                                                endforeach;
-                                                ?>
-                                            </tbody>  
-                                        </table>
-                                    </div>
-                                    <!-- /.box-body -->
+endforeach;
+?>
+                                        </tbody>  
+                                    </table>
                                 </div>
-                                <!-- /.box -->
+                                <!-- /.box-body -->
                             </div>
-                        </div>
-                        
-                    </form>
-                    
-                    
-                </section>
+                            <!-- /.box -->
+                        </div> 
+
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </div>
+        <!-- /.tab-content -->
+    </div>
+
+
+
+
+    <!--Tabela listando Vagas de Aluguel-->
+
+
+
+
+
+
+</section>
 <div class="row">
 <?php include 'menuFooter.php'; ?> 
-    
-<script>
-    $(document).ready(function () {
+
+    <script>
+        $(document).ready(function () {
             $('#myModal').modal('show');
-    });
-    
-    function Excluir(){
-        location.href="minhasVagas.php?id=<?php print $idPort;?>"
-    };
-    
-    function Cancelar(){
-        location.href="teste.php"
-    };
-</script>
+        });
+
+        function Excluir() {
+            location.href = "minhasVagas.php?id=<?php print $idPort; ?>"
+        }
+        ;
+
+        function Cancelar() {
+            location.href = "teste.php"
+        }
+        ;
+    </script>

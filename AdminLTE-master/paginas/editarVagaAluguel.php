@@ -4,29 +4,38 @@ require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
+
+$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $idVaga = $_GET['id'];
 
 
+//MENSAGEM
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
 
-$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
+//INPUT DATA
 if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);
-
-    require '../../admin/_models/AdminVagaAluguel.php';
-    $cadastra = new AdminVagaAluguel;
-
-    $cadastra->ExeUpdate($idVaga,$data);
-
-
-
-    if (!$cadastra->getResult()):
-        RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
+    unset($data['SendPostForm']);    
+    
+    if(!in_array('', $_FILES['foto']['tmp_name'])):         
+        $data['foto'] = ($_FILES['foto']['tmp_name'] ? $_FILES['foto'] : NULL);
+        require('../../admin/_models/AdminVagaAluguelImagem.class.php');   
+        $criaVagaAluguelImagem = new AdminVagaAluguelImagem();
+        $criaVagaAluguelImagem->ExeCreate($data['foto'], $idVaga, $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);        
     else:
-
-        echo "<script>location.href='PerfilVagaAluguelPublico.php?id={$idVaga}';</script>";
+        unset($data['foto']);          
     endif;
+    
+    require '../../admin/_models/AdminVagaAluguel.php';
+    $cadastra = new AdminVagaAluguel; 
+    $cadastra->ExeUpdate($idVaga,$data);  
+    
+    echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVaga}';</script>";
+    
 else:
     //Busca salão e coloca na Array Data
     $readVaga = new Read();
@@ -47,8 +56,29 @@ $readObjeto->FullRead("select * from objetoAlugado");
     <section class="content">
 
 
-        <form role="form" action="" method="post" class="login-form">
+        <form enctype="multipart/form-data" role="form" action="" method="post" class="login-form">
+            
+            <div class="col-lg-12">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs pull-right">
+                                    <li class="pull-left header"><i class="ion-camera"></i> Fotos do espaço a ser alugado</li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="box-body box-profile">
+                                        <div class="input-group">
+                                            <label class="input-group-btn">
+                                                <span class="btn btn-primary">
+                                                    <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" multiple name="foto[]" id="exampleInputFile"/>
+                                                </span>
+                                            </label>
+                                            <input type="text" class="form-control" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
             <section class="col-lg-12 connectedSortable">
+                
                 <!-- Custom tabs (Charts with tabs)-->
                 <div class="nav-tabs-custom">
                     <!-- Tabs within a box -->
@@ -283,7 +313,7 @@ $readObjeto->FullRead("select * from objetoAlugado");
 
 
             <section class="col-lg-12 connectedSortable ">
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar Alterações</button>
             </section>
         </form>
 

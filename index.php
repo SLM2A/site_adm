@@ -52,84 +52,20 @@ require '_app/Includes.php';
                 <a class="navbar-brand page-scroll" href="#page-top">Rental Easy</a>
             </div>
             
-            <?php
-                
-                $login = new LoginSite(0);
-                
-                if($login->CheckLogin()):
-                    header('Location: index.php');
-                endif;            
-				
-				
-                $dataLogin = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-				if(!empty($dataLogin['AdminLogin'])):
-                    $login->ExeLogin($dataLogin);
-                    if(!$login->getResult()):
-                            WSErro ($login->getError ()[0], $login->getError ()[1]);
-                    else:
-                            header('Location: AdminLTE-master/paginas/index.php ');
-                    endif;
-                endif;
-                
-                $get = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
-                if (!empty($get)):
-                    if($get == 'restrito'):
-                        WSErro('<b>OPSS!</b> Acesso negado, favor efetue login para acessar o painel!',WS_ALERT);
-                    elseif($get == 'logoff'):
-                        WSErro('<b>Sucesso ao deslogar!</b> Sua sessão foi finalizada, volte sempre!',WS_ACCEPT);
-                    endif;
-                endif;
-                
-                $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
-                if ($logoff):
-                unset($_SESSION['userlogin']);
-                header('Location: index.php?exe=logoff');
-                endif;
-                                
-                ?>           
-            
+                      
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">Sobre</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Serviços</a>
-                    </li>                    
-                    <li>
-                        <a class="page-scroll" href="#contact">Contato</a>
-                    </li>
+                    
+                                       
+                    
 				
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                         <li>
+                                            <a href="paginas/login.php">
 							<i class="glyphicon glyphicon-user page-scroll"></i> Entrar
-						</a>
-                                           
-						<div class="dropdown-menu stop-propagation form-login2" role="menu">
-						
-						</div>
-						<div class="dropdown-menu stop-propagation form-login" role="menu">
-                                                    
-                                                    <form name="AdminLoginForm" action="" method="post">
-							<div class="form-group form-space">
-                                                          
-								<label for="exampleInputEmail1">
-									<i class="glyphicon glyphicon-envelope"></i> Email
-								</label> 
-								<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Seu email" name="email"/>
-							</div>
-							<div class="form-group form-space">
-								<label for="exampleInputPassword1">
-									<i class="glyphicon glyphicon-lock" required ></i> Senha
-								</label> 
-								<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" name="senha"/>
-							</div>
-                                                        <input type="submit" class="btn btn-success btn-block" name ="AdminLogin" value="Logar" /> 
-														
-                                                    </form>
-						</div>
-					</li>
+                                            </a>
+                                         </li>
+                                         
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -143,193 +79,18 @@ require '_app/Includes.php';
                 <h1 id="homeHeading">Aqui você encontra seu novo studio!</h1>
                 <hr>
                 <p>Um espaço para você!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Saiba Mais</a>
+                <a href="paginas/registrar.php" class="btn btn-primary btn-xl page-scroll">Começe já</a>
             </div>
         </div>
     </header>
 
-    <section class="bg-primary" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Nós temos o que você precisa!</h2>
-                    <hr class="light">
-                    <p class="text-faded">"Temos o que você precisa."</p>
-                    <a href="paginas/registrar.php" class="page-scroll btn btn-default btn-xl sr-button">Começe já</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Nossos serviços</h2>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-users text-primary sr-icons"></i>
-                        <h3>Ligando Pessoas</h3>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane text-primary sr-icons"></i>
-                        <h3>Compartilhar espaço</h3>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-heart  text-primary sr-icons"></i>
-                        <h3>Amamos você</h3>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-scissors text-primary sr-icons"></i>
-                        <h3>Lorem ipsum</h3>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
-    <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter popup-gallery">
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Fenix Cabeleireiro
-                                </div>
-                                <div class="project-name">
-                                    Corte verão
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Onix Studio
-                                </div>
-                                <div class="project-name">
-                                    Undercurt
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Espaço Milaré
-                                </div>
-                                <div class="project-name">
-                                    Corte 3
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/4.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Espaço Farias
-                                </div>
-                                <div class="project-name">
-                                    Corte 4
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Portela Studio
-                                </div>
-                                <div class="project-name">
-                                    Corte 5
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Dadalto Cortes
-                                </div>
-                                <div class="project-name">
-                                    Corte 6
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Veja mais trabalhos!</h2>
-                <a href="" class="btn btn-default btn-xl sr-button">Clique aqui</a>
-            </div>
-        </div>
-    </aside>
-
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Começe a usar em um toque!</h2>
-                    <hr class="primary">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing.</p>
-                </div>
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <i class="fa fa-phone fa-3x sr-contact"></i>
-                    <p>11 9999-9999</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
-                    <p><a href="mailto:your-email@your-domain.com">suporte@rentaleasy.com.br</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 

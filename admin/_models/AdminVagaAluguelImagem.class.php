@@ -12,7 +12,7 @@ class AdminVagaAluguelImagem {
     private $File = Array();
     private $NomeCompletoUsuario;
     private $idVagaAluguel;
-    private $idPortfolio;
+    private $idFoto;
     private $Msg;
     private $Result;
     private $SendFull;
@@ -36,13 +36,13 @@ class AdminVagaAluguelImagem {
     }
 
     public function ExeUpdate($idPortfolio, array $Data) {
-        $this->idPortfolio = (int) $idPortfolio;
+        $this->idFoto = (int) $idPortfolio;
         $this->Data = $Data;
         $this->Update();
     }
 
     public function ExeDelete($idPortfolio) {
-        $this->idPortfolio = (int) $idPortfolio;
+        $this->idFoto = (int) $idPortfolio;  
         $this->Delete();
     }
 
@@ -75,7 +75,7 @@ class AdminVagaAluguelImagem {
             $this->ImagemFullandSmal($ImgFullAndSmall->getResult(), $ImgFullAndSmall->getSend());
             if ($ImgFullAndSmall->getResult()):
                 $gbCreate = ["idVagaAluguel" => $this->idVagaAluguel, "fotoGrande" => $this->SendFull, "fotoPequena" => $this->SendSmall, "dataFoto" => date('Y-m-d H:i:s')];
-                var_dump($gbCreate);
+                
                 $insertGb = new create();
                 $insertGb->ExeCreate(self::ENTITY, $gbCreate);
                 if ($insertGb->getResult()):
@@ -91,7 +91,7 @@ class AdminVagaAluguelImagem {
 
     private function Update() {
         $update = new Update();
-        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
+        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idPortfolio = :idport", "idport={$this->idFoto}");
         if ($update->getResult()):
             $this->Result = TRUE;
             $this->Msg = ["<b>Sucesso:</b> a imagem foi atualizada com sucesso!", RENTAL_ACCEPT];
@@ -100,7 +100,7 @@ class AdminVagaAluguelImagem {
 
     private function Delete() {
         $delete = new Delete();
-        $delete->ExeDelete(self::ENTITY, "WHERE idPortfolio = :idport", "idport={$this->idPortfolio}");
+        $delete->ExeDelete(self::ENTITY, "WHERE idFoto = :idFoto", "idFoto={$this->idFoto}");
         if ($delete->getResult()):
             $this->Result = TRUE;
             $this->Msg = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];

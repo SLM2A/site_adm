@@ -107,18 +107,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     
                     
                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-<!--                            <li class="dropdown notifications-menu" style="margin-top: 7px; margin-right: 10px; width: 950px" >
-                                
-                                <div class="input-group input-groups">
-                                    <input type="text" class="form-control">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-info btn-flat"><i class="fa fa-search"></i> Buscar</button>
-                                    </span>
-                                </div>
-                     
-                                
-                            </li>-->
+                        <ul class="nav navbar-nav">                    
                             
                             <!-- Messages: style can be found in dropdown.less-->
                             <li class="dropdown messages-menu">
@@ -195,66 +184,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                             </li>
                             
                             <!-- Tasks: style can be found in dropdown.less -->
-                            <li class="dropdown tasks-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-flag-o"></i>
-                                    <span class="label label-danger">3</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">Conquistas</li>
-                                    <li>
-                                        <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                            <li><!-- Task item -->
-                                                <a href="#">
-                                                    <h3>
-                                                        Perfil Completo
-                                                        <small class="pull-right">20%</small>
-                                                    </h3>
-                                                    <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">20% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <!-- end task item -->
-                                            <li><!-- Task item -->
-                                                <a href="#">
-                                                    <h3>
-                                                        Cadastrar Salão
-                                                        <small class="pull-right">40%</small>
-                                                    </h3>
-                                                    <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">40% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <!-- end task item -->
-                                            <li><!-- Task item -->
-                                                <a href="#">
-                                                    <h3>
-                                                        Cadastrar vaga
-                                                        <small class="pull-right">60%</small>
-                                                    </h3>
-                                                    <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">60% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <!-- end task item -->
-                                            <!-- end task item -->
-                                        </ul>
-                                    </li>
-                                    <li class="footer">
-                                        <a href="#">Ver todas</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -278,7 +208,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                      endif; ?>
                                         <p>
                                             <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
-                                            <small>Membro desde Nov. 2016</small>
+                                            
                                         </p>
                                     </li>
                                     <!-- Menu Body -->
@@ -287,14 +217,19 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                     <li class="user-footer">
                                         <div class="pull-right">
                                             <a href="../../index.php?logoff=true" class="btn btn-default btn-flat">Sair</a>
+                                            
                                         </div>
+                                        <div class="pull-left">
+                                            <a href="configurarconta.php" class="btn btn-default btn-flat"><i class="fa fa-cog"></i></a>
+                                            
+                                        </div>
+                                        
+                                        
                                     </li>
                                 </ul>
                             </li>
                             <!-- Control Sidebar Toggle Button -->
-                            <li>
-                                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </nav>
@@ -321,32 +256,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         </div>
                     </div>
                     
-                    <?php 
-                    if ($userlogin['idTipoUsuario'] == 2):
-                      echo " 
-                            <form action=\"procurarvaga.php\" method=\"get\" class=\"sidebar-form\">
-                                <div class=\"input-group\">
-                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque por Vagas\">
-                                      <span class=\"input-group-btn\">
-                                        <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
-                                        </button>
-                                      </span>
-                                </div>
-                            </form> ";
-                      else:
-                        echo " 
-                              <form action=\"buscaempresario.php\" method=\"get\" class=\"sidebar-form\">
-                                  <div class=\"input-group\">
-                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque por Profissão\">
-                                        <span class=\"input-group-btn\">
-                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
-                                          </button>
-                                        </span>
-                                  </div>
-                              </form> "; 
-                          
-                      endif;
-                      ?>        
+                         
                             
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
@@ -354,27 +264,25 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         <?php
                         echo '
 		<li class="active treeview/">
-			<a href="index.php"><i class="fa fa-dashboard"></i><span>Inicio</span></a>
+			<a href="index.php"><i class="fa fa-home"></i><span>Inicio</span></a>
 		</li>
 		
 		<li class="treeview">
 			<a href="perfilpublico.php"><i class="fa fa-user"></i> <span>Perfil Público</span></a>	
 		</li>
+                 <li class="treeview">
+                        <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
+                    </li>
                 ';
                         if ($userlogin['idTipoUsuario'] == 2):
                             echo '
                     <li class="treeview">
-			<a href="procurarvaga.php"><i class="fa fa-search"></i> <span>Procurar Vagas</span></a>	
+			<a href="vagascandidatadas.php"><i class="fa fa-address-card"></i> <span>Vagas candidatadas</span></a>	
                     </li>
                     <li class="treeview">
-			<a href="vagascandidatadas.php"><i class="fa fa-search"></i> <span>Vagas candidatadas</span></a>	
+			<a href="propostarecebida.php"><i class="fa fa-handshake-o"></i> <span>Propostas Recebidas</span></a>	
                     </li>
-                    <li class="treeview">
-			<a href="propostarecebida.php"><i class="fa fa-search"></i> <span>Propostas Recebidas</span></a>	
-                    </li>
-                    <li class="treeview">
-                        <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Curriculo</span></a>	
-                    </li>
+                    
                     
                      ';
                         else :
@@ -385,18 +293,14 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                     <li class="treeview">
                         <a href="minhasVagas.php"><i class="fa fa-briefcase"></i> <span>Minhas Vagas</span></a>	
                     </li>
+                  
                     <li class="treeview">
-			<a href="procurarprofissional.php"><i class="fa fa-search"></i> <span>Procurar Profissional</span></a>	
-                    </li>
-                    <li class="treeview">
-			<a href="contatoprofissional.php"><i class="fa fa-user-circle"></i> <span>Propostas de emprego</span></a>	
+			<a href="contatoprofissional.php"><i class="fa fa-user-circle"></i> <span>Propostas de Emprego</span></a>	
                     </li>
                     <li class="treeview">
 			<a href="candidatos.php"><i class="fa fa-user-circle"></i> <span>Candidatos</span></a>	
                     </li>
-                    <li class="treeview">
-                        <a href="perfil.php"><i class="fa fa-edit"></i> <span>Editar Perfil</span></a>	
-                    </li>
+                   
                     ';
                         endif;
 
@@ -426,9 +330,9 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                       echo " 
                             <form action=\"procurarvaga.php\" method=\"get\">
                                 <div class=\"input-group\">
-                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque vagas por profissão\">
+                                  <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque vagas por profissão\" style=\" border-width: 10px; height: 60px; font-size: 20px;\">
                                       <span class=\"input-group-btn\">
-                                        <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i>
+                                        <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\" style=\" border-width: 14px;\"><i class=\"fa fa-search\"></i>
                                         </button>
                                       </span>
                                 </div>
@@ -437,9 +341,9 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         echo " 
                               <form action=\"buscaempresario.php\" method=\"get\" >
                                   <div class=\"input-group\">
-                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"busque profissionais por profissão\" >
+                                    <input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Busque Profissionais por Profissão\" style=\" border-width: 10px; height: 60px; font-size: 20px;\">
                                         <span class=\"input-group-btn\">
-                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\" ></i>
+                                          <button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\" style=\" border-width: 14px; \"><i class=\"fa fa-search\" ></i>
                                           </button>
                                         </span>
                                   </div>

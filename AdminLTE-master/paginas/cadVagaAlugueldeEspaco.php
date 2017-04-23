@@ -33,7 +33,7 @@ if (!empty($data['SendPostForm'])):
     
    
     //$cadastra->ExeCreate($data);    
-    if ($_FILES['portfolio']):
+    if (!in_array('', $_FILES['portfolio']['tmp_name'])):         
         $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
         require('../../admin/_models/AdminVagaAluguelImagem.class.php');
         

@@ -7,58 +7,85 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Dashboard
-                        <small>Informações</small>
+                        <i class="fa fa-home"></i> Home
+                        
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
-                    </ol>
+                    
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-primary">
-                                <div class="inner">
-                                    <h3>0</h3>
-
-                                    <p>Visualizações</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-eye"></i>
-                                </div>
-                                <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
                         <!-- ./col -->
                        
                        <?php 
                        
                        if ($userlogin['idTipoUsuario'] == 2):
-                            $readVagasEmprego = new Read();
-                            $readVagasEmprego->FullRead("SELECT * FROM vagaempregocandidata where idUsuario = {$userlogin['idUsuario']}");
-                            $readVagasAluguel = new Read();
-                            $readVagasAluguel->FullRead("SELECT * FROM vagaaluguelcandidatada where idUsuarioProfissional = {$userlogin['idUsuario']}");
-                            $quantidade = $readVagasEmprego->getRowCount() + $readVagasAluguel->getRowCount();    
+                              
                             echo "  
+                               
                              <div class=\"col-lg-3 col-xs-6\">
                                  <!-- small box -->
                                  <div class=\"small-box bg-primary\">
                                      <div class=\"inner\">
-                                         <h3>{$quantidade}<sup style=\"font-size: 20px\"></sup></h3>
+                                         <h3><i class=\"fa fa-edit\"></i><sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Editar Perfil</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-edit\"></i>
+                                     </div>
+                                     <a href=\"perfil.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>
+                             
+                              <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-address-card\"></i><sup style=\"font-size: 20px\"></sup></h3>
 
                                          <p>Candidaturas</p>
                                      </div>
                                      <div class=\"icon\">
-                                         <i class=\"ion ion-person-add\"></i>
+                                         <i class=\"fa fa-address-card\"></i>
                                      </div>
                                      <a href=\"vagascandidatadas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
                                  </div>
-                             </div>";
+                             </div>
+                             
+                            <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-handshake-o\"></i><sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Propostas Recebidas</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-handshake-o\"></i>
+                                     </div>
+                                     <a href=\"propostarecebida.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>
+                             
+                            <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-camera\"></i><sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Portfolio</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-camera\"></i>
+                                     </div>
+                                     <a href=\"vagascandidatadas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>
+
+                             ";
                        
                        else:
                            $readContato = new Read();
@@ -66,64 +93,78 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                            $quantidade = $readContato->getRowCount();
                            echo " 
                             <div class=\"col-lg-3 col-xs-6\">
-                            <!-- small box -->
-                            <div class=\"small-box bg-primary\">
-                                <div class=\"inner\">
-                                    <h3>{$quantidade}<sup style=\"font-size: 20px\"></sup></h3>
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-university\"></i><sup style=\"font-size: 20px\"></sup></h3>
 
-                                    <p>Profissionais Contatados</p>
-                                </div>
-                                <div class=\"icon\">
-                                    <i class=\"ion ion-person-add\"></i>
-                                </div>
-                                <a href=\"contatoprofissional.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
-                               </div>
-                            </div>";
+                                         <p>Cadastrar Salão</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-university\"></i>
+                                     </div>
+                                     <a href=\"cadastroEmpresa.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>
+                             
+                              <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-scissors\"></i><sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Cadastrar Vaga</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-scissors\"></i>
+                                     </div>
+                                     <a href=\"EscolhaTipoVaga.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>
+                             
+                            <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-briefcase\"></i><sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Minhas Vagas</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-briefcase\"></i>
+                                     </div>
+                                     <a href=\"minhasVagas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>
+                             
+                            <div class=\"col-lg-3 col-xs-6\">
+                                 <!-- small box -->
+                                 <div class=\"small-box bg-primary\">
+                                     <div class=\"inner\">
+                                         <h3><i class=\"fa fa-camera\"></i><sup style=\"font-size: 20px\"></sup></h3>
+
+                                         <p>Portfolio</p>
+                                     </div>
+                                     <div class=\"icon\">
+                                         <i class=\"fa fa-camera\"></i>
+                                     </div>
+                                     <a href=\"vagascandidatadas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                 </div>
+                             </div>";
                            
                        endif;
                         ?>
                         
-                        <?php 
-                        $readFotos = new Read();
-                        $readFotos->FullRead("Select * from portfolio where idUsuario=:id", "id={$userlogin['idUsuario']}");
-                        ?>
+                        
                         <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-primary">
-                                <div class="inner">
-                                    <h3><?php echo "{$readFotos->getRowCount()}"?></h3>
-
-                                    <p>Fotos</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-camera"></i>
-                                </div>
-                                <a href="portfolio.php" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-primary">
-                                <div class="inner">
-                                    <h3>0</h3>
-
-                                    <p>Medalhas</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-ribbon-a"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">Veja Mais <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
+                       
                         <!-- ./col -->
                     </div>
                     <!-- /.row -->
                      
                     <div class="row">
                         <!-- Left col -->
-                        <section class="col-lg-6 connectedSortable">
+                        <section class="col-lg-12 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
                                 <!-- Tabs within a box -->
@@ -151,43 +192,12 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                 </div>
                             </div>
                         </section>
-
-                        <!-- /.Left col -->
-                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                        <section class="col-lg-6 connectedSortable">
-                            <!-- Custom tabs (Charts with tabs)-->
-                            <div class="nav-tabs-custom">
-                                <!-- Tabs within a box -->
-                                <ul class="nav nav-tabs pull-right">                  
-                                    <li class="pull-left header"><i class="ion-paper-airplane"></i> Funções</li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <!-- Morris chart - Sales -->
-                                
-                                    <div class="box-body box-profile" id="sales-chart" style="position: relative; ">
-                                        <a href="perfil.php"><button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-edit"></i> Editar Perfil</button></a>            
-                                        <?php
-                                        if ($userlogin['idTipoUsuario'] == 2):
-                                            echo '
-                        <a href="procurarvaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-search"></i> Procurar Vagas</button></a>
-
                         
-                     ';
-                                        else :
-                                            echo '
-                        <a href="cadastroEmpresa.php"><button type="button" class="btn btn-block btn-warning btn-lg"><i class="fa fa-building"></i> Meus Salões</button></a>
-                        <a href="EscolhaTipoVaga.php"><button type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"></i> Cadastrar Vaga</button></a>
-                        <a href="procurarprofissional.php"><button type="button" class="btn btn-block btn-primary btn-lg"><i class="fa fa-search"></i> Procurar Profissional</button></a>
-                        ';
-                                        endif;
-                                        ?>  
-                                              <button type="button" class="btn btn-block btn-info btn-lg"><i class="fa fa-recycle"></i> Dicas de Sustentabilidade</button>
+                       
+          <!-- /.box -->
+        </div>
 
-                                    </div>
-
-                                </div>
-                            </div>
-                        </section>
+                 
                     </div>
                 </section>
                 <div class="row">

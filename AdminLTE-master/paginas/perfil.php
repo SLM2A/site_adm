@@ -23,6 +23,7 @@ if (isset($data) && array_key_exists("SendPostForm", $data)):
         $sendAvatar = new AdminAvatar();
         $sendAvatar->ExeCreate($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
         $data['avatar'] = ($sendAvatar->getSendAvatar());
+        
     else:
         unset($data['avatar']);
     endif;

@@ -81,7 +81,7 @@ endif;
         
 
             <section class="col-lg-12 connectedSortable ">
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Cadastrar Vaga</button>
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-check"></i> Salvar Endereço</button>
             </section>
         </form>
         

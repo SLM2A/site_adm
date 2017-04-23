@@ -26,16 +26,18 @@ endif;
  * ENVIAR IMAGEM* /
  */
 if (isset($post) && array_key_exists("SendPostForm", $post)):
+    if(!in_array('', $_FILES['portfolio']['tmp_name'])): 
     $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
     unset($post['SendPostForm']);
     require('../../admin/_models/AdminGaleria.class.php');
     $sendGallery = new AdminGaleria;
     $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
-
     if ($sendGallery->getMsg()):
         $_SESSION['userlogin']['msg'] = $sendGallery->getMsg()[0];
         $_SESSION['userlogin']['tipoMsg'] = $sendGallery->getMsg()[1];
     endif;
+endif;
+    
 
 echo "<script>location.href='portfolio.php';</script>";
 else:
