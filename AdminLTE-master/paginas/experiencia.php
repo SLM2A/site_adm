@@ -4,8 +4,12 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 //$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
+/*
+ * Insere no banco a experiencia 
+ */
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
@@ -32,6 +36,61 @@ if (!empty($data['SendPostForm'])):
         echo "<script>location.href='experiencia.php';</script>";
     endif;
 endif;
+
+/*
+ * Fim insere no banco a experiencia 
+ */
+
+/*
+ * DELETE CERTICAÇÃO
+ */
+
+//Chamar a Modal.
+if (isset($post) && array_key_exists("DeleteExperiencia", $post)):
+    unset($post['DeleteExperiencia']);
+    $idExperiencia = $post['CadastroId'];
+    $_SESSION['userlogin']['DeleteExperiencia'] = "ok";
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['cargoExperiencia']}?", "Cancelar", "Excluir", "Excluir");
+endif;
+
+/**
+ * Condição * /
+ */
+
+if (array_key_exists('id', $_GET)):
+       $CadastroId = $_GET['id'];        
+endif;
+
+//Mensagem
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+/**
+ * DELETAR MENSSAGEM* /
+ */
+
+
+//Se na modal for clicado em excluir executa o bloco abaixo 
+if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteExperiencia'])):
+    unset($_SESSION['userlogin']['DeleteExperiencia']);
+    require('../../admin/_models/AdminExperiencia.php');
+    
+    $deleteExperiencia = new AdminExperiencia();    
+    $deleteExperiencia->ExeDelete($CadastroId);
+    
+    unset($_SESSION['userlogin']['$this->CadID']);
+   
+    if ($deleteExperiencia->getError()):
+        $_SESSION['userlogin']['msg'] = $deleteExperiencia->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteExperiencia->getError()[1];
+    endif;
+
+    echo "<script>location.href='certificacao.php';</script>";
+endif;
+
 ?>
 
 
@@ -181,8 +240,6 @@ endif;
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Minhas Experiências</h3>
-
-
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -200,29 +257,29 @@ endif;
                         <tbody>
 
 <?php
-$readSes = new Read;
+    $readSes = new Read;
+    $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
 
-$readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
-foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-
-    echo "<tr><td> {$ses['cargoExperiencia']} </td>
-                                                              <td> {$ses['empresaExperiencia']} </td>
-                                                              
-                                                              <td> {$ses['deExperiencia']} </td>
-                                                              <td> {$ses['ateExperiencia']} </td>
-                                                              <td> {$ses['descricao']} </td>
-                                                                  <td>   <div class=\"btn-group\">
-                                                                    <button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
-                                                                    <button type=\"button\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
-                                                                    
-                                                                  </div></td></tr>
-                                                        ";
-
-endforeach;
+    foreach ($readSes->getResult() as $ses):
+        echo "<tr> 
+               <td> {$ses['cargoExperiencia']} </td>
+                <td> {$ses['empresaExperiencia']} </td>
+                <td> {$ses['deExperiencia']} </td>
+                <td> {$ses['ateExperiencia']} </td>
+                <td> {$ses['descricao']} </td>
+                <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">        
+                      <td>
+                          <a href=\"#?id={$ses['idExperiencia']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
+                          <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idExperiencia']}\">
+                          <input type=\"hidden\" name=\"cargoExperiencia\" value=\"{$ses['cargoExperiencia']}\">
+                          <button input name=\"DeleteExperiencia\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>  
+                      </td> 
+                </form>
+              </tr>
+          ";
+    endforeach;
 ?>
-                        </tbody>  
+                       </tbody>  
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -261,3 +318,18 @@ endforeach;
 
 
 <?php include 'menuFooter.php'; ?>
+
+<script>
+
+    $(document).ready(function () {
+            $('#myModal').modal('show');
+    });
+    
+    function Excluir(){
+        location.href="experiencia.php?id=<?php print $idExperiencia;?>"
+    };
+    
+    function Cancelar(){
+        location.href="experiencia.php"
+    };         
+</script>

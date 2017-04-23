@@ -11,13 +11,14 @@ class AdminExperiencia{
     
     private $Data;
     private $ExperienciaUsuario;
-    private $CadID;
+    private $CadID;    
+    private $idDelete;
     private $Error;
     private $Result;
     
     //Nome da tabela no banco de dados!
     const ENTITY = 'experienciaProfissionalUsuario';
-    const experienciausuario = 'experienciausuario';
+    const EXPERIENCIAUSUARIO = 'experienciausuario';
     
     
     public function ExeCreate(array $Data) {
@@ -63,6 +64,11 @@ class AdminExperiencia{
         endif;        
     }
     
+    public function ExeDelete($CadastroId) {
+        $this->idDelete = (int) $CadastroId;
+        $this->Delete();
+    }
+    
     function getResult() {
         return $this->Result;
     }
@@ -106,7 +112,7 @@ class AdminExperiencia{
     // Adiciona a relação Experiencia com o Usuario
     private function CreateExperiencia() {
         $Create = new Create;
-        $Create->ExeCreate(self::experienciausuario, $this->ExperienciaUsuario);
+        $Create->ExeCreate(self::EXPERIENCIAUSUARIO, $this->ExperienciaUsuario);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
             $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
@@ -119,6 +125,17 @@ class AdminExperiencia{
         if($update->getResult()):
         $this->Result = TRUE;
         $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+        endif;
+    }
+    
+    private function Delete() {
+        $delete = new Delete();
+        
+        $delete->ExeDelete(self::ENTITY, "WHERE idExperiencia = :idExperiencia", "idExperiencia={$this->idDelete}");        
+        $delete->ExeDelete(self::EXPERIENCIAUSUARIO, "WHERE idExperiencia = :idExperiencia", "idExperiencia={$this->idDelete}");        
+        if ($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
         endif;
     }
 }

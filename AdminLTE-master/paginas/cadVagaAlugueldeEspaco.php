@@ -1,28 +1,52 @@
-<?php 
-
+<?php
 require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+//MENSAGEM
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+/**
+ * ENVIAR FORM* /
+ */
 
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
-
-    require '../../admin/_models/AdminVagaAluguel.php';
-    $cadastra = new AdminVagaAluguel;
-
-    $cadastra->ExeCreate($data);
-
-    
-
-    if (!$cadastra->getResult()):
-        RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
         
-         echo "<script>location.href='cadVagaAlugueldeEspaco.php';</script>";
+
+   require '../../admin/_models/AdminVagaAluguel.php';
+    $cadastra = new AdminVagaAluguel;
+    $cadastra->ExeCreate($data);
+    
+    
+    $readID = new Read();
+    
+    $readID->FullRead("SELECT MAX(idVagaAluguel) FROM vagaaluguel");
+    $idVagaAluguel = $readID->getResult()[0]['MAX(idVagaAluguel)'];
+    
+    
+   
+    //$cadastra->ExeCreate($data);    
+    if ($_FILES['portfolio']):
+        $post = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
+        require('../../admin/_models/AdminVagaAluguelImagem.class.php');
+        
+       // $post['idVagaAluguel'];
+        $criaVagaAluguelImagem = new AdminVagaAluguelImagem();
+        $criaVagaAluguelImagem->ExeCreate($post, $idVagaAluguel, $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+       
     endif;
+    
+    
+    
+    echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVagaAluguel}';</script>";
+    
 endif;
 
 ?>
@@ -30,7 +54,7 @@ endif;
 <section class="content">
                      
 
-                    <form role="form" action="" method="post" class="login-form">
+                    <form name="PostForm" role="form" action="" method="post" enctype="multipart/form-data">
                         <div class="col-lg-12">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs pull-right">
@@ -41,7 +65,7 @@ endif;
                                         <div class="input-group">
                                             <label class="input-group-btn">
                                                 <span class="btn btn-primary">
-                                                    <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" name="portfolio" id="exampleInputFile"/>
+                                                    <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" multiple name="portfolio[]" id="exampleInputFile"/>
                                                 </span>
                                             </label>
                                             <input type="text" class="form-control" readonly/>

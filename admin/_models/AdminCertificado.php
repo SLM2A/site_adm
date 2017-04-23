@@ -11,12 +11,13 @@ class AdminCertificado {
     private $Data;
     private $CertificadoUsuario;
     private $CadID;
+    private $idDelete;
     private $Error;
     private $Result;
 
     //Nome da tabela no banco de dados!
     const ENTITY = 'certificadoprofissionalusuario';
-    const salaoempresario = 'certificadousuario';
+    const CERTIFICADOUSUARIO = 'certificadousuario';
 
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
@@ -59,6 +60,11 @@ class AdminCertificado {
         endif;
     }
 
+    public function ExeDelete($CadastroId) {
+        $this->idDelete = (int) $CadastroId;
+        $this->Delete();
+    }
+    
     function getResult() {
         return $this->Result;
     }
@@ -101,7 +107,7 @@ class AdminCertificado {
     // Adiciona a relação Experiencia com o Usuario
     private function CreateExperiencia() {
         $Create = new Create;
-        $Create->ExeCreate(self::salaoempresario, $this->CertificadoUsuario);
+        $Create->ExeCreate(self::CERTIFICADOUSUARIO, $this->CertificadoUsuario);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
         endif;
@@ -113,6 +119,17 @@ class AdminCertificado {
         if ($update->getResult()):
             $this->Result = TRUE;
             $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!", RENTAL_ACCEPT];
+        endif;
+    }
+    
+    private function Delete() {
+        $delete = new Delete();
+        
+        $delete->ExeDelete(self::ENTITY, "WHERE idCertificado = :idCertificado", "idCertificado={$this->idDelete}");        
+        $delete->ExeDelete(self::CERTIFICADOUSUARIO, "WHERE idCertificado = :idCertificado", "idCertificado={$this->idDelete}");        
+        if ($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
         endif;
     }
 

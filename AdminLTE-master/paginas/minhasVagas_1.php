@@ -4,27 +4,30 @@ require_once('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-echo RentalModal("Excluir", "Tem certeza que deseja excluir a imagem", "Cancelar", "Excluir", "Excluir");   
-
 //Chamar a Modal.
-if (isset($post) && array_key_exists("DeletePostForm", $post)):
-    unset($post['DeletePostForm']);
+if (isset($post) && array_key_exists("DeleteAluguel", $post)):
+    unset($post['DeleteAluguel']);
     $idPort = $post['CadastroId'];
-    echo RentalModal("Excluir", "Tem certeza que deseja excluir", "Cancelar", "Excluir", "Excluir");
+    $_SESSION['userlogin']['DeleteAluguel'] = "ok";
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['nomeAnuncio']}?", "Cancelar", "Excluir", "Excluir");
 endif;
 
-
-var_dump($post);
-if (!empty($post['CadastroId'])):
-    $CadastroId = $post['CadastroId'];
+if (isset($post) && array_key_exists("DeleteEmprego", $post)):
+    unset($post['DeleteEmprego']);
+    $idPort = $post['CadastroId'];
+    $_SESSION['userlogin']['DeleteEmprego'] = "ok";
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['nomeAnuncio']}?", "Cancelar", "Excluir", "Excluir");
 endif;
 
 /**
  * Condição * /
  */
-if (array_key_exists('CadastroId', $_GET)):
+if (array_key_exists('id', $_GET)):
     $_SESSION['userlogin']['ModalPortfolioOk'] = "ok";
-    $CadastroId = $_GET['CadastroId'];
+    $CadastroId = $_GET['id'];
+    else:
+        unset($_SESSION['userlogin']['DeleteAluguel']);
+        unset($_SESSION['userlogin']['DeleteEmprego']);
 endif;
 
 if (!empty($_SESSION['userlogin']['msg'])):
@@ -38,17 +41,19 @@ endif;
  */
 
 
-//Se na modal for clicado em excluir execulta o bloco abaixo 
+//Se na modal for clicado em excluir executa o bloco abaixo 
 if (!empty($_SESSION['userlogin']['ModalPortfolioOk'])):
     unset($_SESSION['userlogin']['ModalPortfolioOk']);
-    require('../../admin/_models/AdminMensagem.class.php');
-    $deleteMensagem = new AdminMensagem();
-    $deleteMensagem->ExeDelete($CadastroId);
-    unset($_SESSION['userlogin']['CadastroId']);
-
-    if ($deleteMensagem->getError()):
-        $_SESSION['userlogin']['msg'] = $deleteMensagem->getError()[0];
-        $_SESSION['userlogin']['tipoMsg'] = $deleteMensagem->getError()[1];
+    require('../../admin/_models/AdminVagaAluguel.php');
+    $deleteAluguel = new AdminVagaAluguel();
+    
+    $deleteAluguel->ExeDelete($CadastroId);
+    
+    unset($_SESSION['userlogin']['$this->CadID']);
+   
+    if ($deleteAluguel->getError()):
+        $_SESSION['userlogin']['msg'] = $deleteAluguel->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteAluguel->getError()[1];
     endif;
 
     echo "<script>location.href='minhasVagas.php';</script>";
@@ -101,7 +106,7 @@ endif;
                                                               <td><a href=\"editarVagaAluguel.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa fa-pencil\"></i></button></a>
                                                                   <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaAluguel']}\">
                                                                   <input type=\"hidden\" name=\"nomeAnuncio\" value=\"{$ses['nomeAnuncio']}\">
-                                                                  <button input name=\"DeletePostForm\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                                  <button input name=\"DeleteAluguel\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
                                                                   <a href=\"perfilVagaAluguelPublico.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                               </td></tr>
                                                               </form>
@@ -155,11 +160,17 @@ endif;
                                                               <td> {$ses['vinculoEmpregaticio']} </td>
                                                               <td> {$ses['numeroVagas']} </td>
                                                               <td> {$ses['nomeSalao']} </td>
-                                                                  <td>   <div class=\"btn-group\">
-                                                                    <a href=\"editarVagaEmprego.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
-                                                                    <button type=\"button\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
-                                                                    <a href=\"perfilVagaEmpregoPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
-                                                                  </div></td></tr>
+                                                              <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">    
+                                                              <td><a href=\"editarVagaEmprego.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
+                                                                  <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaEmprego']}\">
+                                                                  <input type=\"hidden\" name=\"nomeAnuncio\" value=\"{$ses['tituloVaga']}\">
+                                                                  <button input name=\"DeleteEmprego\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                                  <a href=\"perfilVagaAluguelPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
+                                                              </td></tr>
+                                                              </form>
+                                                                  
+
+
                                                         ";
 
                                                 endforeach;
@@ -186,7 +197,7 @@ endif;
     });
     
     function Excluir(){
-        location.href="teste.php?id=<?php print $id;?>"
+        location.href="minhasVagas.php?id=<?php print $idPort;?>"
     };
     
     function Cancelar(){

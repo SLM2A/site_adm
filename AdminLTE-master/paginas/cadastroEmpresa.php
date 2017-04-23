@@ -5,34 +5,112 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-if (!empty($data['SendPostForm'])):
+/*
+ * Insere no banco o Salão e a relação salão empresario
+ */
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+
+if (isset($data) && array_key_exists("SendPostForm", $data)):
     unset($data['SendPostForm']);
 
+   $data['avatar'] = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
+   
+    if(!empty($data['avatar'])):
+        require('../../admin/_models/AdminAvatar.class.php');
+        $sendAvatar = new AdminAvatar();
+        $sendAvatar->ExeCreateSalao($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+        $data['avatar'] = ($sendAvatar->getSendAvatar());
+    else:
+        unset($data['avatar']);
+    endif;    
+  
+    
     require '../../admin/_models/AdminSalao.php';
     $cadastra = new AdminSalao;
-
     $cadastra->ExeCreate($data);
     $readSalao = new Read;
-
     $readSalao->FullRead("SELECT MAX(idSalao) FROM salao");
     $idSalao = $readSalao->getResult()[0]['MAX(idSalao)'];
-
-
     $SalaoEmpresario['idSalao'] = $idSalao;
     $SalaoEmpresario['idUsuario'] = $userlogin['idUsuario'];
-
-
     $cadastra->InsereRelacao($SalaoEmpresario);
+   
+     
+    if ($cadastra->getError()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+        endif;
 
-
-    if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        echo "<script>location.href='cadastroEmpresa.php';</script>";
-    endif;
+    echo "<script>location.href='cadastroEmpresa.php';</script>";  
+    
 endif;
+
+/*
+ * Fim Insere no banco o Salão e a relação salão empresario
+ */
+
+//Mostra menssagem de sucesso ou erro se necessario.
+
+
+
+/*
+ * DELETE SALÃO
+ */
+
+//Chamar a Modal.
+if (isset($post) && array_key_exists("DeleteSalao", $post)):
+    unset($post['DeleteSalao']);
+    $idSalao = $post['CadastroId'];
+    $_SESSION['userlogin']['DeleteSalao'] = "ok";
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['nomeSalao']}?", "Cancelar", "Excluir", "Excluir");
+endif;
+
+/**
+ * Condição * /
+ */
+
+if (array_key_exists('id', $_GET)):
+       $CadastroId = $_GET['id'];        
+endif;
+
+//Mensagem
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+/**
+ * DELETAR MENSSAGEM* /
+ */
+
+
+//Se na modal for clicado em excluir executa o bloco abaixo 
+if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteSalao'])):
+    unset($_SESSION['userlogin']['DeleteSalao']);
+    require('../../admin/_models/AdminSalao.php');
+    
+    $deleteSalao = new AdminSalao();    
+    $deleteSalao->ExeDelete($CadastroId);
+    
+    unset($_SESSION['userlogin']['$this->CadID']);
+   
+    if ($deleteSalao->getError()):
+        $_SESSION['userlogin']['msg'] = $deleteSalao->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteSalao->getError()[1];
+    endif;
+
+    echo "<script>location.href='cadastroEmpresa.php';</script>";
+endif;
+
+
 ?>
 
 <section class="content-header">
@@ -41,7 +119,7 @@ endif;
 
     <!-- Main content -->
     <section class="content">
-        <form role="form" action="" method="post" class="login-form">
+        <form enctype="multipart/form-data" role="form" action="" method="post" class="login-form">
             
 
 
@@ -92,19 +170,19 @@ endif;
                                 <div class="box-body box-profile" id="sales-chart" >
                                     <div class="form-group">
                                         <label>Nome da Empresa:</label>
-                                        <input type="text" class="form-control" name="nomeSalao" value="<?php if (isset($data)) echo $data['nomeSalao']; ?>" >
+                                        <input type="text" class="form-control" name="nomeSalao" value="<?php (isset($data['nomeSalao'])) ? $data['nomeSalao'] : $data['nomeSalao'] = null ;?>" >
                                         <label>CNPJ:</label>
-                                        <input type="text" id="cnpj" class="form-control" name="cnpjSalao" value="<?php if (isset($data)) echo $data['cnpjSalao']; ?>" >
+                                        <input type="text" id="cnpj" class="form-control" name="cnpjSalao" value="<?php (isset($data['cnpjSalao'])) ? $data['cnpjSalao'] : $data['cnpjSalao'] = null ;?>" >
                                         <label>Categoria:</label>
                                         <select class="form-control" name="categoriaSalao">
                                             <option></option>
                                             <option>Salão</option>
                                             <option>Barbearia</option>
                                         </select>
-                                        <?php if (isset($data)) echo $data['categoriaSalao']; ?>
+                                        <?php (isset($data['categoriaSalao'])) ? $data['categoriaSalao'] : $data['categoriaSalao'] = null ;  ?>
                                         <div class="box-body pad">
                                             <textarea input class="textarea" placeholder="Escreva sobre o salão..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                      name="descricaoSalao" value="<?php if (isset($data)) echo $data['descricaoSalao']; ?>"></textarea>
+                                                      name="descricaoSalao" value="<?php  (isset($data['descricaoSalao'])) ? $data['descricaoSalao'] : $data['descricaoSalao'] = null ; ?>"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -129,19 +207,19 @@ endif;
                                             <section class="col-lg-12 connectedSortable">
 
                                                 <label>CEP:</label>
-                                                <input type="text" id="cep" class="form-control" name="cep" value="<?php if (isset($data)) echo $data['cep']; ?>" required>
+                                                <input type="text" id="cep" class="form-control" name="cep" value="<?php (isset($data['cep'])) ? $data['cep'] : $data['cep'] = null ; ?>" required>
                                                 <label>Endereço:</label>
-                                                <input type="text" id="rua" class="form-control" name="logradouro" value="<?php if (isset($data)) echo $data['logradouro']; ?>" >
+                                                <input type="text" id="rua" class="form-control" name="logradouro" value="<?php (isset($data['logradouro'])) ? $data['logradouro'] : $data['logradouro'] = null ;  ?>" >
                                                 <label>Número:</label>
-                                                <input type="text"  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
+                                                <input type="text"  class="form-control"  name="numero" value="<?php (isset($data['numero'])) ? $data['numero'] : $data['numero'] = null ; ?>" required>
                                                 <label>Complemento:</label>
-                                                <input type="text" class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
+                                                <input type="text" class="form-control" name="complemento" value="<?php (isset($data['complemento'])) ? $data['complemento'] : $data['complemento'] = null ; ?>" >
                                                 <label>Bairro:</label>
-                                                <input type="text" id="bairro" class="form-control" name="bairro" value="<?php if (isset($data)) echo $data['bairro']; ?>" >
+                                                <input type="text" id="bairro" class="form-control" name="bairro" value="<?php (isset($data['bairro'])) ? $data['bairro'] : $data['bairro'] = null ;  ?>" >
                                                 <label>Cidade:</label>
-                                                <input type="text" id="cidade" class="form-control" name="cidade" value="<?php if (isset($data)) echo $data['cidade']; ?>" >
+                                                <input type="text" id="cidade" class="form-control" name="cidade" value="<?php (isset($data['cidade'])) ? $data['cidade'] : $data['cidade'] = null ; ?>" >
                                                 <label>Estado:</label>
-                                                <input type="text" id="uf"  class="form-control" name="estado" value="<?php if (isset($data)) echo $data['estado']; ?>" >
+                                                <input type="text" id="uf"  class="form-control" name="estado" value="<?php (isset($data['estado'])) ? $data['estado'] : $data['estado'] = null ; ?>" >
                                             </section>
                                         </div>
                                 </div>
@@ -186,7 +264,7 @@ endif;
                          <?php
                                                 $readSes = new Read;
 
-                                                $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                                                $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao", "catid={$userlogin['idUsuario']}");
                                                      foreach ($readSes->getResult() as $ses):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
@@ -196,11 +274,16 @@ endif;
                                                               
                                                               <td> {$ses['categoriaSalao']} </td>
                                                               <td> {$ses['logradouro']} {$ses['numero']}</td>
-                                                              <td><div class=\"btn-group\">
-                                                                    <a href=\"editarEmpresa.php?id={$ses['idSalao']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button>
-                                                                    <button type=\"button\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
-                                                                    <a href=\"perfilSalaoPublico.php?id={$ses['idSalao']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Salão</button></a>
-                                                                  </div></td></tr>
+                                                              <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">        
+                                                                    <td>
+                                                                        <a href=\"editarEmpresa.php?id={$ses['idSalao']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
+                                                                        <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idSalao']}\">
+                                                                        <input type=\"hidden\" name=\"nomeSalao\" value=\"{$ses['nomeSalao']}\">
+                                                                        <button input name=\"DeleteSalao\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                                        <a href=\"perfilSalaoPublico.php?id={$ses['idSalao']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Salão</button></a>
+                                                                    </td> 
+                                                              </form>
+                                                                  </tr>
                                                         ";                                                        
                                                         
                                                     endforeach;
@@ -250,5 +333,18 @@ endif;
     });
     
 
+
+    $(document).ready(function () {
+            $('#myModal').modal('show');
+    });
+    
+    function Excluir(){
+        location.href="cadastroEmpresa.php?id=<?php print $idSalao;?>"
+    };
+    
+    function Cancelar(){
+        location.href="cadastroEmpresa.php"
+    };
+    
     
     </script>

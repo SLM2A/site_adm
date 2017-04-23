@@ -5,8 +5,64 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $readNaoLida = new Read();
-$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0 ", "id={$userlogin['idUsuario']}");
 //var_dump($readNaoLida->getRowCount());
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+/*
+ * DELETE CERTICAÇÃO
+ */
+
+//Chamar a Modal.
+if (isset($post) && array_key_exists("DeleteMensagem", $post)):
+    unset($post['DeleteMensagem']);
+    $idMensagem = $post['CadastroId'];
+    $_SESSION['userlogin']['DeleteMensagem'] = "ok";
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir as mensagens selecionadas?", "Cancelar", "Excluir", "Excluir");
+endif;
+
+/**
+ * Condição * /
+ */
+
+if (array_key_exists('id', $_GET)):
+       $string = $_GET;
+       $CadastroId = explode("?",$string['id']);
+       array_pop($CadastroId);       
+endif;
+
+//Mensagem
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+/**
+ * DELETAR MENSSAGEM* /
+ */
+
+
+//Se na modal for clicado em excluir executa o bloco abaixo 
+if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteMensagem'])):
+    unset($_SESSION['userlogin']['DeleteMensagem']);
+    require('../../admin/_models/AdminMensagem.class.php');
+    $post['excluirRemetente']=1;
+            
+    $deleteMensagem = new AdminMensagem();    
+    $deleteMensagem->ExeUpdate($CadastroId, $post);
+    
+    
+    
+    unset($_SESSION['userlogin']['$this->CadID']);
+   
+    if ($deleteMensagem->getError()):
+        $_SESSION['userlogin']['msg'] = $deleteMensagem->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteMensagem->getError()[1];
+    endif;
+
+    //echo "<script>location.href='caixademensagemenviada.php';</script>";
+endif;
+
 
 ?>
 
@@ -67,18 +123,20 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
+            <form name="PostForm" method="POST" enctype="multipart/form-data">  
             <div class="box-body no-padding">
               <div class="mailbox-controls">
                 <!-- Check all button -->
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
+                      
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                  
+                    <button input name="DeleteMensagem" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                 
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+               
                 <div class="pull-right">
                   1-50/200
                   <div class="btn-group">
@@ -103,7 +161,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                     <?php 
                         
                         $readMensagem = new Read();
-                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id  order by m.data", "id={$userlogin['idUsuario']}");                    
+                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id and excluirRemetente=0 order by m.data", "id={$userlogin['idUsuario']}");                    
                         
                         ?>
                   <tbody>
@@ -112,12 +170,16 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                   foreach ($readMensagem->getResult() as $mensagem):
                         echo "
                         <tr>
-                          <td><input type=\"checkbox\" value=\"{$mensagem['idMensagem']}\"></td>
+                          <td><input type=\"checkbox\" name=\"CadastroId[]\" value=\"{$mensagem['idMensagem']}\"></td>
+                              
                           <td class=\"mailbox-name\"><a href=\"mensagemenviada.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">{$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}</a></td>
                           <td class=\"mailbox-subject\"><b> {$mensagem['assunto']}</b> 
                           </td>
+                          
                           <td>";echo TimeStampParaData($mensagem['data']); echo"</td>
-                        </tr>";
+                        </tr>
+                        
+                        ";
                     endforeach;
                   ?>
                   </tbody>
@@ -133,12 +195,11 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                  <button input name="DeleteMensagem" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                  
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                
                 <div class="pull-right">
                   1-50/200
                   <div class="btn-group">
@@ -150,6 +211,8 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
                 <!-- /.pull-right -->
               </div>
             </div>
+            
+            </form>
           </div>
           <!-- /. box -->
         </div>
@@ -166,3 +229,67 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
     }
 
 include 'menuFooter.php'; ?>
+
+<script>
+  $(function () {
+    //Enable iCheck plugin for checkboxes
+    //iCheck for checkbox and radio inputs
+    $('.mailbox-messages input[type="checkbox"]').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+      radioClass: 'iradio_flat-blue'
+    });
+
+    //Enable check and uncheck all functionality
+    $(".checkbox-toggle").click(function () {
+      var clicks = $(this).data('clicks');
+      if (clicks) {
+        //Uncheck all checkboxes
+        $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+      } else {
+        //Check all checkboxes
+        $(".mailbox-messages input[type='checkbox']").iCheck("check");
+        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+      }
+      $(this).data("clicks", !clicks);
+    });
+
+    //Handle starring for glyphicon and font awesome
+    $(".mailbox-star").click(function (e) {
+      e.preventDefault();
+      //detect type
+      var $this = $(this).find("a > i");
+      var glyph = $this.hasClass("glyphicon");
+      var fa = $this.hasClass("fa");
+
+      //Switch states
+      if (glyph) {
+        $this.toggleClass("glyphicon-star");
+        $this.toggleClass("glyphicon-star-empty");
+      }
+
+      if (fa) {
+        $this.toggleClass("fa-star");
+        $this.toggleClass("fa-star-o");
+      }
+    });
+  });
+</script>
+<script>
+
+    $(document).ready(function () {
+            $('#myModal').modal('show');
+    });
+    
+    function Excluir(){
+        location.href="caixademensagemenviada.php?id=<?php 
+        foreach ($idMensagem as $id):
+            print $id."?";
+        endforeach;
+        ?>"
+    };
+    
+    function Cancelar(){
+        location.href="certificacao.php"
+    };         
+</script>

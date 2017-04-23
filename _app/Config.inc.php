@@ -68,7 +68,7 @@ function RentalErro ($ErrMsg, $ErrNo, $ErrDie = null) {
 }
 
 //Rental :: Exibe modal lançados :: Front
-function RentalModal ($TituloModal = null, $MsgModal = null, $BotaoDiscordo = null, $BotaoAceito = null, $ParClick = null) {
+function RentalModal ($TituloModal = null, $MsgModal = null, $BotaoDiscordo = null, $BotaoAceito = null, $ParAceito = null) {
     echo "
            <div class=\"modal\" id=\"myModal\">
       <div class=\"modal-dialog\">
@@ -83,7 +83,7 @@ function RentalModal ($TituloModal = null, $MsgModal = null, $BotaoDiscordo = nu
           </div>
           <div class=\"modal-footer\">
             <button type=\"button\" class=\"btn btn-default pull-right-container\" data-dismiss=\"modal\">{$BotaoDiscordo}</button>
-            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" onClick=\"{$ParClick}()\">{$BotaoAceito}</button>
+            <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" onClick=\"{$ParAceito}()\">{$BotaoAceito}</button>
           </div>
         </div>
       </div>

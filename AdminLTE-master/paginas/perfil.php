@@ -17,20 +17,24 @@ endif;
 if (isset($data) && array_key_exists("SendPostForm", $data)):
     unset($data['SendPostForm']);
     $data['avatar'] = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
-
-    require('../../admin/_models/AdminAvatar.class.php');
-    $sendAvatar = new AdminAvatar();
-    $sendAvatar->ExeCreate($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
-    $data['avatar'] = ($sendAvatar->getSendAvatar());
-
+    
+    if(!empty($data['avatar'])):
+        require('../../admin/_models/AdminAvatar.class.php');
+        $sendAvatar = new AdminAvatar();
+        $sendAvatar->ExeCreate($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+        $data['avatar'] = ($sendAvatar->getSendAvatar());
+    else:
+        unset($data['avatar']);
+    endif;
+    
     require '../../admin/_models/SiteRegistrar.class.php';
     $cadastra = new SiteRegistrar();
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
 
-    if ($sendAvatar->getMsg()):
+    if ($cadastra->getError()):
         $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
         $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
-endif;
+    endif;
 
     echo "<script>location.href='perfil.php';</script>";
 

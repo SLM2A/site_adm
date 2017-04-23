@@ -13,19 +13,38 @@ $readSalao = new Read();
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 //$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
 
+
+if (isset($data) && array_key_exists("SendPostForm", $data)):
+    unset($data['SendPostForm']);
+    
+   $data['avatar'] = ($_FILES['portfolio']['tmp_name'] ? $_FILES['portfolio'] : NULL);
+   
+    if(!empty($data['avatar'])):
+        require('../../admin/_models/AdminAvatar.class.php');
+        $sendAvatar = new AdminAvatar();
+        $sendAvatar->ExeCreateSalao($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+        $data['avatar'] = ($sendAvatar->getSendAvatar());
+    else:
+        unset($data['avatar']);
+    endif;
+    
     require '../../admin/_models/AdminSalao.php';
     $cadastra = new AdminSalao;
 
     $cadastra->ExeUpdate($idSalao, $data);
-
-    if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        echo "<script>location.href='cadastroEmpresa.php';</script>";
+    
+    if ($cadastra->getError()):
+        $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
     endif;
+    
+    echo "<script>location.href='cadastroEmpresa.php';</script>";  
 else:
     //Busca salão e coloca na Array Data
     $readSalao->FullRead("select * from salao where idSalao= :id", "id={$idSalao}");
@@ -41,13 +60,31 @@ endif;
 
     <!-- Main content -->
     <section class="content">
-        <form role="form" action="" method="post" class="login-form">
+       <form enctype="multipart/form-data" role="form" action="" method="post" class="login-form">
 
 
 
             <!-- INICIO-->
             <!-- Default box -->
-
+            <div class="col-lg-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs pull-right">
+                                <li class="pull-left header"><i class="ion-camera"></i> Logo do Salão</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <div class="box-body box-profile">
+                                    <div class="input-group">
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-primary">
+                                                <i class="fa fa-folder"></i> Arquivos&hellip; <input type="file" style="display: none;" name="portfolio" id="exampleInputFile"/>
+                                            </span>
+                                        </label>
+                                        <input type="text" class="form-control" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <section class="col-lg-6 connectedSortable">
@@ -59,6 +96,7 @@ endif;
                             </ul>
                             <div class="tab-content no-padding">
                                 <!-- Morris chart - Sales -->
+                                
 
                                 <div class="box-body box-profile" id="sales-chart" >
                                     <div class="form-group">

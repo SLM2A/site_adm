@@ -2,25 +2,26 @@
 
 require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
+require('../../admin/_models/AdminMensagem.class.php');
 include 'menuHeader.php';
 
 $idMensagem = $_GET['msg'];
 $idDestinatario =  $_GET['desr'];
 
 $readNaoLida = new Read();
-$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
-//var_dump($readNaoLida->getRowCount());
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and m.situacaoRecebida=0", "id={$userlogin['idUsuario']}");
 
-$data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$data['situacaoEnviada'] = 1;
 
- require '../../admin/_models/AdminMensagem.class.php';
- $cadastra = new AdminMensagem();
- $cadastra->ExeUpdate($idMensagem, $data);
+   $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $data['situacaoEnviada'] = 1;
+    
 
-$readMensagem = new Read();
-$readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDestinatario = u.idUsuario where m.idMensagem = {$idMensagem} and m.idRemetente={$userlogin['idUsuario']} ");
+    $cadastra = new AdminMensagem();
+    $cadastra->ExeUpdateLida($idMensagem, $data);
+    echo "<script>location.href='mensagemenviada.php';</script>";
 
+    $readMensagem = new Read();
+    $readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDestinatario = u.idUsuario where m.idMensagem = {$idMensagem} and m.idRemetente={$userlogin['idUsuario']}");
 
 ?>
 
@@ -65,6 +66,7 @@ $readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDe
           <!-- /. box -->
         </div>
           <!-- /.col -->
+          
         <div class="col-md-9">
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -80,13 +82,16 @@ $readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDe
               <div class="mailbox-read-info">
                 <h3>Assunto: <?php echo "{$readMensagem->getResult()[0]['assunto']}"; ?></h3>
                 <h5>Destinatário: <?php echo "{$readMensagem->getResult()[0]['nomeUsuario']}"; echo " "; echo "{$readMensagem->getResult()[0]['sobrenomeUsuario']}";?>
-                  <span class="mailbox-read-time pull-right">Data Envio</span></h5>
+                  
+                    <span class="mailbox-read-time pull-right">Data Envio</span></h5>
               </div>
               <!-- /.mailbox-read-info -->
               
               <!-- /.mailbox-controls -->
               <div class="mailbox-read-message">
-                  <h3><?php echo "{$readMensagem->getResult()[0]['mensagem']}"; ?></h3>
+                  <h3><?php echo "{$readMensagem->getResult()[0]['mensagem']}"; 
+                 
+                  ?></h3>
               </div>
               <!-- /.mailbox-read-message -->
             </div>
@@ -95,7 +100,7 @@ $readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDe
             <!-- /.box-footer -->
             <div class="box-footer">
               <div class="pull-right">
-                <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Excluir</button>
+                  <a href="caixademensagemenviada.php"> <button class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</button></a>
                
               </div>
               
@@ -105,6 +110,7 @@ $readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDe
           </div>
           <!-- /. box -->
         </div>
+              
         <!-- /.col -->
       </div>
           

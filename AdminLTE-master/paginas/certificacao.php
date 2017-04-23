@@ -4,9 +4,18 @@ require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
+
+
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+
 //$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
+
+/*
+ * Insere no banco a Certificação 
+ */
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
@@ -25,10 +34,62 @@ if (!empty($data['SendPostForm'])):
 
 
     $cadastra->InsereRelacao($CertificadoUsuario);
-
-
-
 endif;
+/*
+ * Fim Insere no banco a Certificação
+ */
+
+/*
+ * DELETE CERTICAÇÃO
+ */
+
+//Chamar a Modal.
+if (isset($post) && array_key_exists("DeleteCertificado", $post)):
+    unset($post['DeleteCertificado']);
+    $idCerticacao = $post['CadastroId'];
+    $_SESSION['userlogin']['DeleteCertificado'] = "ok";
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['nomeCertificado']}?", "Cancelar", "Excluir", "Excluir");
+endif;
+
+/**
+ * Condição * /
+ */
+
+if (array_key_exists('id', $_GET)):
+       $CadastroId = $_GET['id'];        
+endif;
+
+//Mensagem
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
+
+/**
+ * DELETAR MENSSAGEM* /
+ */
+
+
+//Se na modal for clicado em excluir executa o bloco abaixo 
+if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteCertificado'])):
+    unset($_SESSION['userlogin']['DeleteCertificado']);
+    require('../../admin/_models/AdminCertificado.php');
+    
+    $deleteSalao = new AdminCertificado();    
+    $deleteSalao->ExeDelete($CadastroId);
+    
+    unset($_SESSION['userlogin']['$this->CadID']);
+   
+    if ($deleteSalao->getError()):
+        $_SESSION['userlogin']['msg'] = $deleteSalao->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteSalao->getError()[1];
+    endif;
+
+    echo "<script>location.href='certificacao.php';</script>";
+endif;
+
+
 
 ?>
 
@@ -68,9 +129,9 @@ endif;
                                             <div class="box-body box-profile" id="sales-chart" required >
                                                 <div class="form-group">
                                                     <label>Instituição:</label>
-                                                    <input type="text" class="form-control" required name="instituicaoCertificado"  <?php if (isset($data)) echo $data['instituicaoCertificado'];?> >
+                                                    <input type="text" class="form-control" required name="instituicaoCertificado"  <?php (isset($data['instituicaoCertificado'])) ? $data['instituicaoCertificado'] : $data['instituicaoCertificado'] = null ;?> >
                                                     <label>Curso:</label>
-                                                    <input type="text" class="form-control" required name="cursoCertificado"  <?php if (isset($data)) echo $data['cursoCertificado'];?>>
+                                                    <input type="text" class="form-control" required name="cursoCertificado"  <?php (isset($data['cursoCertificado'])) ? $data['cursoCertificado'] : $data['cursoCertificado'] = null ;?> >
                                                     <label>Nível:</label>
                                                     <select class="form-control" required name="nivelCertificado">
                                                         <option></option>
@@ -78,7 +139,7 @@ endif;
                                                         <option>Especialização</option>
                                                         <option>Bacharelado</option>
                                                     </select>
-                                                    <?php if (isset($data)) $data['nivelCertificado'];?>
+                                                    <?php (isset($data['nivelCertificado'])) ? $data['nivelCertificado'] : $data['nivelCertificado'] = null ;?>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +172,7 @@ endif;
                                                         <option>4 anos</option>
                                                         <option>5 anos</option>
                                                     </select>
-                                                    <?php if (isset($data)) $data['duracaoCertificado'];?>
+                                                    <?php (isset($data['duracaoCertificado'])) ? $data['duracaoCertificado'] : $data['duracaoCertificado'] = null ; ?>
                                                     <label>Ano de Inicio:</label>
                                                     <select class="form-control" required name="anoInicioCertificado">
                                                         <option></option>
@@ -119,7 +180,7 @@ endif;
                                                         <option>2016</option>
                                                         <option>2017</option>
                                                     </select>
-                                                     <?php if (isset($data)) $data['anoInicioCertificado'];?>
+                                                     <?php (isset($data['anoInicioCertificado'])) ? $data['anoInicioCertificado'] : $data['anoInicioCertificado'] = null ;?>
                                                     <label>Ano de Conclusão:</label>
                                                     <select class="form-control" required name="anoConclusaoCertificado">
                                                         <option></option>
@@ -127,7 +188,7 @@ endif;
                                                         <option>2016</option>
                                                         <option>2017</option>
                                                     </select>
-                                                     <?php if (isset($data)) $data['anoConclusaoCertificado'];?>
+                                                     <?php (isset($data['anoConclusaoCertificado'])) ? $data['anoConclusaoCertificado'] : $data['anoConclusaoCertificado'] = null ;?>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,7 +243,17 @@ endif;
                                                               <td> {$ses['nivelCertificado']} </td>
                                                               <td> {$ses['duracaoCertificado']} </td>
                                                               <td> {$ses['anoInicioCertificado']} </td>
-                                                              <td> {$ses['anoConclusaoCertificado']} </td></tr>
+                                                              <td> {$ses['anoConclusaoCertificado']} </td>
+                                                              <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">        
+                                                                    <td>
+                                                                        <a href=\"#?id={$ses['idCertificado']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
+                                                                        <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idCertificado']}\">
+                                                                        <input type=\"hidden\" name=\"nomeCertificado\" value=\"{$ses['cursoCertificado']}\">
+                                                                        <button input name=\"DeleteCertificado\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                                        
+                                                                    </td> 
+                                                              </form>
+                                                              </tr>
                                                         ";                                                        
                                                         
                                                     endforeach;
@@ -228,3 +299,18 @@ endif;
 
  <div class="row">
 <?php include 'menuFooter.php'; ?>
+
+<script>
+
+    $(document).ready(function () {
+            $('#myModal').modal('show');
+    });
+    
+    function Excluir(){
+        location.href="certificacao.php?id=<?php print $idCerticacao;?>"
+    };
+    
+    function Cancelar(){
+        location.href="certificacao.php"
+    };         
+</script>

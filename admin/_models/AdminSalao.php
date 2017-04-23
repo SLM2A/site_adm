@@ -11,6 +11,7 @@ class AdminSalao {
     private $Data;
     private $SalaoEmpresario;
     private $CadID;
+    private $idDelete;
     private $Error;
     private $Result;
 
@@ -41,7 +42,11 @@ class AdminSalao {
         $this->CadID = (int) $CategoryId;
         $this->Data = $Data;
         $this->Update();
-
+    }
+    
+    public function ExeDelete($CadastroId) {
+        $this->idDelete = (int) $CadastroId;
+        $this->Delete();
     }
 
     function getResult() {
@@ -84,6 +89,17 @@ class AdminSalao {
         if ($update->getResult()):
             $this->Result = TRUE;
             $this->Error = ["<b>Sucesso:</b>, Salão foi atualizado no sistema!", WS_ACCEPT];
+        endif;
+    }
+    
+     private function Delete() {
+        $delete = new Delete();
+        
+        $delete->ExeDelete(self::ENTITY, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
+        $delete->ExeDelete(self::salaoempresario, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
+        if ($delete->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
         endif;
     }
 

@@ -22,14 +22,16 @@ endif;
 /**
  * Condição * /
  */
+
 if (array_key_exists('id', $_GET)):
-    $_SESSION['userlogin']['ModalPortfolioOk'] = "ok";
-    $CadastroId = $_GET['id'];
-    else:
-        unset($_SESSION['userlogin']['DeleteAluguel']);
-        unset($_SESSION['userlogin']['DeleteEmprego']);
+    if(isset($_SESSION['userlogin']['DeleteAluguel'])):       
+       $CadastroId = $_GET['id'];        
+    elseif (isset($_SESSION['userlogin']['DeleteEmprego'])):
+       $CadastroId = $_GET['id'];
+    endif;
 endif;
 
+//Mensagem
 if (!empty($_SESSION['userlogin']['msg'])):
     RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
     $_SESSION['userlogin']['msg'] = '';
@@ -42,11 +44,11 @@ endif;
 
 
 //Se na modal for clicado em excluir executa o bloco abaixo 
-if (!empty($_SESSION['userlogin']['ModalPortfolioOk'])):
-    unset($_SESSION['userlogin']['ModalPortfolioOk']);
+if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteAluguel'])):
+    unset($_SESSION['userlogin']['DeleteAluguel']);
     require('../../admin/_models/AdminVagaAluguel.php');
-    $deleteAluguel = new AdminVagaAluguel();
     
+    $deleteAluguel = new AdminVagaAluguel();    
     $deleteAluguel->ExeDelete($CadastroId);
     
     unset($_SESSION['userlogin']['$this->CadID']);
@@ -54,6 +56,23 @@ if (!empty($_SESSION['userlogin']['ModalPortfolioOk'])):
     if ($deleteAluguel->getError()):
         $_SESSION['userlogin']['msg'] = $deleteAluguel->getError()[0];
         $_SESSION['userlogin']['tipoMsg'] = $deleteAluguel->getError()[1];
+    endif;
+
+    echo "<script>location.href='minhasVagas.php';</script>";
+endif;
+
+if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteEmprego'])):
+    unset($_SESSION['userlogin']['DeleteEmprego']);
+    require('../../admin/_models/AdminVagaEmprego.php');
+    
+    $deleteEmprego = new AdminVagaEmprego();
+    $deleteEmprego->ExeDelete($CadastroId);
+   
+    unset($_SESSION['userlogin']['$this->CadID']);
+   
+    if ($deleteEmprego->getError()):
+        $_SESSION['userlogin']['msg'] = $deleteEmprego->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $deleteEmprego->getError()[1];
     endif;
 
     echo "<script>location.href='minhasVagas.php';</script>";
@@ -159,12 +178,12 @@ endif;
                                                               <td> {$ses['nivel']} </td>
                                                               <td> {$ses['vinculoEmpregaticio']} </td>
                                                               <td> {$ses['numeroVagas']} </td>
-                                                              <td> {$ses['nomeSalao']} </td>
+                                                              <td> {$ses['idVagaEmprego']} </td>
                                                               <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">    
                                                               <td><a href=\"editarVagaEmprego.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
                                                                   <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaEmprego']}\">
                                                                   <input type=\"hidden\" name=\"nomeAnuncio\" value=\"{$ses['tituloVaga']}\">
-                                                                  <button input name=\"DeleteEmprego\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                                   <button input name=\"DeleteEmprego\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
                                                                   <a href=\"perfilVagaAluguelPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                               </td></tr>
                                                               </form>
