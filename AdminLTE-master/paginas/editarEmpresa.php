@@ -101,9 +101,9 @@ endif;
                                 <div class="box-body box-profile" id="sales-chart" >
                                     <div class="form-group">
                                         <label>Nome da Empresa:</label>
-                                        <input type="text" class="form-control" name="nomeSalao" value="<?php if (isset($data)) echo $data['nomeSalao']; ?>" >
+                                        <input type="text" maxlength=60 class="form-control" name="nomeSalao" value="<?php if (isset($data)) echo $data['nomeSalao']; ?>" >
                                         <label>CNPJ:</label>
-                                        <input type="text" id="cnpj" class="form-control" name="cnpjSalao" value="<?php if (isset($data)) echo $data['cnpjSalao']; ?>" >
+                                        <input type="text" maxlength=60 id="cnpj" class="form-control" name="cnpjSalao" value="<?php if (isset($data)) echo $data['cnpjSalao']; ?>" >
                                         <label>Categoria:</label>
                                         <select class="form-control" name="categoriaSalao">
                                             <option selected><?php if (isset($data)) echo $data['categoriaSalao']; ?></option>
@@ -120,7 +120,7 @@ endif;
                                         </select>
 
                                         <div class="box-body pad">
-                                      <textarea input type="text" class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                      <textarea input type="text" maxlength=255 class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                           name="descricaoSalao" id="descricaoSalao" required><?php if (isset($data)) echo $data['descricaoSalao']; ?></textarea>
 
                                         </div>
@@ -151,9 +151,9 @@ endif;
                                             <label>Endereço:</label>
                                             <input type="text" id="rua" class="form-control" name="logradouro" value="<?php if (isset($data)) echo $data['logradouro']; ?>" >
                                             <label>Número:</label>
-                                            <input type="text"  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
+                                            <input type="text" maxlength=10 class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
                                             <label>Complemento:</label>
-                                            <input type="text" class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
+                                            <input type="text" maxlength=60 class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
                                             <label>Bairro:</label>
                                             <input type="text" id="bairro" class="form-control" name="bairro" value="<?php if (isset($data)) echo $data['bairro']; ?>" >
                                             <label>Cidade:</label>

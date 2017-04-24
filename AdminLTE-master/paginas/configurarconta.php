@@ -86,11 +86,11 @@ endif;
                             <div class="box-body" >
                                 
                                 <label>Senha antiga:</label>
-                                <input type="password" class="form-control" name="senhaantiga" id="senhaantiga" value="<?php (!isset($data)) ? $data['senhaantiga'] : NULL ; ?>" required>
+                                <input type="password" maxlength=60 class="form-control" name="senhaantiga" id="senhaantiga" value="<?php (!isset($data)) ? $data['senhaantiga'] : NULL ; ?>" required>
 				<label>Nova senha:</label>
-                                <input type="password" class="form-control" name="senha" id="senha" value="<?php (!isset($data)) ? $data['senha']: NULL; ?>" required>
+                                <input type="password" maxlength=60 class="form-control" name="senha" id="senha" value="<?php (!isset($data)) ? $data['senha']: NULL; ?>" required>
 				<label>Confirme a nova senha:</label>
-                                <input type="password" class="form-control" name="confirma" id="confirma" value="<?php (!isset($data)) ? $data['confirma']: NULL; ?>" required>
+                                <input type="password" maxlength=60 class="form-control" name="confirma" id="confirma" value="<?php (!isset($data)) ? $data['confirma']: NULL; ?>" required>
                             </div>
                             <div class="box-footer" style="height: 70px;">
                                 <section class="col-lg-12 connectedSortable ">

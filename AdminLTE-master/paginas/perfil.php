@@ -136,9 +136,9 @@ endif;
                         <div class="form-group">
                             <section class="col-lg-6 connectedSortable">
                                 <label>Nome:</label>
-                                <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
+                                <input type="text" maxlength=60  class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
                                 <label>CPF:</label>
-                                <input type="text" class="form-control" name="cpfUsuario" id="cpf" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
+                                <input type="text" maxlength=60  class="form-control" name="cpfUsuario" id="cpf" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
 								<label>Apelido:</label>
                                 <div class="input-group">
 									<span class="input-group-addon">@</span>
@@ -147,7 +147,7 @@ endif;
                             </section>
                             <section class="col-lg-6 connectedSortable">
                                 <label>Sobrenome:</label>
-                                <input type="text" class="form-control" id="sobrenomeUsuario" name="sobrenomeUsuario" value="<?php if (isset($data)) echo $data['sobrenomeUsuario']; ?>" required>
+                                <input type="text" maxlength=60  class="form-control" id="sobrenomeUsuario" name="sobrenomeUsuario" value="<?php if (isset($data)) echo $data['sobrenomeUsuario']; ?>" required>
                                 <label>Sexo:</label>
                                 <select class="form-control" id="sexoUsuario" name="sexoUsuario" required>
                                     <option selected><?php if (isset($data)) echo $data['sexoUsuario']; ?></option>
@@ -169,7 +169,7 @@ endif;
                                 <br>
                             <label>O que penso sobre mim:</label>
                             <div class="box-body pad">
-                                <textarea input type="text" class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                <textarea input type="text" maxlength=250  class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                           name="descricao" id="descricao" required><?php if (isset($data)) echo $data['descricao']; ?></textarea>
 
                             </div>
@@ -183,7 +183,7 @@ endif;
 
 
             <section class="col-lg-12 connectedSortable ">
-                 <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i>Salvar</button>
+                 <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
             </section>
         </form>
 

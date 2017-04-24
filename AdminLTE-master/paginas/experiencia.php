@@ -110,7 +110,7 @@ endif;
         <div class="box" closet>
 
             <div class="box-header with-border">
-                <h3 class="box-title"><i class="ion-plus"></i> Cadastrar Experiência</h3>
+                <h3 class="box-title"><i class=""></i> Cadastrar Experiência</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Maximizar">
@@ -155,7 +155,7 @@ endif;
                                     </select>
 <?php if (isset($data)) echo $data['cargoExperiencia']; ?>
                                     <label>Empresa:</label>
-                                    <input type="text" class="form-control" name="empresaExperiencia" id="empresaExperiencia" value="<?php if (isset($data)) echo $data['empresaExperiencia']; ?>">
+                                    <input type="text" maxlength=60  class="form-control" name="empresaExperiencia" id="empresaExperiencia" value="<?php if (isset($data)) echo $data['empresaExperiencia']; ?>">
                                 </div>
                             </div>
                         </div>
@@ -179,18 +179,48 @@ endif;
                                     <label>De:</label>
                                     <select class="form-control" name="deExperiencia">
                                         <option></option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
+                                        <option>1999</option>
+                                                        <option>2001</option>
+                                                        <option>2002</option>
+                                                        <option>2003</option>
+                                                        <option>2004</option>
+                                                        <option>2005</option>
+                                                        <option>2006</option>
+                                                        <option>2007</option>
+                                                        <option>2008</option>
+                                                        <option>2009</option>
+                                                        <option>2010</option>
+                                                        <option>2011</option>
+                                                        <option>2012</option>
+                                                        <option>2013</option>
+                                                        <option>2014</option>
+                                                        <option>2015</option>
+                                                        <option>2016</option>
+                                                        <option>2017</option>
                                     </select>
 <?php if (isset($data)) echo $data['deExperiencia']; ?>
 
                                     <label>Até</label>
                                     <select class="form-control" name="ateExperiencia">
                                         <option></option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
+                                        <option>1999</option>
+                                                        <option>2001</option>
+                                                        <option>2002</option>
+                                                        <option>2003</option>
+                                                        <option>2004</option>
+                                                        <option>2005</option>
+                                                        <option>2006</option>
+                                                        <option>2007</option>
+                                                        <option>2008</option>
+                                                        <option>2009</option>
+                                                        <option>2010</option>
+                                                        <option>2011</option>
+                                                        <option>2012</option>
+                                                        <option>2013</option>
+                                                        <option>2014</option>
+                                                        <option>2015</option>
+                                                        <option>2016</option>
+                                                        <option>2017</option>
                                     </select>
 <?php if (isset($data)) echo $data['ateExperiencia']; ?>
 
@@ -213,7 +243,7 @@ endif;
                             <div ></div>
                             <div class="box-body box-profile" id="sales-chart" >
                                 <div class="box-body pad">
-                                    <textarea class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                    <textarea maxlength=250 class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                               name="descricao" value="<?php if (isset($data)) echo $data['descricao']; ?>"></textarea>
                                 </div>
 
@@ -225,7 +255,7 @@ endif;
                     </div>
                 </section>
 
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar e Ir para localização</button>
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
             </div>
             <!-- /.box-body -->
         </div>
@@ -269,7 +299,7 @@ endif;
                 <td> {$ses['descricao']} </td>
                 <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">        
                       <td>
-                          <a href=\"#?id={$ses['idExperiencia']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
+                          
                           <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idExperiencia']}\">
                           <input type=\"hidden\" name=\"cargoExperiencia\" value=\"{$ses['cargoExperiencia']}\">
                           <button input name=\"DeleteExperiencia\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>  

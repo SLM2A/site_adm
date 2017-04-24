@@ -170,9 +170,9 @@ endif;
                                 <div class="box-body box-profile" id="sales-chart" >
                                     <div class="form-group">
                                         <label>Nome da Empresa:</label>
-                                        <input type="text" class="form-control" name="nomeSalao" value="<?php (isset($data['nomeSalao'])) ? $data['nomeSalao'] : $data['nomeSalao'] = null ;?>" >
+                                        <input type="text" maxlength=60 class="form-control" name="nomeSalao" value="<?php (isset($data['nomeSalao'])) ? $data['nomeSalao'] : $data['nomeSalao'] = null ;?>" >
                                         <label>CNPJ:</label>
-                                        <input type="text" id="cnpj" class="form-control" name="cnpjSalao" value="<?php (isset($data['cnpjSalao'])) ? $data['cnpjSalao'] : $data['cnpjSalao'] = null ;?>" >
+                                        <input type="text" id="cnpj" maxlength=60 class="form-control" name="cnpjSalao" value="<?php (isset($data['cnpjSalao'])) ? $data['cnpjSalao'] : $data['cnpjSalao'] = null ;?>" >
                                         <label>Categoria:</label>
                                         <select class="form-control" name="categoriaSalao">
                                             <option></option>
@@ -182,7 +182,7 @@ endif;
                                         <?php (isset($data['categoriaSalao'])) ? $data['categoriaSalao'] : $data['categoriaSalao'] = null ;  ?>
                                         <div class="box-body pad">
                                             <textarea input class="textarea" placeholder="Escreva sobre o salão..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                                      name="descricaoSalao" value="<?php  (isset($data['descricaoSalao'])) ? $data['descricaoSalao'] : $data['descricaoSalao'] = null ; ?>"></textarea>
+                                                      name="descricaoSalao" maxlength=200 value="<?php  (isset($data['descricaoSalao'])) ? $data['descricaoSalao'] : $data['descricaoSalao'] = null ; ?>"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -209,11 +209,11 @@ endif;
                                                 <label>CEP:</label>
                                                 <input type="text" id="cep" class="form-control" name="cep" value="<?php (isset($data['cep'])) ? $data['cep'] : $data['cep'] = null ; ?>" required>
                                                 <label>Endereço:</label>
-                                                <input type="text" id="rua" class="form-control" name="logradouro" value="<?php (isset($data['logradouro'])) ? $data['logradouro'] : $data['logradouro'] = null ;  ?>" >
+                                                <input type="text" id="rua"  class="form-control" name="logradouro" value="<?php (isset($data['logradouro'])) ? $data['logradouro'] : $data['logradouro'] = null ;  ?>" >
                                                 <label>Número:</label>
-                                                <input type="text"  class="form-control"  name="numero" value="<?php (isset($data['numero'])) ? $data['numero'] : $data['numero'] = null ; ?>" required>
+                                                <input type="text"  class="form-control"  maxlength=10 name="numero" value="<?php (isset($data['numero'])) ? $data['numero'] : $data['numero'] = null ; ?>" required>
                                                 <label>Complemento:</label>
-                                                <input type="text" class="form-control" name="complemento" value="<?php (isset($data['complemento'])) ? $data['complemento'] : $data['complemento'] = null ; ?>" >
+                                                <input type="text" class="form-control" maxlength=60 name="complemento" value="<?php (isset($data['complemento'])) ? $data['complemento'] : $data['complemento'] = null ; ?>" >
                                                 <label>Bairro:</label>
                                                 <input type="text" id="bairro" class="form-control" name="bairro" value="<?php (isset($data['bairro'])) ? $data['bairro'] : $data['bairro'] = null ;  ?>" >
                                                 <label>Cidade:</label>

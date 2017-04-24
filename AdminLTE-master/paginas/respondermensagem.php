@@ -111,7 +111,7 @@ endif;
                             
                         </div>
                         <div class="box-body pad">
-                                    <textarea class="textarea" placeholder="Escreva sua mensagem..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                    <textarea class="textarea" maxlength=250 placeholder="Escreva sua mensagem..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                               name="mensagem" value="<?php if (isset($data)) echo $data['mensagem']; ?>"></textarea>
                          </div>
                     </div>

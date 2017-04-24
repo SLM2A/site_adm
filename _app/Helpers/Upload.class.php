@@ -31,7 +31,7 @@ class Upload {
     function __construct($BaseDir = null) {
         self::$BaseDir = ( (string) $BaseDir ? $BaseDir : '../uploads/');
         if (!file_exists(self::$BaseDir) && !is_dir(self::$BaseDir)):
-            mkdir(self::$BaseDir, 0777);
+            mkdir(self::$BaseDir, 777);
         endif;
     }
 

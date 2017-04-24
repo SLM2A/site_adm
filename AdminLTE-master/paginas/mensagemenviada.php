@@ -31,10 +31,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
         Caixa de Mensagens
         
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Caixa de Mensagens</li>
-      </ol>
+    
     </section>
 <section class="content">
       <div class="row">

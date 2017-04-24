@@ -58,23 +58,23 @@ endif;
                                         <div class="input-group">
                                             
                                             <span class="input-group-addon">@</i></span>
-                                            <input type="text" class="form-control" placeholder="nome_usuario" id="instagram" name="instagram" value="<?php if (isset($data)) echo $data['instagram']; ?>">
+                                            <input type="text" class="form-control" maxlength=60  placeholder="nome_usuario" id="instagram" name="instagram" value="<?php if (isset($data)) echo $data['instagram']; ?>">
                                          </div>   
                                         
                                         <label><i class="fa fa-facebook-official"></i> Facebook</label> 
                                         <div class="input-group">
                                             <span class="input-group-addon">www.facebook.com/</i></span>
-                                            <input type="text" class="form-control" placeholder="seu_perfil" id="facebook" name="facebook" value="<?php if (isset($data)) echo $data['facebook']; ?>">
+                                            <input type="text" class="form-control" maxlength=60 placeholder="seu_perfil" id="facebook" name="facebook" value="<?php if (isset($data)) echo $data['facebook']; ?>">
                                         </div>
                                         <label><i class="fa fa-twitter"></i> Twitter</label> 
                                         <div class="input-group">
                                             <span class="input-group-addon">@</span>
-                                            <input type="text" class="form-control" placeholder="seu_perfil" id="twitter" name="twitter" value="<?php if (isset($data)) echo $data['twitter']; ?>">
+                                            <input type="text" class="form-control" maxlength=60 placeholder="seu_perfil" id="twitter" name="twitter" value="<?php if (isset($data)) echo $data['twitter']; ?>">
                                         </div> 
                                         <label><i class="fa fa-whatsapp"></i> WhatsApp</label> 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                            <input type="text" id="whatsapp" class="form-control" placeholder="(__)_____-____" id="whatsapp" name="whatsapp" value="<?php if (isset($data)) echo $data['whatsapp']; ?>">
+                                            <input type="text" id="whatsapp" maxlength=60 class="form-control" placeholder="(__)_____-____" id="whatsapp" name="whatsapp" value="<?php if (isset($data)) echo $data['whatsapp']; ?>">
                                         </div>
 
                                     </div>
@@ -85,7 +85,7 @@ endif;
                         
                         
                         <section class="col-lg-12 connectedSortable ">
-                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i> Enviar</button>
+                            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
                         </section>
                     </form>
 

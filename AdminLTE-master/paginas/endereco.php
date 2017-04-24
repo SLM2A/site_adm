@@ -61,9 +61,9 @@ endif;
                                 <label>Endereço:</label>
                                 <input type="text" id="rua" class="form-control" name="logradouro" value="<?php if (isset($data)) echo $data['logradouro']; ?>" >
                                 <label>Número:</label>
-                                <input type="text"  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
+                                <input type="text" maxlength=10  class="form-control"  name="numero" value="<?php if (isset($data)) echo $data['numero']; ?>" required>
                                 <label>Complemento:</label>
-                                <input type="text" class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
+                                <input type="text" maxlength=60  class="form-control" name="complemento" value="<?php if (isset($data)) echo $data['complemento']; ?>" >
                                 <label>Bairro:</label>
                                 <input type="text" id="bairro" class="form-control" name="bairro" value="<?php if (isset($data)) echo $data['bairro']; ?>" >
                                 <label>Cidade:</label>
@@ -81,7 +81,7 @@ endif;
         
 
             <section class="col-lg-12 connectedSortable ">
-                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-check"></i> Salvar Endereço</button>
+                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
             </section>
         </form>
         

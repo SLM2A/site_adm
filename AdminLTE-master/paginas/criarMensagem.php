@@ -102,10 +102,10 @@ endif;
                                 echo "{$readRecebendo->getResult()[0]['sobrenomeUsuario']}"; ?></h3></label>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Assunto"name="assunto" id="assunto" value="<?php if (isset($data)) echo $data['assunto']; ?>">
+                            <input type="text" maxlength=60 class="form-control" placeholder="Assunto"name="assunto" id="assunto" value="<?php if (isset($data)) echo $data['assunto']; ?>">
                         </div>
                         <div class="box-body pad">
-                                    <textarea class="textarea" placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                    <textarea class="textarea" maxlength=255 placeholder="Escreva sobre sua experiência..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                               name="mensagem" value="<?php if (isset($data)) echo $data['mensagem']; ?>"></textarea>
                          </div>
                     </div>

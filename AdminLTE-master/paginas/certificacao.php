@@ -106,7 +106,7 @@ endif;
                         <div class="box">
 
                             <div class="box-header with-border">
-                                <h3 class="box-title"><i class="ion-plus"></i> Cadastrar Certificado</h3>
+                                <h3 class="box-title"><i class=""></i> Cadastrar Certificado</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
@@ -114,7 +114,7 @@ endif;
 
                                 </div>
                             </div>
-                            <div class="box-body">
+                            <div class="box-body" style="display: none;">
                                 <section class="col-lg-6 connectedSortable">
                                     <!-- Custom tabs (Charts with tabs)-->
                                     <div class="nav-tabs-custom">
@@ -176,6 +176,21 @@ endif;
                                                     <label>Ano de Inicio:</label>
                                                     <select class="form-control" required name="anoInicioCertificado">
                                                         <option></option>
+                                                        <option>1999</option>
+                                                        <option>2001</option>
+                                                        <option>2002</option>
+                                                        <option>2003</option>
+                                                        <option>2004</option>
+                                                        <option>2005</option>
+                                                        <option>2006</option>
+                                                        <option>2007</option>
+                                                        <option>2008</option>
+                                                        <option>2009</option>
+                                                        <option>2010</option>
+                                                        <option>2011</option>
+                                                        <option>2012</option>
+                                                        <option>2013</option>
+                                                        <option>2014</option>
                                                         <option>2015</option>
                                                         <option>2016</option>
                                                         <option>2017</option>
@@ -184,6 +199,21 @@ endif;
                                                     <label>Ano de Conclusão:</label>
                                                     <select class="form-control" required name="anoConclusaoCertificado">
                                                         <option></option>
+                                                        <option>1999</option>
+                                                        <option>2001</option>
+                                                        <option>2002</option>
+                                                        <option>2003</option>
+                                                        <option>2004</option>
+                                                        <option>2005</option>
+                                                        <option>2006</option>
+                                                        <option>2007</option>
+                                                        <option>2008</option>
+                                                        <option>2009</option>
+                                                        <option>2010</option>
+                                                        <option>2011</option>
+                                                        <option>2012</option>
+                                                        <option>2013</option>
+                                                        <option>2014</option>
                                                         <option>2015</option>
                                                         <option>2016</option>
                                                         <option>2017</option>
@@ -197,7 +227,7 @@ endif;
                                     </div>
                                 </section>
 
-                                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i>Cadastrar certificação</button>
+                                <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -246,7 +276,7 @@ endif;
                                                               <td> {$ses['anoConclusaoCertificado']} </td>
                                                               <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">        
                                                                     <td>
-                                                                        <a href=\"#?id={$ses['idCertificado']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
+                                                                       
                                                                         <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idCertificado']}\">
                                                                         <input type=\"hidden\" name=\"nomeCertificado\" value=\"{$ses['cursoCertificado']}\">
                                                                         <button input name=\"DeleteCertificado\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>

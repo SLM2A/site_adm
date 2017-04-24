@@ -43,7 +43,7 @@ endif;
                     <div class="box-body box-profile" id="sales-chart" >
                         <div class="form-group">
                             <label>Titulo do Anúncio:</label>
-                            <input type="text" class="form-control" placeholder="Escreva um título bem legal! :)" name="tituloVaga" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['tituloVaga']; ?>" required>
+                            <input type="text" maxlength=60 class="form-control" placeholder="Escreva um título bem legal! :)" name="tituloVaga" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['tituloVaga']; ?>" required>
                         </div>
 
                     </div>
@@ -190,7 +190,7 @@ endif;
                     <div class="box-body box-profile" id="sales-chart" >
 
                         <label>Número de Vagas:</label>
-                        <input type="text" class="form-control" name="numeroVagas" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
+                        <input type="text" maxlength=60 class="form-control" name="numeroVagas" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
 
 
 
@@ -222,13 +222,13 @@ endif;
                         <div class="col-md-4">
                             <label>Comissão:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Seja Justo :)" id="comissao" name="comissao" value="<?php if (isset($data)) echo $data['comissao']; ?>" required> 
+                                <input type="text" maxlength=3 class="form-control" placeholder="Seja Justo :)" id="comissao" name="comissao" value="<?php if (isset($data)) echo $data['comissao']; ?>" required> 
                                 <span class="input-group-addon">%</span>
                             </div>	
                         </div>
 
                         <label>Descrição da Oportunidade:</label>   
-                        <textarea input class="textarea" placeholder="Descreva como será a rotina desse emprego" style="width: 100%; height: 75px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                        <textarea input maxlength=255 class="textarea" placeholder="Descreva como será a rotina desse emprego" style="width: 100%; height: 75px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                   name="descricaoOportunidade" ><?php if (isset($data)) echo $data['descricaoOportunidade']; ?></textarea>
                     </div>
                 </div>
@@ -246,13 +246,13 @@ endif;
                     <div class="box-body box-profile" id="sales-chart" >
                         <div class="form-group">
                             <label>Requisitos do candidato:</label>   
-                            <textarea input class="textarea" placeholder="Quais conhecimentos o candidato precisa ter?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                            <textarea input maxlength=250 class="textarea" placeholder="Quais conhecimentos o candidato precisa ter?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                       name="requisitoCandidato"><?php if (isset($data)) echo $data['requisitoCandidato']; ?></textarea>
                             <label>Diferencial:</label>   
-                            <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se o candidato tivesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                            <textarea input maxlength=250 class="textarea" placeholder="Não é obrigatório, mas seria muito bom se o candidato tivesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                       name="diferencialCandidato"><?php if (isset($data)) echo $data['diferencialCandidato']; ?></textarea>
                             <label>Benefícios:</label>   
-                            <textarea input class="textarea" placeholder="Quais os benefícios que seu funcionario terá?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                            <textarea input maxlength=250 class="textarea" placeholder="Quais os benefícios que seu funcionario terá?" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                       name="beneficioCandidato" ><?php if (isset($data)) echo $data['beneficioCandidato']; ?></textarea>
 
                         </div>

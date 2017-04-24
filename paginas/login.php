@@ -8,7 +8,7 @@ require '../_app/Includes.php';
                 $login = new LoginSite(0);
                 
                 if($login->CheckLogin()):
-                    header('Location: index.php');
+                    header('Location: login.php');
                 endif;            
 				
 				
@@ -34,7 +34,7 @@ require '../_app/Includes.php';
                 $logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
                 if ($logoff):
                 unset($_SESSION['userlogin']);
-                header('Location: index.php?exe=logoff');
+                header('Location: index.php');
                 endif;
                                 
                 ?>  

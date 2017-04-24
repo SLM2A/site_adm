@@ -81,7 +81,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                      <div class=\"icon\">
                                          <i class=\"fa fa-camera\"></i>
                                      </div>
-                                     <a href=\"vagascandidatadas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                     <a href=\"portfolio.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
                                  </div>
                              </div>
 
@@ -148,7 +148,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                      <div class=\"icon\">
                                          <i class=\"fa fa-camera\"></i>
                                      </div>
-                                     <a href=\"vagascandidatadas.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
+                                     <a href=\"portfolio.php\" class=\"small-box-footer\">Veja mais <i class=\"fa fa-arrow-circle-right\"></i></a>
                                  </div>
                              </div>";
                            

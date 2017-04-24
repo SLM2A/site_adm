@@ -123,7 +123,7 @@ endif;
                     <input type="submit" value="+ Adicionar Fotos" name="SendPostForm" button type="button" class="btn btn-block btn-primary btn-lg"/>
             </form>
 
-            <small>Adicione fotos de seus trabolhos para que outros curtam e comentem</small>
+            <small>Adicione fotos de seus trabalhos ao seu portfólio!</small>
 
             <p>
 

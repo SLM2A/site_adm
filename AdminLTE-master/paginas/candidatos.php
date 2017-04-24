@@ -22,6 +22,7 @@ include 'menuHeader.php';
                         <?php
                         $readEmprego = new Read();
                         $readEmprego->FullRead("SELECT * FROM vagaaluguelcandidatada vac inner join vagaaluguel va on vac.idVagaAluguel=va.idVagaAluguel inner join usuario u on u.idUsuario = vac.idUsuarioProfissional inner join salao s  on va.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario = {$userlogin['idUsuario']}");
+                        
                         echo "
     <div class=\"box\">
             
@@ -47,7 +48,7 @@ include 'menuHeader.php';
                         foreach ($readEmprego->getResult() as $profissional):
 //                                                       
 
-                            echo "</td> <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
+                            echo "</td> <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuarioProfissional']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
                                                         <td> <a href=\"perfilVagaAluguelPublico.php?id={$profissional['idVagaAluguel']}\">{$profissional['nomeAnuncio']}</a> </td>
                                                            
                                                               <td> {$profissional['profissao']}</td>
@@ -103,7 +104,7 @@ include 'menuHeader.php';
                         foreach ($readEmprego->getResult() as $profissional):
 //                                                       
 
-                            echo "</td> <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuario']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
+                            echo "</td> <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuarioProfissional']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
                                                         <td> <a href=\"perfilVagaEmpregoPublico.php?id={$profissional['idVagaEmprego']}\">{$profissional['tituloVaga']}</a> </td>
                                                            
                                                               <td> {$profissional['profissao']}</td>

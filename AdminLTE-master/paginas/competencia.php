@@ -38,8 +38,9 @@ endif;
     <section class="content">
 
         <form role="form" action="" method="post" class="login-form" enctype="multipart/form-data"  >
-		<h3> Quais são suas áreas de atuação?</h3>
+		
 		  <div class="col-md-12">
+                      <h3> Quais são suas áreas de atuação?</h3>
               <div class="form-group">
                 <select class="form-control select2" multiple="multiple"  style="width: 100%;" name="idAreaAtuacao[]">
 
@@ -76,24 +77,10 @@ endif;
               </div>
 		</div>
 		
-		<h3> Quais marcas, produtos e equipamentos você utiliza?</h3>
-		  <div class="col-md-12">
-              <div class="form-group">
-                <select class="form-control select2" multiple="multiple"  style="width: 100%;">
-                  <option>Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
-		</div>
-
+		
 
         <section class="col-lg-12 connectedSortable ">
-            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-plus"></i>Salvar</button>
+            <button input type="submit" class="btn btn-block btn-success btn-lg" value="Cadastrar" name="SendPostForm"><i class="fa fa-floppy-o"></i> Salvar</button>
         </section>
         </form>
 	

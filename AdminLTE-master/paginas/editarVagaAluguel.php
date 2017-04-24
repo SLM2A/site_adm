@@ -89,7 +89,7 @@ $readObjeto->FullRead("select * from objetoAlugado");
                         <div class="box-body box-profile" id="sales-chart" >
                             <div class="form-group">
                                 <label>Titulo do Anúncio:</label>
-                                <input type="text" class="form-control" placeholder="Escreva um título bem legal! :)" name="nomeAnuncio" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['nomeAnuncio']; ?>" required>
+                                <input type="text" maxlength=60 class="form-control" placeholder="Escreva um título bem legal! :)" name="nomeAnuncio" style="width: 100%; height: 40px; font-size: 20px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="<?php if (isset($data)) echo $data['nomeAnuncio']; ?>" required>
                             </div>
 
                         </div>
@@ -188,7 +188,7 @@ $readObjeto->FullRead("select * from objetoAlugado");
                                 <label>Preço:</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">R$</span>
-                                    <input type="text" class="form-control" placeholder="Seja Justo :)" id="preco" name="preco" value="<?php if (isset($data)) echo $data['preco']; ?>" required>
+                                    <input type="text" maxlength=60 class="form-control" placeholder="Seja Justo :)" id="preco" name="preco" value="<?php if (isset($data)) echo $data['preco']; ?>" required>
 
                                 </div>
 
@@ -235,7 +235,7 @@ $readObjeto->FullRead("select * from objetoAlugado");
                             </div>
                             <div class="form-group">
                                 <label>Tamanho (m²):</label>
-                                <input type="text" class="form-control" name="tamanho" value="<?php if (isset($data)) echo $data['tamanho']; ?>" required>
+                                <input type="text" maxlength=5 class="form-control" name="tamanho" value="<?php if (isset($data)) echo $data['tamanho']; ?>" required>
 
                             </div>
                             <div class="form-group">
@@ -300,10 +300,10 @@ $readObjeto->FullRead("select * from objetoAlugado");
                         <div class="box-body box-profile" id="sales-chart" >
                             <div class="form-group">
                                 <label>Caracteristica:</label>
-                                            <textarea input class="textarea" placeholder="Escreva coisas que deixe seu anuncio mais atrativo! :)" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                            <textarea input maxlength=255 class="textarea" placeholder="Escreva coisas que deixe seu anuncio mais atrativo! :)" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                                       name="caracteristica"><?php if (isset($data)) echo $data['caracteristica']; ?></textarea>
                                 <label>Diferenciais do seu espaço:</label>
-                                            <textarea input class="textarea" placeholder="Não é obrigatório, mas seria muito bom se você preenchesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                            <textarea input maxlength=255 class="textarea" placeholder="Não é obrigatório, mas seria muito bom se você preenchesse" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
                                                       name="diferencial"><?php if (isset($data)) echo $data['diferencial']; ?></textarea>
                             </div>
                         </div>
