@@ -135,7 +135,7 @@ class AdminExperiencia{
         $delete->ExeDelete(self::EXPERIENCIAUSUARIO, "WHERE idExperiencia = :idExperiencia", "idExperiencia={$this->idDelete}");        
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> experiência deletada com sucesso!", RENTAL_ACCEPT];
         endif;
     }
 }

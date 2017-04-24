@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Abr-2017 às 23:09
+-- Generation Time: 24-Abr-2017 às 01:18
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -17,8 +17,730 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
+-- Database: `cadastroclientepoo`
+--
+CREATE DATABASE IF NOT EXISTS `cadastroclientepoo` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `cadastroclientepoo`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `endereco`
+--
+
+CREATE TABLE `endereco` (
+  `idEndereco` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `cep` varchar(9) NOT NULL,
+  `logradouro` varchar(50) NOT NULL,
+  `numeroLogradouro` varchar(50) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cidade` varchar(50) NOT NULL,
+  `estado` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `endereco`
+--
+
+INSERT INTO `endereco` (`idEndereco`, `idUsuario`, `cep`, `logradouro`, `numeroLogradouro`, `bairro`, `cidade`, `estado`) VALUES
+(1, 0, '', '', '', '', '', ''),
+(2, 0, '', '', '', '', '', ''),
+(3, 0, '', '', '', '', '', ''),
+(4, 0, '', '', '', '', '', ''),
+(5, 0, '02218100', 'Rua Alvaro Cavalcante', '61', 'Vila Medeiros', 'SÃ£o Paulo', 'SP'),
+(6, 0, '02218100', 'Rua Alvaro Cavalcante', '61', 'Vila Medeiros', 'SÃ£o Paulo', 'SP'),
+(7, 0, '', '', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `telefone`
+--
+
+CREATE TABLE `telefone` (
+  `idTelefone` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `ddd` varchar(3) NOT NULL,
+  `numero` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `idUsuario` int(11) NOT NULL,
+  `cpfUsuario` varchar(20) NOT NULL,
+  `tipoUsuario` varchar(10) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `dataNascimento` date NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `senha` varchar(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `endereco`
+--
+ALTER TABLE `endereco`
+  ADD PRIMARY KEY (`idEndereco`),
+  ADD KEY `fk_endereco` (`idUsuario`);
+
+--
+-- Indexes for table `telefone`
+--
+ALTER TABLE `telefone`
+  ADD PRIMARY KEY (`idTelefone`),
+  ADD KEY `fk_telefone` (`idUsuario`);
+
+--
+-- Indexes for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD UNIQUE KEY `cpfUsuario` (`cpfUsuario`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `endereco`
+--
+ALTER TABLE `endereco`
+  MODIFY `idEndereco` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `telefone`
+--
+ALTER TABLE `telefone`
+  MODIFY `idTelefone` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;--
+-- Database: `cadastroclientesdb`
+--
+CREATE DATABASE IF NOT EXISTS `cadastroclientesdb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `cadastroclientesdb`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `cliente`
+--
+
+CREATE TABLE `cliente` (
+  `idcliente` int(3) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `cliente`
+--
+
+INSERT INTO `cliente` (`idcliente`, `nome`, `email`) VALUES
+(1, 'Rafael MilarÃ©', 'rafael@moshe.com.br'),
+(11, 'Milare', 'milare@moshe.com.br'),
+(10, 'Negao Gay', 'negao@gay.com.br'),
+(12, 'rafa', 'ra@msheh.com'),
+(13, 'Rafa', 'mila@mosshe.com.br'),
+(14, 'Cezar', 'cezarmilare@ig.com.br'),
+(15, 'Augusto', 'augu@ogjo.com.br'),
+(16, 'fernando', 'fernando@teste.com.br'),
+(17, 'kaue', 'kaue@moshe.com.br'),
+(18, 'amor', 'amor@amor.com.br'),
+(19, 'pirocao', 'pirocao@moshe.com.br'),
+(24, 'rafinha', 'rafa@moshe.com.br'),
+(22, 'Carolina', 'meuamor@moshe.com.br'),
+(23, 'RAFAEL BORGES MILARE', 'rafaelmilare72@gmail.com'),
+(31, 'Marcelo', 'marcelo@oio.com.br'),
+(26, 'Gabriel Farias', 'gabriel@moshe.com.br'),
+(27, 'Robson', 'robson@moshe.com.br'),
+(28, 'Felipe', 'felip@moshe.com.br'),
+(29, 'Diego', 'diego@moshe.com.br'),
+(30, 'Diego', 'diego@moshe.com.br'),
+(32, 'Rafael', 'moshe@moshe.com.br'),
+(33, 'Teste', 'Teste@teste.com.br');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `endereco`
+--
+
+CREATE TABLE `endereco` (
+  `idEndereco` int(11) NOT NULL,
+  `idCliente` int(11) DEFAULT NULL,
+  `cep` int(8) NOT NULL,
+  `endereco` varchar(50) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cidade` varchar(50) NOT NULL,
+  `estado` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `endereco`
+--
+
+INSERT INTO `endereco` (`idEndereco`, `idCliente`, `cep`, `endereco`, `bairro`, `cidade`, `estado`) VALUES
+(1, 17, 0, 'amor', 'amore', 'SÃ£o Paulo', 'SP'),
+(6, 24, 0, 'yuty', 'ikji', 'ioj0i', 'jijo'),
+(4, 22, 0, 'rua aioal, 51', 'uria', 'ush', 'suha'),
+(5, 23, 0, 'Rua Alvaro Cavalcante, 61', 'teste', 'SÃ£o Paulo', 'SP'),
+(7, 29, 2218100, 'Rua Pedroso, 61', 'vila medeiros', 'SÃ£o Paulo', 'SP'),
+(8, 30, 18228560, 'Rua Pedroso, 61', 'vila medeiros', 'SÃ£o Paulo', 'SP'),
+(9, 31, 2218100, 'Rua Alvaro Cavalcante, 61', 'vila medeiros', 'SÃ£o Paulo', 'SP'),
+(10, 32, 18288998, 'Rua Alvaro Cavalcante, 61', 'vila medeiros', 'SÃ£o Paulo', 'SP'),
+(11, 33, 2218100, 'Rua Alvaro Cavalcante, 61', 'a', 'SÃ£o Paulo', 'SP');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`idcliente`);
+
+--
+-- Indexes for table `endereco`
+--
+ALTER TABLE `endereco`
+  ADD PRIMARY KEY (`idEndereco`),
+  ADD KEY `fk_endereco` (`idCliente`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `idcliente` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+--
+-- AUTO_INCREMENT for table `endereco`
+--
+ALTER TABLE `endereco`
+  MODIFY `idEndereco` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;--
+-- Database: `chatcode`
+--
+CREATE DATABASE IF NOT EXISTS `chatcode` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `chatcode`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `bad_words`
+--
+
+CREATE TABLE `bad_words` (
+  `id` int(11) NOT NULL,
+  `word` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `blocked_users`
+--
+
+CREATE TABLE `blocked_users` (
+  `id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `chat`
+--
+
+CREATE TABLE `chat` (
+  `id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL DEFAULT '1',
+  `user_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `emoticons`
+--
+
+CREATE TABLE `emoticons` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `img` varchar(255) NOT NULL,
+  `e_cmd` varchar(255) NOT NULL,
+  `img_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `emoticons`
+--
+
+INSERT INTO `emoticons` (`id`, `img`, `e_cmd`, `img_name`) VALUES
+(18, 'cViRpWf5AfvnUPyW.png', ':@', 'angry'),
+(19, 'INeuexUQqJPukDj5.png', ':o', 'O'),
+(20, 'VmS4EAJDdesTOne8.png', '(inlove)', 'inlove'),
+(21, 'aezBF2NdMreoZErl.png', ':p', ':p'),
+(22, 'ab7R91E5GaukHrEj.png', ';)', 'wink'),
+(23, 'Q2xCjmhIVUPzBGGJ.png', ':D', 'laughter'),
+(24, 'BZfxbQrrsxHGA4b7.png', '(lol)', 'lol'),
+(25, '2y7t61xiLwqoMtZj.png', ':(', 'pouty'),
+(26, 'ZjE9vd8k5l5DNLdT.png', '(idea)', 'Idea'),
+(27, 'LPjaBjysbskOlZRs.png', ':o', 'O sheat'),
+(28, 'HC7aPdWobswASfG6.png', '(rolf)', 'ROLF'),
+(29, 'p9NVC7vasMVLjaTW.png', '(nerd)', 'Nerd'),
+(30, 'Tw4aGUX3cVy76yQy.png', ';(', 'cry'),
+(31, 'j5N162RS5BSMiuwn.png', '(chuckle)', 'chuckle'),
+(32, 'QykPI2FabEZTFUCI.png', ':*', 'Kiss'),
+(33, 'fqXAYHAMIrnjy2DV.png', '(highfive)', 'highfive'),
+(34, 'ZoWMf74hsVUnX8Dm.png', '(shake)', 'shake'),
+(35, 'eW1p6sxaaRYhB5fS.png', ':z', 'sleep'),
+(36, 'cuQLiVXLGSsPiMwS.png', '(eat)', 'Eat'),
+(37, 'QbLEZTdQa7Nd1hnD.png', '(envy)', 'Envy'),
+(38, 'EVaMsHcNRSLz3fPb.png', '(cool)', 'Cool'),
+(39, 'bTuWhpmLIvJA3X7Q.png', '(party)', 'Party'),
+(40, 'EwW6d5OlTA8xGDfF.png', ':$', 'blush'),
+(41, '9URPO1P6ZewhgLmF.png', ':l', 'nothing'),
+(42, 'WPEAIyRUTSPXOG2J.png', '(puke)', 'Puke'),
+(43, 'gXo1Y7SwIVb8MMIe.png', '(slawcho)', 'Slaveikov'),
+(44, 'jENTtwBTVHhaTvTE.png', '(andrey)', 'Andrey'),
+(47, 'pp3szELRmyCH4U5l.png', '(flowers)', 'Flowers'),
+(48, 'dSt9H5xwkmRetXRl.png', '(faceplam)', 'Faceplam'),
+(49, 'o5EJaz8pADuVP48N.png', '(cold)', 'cold'),
+(50, 'UaxiJuGNPxwfAyjN.png', '(please)', 'Please'),
+(51, '1qbfyHSucaQFnnEf.png', '(you)', 'You'),
+(52, 'VZbcWZBN8wlViS4L.png', '(hot)', 'Hot'),
+(53, 'iuRNidcin37H4DxC.png', '(beware)', 'Beware');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `room_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `room_name` varchar(25) NOT NULL,
+  `description` varchar(35) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `visitors` int(11) NOT NULL,
+  `date_created` varchar(255) NOT NULL,
+  `active` varchar(3) NOT NULL DEFAULT 'yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `rooms_visitors`
+--
+
+CREATE TABLE `rooms_visitors` (
+  `id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `activity` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `statistic`
+--
+
+CREATE TABLE `statistic` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `registred_users` int(11) NOT NULL,
+  `created_rooms` int(11) NOT NULL,
+  `total_registred` int(11) NOT NULL,
+  `total_created_rooms` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `statistic`
+--
+
+INSERT INTO `statistic` (`id`, `date`, `registred_users`, `created_rooms`, `total_registred`, `total_created_rooms`) VALUES
+(1, '2015-09-02', 2, 0, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `user_level` int(11) NOT NULL DEFAULT '2',
+  `user_name` varchar(25) NOT NULL,
+  `user_age` int(11) NOT NULL,
+  `user_avatar` varchar(255) NOT NULL,
+  `user_description` varchar(255) NOT NULL DEFAULT 'No information.',
+  `user_location` varchar(50) NOT NULL,
+  `user_username` varchar(256) NOT NULL,
+  `user_password` varchar(512) NOT NULL,
+  `user_email` varchar(256) NOT NULL,
+  `user_secret` varchar(512) NOT NULL,
+  `user_register_date` date NOT NULL,
+  `user_last_login_date` datetime NOT NULL,
+  `user_last_login_ip` varchar(11) NOT NULL,
+  `user_activity` int(11) NOT NULL,
+  `user_disabled` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `users`
+--
+
+INSERT INTO `users` (`user_id`, `user_level`, `user_name`, `user_age`, `user_avatar`, `user_description`, `user_location`, `user_username`, `user_password`, `user_email`, `user_secret`, `user_register_date`, `user_last_login_date`, `user_last_login_ip`, `user_activity`, `user_disabled`) VALUES
+(1, 0, 'Admin', 0, '', 'No information.', '', 'admin', 'd9feaf1cfd295b5538167496087d07cea26d7f79e0a53715bc555675dd7f841b919586de18e09eafa3f88f4df1ea8b7c7b81ffd439d52c4023b4c89675f94f61', 'admin@yoursite.com', '8032f83fa68061fc2ab281d2ef418a79d76201e3d07047289eeddc211b766a6b16413698188448a86c33487827c4426c2886107e369c661c84b078873c786308', '2015-09-02', '2015-09-02 15:26:16', '1839231610', 1441196865, 0),
+(2, 0, 'System', 0, 'http://icons.iconarchive.com/icons/dakirby309/windows-8-metro/96/Folders-OS-Info-Metro-icon.png', 'No information.', 'Bulgaria', 'system', '0b359c169f20b6e2eb2d1fcff1467eb1050cd7bc73823bf00ca921e6ba7478358a6e8f59544efb0fd9edc10d3ad47604a8c513c20cdfcd3790c15a85f23929dd', 'System@yoursite.com', '0115a792d4f01f2c9dc531f0ee8b9a4ca0312365978a5267808d21522210d059c3635b1dfb88242bf138c8c1466fed1bc261428df297b5f57a66cdf7ec0b573e', '2015-09-02', '2015-09-02 15:26:49', '1572311271', 1441196809, 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `bad_words`
+--
+ALTER TABLE `bad_words`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blocked_users`
+--
+ALTER TABLE `blocked_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chat`
+--
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `emoticons`
+--
+ALTER TABLE `emoticons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`);
+
+--
+-- Indexes for table `rooms_visitors`
+--
+ALTER TABLE `rooms_visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `statistic`
+--
+ALTER TABLE `statistic`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `bad_words`
+--
+ALTER TABLE `bad_words`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `blocked_users`
+--
+ALTER TABLE `blocked_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `emoticons`
+--
+ALTER TABLE `emoticons`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `rooms_visitors`
+--
+ALTER TABLE `rooms_visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `statistic`
+--
+ALTER TABLE `statistic`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;--
+-- Database: `chatigniter`
+--
+CREATE DATABASE IF NOT EXISTS `chatigniter` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `chatigniter`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `last_seen`
+--
+
+CREATE TABLE `last_seen` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `message_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `from` int(11) NOT NULL,
+  `to` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `is_read` enum('0','1') NOT NULL DEFAULT '0',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
+  `online` enum('1','0') NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `last_seen`
+--
+ALTER TABLE `last_seen`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `last_seen`
+--
+ALTER TABLE `last_seen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;--
+-- Database: `loja`
+--
+CREATE DATABASE IF NOT EXISTS `loja` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `loja`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `nome` varchar(60) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `sexo` varchar(10) NOT NULL,
+  `ddd` int(2) DEFAULT NULL,
+  `telefone` int(8) DEFAULT NULL,
+  `endereço` varchar(70) NOT NULL,
+  `cidade` varchar(20) NOT NULL,
+  `estado` varchar(2) NOT NULL,
+  `bairro` varchar(20) NOT NULL,
+  `país` varchar(20) NOT NULL,
+  `login` varchar(12) NOT NULL,
+  `senha` varchar(12) NOT NULL,
+  `news` varchar(8) DEFAULT NULL,
+  `id` int(200) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`nome`, `email`, `sexo`, `ddd`, `telefone`, `endereço`, `cidade`, `estado`, `bairro`, `país`, `login`, `senha`, `news`, `id`) VALUES
+('Rafael', 'rafael@moshe.com.br', 'masculino', 11, 29812901, 'rua x, 51', 'são paulo', 'sp', 'vila medeiros', 'brasil', 'rafinha', '123456789', NULL, 1),
+('teste', 'teste@teste.com', 'masculino', NULL, NULL, 'teste,16', 'teste', 'sp', 'teste', 'teste', 'teste', 'teste', NULL, 2),
+('amor', 'amor', 'masculino', NULL, NULL, 'asa', 'saa', 'ac', 'sasa', 'asas', 'asasa', 'asasa', NULL, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `endereco`
+--
+
+CREATE TABLE `endereco` (
+  `idEndereco` int(11) NOT NULL,
+  `idCliente` int(11) DEFAULT NULL,
+  `nomeEndereco` varchar(50) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cidade` varchar(50) NOT NULL,
+  `estado` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `clientes`
+--
+ALTER TABLE `clientes`
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `endereco`
+--
+ALTER TABLE `endereco`
+  ADD PRIMARY KEY (`idEndereco`),
+  ADD KEY `fk_endereco` (`idCliente`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `endereco`
+--
+ALTER TABLE `endereco`
+  MODIFY `idEndereco` int(11) NOT NULL AUTO_INCREMENT;--
+-- Database: `testing`
+--
+CREATE DATABASE IF NOT EXISTS `testing` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `testing`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tbl_country`
+--
+
+CREATE TABLE `tbl_country` (
+  `country_id` int(11) NOT NULL,
+  `country_name` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tbl_country`
+--
+
+INSERT INTO `tbl_country` (`country_id`, `country_name`) VALUES
+(1, 'Andorra'),
+(2, 'United Arab Emirates'),
+(3, 'Afghanistan'),
+(4, 'Antigua and Barbuda'),
+(5, 'Anguilla'),
+(6, 'Albania'),
+(7, 'Armenia'),
+(8, 'Angola'),
+(9, 'Antarctica'),
+(10, 'Argentina'),
+(11, 'American Samoa');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_country`
+--
+ALTER TABLE `tbl_country`
+  ADD PRIMARY KEY (`country_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_country`
+--
+ALTER TABLE `tbl_country`
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;--
 -- Database: `wsphp`
 --
+CREATE DATABASE IF NOT EXISTS `wsphp` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `wsphp`;
 
 -- --------------------------------------------------------
 
@@ -5754,13 +6476,10 @@ INSERT INTO `certificadoprofissionalusuario` (`idCertificado`, `instituicaoCerti
 (26, 'Rafael-Teste-2', 'a', 'Especialização', '6 meses', '2016', '2017'),
 (27, 'Rafael-Teste-2', 'a', 'Especialização', '6 meses', '2016', '2017'),
 (28, 'Impacta-Educacao', 'eee', 'Técnico', '12 meses', '2016', '2017'),
-(41, 'AAAAA', 'AAAA', 'Técnico', '3 meses', '2015', '2016'),
 (38, 'aaa', 'aaaa', 'Técnico', '6 meses', '2016', '2017'),
 (31, 'Teste', 'Teste', 'Especialização', '6 meses', '2016', '2017'),
 (32, 'Teste', 'Teste', 'Especialização', '6 meses', '2016', '2017'),
 (33, 'Teste', 'Teste', 'Especialização', '6 meses', '2016', '2017'),
-(34, 'Teste', 'Teste', 'Especialização', '6 meses', '2016', '2017'),
-(39, 'Impacta', 'Teste', 'Técnico', '6 meses', '2016', '2015'),
 (40, 'Impacta', 'Teste', 'Técnico', '6 meses', '2016', '2015'),
 (37, 'aaa', 'aaa', 'Técnico', '12 meses', '2016', '2017');
 
@@ -5783,9 +6502,6 @@ INSERT INTO `certificadousuario` (`idCertificado`, `idUsuario`) VALUES
 (1, 27),
 (2, 27),
 (37, 38),
-(41, 26),
-(39, 26),
-(34, 26),
 (33, 26),
 (32, 26),
 (31, 26),
@@ -5875,8 +6591,6 @@ CREATE TABLE `experienciaprofissionalusuario` (
 INSERT INTO `experienciaprofissionalusuario` (`idExperiencia`, `cargoExperiencia`, `empresaExperiencia`, `localizacaoExperiencia`, `deExperiencia`, `ateExperiencia`, `descricao`) VALUES
 (27, 'Cabelereiro', 'Moshe Informática', NULL, '2016', '2017', 'Hair Design'),
 (33, 'Manicure', 'Elaine', NULL, '2015', '2017', 'Elaine'),
-(30, 'Manicure', 'teste', NULL, '2015', '2015', 'aaa'),
-(31, 'Manicure', 'testesaa', NULL, '2016', '2016', 'assasaa'),
 (32, 'Manicure', 'Teste', NULL, '2017', '2016', 'AAAA'),
 (34, 'Cabelereiro', 'Elaine Cabelereiro', NULL, '2015', '2017', 'Cortava cabelo'),
 (35, 'Cabelereiro', 'TesteMarcelo', NULL, '2015', '2017', 'Teste'),
@@ -5908,8 +6622,6 @@ INSERT INTO `experienciausuario` (`idExperiencia`, `idUsuario`) VALUES
 (34, 36),
 (27, 27),
 (33, 36),
-(30, 26),
-(31, 26),
 (32, 27),
 (35, 26),
 (36, 26),
@@ -6088,7 +6800,11 @@ INSERT INTO `mensagem` (`idMensagem`, `idRemetente`, `idDestinatario`, `assunto`
 (3, 27, 26, 'Teste', 'Teste', NULL, 1, 1, 0, 1),
 (5, 27, 26, 'Oi', 'Tudo bem e você?', NULL, 1, 1, 0, 1),
 (6, 26, 27, 'Oi', 'Também!', NULL, 1, 1, 1, 0),
-(8, 27, 26, 'Oi', 'Testando ok', NULL, 0, 1, 0, 1);
+(8, 27, 26, 'Oi', 'Testando ok', NULL, 0, 1, 0, 1),
+(12, 26, 27, 'asfeasf', 'asdfsdf', '2017-04-24 02:44:00', 0, 0, NULL, NULL),
+(13, 26, 27, 'teste', 'teste', '2017-04-24 02:44:30', 0, 0, NULL, NULL),
+(14, 26, 27, 'eraewr', 'ertaerterg', '2017-04-24 02:44:57', 0, 0, NULL, NULL),
+(15, 26, 27, 'sdrtrtrysrt', 'rtdyrtyretyrt', '2017-04-24 02:45:54', 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6185,9 +6901,10 @@ INSERT INTO `portfolio` (`idPortfolio`, `idUsuario`, `portfolioImagemFull`, `por
 (77, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-d81eb.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-d81eb.jpg', '2017-04-23 20:46:26', NULL, NULL),
 (78, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-01bf8.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-4bee7.jpg', '2017-04-23 20:46:27', NULL, NULL),
 (79, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-f82d0.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-f82d0.jpg', '2017-04-23 20:46:49', NULL, NULL),
-(80, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-9e1db.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-9e1db.jpg', '2017-04-23 20:46:50', NULL, NULL),
 (81, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-dc455.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-dc455.jpg', '2017-04-23 20:46:51', NULL, NULL),
-(82, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-58ba5.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-1ff06.jpg', '2017-04-23 20:46:52', NULL, NULL);
+(82, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-58ba5.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-1ff06.jpg', '2017-04-23 20:46:52', '56tyuretyu', 'sdrter'),
+(83, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-2cb06.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-2cb06.jpg', '2017-04-24 03:53:08', NULL, NULL),
+(84, 26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-FULL-ad2b5.jpg', 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SMALL-355ac.jpg', '2017-04-24 04:03:54', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -6957,7 +7674,7 @@ ALTER TABLE `enderecousuario`
 -- AUTO_INCREMENT for table `experienciaprofissionalusuario`
 --
 ALTER TABLE `experienciaprofissionalusuario`
-  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `faixaremuneracao`
 --
@@ -6982,7 +7699,7 @@ ALTER TABLE `imagemvagaaluguel`
 -- AUTO_INCREMENT for table `mensagem`
 --
 ALTER TABLE `mensagem`
-  MODIFY `idMensagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idMensagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `nivelvaga`
 --
@@ -6997,7 +7714,7 @@ ALTER TABLE `objetoalugado`
 -- AUTO_INCREMENT for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 --
 -- AUTO_INCREMENT for table `redesocial`
 --

@@ -275,7 +275,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         if ($userlogin['idTipoUsuario'] == 2):
                             echo '
                     <li class="treeview">
-			<a href="vagascandidatadas.php"><i class="fa fa-address-card"></i> <span>Vagas candidatadas</span></a>	
+			<a href="vagascandidatadas.php"><i class="fa fa-address-card"></i> <span>Vagas Candidatadas</span></a>	
                     </li>
                     <li class="treeview">
 			<a href="propostarecebida.php"><i class="fa fa-handshake-o"></i> <span>Propostas Recebidas</span></a>	
@@ -310,7 +310,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                    <a href="caixademensagem.php"><i class="fa fa-envelope-o"></i> <span>Mensagens</span></a>	
 		</li>
                 <li class="treeview">
-                   <a href=""><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
+                   <a href="dicasustentabilidade.php"><i class="fa fa-recycle"></i> <span>Dicas de Sustentabilidade</span></a>	
 		</li>
                 
                    ';

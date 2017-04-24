@@ -45,7 +45,7 @@ class AdminCandidatarVaga{
 
         if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar a categoria {$this->Data['category_title']}, preencha todos os campos!", WS_ALERT];
+            $this->Error = ["<b>Erro ao atualizar,</b>  preencha todos os campos!", WS_ALERT];
         else:
             $this->setData();
 //            $this->setName();

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <?php
+session_start();
 require('../_app/Config.inc.php');
 require '../_app/Includes.php';
 
 
                 
                 $login = new LoginSite(0);
-                
-                if($login->CheckLogin()):
-                    header('Location: login.php');
-                endif;            
+                //var_dump($login->CheckLogin());       
 				
 				
                 $dataLogin = filter_input_array(INPUT_POST, FILTER_DEFAULT);

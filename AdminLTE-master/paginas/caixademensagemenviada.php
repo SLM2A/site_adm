@@ -5,7 +5,7 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $readNaoLida = new Read();
-$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0 ", "id={$userlogin['idUsuario']}");
+$readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0 order by m.data desc ", "id={$userlogin['idUsuario']}");
 //var_dump($readNaoLida->getRowCount());
 $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 /*
@@ -156,7 +156,7 @@ endif;
                     <?php 
                         
                         $readMensagem = new Read();
-                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id and excluirRemetente=0 order by m.data", "id={$userlogin['idUsuario']}");                    
+                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id and excluirRemetente=0 order by m.data desc", "id={$userlogin['idUsuario']}");                    
                         
                         ?>
                   <tbody>

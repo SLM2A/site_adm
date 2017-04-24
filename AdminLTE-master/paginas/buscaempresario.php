@@ -18,36 +18,7 @@ $readProfissional->FullRead("Select * From usuario u inner join enderecousuario 
 </section>
 
 <section class="content">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Estado</label>
-                <select class="form-control select2" style="width: 100%;" disabled="">
-                    <option selected disabled>São Paulo</option>
-                    
-                </select>
-            </div>
-        </div>
-        <form>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Cidade</label>
-                
-                <select class="form-control select2 j_loadcity" style="width: 100%;">
-                    <option selected="selected" disabled="">Escolha a Cidade</option>
-                    <?php
-                        $readState = new Read;
-                        $readState->ExeRead("app_cidades", "WHERE estado_id=25 ORDER BY cidade_nome ASC");
-                        foreach ($readState->getResult() as $estado):
-                            extract($estado);
-                            echo "<option value=\"{$cidade_id}\"> {$cidade_nome} </option>";
-                        endforeach;
-                        ?>  
-                </select>
-            </div>
-        </div>
-        </form>
-    </div>
+    
 <?php
 foreach ($readProfissional->getResult() as $usuarios):
 

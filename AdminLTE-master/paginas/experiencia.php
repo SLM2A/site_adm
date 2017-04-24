@@ -50,7 +50,7 @@ if (isset($post) && array_key_exists("DeleteExperiencia", $post)):
     unset($post['DeleteExperiencia']);
     $idExperiencia = $post['CadastroId'];
     $_SESSION['userlogin']['DeleteExperiencia'] = "ok";
-    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['cargoExperiencia']}?", "Cancelar", "Excluir", "Excluir");
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a experiencia: {$post['cargoExperiencia']}?", "Cancelar", "Excluir", "Excluir");
 endif;
 
 /**

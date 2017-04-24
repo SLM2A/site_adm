@@ -28,6 +28,8 @@ if (!empty($data['SendPostForm'])):
     $data['idDestinatario'] = $idUsuarioRecebendo;
     $data['situacaoEnviada'] = 0;
     $data['situacaoRecebida'] = 0;
+    $data['excluirRemetente'] = 0;
+    $data['excluirDestinatario'] = 0;
     
     require '../../admin/_models/AdminMensagem.class.php';
     $cadastra = new AdminMensagem();
