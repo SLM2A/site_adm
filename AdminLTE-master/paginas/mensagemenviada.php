@@ -12,13 +12,11 @@ $readNaoLida = new Read();
 $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and m.situacaoRecebida=0", "id={$userlogin['idUsuario']}");
 
 
-   $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     $data['situacaoEnviada'] = 1;
-    
-
     $cadastra = new AdminMensagem();
     $cadastra->ExeUpdateLida($idMensagem, $data);
-    echo "<script>location.href='mensagemenviada.php';</script>";
+    
 
     $readMensagem = new Read();
     $readMensagem->FullRead("Select * From mensagem m inner join usuario u on m.idDestinatario = u.idUsuario where m.idMensagem = {$idMensagem} and m.idRemetente={$userlogin['idUsuario']}");
