@@ -77,7 +77,7 @@ endif;
                             <!-- Profile Image -->
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
-                                    <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
+                                    <img class="profile-user-img img-responsive img-circle" src="../dist/img/Aluguel_de_espaco_128x128.jpg" alt="User profile picture">
 
                                     <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['nomeAnuncio'] ; echo " ";
                                             echo" <a href=\"editarVagaAluguel.php?id={$idVaga}\"><i class=\"fa  fa-pencil\"></i></a></h3>";
@@ -277,9 +277,9 @@ endif;
                         
     <?php
 //Inicio Busca Candidatura para Vagas de Alguel
-    $readProfissional = new Read();
+    $readImagem = new Read();
 
-    $readProfissional->FullRead("SELECT * FROM imagemvagaaluguel iva inner join vagaaluguel va on iva.idVagaAluguel=va.idVagaAluguel where iva.idVagaAluguel = {$idVaga}");
+    $readImagem->FullRead("SELECT * FROM imagemvagaaluguel iva inner join vagaaluguel va on iva.idVagaAluguel=va.idVagaAluguel where iva.idVagaAluguel = {$idVaga}");
     
 
 //Fim Busca Candidatura para Vagas de Alguel
@@ -307,8 +307,8 @@ echo "
 
                                    ";
 
-if (!empty($readProfissional)) {
-    foreach ($readProfissional->getResult() as $fotos):
+if (!empty($readImagem)) {
+    foreach ($readImagem->getResult() as $fotos):
         $post['idFoto'] = $fotos['idFoto'];
         echo "
                 <div class=\"col-lg-3 connectedSortable\">

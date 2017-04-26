@@ -73,7 +73,7 @@ endif;
                     </div>
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
-                            <li><a href="caixademensagem.php><i class="fa fa-inbox"></i> Recebidas
+                            <li><a href="caixademensagem.php"><i class="fa fa-inbox"></i> Recebidas
                                 <?php
                                     if ($readNaoLida->getRowCount() > 0):
                                         echo "<span class=\"label label-primary pull-right\"> {$readNaoLida->getRowCount()} </span></a></li>";

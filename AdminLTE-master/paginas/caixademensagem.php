@@ -65,7 +65,7 @@ if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteMensagem'])):
         $_SESSION['userlogin']['tipoMsg'] = $deleteMensagem->getError()[1];
     endif;
 
-    echo "<script>location.href='caixademensagemenviada.php';</script>";
+    echo "<script>location.href='caixademensagem.php';</script>";
 endif;
 
     

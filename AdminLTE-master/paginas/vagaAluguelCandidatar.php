@@ -44,7 +44,7 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
         <!-- Profile Image -->
         <div class="box box-primary">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
+                <img class="profile-user-img img-responsive img-circle" src="../dist/img/Aluguel_de_espaco_128x128.jpg" alt="User profile picture">
 
                 <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['nomeAnuncio'] ?></h3>
                 <?php echo "<a href=\"criarMensagem.php?desr={$readSes->getResult()[0]['idUsuario']}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem para o proprietário</button></a>";?>
@@ -142,6 +142,62 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
             </div>
         </div>
     </section>
+    <?php
+//Inicio Busca Candidatura para Vagas de Alguel
+    $readImagem = new Read();
+
+    $readImagem->FullRead("SELECT * FROM imagemvagaaluguel iva inner join vagaaluguel va on iva.idVagaAluguel=va.idVagaAluguel where iva.idVagaAluguel = {$idVaga}");
+    
+
+//Fim Busca Candidatura para Vagas de Alguel
+ 
+
+
+echo "
+  <div class=\"col-md-12\">
+    <div class=\"box box-primary\">
+            <div class=\"box-header\">
+                <h3 class=\"box-title\"><i class=\"fa fa-camera\"></i> Fotos da Vaga</h3>
+                   
+                <div class=\"box-tools pull-right\">
+                    <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\" data-toggle=\"tooltip\" title=\"Minimizar\">
+                        <i class=\"fa fa-minus\"></i></button>
+
+                </div>
+
+            </div>
+            
+        
+        <div class=\"box-body table-responsive no-padding\" >
+            <div class=\"box-body table-responsive no-padding\">
+             <div class=\"popup-gallery\">
+
+                                   ";
+
+if (!empty($readImagem)) {
+    foreach ($readImagem->getResult() as $fotos):
+        $post['idFoto'] = $fotos['idFoto'];
+        echo "
+                <div class=\"col-lg-3 connectedSortable\">
+                    <div class=\"box box-primary\">
+                        <div class=\"mailbox-attachment-info\">
+                            <div class=\"mailbox-attachment-info\">
+                                <span class=\"mailbox-attachment-icon has-img\">
+                                    <a href=\"../uploads/{$fotos['fotoGrande']}\" class=\"portfolio-box\">
+                                        <img src=\"../uploads/{$fotos['fotoPequena']}\" alt=\"Attachment\" class=\"img-responsive\">
+                                    </a>
+                                </span>
+        
+                        </div>
+                    </div>
+                </div>
+           
+                                    </div>";
+    endforeach;
+}
+echo "</div>";
+?>
+    
 
     <?php
 

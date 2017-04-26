@@ -19,7 +19,12 @@ endif;
 
 //INPUT DATA
 if (!empty($data['SendPostForm'])):
-    unset($data['SendPostForm']);    
+    unset($data['SendPostForm']);   
+
+    require '../../admin/_models/AdminVagaAluguel.php';
+    $cadastra = new AdminVagaAluguel; 
+    $cadastra->ExeUpdate($idVaga,$data);  
+    
     
     if(!in_array('', $_FILES['foto']['tmp_name'])):         
         $data['foto'] = ($_FILES['foto']['tmp_name'] ? $_FILES['foto'] : NULL);
@@ -30,9 +35,6 @@ if (!empty($data['SendPostForm'])):
         unset($data['foto']);          
     endif;
     
-    require '../../admin/_models/AdminVagaAluguel.php';
-    $cadastra = new AdminVagaAluguel; 
-    $cadastra->ExeUpdate($idVaga,$data);  
     
     echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVaga}';</script>";
     
