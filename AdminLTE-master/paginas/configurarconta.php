@@ -101,8 +101,8 @@ endif;
                         </div>
                     </div>
                 </section>
-        
-        
+    </form>  
+        <form name="PostForm" method="POST" enctype="multipart/form-data">
     <!-- Excluir Conta -->
     <section class="col-lg-12 connectedSortable">
                     <!-- Custom tabs (Charts with tabs)-->

@@ -119,6 +119,10 @@ endif;
                                     </div>
                                     <button input type="submit" class="btn" Value="Registrar" name="SendPostForm"/>Registrar</button>									
                                 </form>
+                            
+                                <div class="pull-right">
+                                    <a href="login.php"><label>Já sou cadastrado</label></a>
+                                </div>
                             </div>
                         </div>
                     </div>

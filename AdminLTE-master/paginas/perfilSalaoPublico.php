@@ -12,7 +12,7 @@ $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idS
 ?>
 
 <section class="content-header">
-        <h1> <i class="ion-person"></i> Nome do Salão</h1>  
+        <h1> <i class="fa fa-university"></i> <?php echo "{$readSes->getResult()[0]['nomeSalao']}";?></h1>  
     </section>
 
     <!-- Main content -->
@@ -23,8 +23,12 @@ $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idS
                             <!-- Profile Image -->
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
-                                    <img class="profile-user-img img-responsive img-circle" src="../dist/img/salao_default.jpg" alt="User profile picture">
-
+                                    <?php 
+                                    if ($readSes->getResult()[0]['avatar']==''):
+                                        echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../dist/img/salao_default.jpg\" alt=\"User profile picture\">";
+                                    else:
+                                        echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readSes->getResult()[0]['avatar']} \" alt=\"User profile picture\">";
+                                    endif;        ?>
                                     <h3 class="profile-username text-center"><?php echo $readSes->getResult()[0]['nomeSalao'] ?></h3>
                                     <hr>
                                     <strong><i class="fa fa-pencil margin-r-5"></i>Categoria</strong>

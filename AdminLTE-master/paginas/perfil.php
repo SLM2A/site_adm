@@ -42,6 +42,7 @@ if (isset($data) && array_key_exists("SendPostForm", $data)):
 else:
     $read = new Read();
     $read->ExeRead("usuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
+   
     if($read->getResult()):
         $data = $read->getResult()[0];
     endif;
