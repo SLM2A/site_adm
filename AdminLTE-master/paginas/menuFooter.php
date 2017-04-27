@@ -288,6 +288,8 @@
         $("[data-mask]").inputmask();
         //CEP
         $("#cep").inputmask("99999-999", {"placeholder": "_____-___"});
+        //WhatsAPP
+        $("#whatsapp").inputmask("(99)99999-9999", {"placeholder": "(__)_____-____"});
         //CPF
         $("#cpf").inputmask("999.999.999-99", {"placeholder": "___.___.___-__"});
         $("#cnpj").inputmask("99.999.999/9999-99", {"placeholder": "__.___.___/___-__"});

@@ -88,7 +88,7 @@ class AdminMensagem {
 
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+            $this->Error = ["<b>Mensagem</b> deletada!", RENTAL_ACCEPT];
         endif;
     }
 

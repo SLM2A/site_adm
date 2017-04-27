@@ -74,7 +74,7 @@ endif;
                                         <label><i class="fa fa-whatsapp"></i> WhatsApp</label> 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                            <input type="text" id="whatsapp" maxlength=60 class="form-control" placeholder="(__)_____-____" id="whatsapp" name="whatsapp" value="<?php if (isset($data)) echo $data['whatsapp']; ?>">
+                                            <input type="text" id="whatsapp" maxlength=60 class="form-control" id="whatsapp" name="whatsapp" value="<?php if (isset($data)) echo $data['whatsapp']; ?>">
                                         </div>
 
                                     </div>

@@ -88,7 +88,7 @@ if (isset($CadastroId) and isset($_SESSION['userlogin']['DeleteExperiencia'])):
         $_SESSION['userlogin']['tipoMsg'] = $deleteExperiencia->getError()[1];
     endif;
 
-    echo "<script>location.href='certificacao.php';</script>";
+    echo "<script>location.href='experiencia.php';</script>";
 endif;
 
 ?>

@@ -99,7 +99,7 @@ class AdminSalao {
         $delete->ExeDelete(self::salaoempresario, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+            $this->Error = ["<b>Salão</b> deletado!", RENTAL_ACCEPT];
         endif;
     }
 

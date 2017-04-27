@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27-Abr-2017 às 02:59
+-- Generation Time: 27-Abr-2017 às 12:26
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -6190,7 +6190,7 @@ CREATE TABLE `redesocial` (
 
 INSERT INTO `redesocial` (`idRedeSocial`, `idUsuario`, `facebook`, `instagram`, `twitter`, `whatsapp`) VALUES
 (4, 27, 'rafinhmilare', 'rafinhamilare', 'rafinhamilare', '11970403620'),
-(5, 26, 'rafinhamilare', 'rafinhamilare', 'rafinhamilare', '11970403650');
+(5, 26, 'rafinhamilare', 'rafinhamilare', 'rafinhamilare', '(11)99614-8979');
 
 -- --------------------------------------------------------
 
@@ -6366,7 +6366,9 @@ CREATE TABLE `usuarioconvidado` (
 
 INSERT INTO `usuarioconvidado` (`idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`, `visualizadoProfissional`, `visualizadoEmpresario`, `idVagaEmprego`) VALUES
 (26, 27, NULL, 1, 1, 1, 11),
-(26, 27, NULL, 1, 1, 1, 10);
+(26, 27, NULL, 1, 1, 1, 10),
+(26, 38, NULL, 0, 0, NULL, 11),
+(26, 38, NULL, 0, 0, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -6508,7 +6510,6 @@ CREATE TABLE `vinculoempregaticio` (
 INSERT INTO `vinculoempregaticio` (`idvinculoEmpregaticio`, `opcao`) VALUES
 (1, 'Registro CLT'),
 (2, 'Registro PJ'),
-(3, 'Registro CLT'),
 (4, 'Estágio'),
 (5, 'Freelancer');
 

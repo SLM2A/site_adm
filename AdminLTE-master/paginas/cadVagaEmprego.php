@@ -84,7 +84,7 @@ endif;
                         </div>
                         <div class="form-group">
                             <section class="col-lg-12 connectedSortable">
-                                <div class="col-md-9">
+                                <div class="col-md-7">
 
                                     <label>Profissão</label>
                                     <select class="form-control" name="profissao" required>
@@ -111,7 +111,7 @@ endif;
                                     
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-5">
                                     <div class="form-group" >
                                         <label>Nível</label>
                                         <select class="form-control" name="nivel" required>
