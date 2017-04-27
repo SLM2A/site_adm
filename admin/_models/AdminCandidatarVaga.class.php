@@ -52,6 +52,18 @@ class AdminCandidatarVaga{
             $this->Update();
         endif;
     }
+    
+    public function ExeUpdateVisualizacaoAluguel($CategoryId, array $Data) {
+        $this->CadID = (int) $CategoryId;
+        $this->Data = $Data;
+        $this->UpdateVisualizacaoAluguel();        
+    }
+    public function ExeUpdateVisualizacaoEmprego($CategoryId, array $Data) {
+        $this->CadID = (int) $CategoryId;
+        $this->Data = $Data;
+        $this->UpdateVisualizacaoEmprego();        
+    }
+    
 
     function getResult() {
         return $this->Result;
@@ -111,6 +123,34 @@ class AdminCandidatarVaga{
         if($update->getResult()):
             $this->Result = TRUE;
             $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+        endif;
+    }
+    
+    private function UpdateVisualizacaoAluguel() {
+        
+        $update = new Update();
+        $fim = count($this->Data);
+        for($i = 0; $i < $fim; $i++):
+            $idArray = ['situacao' => 1] ;
+            $update->ExeUpdate(self::ALUGUEL, $idArray , "WHERE idVagaAluguel =:id ", "id={$this->Data[$i]['idVagaAluguel']}");
+        endfor;
+        if($update->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+        endif;
+    }
+     
+    private function UpdateVisualizacaoEmprego() {
+        
+        $update = new Update();
+        $fim = count($this->Data);
+        for($i = 0; $i < $fim; $i++):
+            $idArray = ['situacao' => 1] ;
+            $update->ExeUpdate(self::EMPREGO, $idArray , "WHERE idVagaEmprego =:id ", "id={$this->Data[$i]['idVagaEmprego']}");
+        endfor;
+        if($update->getResult()):
+            $this->Result = TRUE;
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
         endif;
     }
 }

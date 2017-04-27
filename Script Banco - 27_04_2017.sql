@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 24-Abr-2017 às 01:43
+-- Generation Time: 27-Abr-2017 às 02:59
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -6052,6 +6052,13 @@ CREATE TABLE `imagemvagaaluguel` (
 --
 
 INSERT INTO `imagemvagaaluguel` (`idFoto`, `IdVagaAluguel`, `fotoGrande`, `fotoPequena`, `dataFoto`) VALUES
+(41, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-ad390.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-ad390.jpg', '2017-04-26 15:37:53'),
+(39, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-af86b.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-cf550.jpg', '2017-04-26 15:36:53'),
+(38, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-67323.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-67323.jpg', '2017-04-26 01:21:47'),
+(37, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-891de.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-891de.jpg', '2017-04-26 01:21:24'),
+(36, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-e53cb.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-42d62.jpg', '2017-04-26 01:21:12'),
+(35, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-ca74d.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-ca74d.jpg', '2017-04-26 01:20:52'),
+(33, 11, 'Empresario-Teste-11/2017/04//Empresario-Teste-11-FULL-3bdd8.jpg', 'Empresario-Teste-11/2017/04//Empresario-Teste-11-SMALL-dabb0.jpg', '2017-04-26 01:19:43'),
 (29, 22, 'Empresario-Teste-22/2017/04//Empresario-Teste-22-FULL-85a06.jpg', 'Empresario-Teste-22/2017/04//Empresario-Teste-22-SMALL-c7973.jpg', '2017-04-23 20:43:21'),
 (30, 22, 'Empresario-Teste-22/2017/04//Empresario-Teste-22-FULL-b2083.jpg', 'Empresario-Teste-22/2017/04//Empresario-Teste-22-SMALL-b2083.jpg', '2017-04-23 20:43:22'),
 (31, 22, 'Empresario-Teste-22/2017/04//Empresario-Teste-22-FULL-f071a.jpg', 'Empresario-Teste-22/2017/04//Empresario-Teste-22-SMALL-85a06.jpg', '2017-04-23 20:43:23');
@@ -6080,7 +6087,10 @@ CREATE TABLE `mensagem` (
 --
 
 INSERT INTO `mensagem` (`idMensagem`, `idRemetente`, `idDestinatario`, `assunto`, `mensagem`, `data`, `situacaoEnviada`, `situacaoRecebida`, `excluirRemetente`, `excluirDestinatario`) VALUES
-(17, 26, 27, 'teste', 'teste', '2017-04-24 04:38:47', 0, 0, 0, 0);
+(19, 26, 27, 'a', 'a', '2017-04-26 16:08:08', 1, 1, 0, 0),
+(20, 26, 27, 'Teste', 'tesste', '2017-04-27 05:57:18', 0, 1, 0, 0),
+(18, 27, 26, 'teste', 'tedte', '2017-04-26 15:54:39', 0, 1, 0, 1),
+(17, 26, 27, 'teste', 'teste', '2017-04-24 04:38:47', 1, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -6148,6 +6158,17 @@ CREATE TABLE `portfolio` (
   `descricaoImagem` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `portfolio`
+--
+
+INSERT INTO `portfolio` (`idPortfolio`, `idUsuario`, `portfolioImagemFull`, `portfolioImagemSmall`, `dataImagem`, `tituloImagem`, `descricaoImagem`) VALUES
+(1, 27, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-FULL-a7034.jpg', 'Profissional-Teste-27/2017/04//Profissional-Teste-27-SMALL-a7034.jpg', '2017-04-27 02:04:22', NULL, NULL),
+(2, 27, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-FULL-869e3.jpg', 'Profissional-Teste-27/2017/04//Profissional-Teste-27-SMALL-869e3.jpg', '2017-04-27 02:04:22', NULL, NULL),
+(3, 27, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-FULL-bad1f.jpg', 'Profissional-Teste-27/2017/04//Profissional-Teste-27-SMALL-e720c.jpg', '2017-04-27 02:04:23', NULL, NULL),
+(4, 27, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-FULL-1a26f.jpg', 'Profissional-Teste-27/2017/04//Profissional-Teste-27-SMALL-1a26f.jpg', '2017-04-27 02:04:23', NULL, NULL),
+(5, 27, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-FULL-a7034.jpg', 'Profissional-Teste-27/2017/04//Profissional-Teste-27-SMALL-6b21b.jpg', '2017-04-27 02:04:24', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -6204,7 +6225,6 @@ INSERT INTO `salao` (`idSalao`, `avatar`, `nomeSalao`, `cnpjSalao`, `categoriaSa
 (29, NULL, 'Testando Imagem 4', '15.165.156/1651-65', 'Salão', 'sdad156a', '02202-000', 'Rua Aldeia Vinte de Setembro', '515', 'as', 'Vila Ede', 'São Paulo', 'SP'),
 (8, NULL, 'Rafael', '05.653.724/0001-58', 'Barbearia', 'aaa', '04011-002', 'Rua Estela', '515', 'a', 'Vila Mariana', 'São Paulo', 'SP'),
 (9, NULL, 'Rafael', '05.653.724/0001-58', 'Barbearia', 'aaa', '02218-100', 'Rua Álvaro Cavalcante', '515', 'a', 'Vila Medeiros', 'São Paulo', 'SP'),
-(12, NULL, 'teste', 'teste', 'Salão', 'teste', '04011-002', 'Rua Estela', 'teste', '', 'Vila Mariana', 'São Paulo', 'SP'),
 (18, '-/2017/04//--AVATAR-9acae.jpg', 'Teste Marcelo Imagem', '12.345.678/9123-45', 'Salão', 'dshuauhdas', '02218-100', 'Rua Álvaro Cavalcante', '61', 'a', 'Vila Medeiros', 'São Paulo', 'SP'),
 (19, '-/2017/04//--AVATAR-47c1b.jpg', 'Testando Imagem', '15.815.615/6156-16', 'Barbearia', '1561651', '02218-100', 'Rua Álvaro Cavalcante', '61', 'a', 'Vila Medeiros', 'São Paulo', 'SP'),
 (20, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-AVATAR-44471.jpg', 'Los Tinkanos', '15.156.165/1651-65', 'Barbearia', '561515', '04011-002', 'Rua Estela', '151', '1', 'Vila Mariana', 'São Paulo', 'SP'),
@@ -6215,7 +6235,8 @@ INSERT INTO `salao` (`idSalao`, `avatar`, `nomeSalao`, `cnpjSalao`, `categoriaSa
 (25, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SALAO-0c2dd.jpg', 'Corinthians ', '15.618.918/9198-12', 'Salão', '211asdfaf', '04011-002', 'Rua Estela', '515', '1', 'Vila Mariana', 'São Paulo', 'SP'),
 (26, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SALAO-1e759.jpg', 'Testando Imagem 2', '31.567.789/6784-56', 'Salão', 'saffsdafssd', '04011-002', 'Rua Estela', '81', '1', 'Vila Mariana', 'São Paulo', 'SP'),
 (27, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SALAO-ca0ca.jpg', 'Elaine Solteira', '12.413.256/1345-66', 'Salão', 'sdasdas1', '04011-000', 'Rua Estela', '51', '51', 'Vila Mariana', 'São Paulo', 'SP'),
-(30, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SALAO-9d819.jpg', 'Testando imagem 3', '34.674.788/9787-67', 'Salão', 'asssasdsasdas', '02218-100', 'Rua Álvaro Cavalcante', '1515', 'a', 'Vila Medeiros', 'São Paulo', 'SP');
+(30, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SALAO-9d819.jpg', 'Testando imagem 3', '34.674.788/9787-67', 'Salão', 'asssasdsasdas', '02218-100', 'Rua Álvaro Cavalcante', '1515', 'a', 'Vila Medeiros', 'São Paulo', 'SP'),
+(31, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-SALAO-ef1de.jpg', 'Gabriel', '01.515.151/5151-51', 'Salão', 'sadaada', '04011-002', 'Rua Estela', '515', 'a', 'Vila Mariana', 'São Paulo', 'SP');
 
 -- --------------------------------------------------------
 
@@ -6235,16 +6256,12 @@ CREATE TABLE `salaoempresario` (
 INSERT INTO `salaoempresario` (`idSalao`, `idUsuario`) VALUES
 (24, 26),
 (23, 26),
-(12, 26),
 (22, 26),
 (4, 26),
-(12, 26),
 (29, 26),
 (8, 26),
 (9, 26),
 (16, 26),
-(12, 26),
-(12, 26),
 (17, 26),
 (21, 26),
 (20, 26),
@@ -6253,7 +6270,8 @@ INSERT INTO `salaoempresario` (`idSalao`, `idUsuario`) VALUES
 (25, 26),
 (26, 26),
 (27, 26),
-(30, 26);
+(30, 26),
+(31, 26);
 
 -- --------------------------------------------------------
 
@@ -6302,8 +6320,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `avatar`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`, `situacao`, `excluir`) VALUES
-(26, 1, '', 'Empresario2', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '17/12/1995', 'Sou empresario!!!!!!!', 1, 1),
-(27, 2, '', 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', 'Masculino', '084.242.998-09', '17/12/1994', 'Profissional', 1, NULL),
+(26, 1, 'Empresario-Teste-26/2017/04//Empresario-Teste-26-AVATAR-5d88f.jpg', 'Empresario2', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '17/12/1995', 'Sou empresario!!!!!!!', 1, 1),
+(27, 2, 'Profissional-Teste-27/2017/04//Profissional-Teste-27-AVATAR-0cf8d.jpg', 'Profissional Teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', 'Masculino', '084.242.998-09', '17/12/1994', 'Profissional', 1, NULL),
 (33, 1, NULL, NULL, 'gabriel@moshe.com.br', 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Farias', NULL, NULL, NULL, '', NULL, NULL),
 (34, 1, NULL, 'Teste', 'marcelo@rental.com.br', '995bf053c4694e1e353cfd42b94e4447', 'Marcelo', 'Lima', 'Feminino', '456.789.545-67', '17/12/1994', 'Gay', NULL, NULL),
 (35, 1, NULL, 'izamelao', 'iza@melao.com.br', 'bf3fdd34090adbcd4a20e5b19baf0113', 'Iza', 'Melao', 'Feminino', '675.765.675-67', '08031966', 'Teste', NULL, NULL),
@@ -6337,7 +6355,8 @@ CREATE TABLE `usuarioconvidado` (
   `idUsuarioProfissional` int(11) NOT NULL,
   `data` timestamp NULL DEFAULT NULL,
   `situacao` int(11) DEFAULT NULL,
-  `idVagaAluguel` int(11) DEFAULT NULL,
+  `visualizadoProfissional` int(11) DEFAULT NULL,
+  `visualizadoEmpresario` int(11) DEFAULT NULL,
   `idVagaEmprego` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -6345,13 +6364,9 @@ CREATE TABLE `usuarioconvidado` (
 -- Extraindo dados da tabela `usuarioconvidado`
 --
 
-INSERT INTO `usuarioconvidado` (`idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`, `idVagaAluguel`, `idVagaEmprego`) VALUES
-(26, 27, NULL, 1, NULL, 5),
-(26, 27, NULL, 1, NULL, 7),
-(26, 27, NULL, 1, NULL, 1),
-(26, 27, NULL, 1, NULL, 8),
-(26, 27, NULL, 1, NULL, 3),
-(26, 27, NULL, 1, NULL, 4);
+INSERT INTO `usuarioconvidado` (`idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`, `visualizadoProfissional`, `visualizadoEmpresario`, `idVagaEmprego`) VALUES
+(26, 27, NULL, 1, 1, 1, 11),
+(26, 27, NULL, 1, 1, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -6380,7 +6395,7 @@ CREATE TABLE `vagaaluguel` (
 
 INSERT INTO `vagaaluguel` (`idVagaAluguel`, `idSalao`, `nomeAnuncio`, `profissao`, `formaAluguel`, `preco`, `itemAlugado`, `tamanho`, `diaFuncionamento`, `horarioFuncionamento`, `caracteristica`, `diferencial`) VALUES
 (12, 20, 'Testando', 'Cabelereiro', 'Por Dia', '12', 'Estação de trabalho sem equipamentos', '12', 'Todos os dias da semana', 'Horário Flexível', 'a', 'a'),
-(11, 21, 'Testando as Imagens1', 'Acupuntura', 'Por Dia', '150', 'Estação de trabalho sem equipamentos', '10', 'À disposição do contratante', 'À disposição do contratante', 'a', 'a'),
+(11, 21, 'Testando as Imagens', 'Acupuntura', 'Por Dia', '150', 'Estação de trabalho sem equipamentos', '10', 'À disposição do contratante', 'À disposição do contratante', 'a', 'a'),
 (3, 2, 'Testando a Listagem 2', 'Barbeiro', 'Por Mês', '500', 'Cadeira para serviços', '5', 'Segunda à Sexta', 'Horário Flexível', 'Testando listagem', 'Testando listagem'),
 (4, 2, 'Teste', 'Barbeiro', 'Por Hora', '5005', 'Cadeira para serviços', '60', 'Todos os dias da semana', 'Horário Flexível', 'aaa', 'aaaa'),
 (5, 2, 'Teste 2', 'Barbeiro', 'Por Hora', '5005', 'Cadeira para Servicos', '60', 'Todos os dias da semana', 'Horário Comercial', 'aaa', 'aaaa'),
@@ -6404,6 +6419,7 @@ INSERT INTO `vagaaluguel` (`idVagaAluguel`, `idSalao`, `nomeAnuncio`, `profissao
 
 CREATE TABLE `vagaaluguelcandidatada` (
   `idVagaAluguel` int(11) NOT NULL,
+  `idUsuarioEmpresario` int(11) DEFAULT NULL,
   `idUsuarioProfissional` int(11) NOT NULL,
   `data` timestamp NULL DEFAULT NULL,
   `situacao` int(11) DEFAULT NULL
@@ -6413,11 +6429,13 @@ CREATE TABLE `vagaaluguelcandidatada` (
 -- Extraindo dados da tabela `vagaaluguelcandidatada`
 --
 
-INSERT INTO `vagaaluguelcandidatada` (`idVagaAluguel`, `idUsuarioProfissional`, `data`, `situacao`) VALUES
-(6, 27, NULL, NULL),
-(2, 27, NULL, NULL),
-(8, 27, NULL, NULL),
-(12, 27, NULL, NULL);
+INSERT INTO `vagaaluguelcandidatada` (`idVagaAluguel`, `idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`) VALUES
+(6, NULL, 27, NULL, 0),
+(2, NULL, 27, NULL, 0),
+(8, NULL, 27, NULL, 0),
+(12, NULL, 27, NULL, 1),
+(11, NULL, 27, NULL, 1),
+(9, NULL, 27, '2017-04-27 04:45:53', 1);
 
 -- --------------------------------------------------------
 
@@ -6460,7 +6478,7 @@ INSERT INTO `vagaemprego` (`idVagaEmprego`, `idSalao`, `tituloVaga`, `profissao`
 
 CREATE TABLE `vagaempregocandidata` (
   `idVagaEmprego` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
+  `idUsuarioProfissional` int(11) NOT NULL,
   `data` datetime DEFAULT NULL,
   `situacao` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -6469,9 +6487,8 @@ CREATE TABLE `vagaempregocandidata` (
 -- Extraindo dados da tabela `vagaempregocandidata`
 --
 
-INSERT INTO `vagaempregocandidata` (`idVagaEmprego`, `idUsuario`, `data`, `situacao`) VALUES
-(1, 27, NULL, 0),
-(8, 27, NULL, NULL);
+INSERT INTO `vagaempregocandidata` (`idVagaEmprego`, `idUsuarioProfissional`, `data`, `situacao`) VALUES
+(11, 27, '2017-04-27 02:56:43', 1);
 
 -- --------------------------------------------------------
 
@@ -6833,7 +6850,7 @@ ALTER TABLE `vagaemprego`
 --
 ALTER TABLE `vagaempregocandidata`
   ADD KEY `idVagaEmprego` (`idVagaEmprego`),
-  ADD KEY `idUsuario` (`idUsuario`);
+  ADD KEY `idUsuario` (`idUsuarioProfissional`);
 
 --
 -- Indexes for table `vinculoempregaticio`
@@ -6948,12 +6965,12 @@ ALTER TABLE `horariofuncionamento`
 -- AUTO_INCREMENT for table `imagemvagaaluguel`
 --
 ALTER TABLE `imagemvagaaluguel`
-  MODIFY `idFoto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `idFoto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `mensagem`
 --
 ALTER TABLE `mensagem`
-  MODIFY `idMensagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idMensagem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `nivelvaga`
 --
@@ -6968,7 +6985,7 @@ ALTER TABLE `objetoalugado`
 -- AUTO_INCREMENT for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `redesocial`
 --
@@ -6978,7 +6995,7 @@ ALTER TABLE `redesocial`
 -- AUTO_INCREMENT for table `salao`
 --
 ALTER TABLE `salao`
-  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `usuario`
 --

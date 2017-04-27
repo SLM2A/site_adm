@@ -10,6 +10,8 @@ if (!empty($data['SendPostForm'])):
    
     $data['idUsuarioProfissional'] = $userlogin['idUsuario'];
     $data['situacao'] = 1;
+    $data['visualizadoEmpresario'] = 0;
+        
     
     require '../../admin/_models/AdminProfissionalConvidar.class.php';
     require '../../admin/_models/AdminCandidatarVaga.class.php';
@@ -21,11 +23,17 @@ if (!empty($data['SendPostForm'])):
     
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
 
-    
-    
-    
-    echo "<script>location.href='propostarecebida.php';</script>";
+       echo "<script>location.href='propostarecebida.php';</script>";
 
+endif;
+
+$readEmprego = new Read();
+$readEmprego->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=0 ");
+//
+if($readEmprego->getResult()):
+    require '../../admin/_models/AdminProfissionalConvidar.class.php';
+    $cadastra = new AdminProfissionalConvidar;   
+    $cadastra->ExeUpdateVisualizada($userlogin['idUsuario'],$readEmprego->getResult());
 endif;
 
 
@@ -49,69 +57,9 @@ endif;
 
 <?php
 //Inicio Busca Candidatura para Vagas de Alguel
-$readAluguel = new Read();
-$readAluguel->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaaluguel va on uc.idVagaAluguel=va.idVagaAluguel inner join salao s on va.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=0");
-//var_dump($readProfissional->getResult());
-//Fim Busca Candidatura para Vagas de Alguel
 
-echo "
-    <div class=\"box\">
-            <div class=\"box-header\">
-                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Vagas de Aluguel</h3>
-            </div>
-        
-        <div class=\"box-body table-responsive no-padding\">
-            <div class=\"box-body table-responsive no-padding\">
-                                        <table class=\"table table-hover\">
-                                            <thead> 
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Nome do Anúncio</th>
-                                                    <th>Profissão</th>
-                                                    <th>Forma de Aluguel</th>
-                                                    <th>Preço</th>
-                                                    <th>Nome Salão</th>
-                                                    
-                                                 
-                                                </tr>
-                                            </thead>
-                                            <tbody> ";
-
-                                              
-                                               foreach ($readAluguel->getResult() as $vaga):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" ";
-
-                                                            if ($vaga['idVagaAluguel'] == $data['idVagaAluguel']):
-                                                                echo ' checked';
-                                                            endif;
-                                                                  
-                                                    echo "</td><td> {$vaga['nomeAnuncio']} </td>
-                                                              <td> {$vaga['profissao']} </td>
-                                                              
-                                                              <td> {$vaga['formaAluguel']} </td>
-                                                              <td> {$vaga['preco']} </td>
-                                                              <td> {$vaga['nomeSalao']} </td>
-                                                                <td>  
-                                                              <a href=\"vagaAluguelCandidatar.php?id={$vaga['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
-                                                                  </td></tr>
-                                                        ";
-
-                                                endforeach;
-                                         echo "       
-                                            </tbody>  
-                                        </table>
-                                    </div>
-        </div>
-    </div>
-    
-    ";
-    
     
   //Inicio Busca Candidatura para Vagas de Emprego
-$readEmprego = new Read();
-$readEmprego->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=0 ");
 //var_dump($readEmprego->getResult());
 //Fim Busca Candidatura para Vagas de Alguel
 
@@ -174,14 +122,12 @@ echo "
                 </div>
                 
     <?php            
- if(!$readAluguel->getResult() && !$readEmprego->getResult()):
+ if(!$readEmprego->getResult()):
      echo "
-     
     <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Demonstrar Interesse</button>
     ";
 else:
     echo "
-    
     <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Demonstrar Interesse</button>
    ";
 endif; 
@@ -192,66 +138,7 @@ endif;
             <div class="tab-pane" id="timeline">
                 <div class="box-footer">
                   <?php
-//Inicio Busca Candidatura para Vagas de Alguel
-$readAluguel = new Read();
-$readAluguel->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaaluguel va on uc.idVagaAluguel=va.idVagaAluguel inner join salao s on va.idSalao=s.idSalao where uc.idUsuarioProfissional= {$userlogin['idUsuario']} and situacao=1");
-//var_dump($readProfissional->getResult());
-//Fim Busca Candidatura para Vagas de Alguel
 
-echo "
-    <div class=\"box\">
-            <div class=\"box-header\">
-                <h3 class=\"box-title\"><i class=\"ion-ios-bookmarks\"></i> Vagas de Aluguel</h3>
-            </div>
-        
-        <div class=\"box-body table-responsive no-padding\">
-            <div class=\"box-body table-responsive no-padding\">
-                                        <table class=\"table table-hover\">
-                                            <thead> 
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Nome do Anúncio</th>
-                                                    <th>Profissão</th>
-                                                    <th>Forma de Aluguel</th>
-                                                    <th>Preço</th>
-                                                    <th>Nome Salão</th>
-                                                    
-                                                 
-                                                </tr>
-                                            </thead>
-                                            <tbody> ";
-
-                                              
-                                               foreach ($readAluguel->getResult() as $vaga):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" disabled ";
-
-                                                            if ($vaga['idVagaAluguel'] == $data['idVagaAluguel']):
-                                                                echo ' checked';
-                                                            endif;
-                                                                  
-                                                    echo "</td><td> {$vaga['nomeAnuncio']} </td>
-                                                              <td> {$vaga['profissao']} </td>
-                                                              
-                                                              <td> {$vaga['formaAluguel']} </td>
-                                                              <td> {$vaga['preco']} </td>
-                                                              <td> {$vaga['nomeSalao']} </td>
-                                                                <td>  
-                                                              <a href=\"vagaAluguelCandidatar.php?id={$vaga['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
-                                                                  </td></tr>
-                                                        ";
-
-                                                endforeach;
-                                         echo "       
-                                            </tbody>  
-                                        </table>
-                                    </div>
-        </div>
-    </div>
-    
-    ";
-    
     
   //Inicio Busca Candidatura para Vagas de Emprego
 $readEmprego = new Read();
@@ -270,7 +157,7 @@ echo "
                                         <table class=\"table table-hover\">
                                             <thead> 
                                                 <tr>
-                                                    <th></th>
+                                                    
                                                     <th>Nome do Anúncio</th>
                                                     <th > Profissão</th>
                                                     <th>Faixa Remuneração</th>
@@ -285,12 +172,7 @@ echo "
                                                foreach ($readEmprego->getResult() as $vaga):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaAluguel[]\" value=\"{$vaga['idVagaAluguel']}\" class=\"flat-red\" disabled";
-
-                                                            if ($vaga['idVagaAluguel'] == $data['idVagaAluguel']):
-                                                                echo ' checked';
-                                                            endif;
-                                                                  
+                                                                                                                    
                                                     echo "</td><td> {$vaga['tituloVaga']} </td>
                                                               <td> {$vaga['profissao']} </td>
                                                               <td> {$vaga['faixaRemuneracao']} </td>

@@ -20,8 +20,14 @@ include 'menuHeader.php';
                 <div class="active tab-pane" id="aluguel">
                     <div class="box-footer">
                         <?php
-                        $readEmprego = new Read();
-                        $readEmprego->FullRead("SELECT * FROM vagaaluguelcandidatada vac inner join vagaaluguel va on vac.idVagaAluguel=va.idVagaAluguel inner join usuario u on u.idUsuario = vac.idUsuarioProfissional inner join salao s  on va.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario = {$userlogin['idUsuario']}");
+                        $readAluguel = new Read();
+                        $readAluguel->FullRead("SELECT * FROM vagaaluguelcandidatada vac inner join vagaaluguel va on vac.idVagaAluguel=va.idVagaAluguel inner join usuario u on u.idUsuario = vac.idUsuarioProfissional inner join salao s  on va.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario = {$userlogin['idUsuario']}");
+                        if($readAluguel->getResult()):
+                            require '../../admin/_models/AdminCandidatarVaga.class.php';
+                            $cadastra = new AdminCandidatarVaga();   
+                            $cadastra->ExeUpdateVisualizacaoAluguel($userlogin['idUsuario'],$readAluguel->getResult());
+                        endif;
+                        
                         
                         echo "
     <div class=\"box\">
@@ -45,7 +51,7 @@ include 'menuHeader.php';
                                             <tbody> ";
 
 
-                        foreach ($readEmprego->getResult() as $profissional):
+                        foreach ($readAluguel->getResult() as $profissional):
 //                                                       
 
                             echo "</td> <td> <a href=\"perfilProfissionalPublico.php?id={$profissional['idUsuarioProfissional']}\"> {$profissional['nomeUsuario']} {$profissional['sobrenomeUsuario']} </a></td>
@@ -78,7 +84,14 @@ include 'menuHeader.php';
                     <div class="box-footer">
                         <?php
                         $readEmprego = new Read();
-                        $readEmprego->FullRead("SELECT * FROM vagaempregocandidata vec inner join vagaemprego ve on vec.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = vec.idUsuario inner join salao s  on ve.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario = {$userlogin['idUsuario']}");
+                        $readEmprego->FullRead("SELECT * FROM vagaempregocandidata vec inner join vagaemprego ve on vec.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = vec.idUsuarioProfissional inner join salao s  on ve.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario = {$userlogin['idUsuario']}");
+                        if($readEmprego->getResult()):
+                          if(!$readAluguel->getResult()):
+                            require '../../admin/_models/AdminCandidatarVaga.class.php';
+                        endif;
+                            $cadastra = new AdminCandidatarVaga();   
+                            $cadastra->ExeUpdateVisualizacaoEmprego($userlogin['idUsuario'],$readEmprego->getResult());
+                        endif;
                         echo "
     <div class=\"box\">
             

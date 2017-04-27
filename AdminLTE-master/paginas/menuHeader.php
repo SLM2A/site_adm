@@ -28,7 +28,7 @@ $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRem
 $readUsuario= new Read();
 $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
 
-
+//var_dump($readProfissional->getResult());
 ?>
 
 <!DOCTYPE html>
@@ -156,31 +156,113 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                     <li class="footer"><a href="caixademensagem.php">Ver todas as mensagens</a></li>
                                 </ul>
                             </li>
+                            
+                            
                             <!-- Notifications: style can be found in dropdown.less -->
-                            <li class="dropdown notifications-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-bell-o"></i>
-                                    <span class="label label-warning">1
+                            <?php
+                            
+                             if ($userlogin['idTipoUsuario'] == 2):
+                                 $readProfissional = new Read();
+                                 $readProfissional->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego where (uc.visualizadoProfissional=0 and uc.idUsuarioProfissional=:id)", "id={$userlogin['idUsuario']}");
+
+                                     echo "
+                                        <li class=\"dropdown messages-menu\">
+                                            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">
+                                                <i class=\"fa fa-bell-o\"></i>";
+
+                                                if ($readProfissional->getRowCount() > 0):
+                                                    echo "<span class=\"label label-danger\"><i class=\"fa fa-exclamation\"></i></span></a>";
+                                                endif;
+                                           echo "     
+                                            </a>
+                                            <ul class=\"dropdown-menu\">
+                                                <li class=\"header\">Você tem {$readProfissional->getRowCount()} notificação</li>
+                                                <li>
+                                                    <!-- inner menu: contains the actual data -->
+                                                    <ul class=\"menu\">";
 
 
-                                    </span>
+            //                                        foreach ($readProfissional->getResult() as $mensagem):
+                                                            if ($readProfissional->getResult()):
+                                                                echo "                                           
+                                                                         <li>
+                                                                             <a href=\"propostarecebida.php\">
+                                                                                 <i class=\"fa fa-users text-aqua\"></i> Você tem {$readProfissional->getRowCount()} novo(s) convite(s) de emprego</b>
+                                                                             </a>
+                                                                         </li>";
+            //                                        
+                                                            endif;
+
+                                                       echo "  
+                                                    </ul>
+                                                </li>
+
+                                            </ul>
+                                        </li>";
+                                else:
+                                  $readEmpresario = new Read();
+                                  $readEmpresario->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego where (uc.visualizadoEmpresario=0 and uc.idUsuarioEmpresario=:id)", "id={$userlogin['idUsuario']}");  
+                                  $readAluguel = new Read();
+                                  $readAluguel->FullRead("SELECT * FROM vagaaluguelcandidatada vac inner join vagaaluguel va on vac.idVagaAluguel = va.idVagaAluguel inner join salao s on va.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario={$userlogin['idUsuario']} and situacao=0");
+                                  $readEmprego = new Read();
+                                  $readEmprego->FullRead("SELECT * FROM vagaempregocandidata vec inner join vagaemprego ve on vec.idVagaEmprego = ve.idVagaEmprego inner join salao s on ve.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where se.idUsuario={$userlogin['idUsuario']} and situacao=0");
+                                  
+                                  echo "
+                            <li class=\"dropdown messages-menu\">
+                                <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">
+                                    <i class=\"fa fa-bell-o\"></i>";
+                                    
+                                    if (($readEmpresario->getRowCount() > 0) || ($readAluguel->getRowCount() > 0) || ($readEmprego->getRowCount() > 0)):
+                                        echo "<span class=\"label label-danger\"><i class=\"fa fa-exclamation\"></i></span></a>";
+                                    endif;
+                               echo "     
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">Você tem 1 notificação</li>
+                                <ul class=\"dropdown-menu\">
+                                    <li class=\"header\">Notificações:</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-users text-aqua"></i> 2 pessoas visualizaram sua página
-                                                </a>
-                                            </li>
+                                        <ul class=\"menu\">";
+                                           
+                                           
+//                                        foreach ($readProfissional->getResult() as $mensagem):
+                                                if ($readEmpresario->getResult()):
+                                                    echo "                                           
+                                                             <li>
+                                                                 <a href=\"contatoprofissional.php#respondida\">
+                                                                     <i class=\"fa fa-users text-aqua\"></i> Você tem {$readEmpresario->getRowCount()} demonstrações de interesse</b>
+                                                                 </a>
+                                                             </li>";
+//                                        
+                                                endif;
+                                                 if ($readAluguel->getResult()):
+                                                    echo "                                           
+                                                             <li>
+                                                                 <a href=\"candidatos.php\">
+                                                                     <i class=\"fa fa-users text-aqua\"></i>{$readAluguel->getRowCount()} interesse(s) na(s) vaga(s) de aluguel</b>
+                                                                 </a>
+                                                             </li>";
+//                                        
+                                                endif;
+                                                 if ($readEmprego->getResult()):
+                                                    echo "                                           
+                                                             <li>
+                                                                 <a href=\"candidatos.php\">
+                                                                     <i class=\"fa fa-users text-aqua\"></i>{$readEmprego->getRowCount()} interesse(s) na(s) vaga(s) de emprego</b>
+                                                                 </a>
+                                                             </li>";
+//                                        
+                                                endif;
+                                           
+                                           echo "  
                                         </ul>
                                     </li>
-                                    <li class="footer"><a href="#">Ver todas</a></li>
+                                    
                                 </ul>
-                            </li>
-                            
+                            </li>";
+                                endif;
+                                
+                                            
+                                            ?>
                             <!-- Tasks: style can be found in dropdown.less -->
                             
                             <!-- User Account: style can be found in dropdown.less -->

@@ -17,9 +17,15 @@ $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
+    
+    $readEmpresario = new Read;
+    $readEmpresario->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao=s.idSalao inner join salaoempresario se on s.idSalao=se.idSalao where idVagaAluguel = :id", "id={$idVaga}");
 
     $data['idVagaAluguel']= $idVaga;
     $data['idUsuarioProfissional'] = $userlogin['idUsuario'];
+    $data['data'] = date('Y-m-d H:i:s');     
+    $data['situacao'] = 0;
+    
 
     require '../../admin/_models/AdminCandidatarVaga.class.php';
     $cadastra = new AdminCandidatarVaga;
@@ -162,9 +168,7 @@ echo "
                 <div class=\"box-tools pull-right\">
                     <button type=\"button\" class=\"btn btn-box-tool\" data-widget=\"collapse\" data-toggle=\"tooltip\" title=\"Minimizar\">
                         <i class=\"fa fa-minus\"></i></button>
-
                 </div>
-
             </div>
             
         
@@ -187,15 +191,15 @@ if (!empty($readImagem)) {
                                         <img src=\"../uploads/{$fotos['fotoPequena']}\" alt=\"Attachment\" class=\"img-responsive\">
                                     </a>
                                 </span>
-        
+                            </div>
                         </div>
                     </div>
-                </div>
-           
-                                    </div>";
+                </div>";
     endforeach;
 }
-echo "</div>";
+echo "</div>
+    </div></div></div> ";
+
 ?>
     
 
@@ -204,12 +208,12 @@ echo "</div>";
     if(!$readVaga->getResult()):
     echo "
     <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Quero Alugar</button>
+        <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Quero Alugar</button>
     </div>";
     else:
     echo "
     <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Proposta de Aluguel Enviada</button>
+        <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Proposta de Aluguel Enviada</button>
     </div>";
     endif;
     ?>

@@ -2,6 +2,9 @@
 require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
+
+
+
 ?>
 
 <!-- /.col -->
@@ -80,10 +83,20 @@ include 'menuHeader.php';
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="respondida">
-                <div class="box-footer">
-                    <?php
+                <?php
                     $readEmprego = new Read();
                     $readEmprego->FullRead("SELECT * FROM usuarioconvidado uc inner join vagaemprego ve on uc.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = uc.idUsuarioProfissional inner join salao s on ve.idSalao=s.idSalao where uc.idUsuarioEmpresario= {$userlogin['idUsuario']} and uc.situacao=1 order by tituloVaga");
+                    //
+                    if($readEmprego->getResult()):
+                        require '../../admin/_models/AdminProfissionalConvidar.class.php';
+                        $cadastra = new AdminProfissionalConvidar;   
+                        $cadastra->ExeUpdateVisualizadaEmpresario($userlogin['idUsuario'],$readEmprego->getResult());
+                    endif;
+                ?>
+                
+                <div class="box-footer">
+                    <?php
+                    
                     echo "
     <div class=\"box\">
            

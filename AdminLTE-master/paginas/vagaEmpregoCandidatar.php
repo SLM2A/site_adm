@@ -19,18 +19,20 @@ if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
     $data['idVagaEmprego']= $idVaga;
-    $data['idUsuario'] = $userlogin['idUsuario'];
+    $data['idUsuarioProfissional'] = $userlogin['idUsuario'];
+    $data['data']=date('Y-m-d H:i:s');     
+    $data['situacao']=0;
 
     require '../../admin/_models/AdminCandidatarVaga.class.php';
     $cadastra = new AdminCandidatarVaga;
 
     $cadastra->ExeCreateEmprego($data);
-    echo "<script>location.href='vagaAluguelCandidatar.php?id={$idVaga}';</script>";
+    echo "<script>location.href='vagaEmpregoCandidatar.php?id={$idVaga}';</script>";
 
 endif;
 
 $readVaga = new Read();
-$readVaga->FullRead("Select * From vagaempregocandidata where idVagaEmprego = {$idVaga} and idUsuario = {$userlogin['idUsuario']}");
+$readVaga->FullRead("Select * From vagaempregocandidata where idVagaEmprego = {$idVaga} and idUsuarioProfissional = {$userlogin['idUsuario']}");
 
 
 

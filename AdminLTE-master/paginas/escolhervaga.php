@@ -14,7 +14,7 @@ if (!empty($data['SendPostForm'])):
     $data['idUsuarioEmpresario'] = $userlogin['idUsuario'];
     $data['idUsuarioProfissional'] = $idProfissional;
     $data['situacao'] = 0;
-
+    $data['visualizadoProfissional'] = 0;
     require '../../admin/_models/AdminProfissionalConvidar.class.php';
     $cadastra = new AdminProfissionalConvidar;
 
@@ -88,17 +88,17 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
 
 
     <?php
-    if (!$readConvidado->getResult()):
+//    if (!$readConvidado->getResult()):
         echo "
     <div class=\"col-lg-12 connectedSortable\">
     <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\"><i class=\"fa fa-plus\"></i> Enviar Proposta de Emprego para as Vagas Selecionada</button>
     </div>";
-    else:
-        echo "
-    <div class=\"col-lg-12 connectedSortable\">
-    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Aguarde contato do Profissional</button>
-    </div>";
-    endif;
+//    else:
+//        echo "
+//    <div class=\"col-lg-12 connectedSortable\">
+//    <button input type=\"submit\" class=\"btn btn-block btn-success btn-lg\" value=\"Cadastrar\" name=\"SendPostForm\" disabled><i class=\"fa fa-check\"></i> Aguarde contato do Profissional</button>
+//    </div>";
+//    endif;
     ?>
 </form>
 
