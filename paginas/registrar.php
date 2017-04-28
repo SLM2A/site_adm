@@ -42,6 +42,7 @@ endif;
         <link rel="stylesheet" href="../css/style.css">
 
 
+
         <!-- Favicon and touch icons -->
         <link rel="shortcut icon" href="assets/ico/favicon.png">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -53,80 +54,92 @@ endif;
         <link rel="stylesheet" href="../AdminLTE-master/plugins/iCheck/all.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="../AdminLTE-master/dist/css/AdminLTE.min.css">
+
     </head>
 
     <body>
-      <!-- Top content -->
+        <!-- Top content -->
         <div class="top-content">
             <br>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Faça seu registro</strong> </h1>
-                            <div class="description">
-                                <p>
-                                    Aqui você encontra seu espaço
-                                </p>
-                            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>Faça seu registro</strong> </h1>
+                        <div class="description">
+                            <p>
+                                Aqui você encontra seu espaço
+                            </p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 form-box">
-                            <div class="form-top">
-                                <div class="form-top-left">
-                                    <h3>Crie sua conta</h3>
-                                    <p>Coloque seu nome, e-mail e senha:</p>
-                                </div>
-                                <div class="form-top-right">
-                                    <i class="fa fa-user"></i>
-                                </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Crie sua conta</h3>
+                                <p>Coloque seu nome, e-mail e senha:</p>
                             </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-user"></i>
+                            </div>
+                        </div>
 
-                            <div class="form-bottom">
-                                <form role="form" action="" method="post" class="login-form">
-                                    <center>
-                                        <div class="form-group">
-                                            <label>
-                                                <input type="radio" name="idTipoUsuario" class="flat-red" value="1" checked>
-                                                Empresário
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="idTipoUsuario" class="flat-red" value="2" >
-                                                Profissional
-                                            </label>
-                                            <?php if (isset($data)) echo $data['idTipoUsuario']; ?>
+                        <div class="form-bottom">
+                            <form role="form" action="" method="post" class="login-form">
+
+                                <div class="form-group col-sm-12">
+                                    <center>  
+                                        <div class="col-sm-6">
+                                            <input type="radio"  name="idTipoUsuario" value="1" checked>
+                                            <label>Empresário</label>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <input type="radio" name="idTipoUsuario" value="2" >
+                                            <label>Profissional</label>
+                                        </div>
+
+                                        <!--                                            <label>
+                                                                                        <input type="radio" name="idTipoUsuario" class="flat-red" value="1" checked>
+                                                                                        Empresário
+                                                                                    </label>
+                                                                                    <label>
+                                                                                        <input type="radio" name="idTipoUsuario" class="flat-red" value="2" >
+                                                                                        Profissional
+                                                                                    </label>-->
+                                        <?php if (isset($data)) echo $data['idTipoUsuario']; ?>
                                     </center>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-usernome">Nome</label>
-                                        <input type="text" name="nomeUsuario" placeholder="Nome" class="form-username form-control" id="form-nome"
-                                               value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-usersobrenome">Sobrenome</label>
-                                        <input type="text" name="sobrenomeUsuario" placeholder="Sobrenome" class="form-username form-control" id="form-sobrenome"
-                                               value="<?php if (isset($data)) echo $data['sobrenomeUsuario']; ?>" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-useremail">E-mail</label>
-                                        <input type="text" name="email" placeholder="E-mail" class="form-username form-control" id="form-email"
-                                               value="<?php if (isset($data)) echo $data['email']; ?>" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-usersenha">Senha</label>
-                                        <input type="password" name="senha" placeholder="Senha" class="form-password form-control" id="form-password"
-                                               value="<?php if (isset($data)) echo md5($data['senha']); ?>" required />
-                                    </div>
-                                    <button input type="submit" class="btn" Value="Registrar" name="SendPostForm"/>Registrar</button>									
-                                </form>
-                            
-                                <div class="pull-right">
-                                    <a href="login.php"><label>Já sou cadastrado</label></a>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-usernome">Nome</label>
+                                    <input type="text" name="nomeUsuario" placeholder="Nome" class="form-username form-control" id="form-nome"
+                                           value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-usersobrenome">Sobrenome</label>
+                                    <input type="text" name="sobrenomeUsuario" placeholder="Sobrenome" class="form-username form-control" id="form-sobrenome"
+                                           value="<?php if (isset($data)) echo $data['sobrenomeUsuario']; ?>" required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-useremail">E-mail</label>
+                                    <input type="text" name="email" placeholder="E-mail" class="form-username form-control" id="form-email"
+                                           value="<?php if (isset($data)) echo $data['email']; ?>" required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-usersenha">Senha</label>
+                                    <input type="password" name="senha" placeholder="Senha" class="form-password form-control" id="form-password"
+                                           value="<?php if (isset($data)) echo md5($data['senha']); ?>" required />
+                                </div>
+                                <button input type="submit" class="btn" Value="Registrar" name="SendPostForm"/>Registrar</button>									
+                            </form>
+
+                            <div class="pull-right">
+                                <a href="login.php"><label>Já sou cadastrado</label></a>
                             </div>
                         </div>
                     </div>
-                
+                </div>
+
             </div>
 
         </div>
@@ -134,16 +147,14 @@ endif;
 
         <!-- Javascript -->
         <script src="../vendor/jquery/jquery-1.11.1.min.js"></script>
+
         <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="../vendor/jquery/jquery.backstretch.min.js"></script>
         <script src="../js/scripts.js"></script>
         <!-- iCheck 1.0.1 -->
         <script src="../AdminLTE-master/plugins/iCheck/icheck.min.js"></script>
 
-        <!--[if lt IE 10]>
-            <script src="assets/js/placeholder.js"></script>
-        <![endif]-->
-        <script>
+<!--        <script>
             $(function () {
 //iCheck for checkbox and radio inputs
                 $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -159,6 +170,23 @@ endif;
                 $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
                     checkboxClass: 'icheckbox_flat-orange',
                     radioClass: 'iradio_flat-orange'
+                });
+            });
+        </script>-->
+
+        <script>
+            $(document).ready(function () {
+                $('input').each(function () {
+                    var self = $(this),
+                            label = self.next(),
+                            label_text = label.text();
+
+                    label.remove();
+                    self.iCheck({
+                        checkboxClass: 'icheckbox_line-orange',
+                        radioClass: 'iradio_line-orange',
+                        insert: '<div class="icheck_line-icon"></div>' + label_text
+                    });
                 });
             });
         </script>
