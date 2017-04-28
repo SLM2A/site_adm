@@ -1,6 +1,7 @@
 <?php include 'menuHeader.php'; 
 $readUsuario= new Read();
 $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
+//var_dump($readUsuario->getResult());
                       ?>        
                         
            <!-- Content Wrapper. Contains page content -->

@@ -4,8 +4,6 @@ session_start();
 require('../_app/Config.inc.php');
 require '../_app/Includes.php';
 
-
-
 $login = new LoginSite(0);
 //var_dump($login->CheckLogin());       
 
@@ -14,7 +12,7 @@ $dataLogin = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($dataLogin['AdminLogin'])):
     $login->ExeLogin($dataLogin);
     if (!$login->getResult()):
-        WSErro($login->getError()[0], $login->getError()[1]);
+        RentalErro($login->getError()[0], $login->getError()[1]);
     else:
         header('Location: ../AdminLTE-master/paginas/index.php ');
     endif;
@@ -23,9 +21,9 @@ endif;
 $get = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
 if (!empty($get)):
     if ($get == 'restrito'):
-        WSErro('<b>OPSS!</b> Acesso negado, favor efetue login para acessar o painel!', WS_ALERT);
+        RentalErro('<b>OPSS!</b> Acesso negado, favor efetue login para acessar o painel!', WS_ALERT);
     elseif ($get == 'logoff'):
-        WSErro('<b>Sucesso ao deslogar!</b> Sua sessão foi finalizada, volte sempre!', WS_ACCEPT);
+        RentalErro('<b>Sucesso ao deslogar!</b> Sua sessão foi finalizada, volte sempre!', WS_ACCEPT);
     endif;
 endif;
 
@@ -133,3 +131,10 @@ endif;
     </body>
 
 </html>
+
+<script>
+    setTimeout(function(){
+        var msg = document.getElementById("msg-success");
+        msg.parentNode.removeChild(msg);
+    }, 4000);
+</script>

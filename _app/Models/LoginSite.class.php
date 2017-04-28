@@ -55,13 +55,13 @@ class LoginSite {
      */
     private function setLogin() {
         if(!$this->Email || !$this->Senha || !Check::Email($this->Email)):
-            $this->Error = ['Informe seu E-mail e senha para efetuar o login!', WS_INFOR];
+    $this->Error = ['Informe seu E-mail e senha para efetuar o login!', RENTAL_ALERT];
             $this->Result = false;
         elseif(!$this->getUser()):
-            $this->Error = ['Os dados informados não são compatíveis!', WS_ALERT];
+            $this->Error = ['Os dados informados não são compatíveis!', RENTAL_ALERT];
             $this->Result = false;
         elseif($this->Result['idTipoUsuario']< $this->Level):
-            $this->Error = ["Desculpe {$this->Result['nomeUsuario']}, você nao tem permissão para acessar esta área!", WS_ERROR];
+            $this->Error = ["Desculpe {$this->Result['nomeUsuario']}, você nao tem permissão para acessar esta área!", RENTAL_ERROR];
             $this->Result = false;
         else:
             $this->Execute();
@@ -91,7 +91,7 @@ class LoginSite {
         endif;
         
         $_SESSION['userlogin'] = $this->Result;
-        $this->Error = ["Olá {$this->Result['nomeUsuario']}, seja bem vindo(a). Aguarde redirecionamento!", WS_ACCEPT];
+        $this->Error = ["Olá {$this->Result['nomeUsuario']}, seja bem vindo(a). Aguarde redirecionamento!", RENTAL_ACCEPT];
         $this->Result = true; 
     }    
 }

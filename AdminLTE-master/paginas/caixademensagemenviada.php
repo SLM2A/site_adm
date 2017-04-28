@@ -156,8 +156,8 @@ endif;
                     <?php 
                         
                         $readMensagem = new Read();
-                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idRemetente=:id and excluirRemetente=0 order by m.data desc", "id={$userlogin['idUsuario']}");                    
-                        
+                        $readMensagem->FullRead("Select * from mensagem m inner join usuario u on m.idDestinatario=u.idUsuario where m.idRemetente=:id and excluirRemetente=0 order by m.data desc", "id={$userlogin['idUsuario']}");                    
+                       // var_dump($readMensagem->getResult());
                         ?>
                   <tbody>
                   <?php   
