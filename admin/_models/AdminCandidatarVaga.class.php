@@ -76,10 +76,10 @@ class AdminCandidatarVaga{
     private function CreateAluguel() {
         $Create = new Create;
         $Create->ExeCreate(self::ALUGUEL, $this->Data);
-        if ($Create->getResult()):
-            $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
-        endif;
+        
+            $this->Result = TRUE;
+            $this->Error = ["Você acaba de se candidatar a vaga, aguarde contato do salão!",RENTAL_ACCEPT];
+        
     }
     
     private function CreateAluguelArray() {
@@ -89,19 +89,18 @@ class AdminCandidatarVaga{
             $idArray = ['idUsuarioProfissional' => $this->Data['idUsuarioProfissional'], 'idVagaAluguel'=>  $this->Data['idVagaAluguel'][$i]];
             $Create->ExeCreate(self::ALUGUEL, $idArray);
          endfor;
-        if ($Create->getResult()):
-            $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
-        endif;
+        
+            $this->Result = TRUE;
+            $this->Error = ["Você acaba de se candidatar a vaga, aguarde contato do salão!",RENTAL_ACCEPT];
+       
     }
 
     private function CreateEmprego() {
         $Create = new Create;
         $Create->ExeCreate(self::EMPREGO, $this->Data);
-        if ($Create->getResult()):
-            $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
-        endif;
+        $this->Result = TRUE;
+        $this->Error = ["Você acaba de se candidatar a vaga, aguarde contato do salão!",RENTAL_ACCEPT];
+        
     }
     
     private function CreateEmpregoArray() {
@@ -111,10 +110,10 @@ class AdminCandidatarVaga{
             $idArray = ['idUsuario' => $this->Data['idUsuarioProfissional'], 'idVagaEmprego'=>  $this->Data['idVagaEmprego'][$i]];
             $Create->ExeCreate(self::EMPREGO, $idArray);
          endfor;
-        if ($Create->getResult()):
-            $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> você está concorrendo a vaga, aguarde contato do Salão!",RENTAL_ACCEPT];
-        endif;
+        
+            $this->Result = TRUE;
+            $this->Error = ["Você acaba de se candidatar as vagas, aguarde contato do salão!",RENTAL_ACCEPT];
+        
     }
 
     private function Update() {
@@ -122,7 +121,7 @@ class AdminCandidatarVaga{
         $update->ExeUpdate(self::ALUGUEL, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
     
@@ -136,7 +135,7 @@ class AdminCandidatarVaga{
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
      
@@ -150,7 +149,7 @@ class AdminCandidatarVaga{
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
 }

@@ -4,14 +4,8 @@ require_once ('../../_app/Config.inc.php');
 require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
-
-
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-
-//$ExperienciaUsuario = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
 
 /*
  * Insere no banco a Certificação 
@@ -34,6 +28,12 @@ if (!empty($data['SendPostForm'])):
 
 
     $cadastra->InsereRelacao($CertificadoUsuario);
+    
+      if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+            echo "<script>location.href='certificacao.php';</script>";
+        endif;
 endif;
 /*
  * Fim Insere no banco a Certificação
@@ -48,7 +48,7 @@ if (isset($post) && array_key_exists("DeleteCertificado", $post)):
     unset($post['DeleteCertificado']);
     $idCerticacao = $post['CadastroId'];
     $_SESSION['userlogin']['DeleteCertificado'] = "ok";
-    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['nomeCertificado']}?", "Cancelar", "Excluir", "Excluir");
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir a cartificação: <b>{$post['nomeCertificado']}</b>?", "Cancelar", "Excluir", "Excluir");
 endif;
 
 /**
@@ -57,13 +57,6 @@ endif;
 
 if (array_key_exists('id', $_GET)):
        $CadastroId = $_GET['id'];        
-endif;
-
-//Mensagem
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
 endif;
 
 /**
@@ -103,18 +96,18 @@ endif;
                                                 <!-- INICIO-->
                         <!-- Default box -->
 
-                        <div class="box">
+                        <div class="box box-solid collapsed-box" >
 
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class=""></i> Cadastrar Certificado</h3>
 
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar">
-                                        <i class="fa fa-minus"></i></button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Maximizar">
+                                        <i class="fa fa-plus"></i></button>
 
                                 </div>
                             </div>
-                            <div class="box-body" style="display: none;">
+                            <div style="display: none;" class="box-body" >
                                 <section class="col-lg-6 connectedSortable">
                                     <!-- Custom tabs (Charts with tabs)-->
                                     <div class="nav-tabs-custom">

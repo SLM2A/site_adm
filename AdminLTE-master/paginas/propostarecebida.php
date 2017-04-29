@@ -22,8 +22,15 @@ if (!empty($data['SendPostForm'])):
     $candidatavaga->ExeCreateArray($data);
     
     $cadastra->ExeUpdate($userlogin['idUsuario'], $data);
-
+    
+    
+    if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
        echo "<script>location.href='propostarecebida.php';</script>";
+   endif;
+    
+      
 
 endif;
 

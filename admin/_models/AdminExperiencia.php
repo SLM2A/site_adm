@@ -105,7 +105,7 @@ class AdminExperiencia{
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!",WS_ACCEPT];
+        $this->Error = ["A experiência foi cadastrada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
@@ -115,18 +115,10 @@ class AdminExperiencia{
         $Create->ExeCreate(self::EXPERIENCIAUSUARIO, $this->ExperienciaUsuario);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
-    private function Update() {
-        $update = new Update();
-        $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE category_id = :catid", "catid={$this->CadID}");
-        if($update->getResult()):
-        $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['category_title']}, a categoria foi atualizada no sistema!",WS_ACCEPT];
-        endif;
-    }
     
     private function Delete() {
         $delete = new Delete();
@@ -135,7 +127,7 @@ class AdminExperiencia{
         $delete->ExeDelete(self::EXPERIENCIAUSUARIO, "WHERE idExperiencia = :idExperiencia", "idExperiencia={$this->idDelete}");        
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> experiência deletada com sucesso!", RENTAL_ACCEPT];
+            $this->Error = ["Experiência excluida do sistema!", RENTAL_ACCEPT];
         endif;
     }
 }

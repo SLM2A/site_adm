@@ -52,7 +52,7 @@ function WSErro($ErrMsg, $ErrNo, $ErrDie = null) {
 //Rental :: Exibe erros lançados :: Front
 function RentalErro ($ErrMsg, $ErrNo, $ErrDie = null) {
     $tipoIcon = ($ErrNo == RENTAL_ACCEPT) ? "fa-check" : ($ErrNo == RENTAL_INFOR ? "fa-info" : ($ErrNo == RENTAL_ALERT ? "fa-warning" : "fa-ban"));
-    $tipoErro = ($ErrNo == RENTAL_ACCEPT) ? "Sucesso" : ($ErrNo == RENTAL_INFOR ? "Atenção" : ($ErrNo == RENTAL_ALERT ? "Cuidado" : "Erro"));
+    $tipoErro = ($ErrNo == RENTAL_ACCEPT) ? "Sucesso" : ($ErrNo == RENTAL_INFOR ? "Informação" : ($ErrNo == RENTAL_ALERT ? "Atenção" : "Erro"));
     echo "
             <div class=\"box-body\" id=\"msg-success\">
                 <div class=\"alert {$ErrNo} alert-dismissible\">

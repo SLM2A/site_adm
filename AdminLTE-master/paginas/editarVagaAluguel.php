@@ -9,13 +9,6 @@ $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $idVaga = $_GET['id'];
 
 
-//MENSAGEM
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
-endif;
-
 
 //INPUT DATA
 if (!empty($data['SendPostForm'])):
@@ -24,7 +17,7 @@ if (!empty($data['SendPostForm'])):
     require '../../admin/_models/AdminVagaAluguel.php';
     $cadastra = new AdminVagaAluguel; 
     $cadastra->ExeUpdate($idVaga,$data);  
-    
+   
     
     if(!in_array('', $_FILES['foto']['tmp_name'])):         
         $data['foto'] = ($_FILES['foto']['tmp_name'] ? $_FILES['foto'] : NULL);
@@ -35,8 +28,12 @@ if (!empty($data['SendPostForm'])):
         unset($data['foto']);          
     endif;
     
+    if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+      echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVaga}';</script>";
+   endif;
     
-    echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVaga}';</script>";
     
 else:
     //Busca salão e coloca na Array Data

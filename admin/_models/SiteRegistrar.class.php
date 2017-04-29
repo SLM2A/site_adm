@@ -24,12 +24,12 @@ class SiteRegistrar{
         
         if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
             $this->Result = false;
-            $this->Error = ['<b>Erro ao cadastrar:</b> Para cadastrar uma categoria preencha todos os campos!', WS_ALERT];
+            $this->Error = ['<b>Erro ao cadastrar:</b> Para cadastrar uma categoria preencha todos os campos!', RENTAL_ACCEPT];
         else:
             $this->setData();     
             $this->setEmail();
             if($this->setEmail()==1):
-                $this->Error = ['<b>E-mail em uso', WS_ALERT];
+                $this->Error = ['<b>O E-mail escolhido já está em uso</b>', RENTAL_ALERT];
            else:        
             $this->Create();
            endif;
@@ -93,7 +93,7 @@ class SiteRegistrar{
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b> {$this->Data['nomeUsuario']}, o usuário foi cadastrada no sistema!",WS_ACCEPT];
+        $this->Error = ["O Perfil foi registrado no sistema!",RENTAL_ACCEPT];
         endif;
     }
 
@@ -102,7 +102,7 @@ class SiteRegistrar{
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idUsuario = :cadId", "cadId={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!",RENTAL_ACCEPT];
+        $this->Error = ["O Perfil foi atualizado no sistema!",RENTAL_ACCEPT];
         endif;
     }
     
@@ -113,7 +113,7 @@ class SiteRegistrar{
         
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+            $this->Error = ["O Perfil foi deletado do sistema!", RENTAL_ACCEPT];
         endif;
     }
 

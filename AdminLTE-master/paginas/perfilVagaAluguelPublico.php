@@ -29,11 +29,6 @@ if (array_key_exists('idFoto', $_GET)):
 endif;
 //var_dump($idFoto);
 //var_dump($_SESSION['userlogin']['ModalPortfolioOk']);
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
-endif;
 
 
 /**

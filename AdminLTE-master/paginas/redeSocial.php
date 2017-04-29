@@ -19,11 +19,19 @@ $readSocial->ExeRead('redesocial', "WHERE idUsuario = :t", "t={$userlogin['idUsu
 if ($readSocial->getResult()):
 $idSocial = (int) $readSocial->getResult()[0]['idRedeSocial'];
 $cadastra->ExeUpdate($idSocial, $data);
+if ($cadastra->getError()):
+        $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+    endif;
 else:
 $cadastra->ExeCreate($data);
+if ($cadastra->getError()):
+        $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+        $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+    endif;
 endif;
 
-//WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
+echo "<script>location.href='redeSocial.php';</script>";
 
 else:
 $readSocial = new Read;

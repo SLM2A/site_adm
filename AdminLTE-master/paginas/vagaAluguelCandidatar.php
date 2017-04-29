@@ -31,7 +31,14 @@ if (!empty($data['SendPostForm'])):
     $cadastra = new AdminCandidatarVaga;
 
     $cadastra->ExeCreateAluguel($data);
-    echo "<script>location.href='vagaAluguelCandidatar.php?id={$idVaga}';</script>";
+    
+     if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+      echo "<script>location.href='vagaAluguelCandidatar.php?id={$idVaga}';</script>";
+   endif;
+    
+   
 
 endif;
 

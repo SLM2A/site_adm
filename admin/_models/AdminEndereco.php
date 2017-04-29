@@ -51,7 +51,7 @@ class AdminEndereco{
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b>, o endereco foi cadastrado no sistema!",WS_ACCEPT];
+        $this->Error = ["O endereco foi cadastrado no sistema!",RENTAL_ACCEPT];
         endif;
     }
 
@@ -60,7 +60,7 @@ class AdminEndereco{
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idEndereco = :cadId", "cadId={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b>, o endereco foi atualizado no sistema!",WS_ACCEPT];
+        $this->Error =["O endereco foi atualizado no sistema!",RENTAL_ACCEPT];
         endif;
     }
 }

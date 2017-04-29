@@ -69,7 +69,7 @@ class AdminSalao {
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
+            $this->Error = ["O salão foi cadastrado no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
@@ -79,7 +79,7 @@ class AdminSalao {
         $Create->ExeCreate(self::salaoempresario, $this->SalaoEmpresario);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
@@ -88,7 +88,7 @@ class AdminSalao {
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idSalao = :cadId", "cadId={$this->CadID}");
         if ($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b>, Salão foi atualizado no sistema!", WS_ACCEPT];
+            $this->Error = ["O salão foi atualizado no sistema!", RENTAL_ACCEPT];
         endif;
     }
     
@@ -99,7 +99,7 @@ class AdminSalao {
         $delete->ExeDelete(self::salaoempresario, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Salão</b> deletado!", RENTAL_ACCEPT];
+            $this->Error = ["O Salão foi deletado do sistema!", RENTAL_ACCEPT];
         endif;
     }
 

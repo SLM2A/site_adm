@@ -100,7 +100,7 @@ class AdminCertificado {
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
             $this->Result = $Create->getResult();
-            $this->Error = ["<b>Sucesso:</b> a experiência foi cadastrada no sistema!", RENTAL_ACCEPT];
+            $this->Error = ["A certificação foi cadastrada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
@@ -129,7 +129,7 @@ class AdminCertificado {
         $delete->ExeDelete(self::CERTIFICADOUSUARIO, "WHERE idCertificado = :idCertificado", "idCertificado={$this->idDelete}");        
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+            $this->Error = ["A certificação foi deletada do sistema!", RENTAL_ACCEPT];
         endif;
     }
 

@@ -247,7 +247,7 @@ echo"     <a href=\"editarVagaEmprego.php?id={$idVaga}\"><i class=\"fa  fa-penci
 //Inicio Busca Candidatura para Vagas de Alguel
     $readProfissional = new Read();
 
-    $readProfissional->FullRead("SELECT * FROM vagaempregocandidata vec inner join vagaemprego ve on vec.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = vec.idUsuario inner join salao s on ve.idSalao=s.idSalao where ve.idVagaEmprego = {$idVaga}");
+    $readProfissional->FullRead("SELECT * FROM vagaempregocandidata vec inner join vagaemprego ve on vec.idVagaEmprego=ve.idVagaEmprego inner join usuario u on u.idUsuario = vec.idUsuarioProfissional inner join salao s on ve.idSalao=s.idSalao where ve.idVagaEmprego = {$idVaga}");
 
 
 

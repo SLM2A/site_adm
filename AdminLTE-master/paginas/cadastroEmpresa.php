@@ -10,12 +10,6 @@ $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 /*
  * Insere no banco o Salão e a relação salão empresario
  */
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
-endif;
-
 
 if (isset($data) && array_key_exists("SendPostForm", $data)):
     unset($data['SendPostForm']);
@@ -69,7 +63,7 @@ if (isset($post) && array_key_exists("DeleteSalao", $post)):
     unset($post['DeleteSalao']);
     $idSalao = $post['CadastroId'];
     $_SESSION['userlogin']['DeleteSalao'] = "ok";
-    echo RentalModal("Excluir", "Tem certeza que deseja excluir a Vaga: {$post['nomeSalao']}?", "Cancelar", "Excluir", "Excluir");
+    echo RentalModal("Excluir", "Tem certeza que deseja excluir o salão: <b>{$post['nomeSalao']}</b>?", "Cancelar", "Excluir", "Excluir");
 endif;
 
 /**
@@ -78,13 +72,6 @@ endif;
 
 if (array_key_exists('id', $_GET)):
        $CadastroId = $_GET['id'];        
-endif;
-
-//Mensagem
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
 endif;
 
 /**
@@ -126,13 +113,13 @@ endif;
             <!-- INICIO-->
             <!-- Default box -->
              
-            <div class="box" closet>
+            <div class="box box-solid collapsed-box">
              
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="ion-plus"></i> Cadastrar Salão</h3>
+                    <h3 class="box-title"><i class="fa fa-building"></i> Cadastrar Salão</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Maximizar">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" >
                             <i class="fa fa-plus"></i></button>
 
                     </div>

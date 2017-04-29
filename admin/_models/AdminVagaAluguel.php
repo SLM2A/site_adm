@@ -72,7 +72,7 @@ class AdminVagaAluguel{
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b> a vaga foi cadastrada no sistema!",WS_ACCEPT];
+        $this->Error = ["A vaga de aluguel foi cadastrada no sistema!", RENTAL_ACCEPT];
         endif;
     }
 
@@ -81,7 +81,7 @@ class AdminVagaAluguel{
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idVagaAluguel = :cadid", "cadid={$this->CadID}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b>, a vaga foi atualizada no sistema!",WS_ACCEPT];
+        $this->Error = ["A vaga de aluguel foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
     
@@ -93,7 +93,7 @@ class AdminVagaAluguel{
       
         if ($delete->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> ao deletar a imagem!", RENTAL_ACCEPT];
+            $this->Error = ["A vaga de aluguel foi excluida do sistema", RENTAL_ACCEPT];
         endif;
     }
     

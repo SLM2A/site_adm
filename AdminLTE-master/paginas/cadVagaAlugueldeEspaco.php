@@ -42,10 +42,11 @@ if (!empty($data['SendPostForm'])):
         $criaVagaAluguelImagem->ExeCreate($post, $idVagaAluguel, $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
        
     endif;
-    
-    
-    
-    echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVagaAluguel}';</script>";
+    if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+      echo "<script>location.href='perfilVagaAluguelPublico.php?id={$idVagaAluguel}';</script>";
+   endif;
     
 endif;
 

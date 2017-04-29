@@ -1,6 +1,14 @@
 <?php
+
+session_start();
 require('_app/Config.inc.php');
 require '_app/Includes.php'; 
+
+$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
+if ($logoff):
+    unset($_SESSION['userlogin']);
+    header('Location: index.php');
+endif;
 
 ?>
 

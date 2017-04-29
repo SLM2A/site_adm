@@ -29,12 +29,11 @@ if (!empty($data['SendPostForm'])):
 
     $cadastra->InsereRelacao($ExperienciaUsuario);
 
-
-    if (!$cadastra->getResult()):
-        WSErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        echo "<script>location.href='experiencia.php';</script>";
-    endif;
+         if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+            echo "<script>location.href='experiencia.php';</script>";
+        endif;
 endif;
 
 /*
@@ -61,12 +60,6 @@ if (array_key_exists('id', $_GET)):
        $CadastroId = $_GET['id'];        
 endif;
 
-//Mensagem
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
-endif;
 
 /**
  * DELETAR MENSSAGEM* /
@@ -94,6 +87,7 @@ endif;
 ?>
 
 
+
 <section class="content-header">
     <h1> <i class="ion-briefcase"></i> Experiências</h1>  
 </section>
@@ -107,7 +101,7 @@ endif;
         <!-- INICIO-->
         <!-- Default box -->
 
-        <div class="box" closet>
+        <div class="box box-solid collapsed-box" >
 
             <div class="box-header with-border">
                 <h3 class="box-title"><i class=""></i> Cadastrar Experiência</h3>

@@ -193,7 +193,7 @@ foreach ($readSes->getResult() as $ses):
                                                                   <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaEmprego']}\">
                                                                   <input type=\"hidden\" name=\"nomeAnuncio\" value=\"{$ses['tituloVaga']}\">
                                                                    <button input name=\"DeleteEmprego\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
-                                                                  <a href=\"perfilVagaAluguelPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
+                                                                  <a href=\"perfilVagaEmpregoPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                               </td></tr>
                                                               </form>
                                                                   

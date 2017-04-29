@@ -82,7 +82,7 @@ class AdminProfissionalConvidar{
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
     
@@ -96,7 +96,7 @@ class AdminProfissionalConvidar{
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
     
@@ -112,7 +112,7 @@ class AdminProfissionalConvidar{
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",RENTAL_ACCEPT];
         endif;
     }
     
@@ -127,7 +127,7 @@ class AdminProfissionalConvidar{
         endfor;
         if($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b> a categoria foi atualizada no sistema!",WS_ACCEPT];
+            $this->Error = ["Você aceitou a proposta, aguarde o contato do salão!",RENTAL_ACCEPT];
         endif;
     }
 }

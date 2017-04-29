@@ -5,22 +5,22 @@ require_once ('../../_app/Includes.php');
 include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$msg = false;
+
 
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
     $data['idUsuario'] = $userlogin['idUsuario'];
 
-
-
     require '../../admin/_models/AdminCompetencia.class.php';
     $cadastra = new AdminCompetencia;
     $cadastra->ExeCreate($data);
-    RentalErro("<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT);
-   // echo "<script>location.href='competencia.php';</script>";
+    $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+    $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+    echo "<script>location.href='competencia.php';</script>";
 
-endif;
+endif;   
+
     $read = new Read();
     $read->FullRead("select * from habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao WHERE idUsuario = :id order by aa.nomeProfissao" , "id={$userlogin['idUsuario']}");
     if($read->getResult()):

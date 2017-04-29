@@ -6,12 +6,6 @@ include 'menuHeader.php';
 
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-//Mostra menssagem de sucesso ou erro se necessario.
-if (!empty($_SESSION['userlogin']['msg'])):
-    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
-    $_SESSION['userlogin']['msg'] = '';
-    $_SESSION['userlogin']['tipoMsg'] = '';
-endif;
 
 //Cadastra e atualiza informações e vatar do perfil
 if (isset($data) && array_key_exists("SendPostForm", $data)):

@@ -16,7 +16,13 @@ if (!empty($data['SendPostForm'])):
 
     $cadastra->ExeUpdate($idVaga, $data);
     
-    echo "<script>location.href='perfilVagaEmpregoPublico.php?id={$idVaga}';</script>";
+        if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+     echo "<script>location.href='perfilVagaEmpregoPublico.php?id={$idVaga}';</script>";
+   endif;
+    
+    
     
 else:
     $readVaga = new Read();

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <?php
-session_start();
+
 require('../_app/Config.inc.php');
 require '../_app/Includes.php';
 
 $login = new LoginSite(0);
-//var_dump($login->CheckLogin());       
 
 
 $dataLogin = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -16,22 +15,10 @@ if (!empty($dataLogin['AdminLogin'])):
     else:
         header('Location: ../AdminLTE-master/paginas/index.php ');
     endif;
+    
 endif;
 
-$get = filter_input(INPUT_GET, 'exe', FILTER_DEFAULT);
-if (!empty($get)):
-    if ($get == 'restrito'):
-        RentalErro('<b>OPSS!</b> Acesso negado, favor efetue login para acessar o painel!', WS_ALERT);
-    elseif ($get == 'logoff'):
-        RentalErro('<b>Sucesso ao deslogar!</b> Sua sessão foi finalizada, volte sempre!', WS_ACCEPT);
-    endif;
-endif;
 
-$logoff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
-if ($logoff):
-    unset($_SESSION['userlogin']);
-    header('Location: index.php');
-endif;
 ?>  
 
 <html lang="pt-br">
@@ -50,13 +37,6 @@ endif;
         <link rel="stylesheet" href="../css/form-elements.css">
         <link rel="stylesheet" href="../css/style.css">
 
-
-        <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="assets/ico/favicon.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 
     </head>
 
@@ -123,10 +103,6 @@ endif;
         <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="../vendor/jquery/jquery.backstretch.min.js"></script>
         <script src="../js/scripts.js"></script>
-
-        <!--[if lt IE 10]>
-            <script src="assets/js/placeholder.js"></script>
-        <![endif]-->
 
     </body>
 

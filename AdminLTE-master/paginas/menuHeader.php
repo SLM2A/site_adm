@@ -15,11 +15,11 @@ else:
 endif;
 
 if ($logoff):
-    unset($_SESSION['userlogin']);
-    header('Location: index.php?exe=logoff');
-
+    var_dump($_SESSION['userlogin']);
+    header('Location: index.php');
 
 endif;
+
 
 
 $readNaoLida = new Read();
@@ -430,4 +430,11 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                               </form> "; 
                           
                       endif;
+                      
+                      //Mostra menssagem de sucesso ou erro se necessario.
+if (!empty($_SESSION['userlogin']['msg'])):
+    RentalErro($_SESSION['userlogin']['msg'], $_SESSION['userlogin']['tipoMsg']);
+    $_SESSION['userlogin']['msg'] = '';
+    $_SESSION['userlogin']['tipoMsg'] = '';
+endif;
                       ?>  

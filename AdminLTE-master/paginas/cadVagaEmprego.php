@@ -13,14 +13,16 @@ if (!empty($data['SendPostForm'])):
     $cadastra = new AdminVagaEmprego;
 
     $cadastra->ExeCreate($data);
+    
+    $readID=new Read();
+    $readID->FullRead("SELECT MAX(idVagaEmprego) FROM vagaemprego");
+    $idVagaEmprego = $readID->getResult()[0]['MAX(idVagaEmprego)'];
 
-    RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-
-    if (!$cadastra->getResult()):
-        RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
-    else:
-        echo "<script>location.href='minhasVagas.php';</script>";
-    endif;
+    if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+      echo "<script>location.href='perfilVagaEmpregoPublico.php?id={$idVagaEmprego}';</script>";
+   endif;
 endif;
 ?>
 

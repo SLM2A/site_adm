@@ -55,7 +55,7 @@ class AdminRedeSocial{
         $Create->ExeCreate(self::ENTITY, $this->Data);
         if ($Create->getResult()):
         $this->Result = $Create->getResult();
-        $this->Error = ["<b>Sucesso:</b> as redes sociais foram cadastradas no RentalEasy!",WS_ACCEPT];
+        $this->Error = ["As redes sociais foram atualizadas no sistema!",RENTAL_ACCEPT];
         endif;
     }
 
@@ -64,7 +64,7 @@ class AdminRedeSocial{
         $update->ExeUpdate(self::ENTITY, $this->Data, "WHERE idRedeSocial = :catid", "catid={$this->id}");
         if($update->getResult()):
         $this->Result = TRUE;
-        $this->Error = ["<b>Sucesso:</b> as redes sociais foram atualizadas no RentalEasy!",WS_ACCEPT];
+        $this->Error = ["As redes sociais foram atualizadas no sistema!",RENTAL_ACCEPT];
         endif;
     }
 }
