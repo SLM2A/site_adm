@@ -164,7 +164,7 @@ endif;
                                                             if ($opcao['opcao'] == $data['vinculoEmpregaticio']):
                                                                 echo ' checked';
                                                             endif;
-                                                            echo "> {$opcao['opcao']} </option></label>";
+                                                            echo "> <label>{$objeto['opcao']}</label>";
                                                         endforeach;
                                                     endif;
                                                     ?>

@@ -31,8 +31,8 @@ class Upload {
     function __construct($BaseDir = null) {
         self::$BaseDir = ( (string) $BaseDir ? $BaseDir : '../uploads/');
         if (!file_exists(self::$BaseDir) && !is_dir(self::$BaseDir)):
-            mkdir(self::$BaseDir, 777);
-            
+            mkdir(self::$BaseDir, 0777);
+            chmod(self::$BaseDir, 0777);
         endif;
     }
 
@@ -162,7 +162,8 @@ class Upload {
     //Verifica e cria o diretório base!
     private function CreateFolder($Folder) {
         if (!file_exists(self::$BaseDir . $Folder) && !is_dir(self::$BaseDir . $Folder)):
-            mkdir(self::$BaseDir . $Folder, 777);
+            mkdir(self::$BaseDir . $Folder, 0777);
+            chmod(self::$BaseDir . $Folder, 0777);
         endif;
     }
 

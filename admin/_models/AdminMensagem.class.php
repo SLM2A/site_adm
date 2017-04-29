@@ -65,7 +65,7 @@ class AdminMensagem {
         endforeach;
         if ($update->getResult()):
             $this->Result = TRUE;
-            $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
+            $this->Error = ["Mensagens deletadas do sistema!", RENTAL_ACCEPT];
         endif;
     }
 

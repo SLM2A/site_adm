@@ -6,8 +6,14 @@ include 'menuHeader.php';
 
 $readFotos = new Read();
 $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
-                        
+          
+$readCadastro = new Read();
+$readCadastro->FullRead("SELECT * FROM usuario u inner join enderecousuario e on u.idUsuario=e.idUsuario WHERE u.idUsuario={$userlogin['idUsuario']}");
+//var_dump($readCadastro->getResult());
 
+$readAreaAtuacao = new Read();
+$readAreaAtuacao->FullRead("SELECT * FROM habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao inner join usuario u on u.idUsuario=hu.idUsuario WHERE hu.idUsuario={$userlogin['idUsuario']}");
+//var_dump($readAreaAtuacao->getResult());
 ?>
 
 <link rel='stylesheet' href='package/unitegallery/css/unite-gallery.css' type='text/css' />
@@ -16,14 +22,32 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
 
     <section class="col-lg-3 connectedSortable">
         <!-- Profile Image -->
-        <div class="box box-primary">
+        <div class="box box-primary" style="height: 291px">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture">
+                <?php if($readUsuario->getResult()[0]['avatar']==null):
+                                        echo "<img src=\"../dist/img/userpadrao.png\" class=\"profile-user-img img-responsive img-circle\" alt=\"User profile picture\"> ";  
+                                    else:
+                                        echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User profile picture\">"; 
+                                    endif;?>
 
-                <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
+                <h3 class="profile-username text-center">
+                    <?php if($readCadastro->getResult()): 
+                              echo "{$readCadastro->getResult()[0]['nomeUsuario']}"; 
+                              echo " "; echo "{$readCadastro->getResult()[0]['sobrenomeUsuario']}"; 
+                          else: 
+                              echo $userlogin['nomeUsuario']." ".$userlogin['sobrenomeUsuario'];  
+                          endif;  ?></h3>
+                <center><a href="perfil.php"><span class="label label-primary">editar perfil</span></a></center>
                 <hr>
+                
                 <strong><i class="fa fa-pencil margin-r-5"></i>Áreas de Atuação</strong>
-                <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
+                <p class="text-muted text-center">
+                    <?php 
+                            
+                            foreach ($readAreaAtuacao->getResult() as $areaatuacao):
+                                    echo "<span class=\"label label-danger\">{$areaatuacao['nomeProfissao']}</span> ";
+                            endforeach;
+                    ?>  </p>
                 <hr>
             </div>
             <!-- /.box-body -->
@@ -43,17 +67,48 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
                 <strong><i class="fa fa-book margin-r-5"></i> O que acho sobre mim</strong>
 
                 <p class="text-muted">
-                    <?= $userlogin['descricao']; ?>
-                </p>
+                    <?php if($readCadastro->getResult()): 
+                             echo "{$readCadastro->getResult()[0]['descricao']}";
+                          else: 
+                              echo "Sem descrição cadastrada!";  
+                          endif;?>
+                </p>    
                 <hr>
-                <strong><i class="fa fa-pencil margin-r-5"></i> Competências</strong>
+                <strong><i class="fa fa-pencil margin-r-5"></i> Redes Sociais</strong>
                 <p>
-                    <span class="label label-danger">Pigmentação</span>
-                    <span class="label label-success">Navalhado</span>
+                    <?php 
+                    $readRedeSocial = new Read();
+                    $readRedeSocial->FullRead("SELECT * FROM redesocial rs inner join usuario u on rs.idUsuario=u.idUsuario WHERE rs.idUsuario={$userlogin['idUsuario']}");
+                    //var_dump($readRedeSocial->getResult());
+                    if($readRedeSocial->getResult()):
+                        if($readRedeSocial->getResult()[0]['facebook']):
+                            echo "<a class=\"btn btn-social-icon btn-facebook\" href=\"https://www.facebook.com/{$readRedeSocial->getResult()[0]['facebook']}\"><i class=\"fa fa-facebook\"></i></a> ";
+                        endif;
+                        if($readRedeSocial->getResult()[0]['instagram']):
+                            echo "<a class=\"btn btn-social-icon btn-instagram\" href=\"https://www.instagram.com/{$readRedeSocial->getResult()[0]['instagram']}\"><i class=\"fa fa-instagram\"></i></a> ";
+                        endif;
+                        if($readRedeSocial->getResult()[0]['twitter']):
+                            echo "<a class=\"btn btn-social-icon btn-twitter\"  href=\"https://twitter.com/{$readRedeSocial->getResult()[0]['twitter']}\"><i class=\"fa fa-twitter\"></i></a> ";
+                        endif;
+                    else:
+                        echo "Usuário não possui redes sociais cadastradas!";
+                    endif;
+                    
+                    
+                    ?>
+                    
+                    
                 </p>
                 <hr>
                 <strong><i class="fa fa-map-marker margin-r-5"></i> Localidade</strong>
-                <p class="text-muted">São Paulo, Brasil</p>
+                <p class="text-muted">
+                    <?php 
+                        if($readCadastro->getResult()): 
+                            echo "{$readCadastro->getResult()[0]['cidade']}"; echo "/"; echo "{$readCadastro->getResult()[0]['estado']}";
+                        else: 
+                            echo "Sem localização cadastrada!";  
+                        endif;
+                          ?></p>
 
             </div>
         </div>
@@ -86,7 +141,7 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
                     <?php
                     $readSes = new Read;
 
-                    $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                    $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid order by exp.deExperiencia", "catid={$userlogin['idUsuario']}");
                     foreach ($readSes->getResult() as $ses):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
@@ -141,7 +196,7 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
                     <?php
                     $readSes = new Read;
 
-                    $readSes->FullRead("select * from certificadoprofissionalusuario cpu inner join certificadousuario cu on cpu.idCertificado = cu.idCertificado where cu.idUsuario= :catid", "catid={$userlogin['idUsuario']}");
+                    $readSes->FullRead("select * from certificadoprofissionalusuario cpu inner join certificadousuario cu on cpu.idCertificado = cu.idCertificado where cu.idUsuario= :catid order by cpu.anoInicioCertificado", "catid={$userlogin['idUsuario']}");
                     foreach ($readSes->getResult() as $ses):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
@@ -203,7 +258,7 @@ $readFotos->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$userlogin['idUsu
 </section>
 <div class="row">
     <?php include 'menuFooter.php'; ?>
-    <script type='text/javascript' src='package/unitegallery/js/jquery-11.0.min.js'></script>
+    
     <script type='text/javascript' src='package/unitegallery/js/unitegallery.min.js'></script>
     <script type='text/javascript' src='package/unitegallery/themes/tilesgrid/ug-theme-tilesgrid.js'></script>
 

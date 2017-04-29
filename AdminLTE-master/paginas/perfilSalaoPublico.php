@@ -7,8 +7,10 @@ include 'menuHeader.php';
 $idSalao = $_GET['id'];
 
 $readSes = new Read;
-$readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao=se.idSalao inner join usuario u on se.idUsuario=u.idUsuario where s.idSalao = :id", "id={$idSalao}");
-
+$readSes->FullRead("select * from salao s inner join salaoempresario se on s.idSalao=se.idSalao where s.idSalao = :id", "id={$idSalao}");
+//var_dump($readSes->getResult());
+$readProprietario = new Read();
+$readProprietario->FullRead("select * from salao s inner join salaoempresario se on s.idSalao=se.idSalao inner join usuario u on u.idUsuario=se.idUsuario where s.idSalao = :id", "id={$idSalao}");
 ?>
 
 <section class="content-header">
@@ -59,7 +61,7 @@ $readSes->FullRead("select * from salao s inner join salaoempresario se on s.idS
                                     <hr>
                                     <strong><i class="fa fa-pencil margin-r-5"></i> Nome do Proprietário</strong>
                                     <p>
-                                        <?php echo $readSes->getResult()[0]['nomeUsuario']; echo " "; echo $readSes->getResult()[0]['sobrenomeUsuario']; ?>
+                                        <?php echo $readProprietario->getResult()[0]['nomeUsuario']; echo " "; echo $readProprietario->getResult()[0]['sobrenomeUsuario']; ?>
                                         
                                     </p>
                                     <hr>						  

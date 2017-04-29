@@ -23,7 +23,7 @@ if (!empty($data['SendPostForm'])):
         $data['foto'] = ($_FILES['foto']['tmp_name'] ? $_FILES['foto'] : NULL);
         require('../../admin/_models/AdminVagaAluguelImagem.class.php');   
         $criaVagaAluguelImagem = new AdminVagaAluguelImagem();
-        $criaVagaAluguelImagem->ExeCreate($data['foto'], $idVaga, $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);        
+        $criaVagaAluguelImagem->ExeCreate($data['foto'], $idVaga, $idVaga);        
     else:
         unset($data['foto']);          
     endif;
@@ -169,12 +169,12 @@ $readObjeto->FullRead("select * from objetoAlugado");
                                         echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                     else:
                                         foreach ($readFormaAluguel->getResult() as $objeto):
-                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\" class=\"flat-red\" ";
+                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\"";
 
                                             if ($objeto['opcao'] == $data['formaAluguel']):
                                                 echo ' checked';
                                             endif;
-                                            echo "> {$objeto['opcao']} </option></label>";
+                                            echo "> <label>{$objeto['opcao']}</label> ";
                                         endforeach;
                                     endif;
                                     ?>

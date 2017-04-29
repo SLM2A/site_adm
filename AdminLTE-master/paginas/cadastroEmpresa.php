@@ -19,7 +19,7 @@ if (isset($data) && array_key_exists("SendPostForm", $data)):
     if(!empty($data['avatar'])):
         require('../../admin/_models/AdminAvatar.class.php');
         $sendAvatar = new AdminAvatar();
-        $sendAvatar->ExeCreateSalao($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+        $sendAvatar->ExeCreateSalao($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['idUsuario']);
         $data['avatar'] = ($sendAvatar->getSendAvatar());
     else:
         unset($data['avatar']);

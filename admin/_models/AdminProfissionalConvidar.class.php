@@ -68,9 +68,9 @@ class AdminProfissionalConvidar{
             $Create->ExeCreate(self::ENTITY, $idArray);
           endfor;
         $this->Result = TRUE;
-         if($Create->getResult()):
-             $this->Error = ["<b>Sucesso:</b>  o usuário foi atualizado!", RENTAL_ACCEPT];
-         endif;
+        
+             $this->Error = ["Propostas de emprego enviada, aguarde aceitação do Profissional!", RENTAL_ACCEPT];
+        
     }
     
     private function UpdateAluguel() {

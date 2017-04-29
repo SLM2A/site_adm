@@ -39,7 +39,7 @@ if (!empty($data['SendPostForm'])):
         
        // $post['idVagaAluguel'];
         $criaVagaAluguelImagem = new AdminVagaAluguelImagem();
-        $criaVagaAluguelImagem->ExeCreate($post, $idVagaAluguel, $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+        $criaVagaAluguelImagem->ExeCreate($post, $idVagaAluguel, $idVagaAluguel);
        
     endif;
     if ($cadastra->getResult()):
@@ -169,14 +169,15 @@ endif;
                                                         echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                                     else:
                                                         foreach ($readFormaAluguel->getResult() as $objeto):
-                                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\" class=\"flat-red\" ";
+                                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\" ";
 
                                                             if ($objeto['opcao'] == $data['formaAluguel']):
                                                                 echo ' checked';
                                                             endif;
-                                                            echo "> {$objeto['opcao']} </option></label>";
+                                                            echo "> <label>{$objeto['opcao']}</label> "; echo " ";
                                                         endforeach;
                                                     endif;
+                                                    
                                                     ?>
 
                                                 </div>

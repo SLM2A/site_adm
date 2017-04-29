@@ -31,7 +31,7 @@ if (isset($post) && array_key_exists("SendPostForm", $post)):
     unset($post['SendPostForm']);
     require('../../admin/_models/AdminGaleria.class.php');
     $sendGallery = new AdminGaleria;
-    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+    $sendGallery->ExeCreate($post, $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['idUsuario']);
     if ($sendGallery->getMsg()):
         $_SESSION['userlogin']['msg'] = $sendGallery->getMsg()[0];
         $_SESSION['userlogin']['tipoMsg'] = $sendGallery->getMsg()[1];

@@ -39,13 +39,9 @@ class SiteRegistrar{
     public function ExeUpdate($idUsuario, array $Data) {
         $this->CadID = (int) $idUsuario;
         $this->Data = $Data;
-        
-        if(in_array('', $this->Data))://Verifica se a algum campo em branco na array
-            $this->Result = false;
-            $this->Error = ["<b>Erro ao atualizar:</b> Para atualizar o cliente, preencha todos os campos!", WS_ALERT];
-        else:       
+       
             $this->Update();
-        endif;        
+             
     }
     
      public function ExeDelete($CadastroId) {

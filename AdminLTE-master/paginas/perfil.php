@@ -15,7 +15,7 @@ if (isset($data) && array_key_exists("SendPostForm", $data)):
     if(!empty($data['avatar'])):
         require('../../admin/_models/AdminAvatar.class.php');
         $sendAvatar = new AdminAvatar();
-        $sendAvatar->ExeCreate($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['nomeUsuario'] . '-' . $_SESSION['userlogin']['sobrenomeUsuario']);
+        $sendAvatar->ExeCreate($data['avatar'], $_SESSION['userlogin']['idUsuario'], $_SESSION['userlogin']['idUsuario']);
         $data['avatar'] = ($sendAvatar->getSendAvatar());
         
     else:
@@ -36,7 +36,7 @@ if (isset($data) && array_key_exists("SendPostForm", $data)):
 else:
     $read = new Read();
     $read->ExeRead("usuario", "WHERE idUsuario = :id", "id={$userlogin['idUsuario']}");
-   
+    
     if($read->getResult()):
         $data = $read->getResult()[0];
     endif;
@@ -133,18 +133,18 @@ endif;
                                 <label>Nome:</label>
                                 <input type="text" maxlength=60  class="form-control" id="nomeUsuario" name="nomeUsuario" value="<?php if (isset($data)) echo $data['nomeUsuario']; ?>" required>
                                 <label>CPF:</label>
-                                <input type="text" maxlength=60  class="form-control" name="cpfUsuario" id="cpf" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" required>
+                                <input type="text" maxlength=60  class="form-control" name="cpfUsuario" id="cpf" value="<?php if (isset($data)) echo $data['cpfUsuario']; ?>" >
 								<label>Apelido:</label>
                                 <div class="input-group">
 									<span class="input-group-addon">@</span>
-									<input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" required>
+									<input type="text" class="form-control"  id="apelidoUsuario" name="apelidoUsuario" value="<?php if (isset($data)) echo $data['apelidoUsuario']; ?>" >
 								</div>
                             </section>
                             <section class="col-lg-6 connectedSortable">
                                 <label>Sobrenome:</label>
                                 <input type="text" maxlength=60  class="form-control" id="sobrenomeUsuario" name="sobrenomeUsuario" value="<?php if (isset($data)) echo $data['sobrenomeUsuario']; ?>" required>
                                 <label>Sexo:</label>
-                                <select class="form-control" id="sexoUsuario" name="sexoUsuario" required>
+                                <select class="form-control" id="sexoUsuario" name="sexoUsuario" >
                                     <option selected><?php if (isset($data)) echo $data['sexoUsuario']; ?></option>
                                     <?php
                                           if($data['sexoUsuario']=='Feminino'):
@@ -158,14 +158,14 @@ endif;
                                      ?>
                                 </select>
                                                                 <label>Data de Nascimento:</label>
-                                <input type="text" class="form-control" id="data" name="dataNascimento" value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" required>
+                                <input type="text" class="form-control" id="data" name="dataNascimento" value="<?php if (isset($data)) echo $data['dataNascimento']; ?>" >
                             </section>
                             <section class="col-lg-12 connectedSortable">
                                 <br>
                             <label>O que penso sobre mim:</label>
                             <div class="box-body pad">
                                 <textarea input type="text" maxlength=250  class="form-control" placeholder="Escreva sobre você..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
-                                          name="descricao" id="descricao" required><?php if (isset($data)) echo $data['descricao']; ?></textarea>
+                                          name="descricao" id="descricao" ><?php if (isset($data)) echo $data['descricao']; ?></textarea>
 
                             </div>
                             </section>

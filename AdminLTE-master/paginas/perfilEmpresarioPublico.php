@@ -88,7 +88,7 @@ $readProfissional->FullRead("select * from usuario where idUsuario = :id", "id={
                                             <?php
                                             $readSes = new Read;
 
-                                            $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid", "catid={$idProfissional}");
+                                            $readSes->FullRead("select * from experienciaprofissionalusuario exp inner join experienciausuario ex on exp.idExperiencia = ex.idExperiencia where ex.idUsuario= :catid order by exp.deExperiencia", "catid={$idProfissional}");
                                             foreach ($readSes->getResult() as $ses):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
@@ -138,7 +138,7 @@ $readProfissional->FullRead("select * from usuario where idUsuario = :id", "id={
 <?php
 $readSes = new Read;
 
-$readSes->FullRead("select * from certificadoprofissionalusuario cpu inner join certificadousuario cu on cpu.idCertificado = cu.idCertificado where cu.idUsuario= :catid", "catid={$idProfissional}");
+$readSes->FullRead("select * from certificadoprofissionalusuario cpu inner join certificadousuario cu on cpu.idCertificado = cu.idCertificado where cu.idUsuario= :catid order by cpu.anoInicioCertificado", "catid={$idProfissional}");
 foreach ($readSes->getResult() as $ses):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
@@ -205,7 +205,7 @@ endforeach;
 <div class="row">
 <?php include 'menuFooter.php'; ?>
 
-    <script type='text/javascript' src='package/unitegallery/js/jquery-11.0.min.js'></script>
+    
     <script type='text/javascript' src='package/unitegallery/js/unitegallery.min.js'></script>
     <script type='text/javascript' src='package/unitegallery/themes/tilesgrid/ug-theme-tilesgrid.js'></script>
 

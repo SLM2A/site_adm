@@ -3,21 +3,29 @@ session_start();
 require('../_app/Config.inc.php');
 require '../_app/Includes.php';
 
-$_SESSION['teste'] = 'ok';
-
 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
     $data['senha'] = md5($data['senha']);
-    require '../admin/_models/SiteRegistrar.class.php';
-    $cadastra = new SiteRegistrar;
-    $cadastra->ExeCreate($data);
+    
+    $check = new Check();
+    
+    if ($check->Email($data['email'])):
+         require '../admin/_models/SiteRegistrar.class.php';
+        $cadastra = new SiteRegistrar;
+        $cadastra->ExeCreate($data);
 
-    if (!$cadastra->getResult()):
-        RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
+        if (!$cadastra->getResult()):
+            RentalErro($cadastra->getError()[0], $cadastra->getError()[1]);
+        else:
+            header('Location: login.php ');
+        endif;
     else:
-        header('Location: login.php ');
+        RentalErro("Digite um e-mail valido", RENTAL_ALERT); 
     endif;
+    
+   
 endif;
 
 ?>
@@ -110,7 +118,7 @@ endif;
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="form-useremail">E-mail</label>
-                                    <input type="email" name="email" placeholder="E-mail" class="form-username form-control" id="form-email"
+                                    <input type="text" name="email" placeholder="E-mail" class="form-username form-control" id="form-email"
                                            value="<?php if (isset($data)) echo $data['email']; ?>" required />
                                 </div>
                                 <div class="form-group">

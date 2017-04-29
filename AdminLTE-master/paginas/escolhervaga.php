@@ -19,7 +19,14 @@ if (!empty($data['SendPostForm'])):
     $cadastra = new AdminProfissionalConvidar;
 
     $cadastra->ExeCreate($data);
-    echo "<script>location.href='perfilProfissionalPublico?id={$idProfissional}';</script>";
+    
+     if ($cadastra->getResult()):
+            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+       echo "<script>location.href='perfilProfissionalPublico?id={$idProfissional}';</script>";
+   endif;
+    
+    
 
 endif;
 
