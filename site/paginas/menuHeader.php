@@ -275,7 +275,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                        echo " <img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"user-image\" alt=\"User Image\"> "; 
                                       endif; ?>
                                       
-                                    <span class="hidden-xs"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></span>
+                                    <span class="hidden-xs"><?php echo $readUsuario->getResult()[0]['nomeUsuario']; ?> <?php echo $readUsuario->getResult()[0]['sobrenomeUsuario']; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -287,7 +287,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                         echo"<img src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" class=\"img-circle\" alt=\"User Image\">";
                                      endif; ?>
                                         <p>
-                                            <?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?> - Profissional
+                                            <?php echo $readUsuario->getResult()[0]['nomeUsuario']; ?> <?php echo $readUsuario->getResult()[0]['sobrenomeUsuario']; ?>
                                             
                                         </p>
                                     </li>
@@ -331,7 +331,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         </div>
                         <div class="pull-left info">
                             <p>
-                            <p><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></p>
+                            <p><?php echo $readUsuario->getResult()[0]['nomeUsuario']; ?> <?php echo $readUsuario->getResult()[0]['sobrenomeUsuario']; ?></p>
                             
                         </div>
                     </div>

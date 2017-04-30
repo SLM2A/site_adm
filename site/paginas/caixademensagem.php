@@ -20,7 +20,11 @@ $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 //Chamar a Modal.
 if (isset($post) && array_key_exists("DeleteMensagem", $post)):
     unset($post['DeleteMensagem']);
+
+    if (!empty($post['CadastroId'])):
     $idMensagem = $post['CadastroId'];
+    endif;
+    
     $_SESSION['userlogin']['DeleteMensagem'] = "ok";
     echo RentalModal("Excluir", "Tem certeza que deseja excluir as mensagens selecionadas?", "Cancelar", "Excluir", "Excluir");
 endif;

@@ -2,6 +2,13 @@
 $readUsuario= new Read();
 $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
 //var_dump($readUsuario->getResult());
+
+
+$readAreaAtuacao = new Read();
+$readAreaAtuacao->FullRead("SELECT * FROM habilidadeusuario hu inner join areaatuacao aa on hu.idAreaAtuacao=aa.idAreaAtuacao inner join usuario u on u.idUsuario=hu.idUsuario WHERE hu.idUsuario={$userlogin['idUsuario']}");
+
+
+
                       ?>        
                         
            <!-- Content Wrapper. Contains page content -->
@@ -183,9 +190,18 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                         echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User profile picture\">"; 
                                     endif;?></div>
                                     <div class="box-body box-profile" id="sales-chart" style="position: relative; height: 130px;">
-                                        <h3 class="profile-username text-center"><?= $userlogin['nomeUsuario']; ?> <?= $userlogin['sobrenomeUsuario']; ?></h3>
+                                        <h3 class="profile-username text-center"><?php echo $readUsuario->getResult()[0]['nomeUsuario']; ?> <?php echo $readUsuario->getResult()[0]['sobrenomeUsuario']; ?></h3>
 
-                                        <p class="text-muted text-center">Cabelereiro, Barbeiro e Hair Design</p>
+                                        <p class="text-muted text-center">
+                                        <?php 
+                                            if($readAreaAtuacao->getResult()):
+                                                foreach ($readAreaAtuacao->getResult() as $areaatuacao):
+                                                        echo "<span class=\"label label-primary\">{$areaatuacao['nomeProfissao']}</span> ";
+                                                endforeach;
+                                            else:
+                                                echo "<a href=\"competencia.php\"><span class=\"label label-primary\">Adicionar Área de Atuação </span></a>";
+                                            endif;  
+                                        ?></p>
 
                                         <a href="perfilpublico.php" class="btn btn-primary btn-block"><b>Ver Perfil Completo</b></a>				
                                     </div>

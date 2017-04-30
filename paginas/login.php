@@ -13,7 +13,7 @@ if (!empty($dataLogin['AdminLogin'])):
     if (!$login->getResult()):
         RentalErro($login->getError()[0], $login->getError()[1]);
     else:
-        header('Location: ../AdminLTE-master/paginas/index.php ');
+        header('Location: ../site/paginas/index.php ');
     endif;
     
 endif;

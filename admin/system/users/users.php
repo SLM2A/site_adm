@@ -20,8 +20,8 @@
             <?php for($u=1;$u<=5;$u++):?>            
             <li>
                 <span class="ui center"><?=$u;?></span>
-                <span class="un">Robson Vidaletti Leite</span>
-                <span class="ue">contato@upinside.com.br</span>
+                <span class="un">Rafael Milaré</span>
+                <span class="ue">rafael@moshe.com.br</span>
                 <span class="ur center"><?=date('d/m/Y');?></span>
                 <span class="ua center"><?=date('d/m/Y H:i');?>Hs</span>
                 <span class="ul center">Admin</span>
