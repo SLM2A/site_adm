@@ -55,7 +55,7 @@ $readSalao->FullRead("Select * From Salao where nomeSalao like '%{$termos}%'");
 
                             </div>
                             <div class=\"widget-user-image\">
-                              <img class=\"img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User Avatar\">
+                              <img class=\"img-circle\" src=\"../dist/img/Aluguel_de_espaco_128x128.jpg\" alt=\"User Avatar\">
                             </div>
                             <div class=\"box-footer\">
                                <div class=\"row\">
@@ -117,7 +117,7 @@ $readSalao->FullRead("Select * From Salao where nomeSalao like '%{$termos}%'");
 
                             </div>
                             <div class=\"widget-user-image\">
-                              <img class=\"img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User Avatar\">
+                              <img class=\"img-circle\" src=\"../dist/img/vaga_de_emprego_128x128.jpg\" alt=\"User Avatar\">
                             </div>
                             <div class=\"box-footer\">
                                <div class=\"row\">
@@ -166,7 +166,7 @@ $readSalao->FullRead("Select * From Salao where nomeSalao like '%{$termos}%'");
             <div class="tab-pane" id="salao">
                 <div class="box-footer">
                     <?php
-                    
+                          
                     foreach ($readSalao->getResult() as $salao):
                       echo "
                         <div class=\"col-md-4\">
@@ -177,8 +177,14 @@ $readSalao->FullRead("Select * From Salao where nomeSalao like '%{$termos}%'");
                               <h3 class=\"widget-user-username\"><b>{$salao['nomeSalao']}</b></h3>
 
                             </div>
-                            <div class=\"widget-user-image\">
-                              <img class=\"img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User Avatar\">
+                            <div class=\"widget-user-image\">";
+                            if($salao['avatar']==null):
+                                echo "<img class=\"img-circle\" src=\"../dist/img/salao_default.jpg\" alt=\"User Avatar\">";
+                            
+                            else:    
+                                echo "<img class=\"img-circle\" src=\"../uploads/{$salao['avatar']}\" alt=\"User Avatar\">";
+                            endif;
+                              echo "
                             </div>
                             <div class=\"box-footer\">
                                <div class=\"row\">

@@ -187,7 +187,7 @@ foreach ($readSes->getResult() as $ses):
                                                               <td> {$ses['nivel']} </td>
                                                               <td> {$ses['vinculoEmpregaticio']} </td>
                                                               <td> {$ses['numeroVagas']} </td>
-                                                              <td> {$ses['idVagaEmprego']} </td>
+                                                              <td> {$ses['nomeSalao']} </td>
                                                               <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">    
                                                               <td><a href=\"editarVagaEmprego.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
                                                                   <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaEmprego']}\">

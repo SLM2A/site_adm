@@ -31,8 +31,12 @@ foreach ($readProfissional->getResult() as $usuarios):
                       <h3 class=\"widget-user-username\"><b>{$usuarios['nomeUsuario']} {$usuarios['sobrenomeUsuario']}</b></h3>
                      
                     </div>
-                    <div class=\"widget-user-image\">
-                      <img class=\"img-circle\" src=\"../uploads/{$readUsuario->getResult()[0]['avatar']}\" alt=\"User Avatar\">
+                    <div class=\"widget-user-image\">";
+                    if($usuarios['avatar']==null):
+                         echo "<img src=\"../dist/img/userpadrao.png\" class=\"profile-user-img img-responsive img-circle\" alt=\"User profile picture\"> ";  
+                    else:
+                         echo "<img class=\"img-circle\" src=\"../uploads/{$usuarios['avatar']}\" alt=\"User Avatar\">";
+                    endif;     echo"
                     </div>
                     <div class=\"box-footer\">
                        <div class=\"row\">

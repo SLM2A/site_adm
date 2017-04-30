@@ -27,8 +27,13 @@ $readFoto->ExeRead("portfolio", "WHERE idUsuario = :id", "id={$idProfissional}")
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="../dist/img/user2-160x160.jpg" alt="User profile picture">
-
+                  <?php  
+                  if($readProfissional->getResult()[0]['avatar']==null):
+                       echo "<img src=\"../dist/img/userpadrao.png\" class=\"profile-user-img img-responsive img-circle\" alt=\"User profile picture\"> ";  
+                  else:
+                    echo "<img class=\"profile-user-img img-responsive img-circle\" src=\"../uploads/{$readProfissional->getResult()[0]['avatar']}\" alt=\"User profile picture\">";
+                endif;?>
+                    
                     <h3 class="profile-username text-center"><?php echo $readProfissional->getResult()[0]['nomeUsuario'];
 echo " ";
 echo $readProfissional->getResult()[0]['sobrenomeUsuario']; ?></h3>
