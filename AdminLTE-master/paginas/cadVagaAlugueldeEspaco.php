@@ -186,7 +186,7 @@ endif;
                                                 <label>Preço:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="text" class="form-control" placeholder="Seja Justo :)" id="preco" name="preco" value="<?php if (isset($data)) echo $data['preco']; ?>" maxlength=50 required> 
+                                                    <input type="text" class="form-control" placeholder="Seja Justo :)" onkeyup="moeda(this);" maxlength="10" id="preco" name="preco" value="<?php if (isset($data)) echo $data['preco']; ?>" maxlength=50 required> 
                                                     
                                                 </div>	
                                             
@@ -235,8 +235,8 @@ endif;
                                         </div>
                                         <div class="form-group">
                                             <label>Tamanho (m²):</label>
-                                            <input type="text" class="form-control" name="tamanho" value="<?php if (isset($data)) echo $data['tamanho']; ?>"  maxlength=10 required>
-
+                                            <input type="text"  class="form-control" onkeyup="somenteNumeros(this);" maxlength="5" name="tamanho" pattern="[0-5]+$"  value="<?php if (isset($data)) echo $data['tamanho']; ?>"  required>
+                                            
                                         </div>   
                                         <div class="form-group">
                                             <label>Dias de Funcionamento:</label>
@@ -324,3 +324,25 @@ endif;
 <div class="row">
 
 <?php include 'menuFooter.php'; ?>
+
+    <script>
+    function somenteNumeros(num) {
+        var er = /[^0-9.]/;
+        er.lastIndex = 0;
+        var campo = num;
+        if (er.test(campo.value)) {
+          campo.value = "";
+        }
+    }
+    
+    function moeda(z){
+        v = z.value;
+        v=v.replace(/\D/g,"") // permite digitar apenas numero
+        v=v.replace(/(\d{1})(\d{14})$/,"$1.$2") // coloca ponto antes dos ultimos digitos
+        v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos
+        v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos
+        v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos
+        v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2") // coloca virgula antes dos ultimos 2 digitos
+        z.value = v;
+    }
+ </script>

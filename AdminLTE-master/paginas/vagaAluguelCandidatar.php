@@ -89,7 +89,7 @@ $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSala
                 <hr>
                 <strong><i class="fa fa-map-marker margin-r-5"></i> Preço do Aluguel</strong>
                 <p>
-                    R$ <?php echo $readSes->getResult()[0]['preco'] ?>,00
+                    R$ <?php echo $readSes->getResult()[0]['preco'] ?>
                 </p>
                 <hr>
                 <strong><i class="fa fa-book margin-r-5"></i> O que está sendo alugado</strong>

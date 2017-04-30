@@ -191,7 +191,7 @@ endif;
                     <div class="box-body box-profile" id="sales-chart" >
 
                         <label>Número de Vagas:</label>
-                        <input type="text" maxlength=2 class="form-control" name="numeroVagas" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
+                        <input type="text" maxlength=2 class="form-control" name="numeroVagas" onkeyup="somenteNumeros(this);" value="<?php if (isset($data)) echo $data['numeroVagas']; ?>" required>
 
 
 
@@ -223,7 +223,7 @@ endif;
                         <div class="col-md-4">
                             <label>Comissão:</label>
                             <div class="input-group">
-                                <input type="text" maxlength=60 class="form-control" placeholder="Seja Justo :)" id="comissao" name="comissao" value="<?php if (isset($data)) echo $data['comissao']; ?>" required> 
+                                <input type="text" maxlength=60 class="form-control" placeholder="Seja Justo :)" id="comissao" onkeyup="somenteNumeros(this);" name="comissao" value="<?php if (isset($data)) echo $data['comissao']; ?>" required> 
                                 <span class="input-group-addon">%</span>
                             </div>	
                         </div>
@@ -270,3 +270,14 @@ endif;
 </section>
 <div class="row">
     <?php include 'menuFooter.php'; ?>
+
+    <script>
+    function somenteNumeros(num) {
+        var er = /[^0-9.]/;
+        er.lastIndex = 0;
+        var campo = num;
+        if (er.test(campo.value)) {
+          campo.value = "";
+        }
+    }
+    </script>

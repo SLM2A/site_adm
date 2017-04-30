@@ -23,15 +23,16 @@ if (!empty($data['SendPostForm'])):
      if ($cadastra->getResult()):
             $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
             $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
-       echo "<script>location.href='perfilProfissionalPublico?id={$idProfissional}';</script>";
+        if($_SESSION['userlogin']['msg']!="Não existem vagas selecionadas!"):
+           echo "<script>location.href='perfilProfissionalPublico?id={$idProfissional}';</script>"; 
+        else:
+           echo "<script>location.href='escolhervaga.php?id={$idProfissional}';</script>";     
+        endif;    
+        
    endif;
-    
-    
-
 endif;
 
-$readConvidado = new Read();
-$readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']} and idUsuarioProfissional = {$idProfissional}");
+
 ?>
 
 
@@ -63,27 +64,32 @@ $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresar
 
                                                 <?php
                                                 $readSes = new Read;
-
                                                 $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSalao = s.idSalao inner join salaoempresario se on s.idSalao = se.idSalao where se.idUsuario= :catid order by s.nomeSalao" , "catid={$userlogin['idUsuario']}");
-                                                foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaEmprego[]\" value=\"{$ses['idVagaEmprego']}\" class=\"flat-red\" ";
-
-                                                            if ($ses['idVagaEmprego'] == $data['idVagaEmprego']):
-                                                                echo ' checked';
-                                                            endif;
-                                                                  
-                                                    echo "</td><td> {$ses['tituloVaga']} </td>
-                                                              <td> {$ses['profissao']} </td>
-                                                              
-                                                              <td> {$ses['nivel']} </td>
-                                                              <td> {$ses['vinculoEmpregaticio']} </td>
-                                                              <td> {$ses['numeroVagas']} </td>
-                                                                  </tr>
-                                                        ";
-
-                                                endforeach;
+                                                $i=0;
+                                                $readConvidado = new Read();
+                                                $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']} and idUsuarioProfissional = {$idProfissional} ");
+                                                                                                   
+                                                  foreach ($readSes->getResult() as $ses):
+                                                     if($i<$readConvidado->getRowCount()):
+                                                        if ($ses['idVagaEmprego'] == $readConvidado->getResult()[$i]['idVagaEmprego']):
+                                                           $i++;
+                                                        else:                                                                
+                                                               echo "<tr><td><input type=\"checkbox\" name=\"idVagaEmprego[]\" value=\"{$ses['idVagaEmprego']}\" >";
+                                                               echo "</td><td> {$ses['tituloVaga']} </td>
+                                                                     <td> {$ses['profissao']} </td>
+                                                                     <td> {$ses['nivel']} </td>
+                                                                     <td> {$ses['vinculoEmpregaticio']} </td>
+                                                                     <td> {$ses['numeroVagas']} </td></tr> ";
+                                                        endif;
+                                                    else: 
+                                                        echo "<tr><td><input type=\"checkbox\" name=\"idVagaEmprego[]\" value=\"{$ses['idVagaEmprego']}\" >";
+                                                                   echo "</td><td> {$ses['tituloVaga']} </td>
+                                                                         <td> {$ses['profissao']} </td>
+                                                                         <td> {$ses['nivel']} </td>
+                                                                         <td> {$ses['vinculoEmpregaticio']} </td>
+                                                                         <td> {$ses['numeroVagas']} </td></tr> ";
+                                                    endif;
+                                                 endforeach;
                                                 ?>
                                             </tbody>  
                                         </table>

@@ -343,7 +343,7 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                         <li class="header">Navegação Principal</li>
                         <?php
                         echo '
-		<li class="active treeview/">
+		<li class="treeview/">
 			<a href="index.php"><i class="fa fa-home"></i><span>Inicio</span></a>
 		</li>
 		

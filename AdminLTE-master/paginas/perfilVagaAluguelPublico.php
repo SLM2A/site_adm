@@ -61,7 +61,7 @@ endif;
 <!-- Plugin CSS -->
 <link href="../../vendor/magnific-popup/magnific-popup.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
 <section class="content-header">
   
                 </section>
@@ -112,7 +112,7 @@ endif;
                                     <hr>						  
                                     <strong><i class="fa fa-map-marker margin-r-5"></i> Preço do Aluguel</strong>
                                     <p>
-                                    R$ <?php echo $readSes->getResult()[0]['preco'] ?>,00
+                                    R$ <?php echo $readSes->getResult()[0]['preco'] ?>
                                     </p>
                                     <hr>
                                     <strong><i class="fa fa-book margin-r-5"></i> O que está sendo alugado</strong>

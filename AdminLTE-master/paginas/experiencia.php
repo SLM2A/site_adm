@@ -13,27 +13,36 @@ $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
-    require '../../admin/_models/AdminExperiencia.php';
-    $cadastra = new AdminExperiencia;
+    if($data['deExperiencia']<$data['ateExperiencia']):
+        require '../../admin/_models/AdminExperiencia.php';
+        $cadastra = new AdminExperiencia;
 
-    $cadastra->ExeCreate($data);
-    $readEndereco = new Read;
+        $cadastra->ExeCreate($data);
+        $readEndereco = new Read;
 
-    $readEndereco->FullRead("SELECT MAX(idExperiencia) FROM experienciaprofissionalusuario");
-    $idExperiencia = $readEndereco->getResult()[0]['MAX(idExperiencia)'];
-
-
-    $ExperienciaUsuario['idExperiencia'] = $idExperiencia;
-    $ExperienciaUsuario['idUsuario'] = $userlogin['idUsuario'];
+        $readEndereco->FullRead("SELECT MAX(idExperiencia) FROM experienciaprofissionalusuario");
+        $idExperiencia = $readEndereco->getResult()[0]['MAX(idExperiencia)'];
 
 
-    $cadastra->InsereRelacao($ExperienciaUsuario);
+        $ExperienciaUsuario['idExperiencia'] = $idExperiencia;
+        $ExperienciaUsuario['idUsuario'] = $userlogin['idUsuario'];
 
-         if ($cadastra->getResult()):
-            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
-            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
-            echo "<script>location.href='experiencia.php';</script>";
-        endif;
+
+        $cadastra->InsereRelacao($ExperienciaUsuario);
+
+             if ($cadastra->getResult()):
+                $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+                $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+                echo "<script>location.href='experiencia.php';</script>";
+            endif;
+    else:
+        
+                $_SESSION['userlogin']['msg'] = "Não foi possível cadastrar, pois o campo 'DE' é maior que o campo 'ATÉ'!";
+                $_SESSION['userlogin']['tipoMsg'] = RENTAL_ALERT;
+                echo "<script>location.href='experiencia.php';</script>";
+    endif;
+
+    
 endif;
 
 /*

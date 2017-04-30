@@ -95,8 +95,18 @@ class AdminSalao {
      private function Delete() {
         $delete = new Delete();
         
-        $delete->ExeDelete(self::ENTITY, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
-        $delete->ExeDelete(self::salaoempresario, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
+        $ProcuraVagaAluguel = new Read();
+        $ProcuraVagaAluguel->FullRead("SELECT * FROM vagaaluguel WHERE idSalao={$this->idDelete}");
+        $ProcuraVagaEmprego = new Read();
+        $ProcuraVagaEmprego->FullRead("SELECT * FROM vagaemprego WHERE idSalao={$this->idDelete}");
+        
+        if((!$ProcuraVagaAluguel->getResult()) && (!$ProcuraVagaEmprego->getResult()) ):        
+            $delete->ExeDelete(self::ENTITY, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");        
+            $delete->ExeDelete(self::salaoempresario, "WHERE idSalao = :idSalao", "idSalao={$this->idDelete}");
+        else:
+            $this->Result = TRUE;
+            $this->Error = ["O Salão não pode ser deletado, existem vagas cadastradas!", RENTAL_ALERT];
+        endif;    
         if ($delete->getResult()):
             $this->Result = TRUE;
             $this->Error = ["O Salão foi deletado do sistema!", RENTAL_ACCEPT];

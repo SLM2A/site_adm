@@ -8,6 +8,8 @@ $idProfissional = $_GET['id'];
 $readProfissional = new Read;
 $readProfissional->FullRead("select * from usuario where idUsuario = :id", "id={$idProfissional}");
 
+$readEndereco = new Read();
+$readEndereco->FullRead("SELECT * FROM enderecousuario WHERE idUsuario={$idProfissional}");
 
 $readConvidado = new Read();
 $readConvidado->FullRead("Select * From usuarioconvidado where idUsuarioEmpresario = {$userlogin['idUsuario']} and idUsuarioProfissional = {$idProfissional}");
@@ -45,7 +47,8 @@ echo $readProfissional->getResult()[0]['sobrenomeUsuario']; ?></h3>
                                 
 
                                 echo"  
-                                        <a href=\"criarMensagem.php?desr={$idProfissional}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Enviar Mensagem</button></a>";
+                                        <a href=\"criarMensagem.php?desr={$idProfissional}&remr={$userlogin['idUsuario']}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envelope\"></i> Mensagem</button></a>
+                                        <a href=\"escolhervaga.php?id={$idProfissional}\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-check\"></i> Ofertar Emprego</button></a>";
                                 ?>
                         </div>
                     </center>
@@ -67,17 +70,37 @@ echo $readProfissional->getResult()[0]['sobrenomeUsuario']; ?></h3>
                     <strong><i class="fa fa-book margin-r-5"></i> O que acho sobre mim</strong>
 
                     <p class="text-muted">
-                        <?= $userlogin['descricao']; ?>
+                        <?php echo $readProfissional->getResult()[0]['descricao'] ?>
                     </p>
                     <hr>
-                    <strong><i class="fa fa-pencil margin-r-5"></i> Competências</strong>
-                    <p>
-                        <span class="label label-danger">Pigmentação</span>
-                        <span class="label label-success">Navalhado</span>
-                    </p>
+                    <strong><i class="fa fa-pencil margin-r-5"></i> Redes Sociais</strong>
+                <p>
+                    <?php 
+                    $readRedeSocial = new Read();
+                    $readRedeSocial->FullRead("SELECT * FROM redesocial rs inner join usuario u on rs.idUsuario=u.idUsuario WHERE rs.idUsuario={$userlogin['idUsuario']}");
+                    //var_dump($readRedeSocial->getResult());
+                    if($readRedeSocial->getResult()):
+                        if($readRedeSocial->getResult()[0]['facebook']):
+                            echo "<a class=\"btn btn-social-icon btn-facebook\" href=\"https://www.facebook.com/{$readRedeSocial->getResult()[0]['facebook']}\"><i class=\"fa fa-facebook\"></i></a> ";
+                        endif;
+                        if($readRedeSocial->getResult()[0]['instagram']):
+                            echo "<a class=\"btn btn-social-icon btn-instagram\" href=\"https://www.instagram.com/{$readRedeSocial->getResult()[0]['instagram']}\"><i class=\"fa fa-instagram\"></i></a> ";
+                        endif;
+                        if($readRedeSocial->getResult()[0]['twitter']):
+                            echo "<a class=\"btn btn-social-icon btn-twitter\"  href=\"https://twitter.com/{$readRedeSocial->getResult()[0]['twitter']}\"><i class=\"fa fa-twitter\"></i></a> ";
+                        endif;
+                    else:
+                        echo "Usuário não possui redes sociais cadastradas!";
+                    endif;
+                    
+                    
+                    ?>
+                    
+                    
+                </p>
                     <hr>						  
                     <strong><i class="fa fa-map-marker margin-r-5"></i> Localidade</strong>
-                    <p class="text-muted">São Paulo, Brasil</p>
+                    <p class="text-muted"><?php echo $readEndereco->getResult()[0]['cidade']."/".$readEndereco->getResult()[0]['estado'];?></p>
 
                 </div>
             </div>

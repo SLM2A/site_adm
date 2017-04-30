@@ -103,23 +103,28 @@ $readProprietario->FullRead("select * from salao s inner join salaoempresario se
                                                 $readSes = new Read;
 
                                                 $readSes->FullRead("select * from vagaaluguel va inner join salao s on va.idSalao = s.idSalao where va.idSalao = :catid order by s.nomeSalao" , "catid={$idSalao}");
-                                                foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
+                                                
+                                                if($readSes->getResult()):
+                                                        foreach ($readSes->getResult() as $ses):
+        //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
 
-                                                    echo "<tr><td> {$ses['nomeAnuncio']} </td>
-                                                              <td> {$ses['profissao']} </td>
-                                                              <td> {$ses['formaAluguel']} </td>
-                                                              <td> {$ses['preco']} </td>
-                                                              <td> {$ses['nomeSalao']} </td>
-                                                                  <td>   <div class=\"btn-group\">
-                                                                    <a href=\"perfilVagaAluguelPublico.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-info\">Ir Para Vaga</button></a>
-                                                                    
-                                                                    
-                                                                  </div></td></tr>
-                                                        ";
+                                                            echo "<tr><td> {$ses['nomeAnuncio']} </td>
+                                                                      <td> {$ses['profissao']} </td>
+                                                                      <td> {$ses['formaAluguel']} </td>
+                                                                      <td> {$ses['preco']} </td>
+                                                                      <td> {$ses['nomeSalao']} </td>
+                                                                          <td>   <div class=\"btn-group\">
+                                                                            <a href=\"perfilVagaAluguelPublico.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-info\">Ir Para Vaga</button></a>
 
-                                                endforeach;
+
+                                                                          </div></td></tr>
+                                                                ";
+
+                                                        endforeach;
+                                                else:
+                                                    echo "<tr><td>NÃO EXISTEM VAGAS CADASTRADAS!</tr></td>";
+                                                endif;        
                                                 ?>
                                             </tbody>  
                                         </table>
@@ -155,23 +160,28 @@ $readProprietario->FullRead("select * from salao s inner join salaoempresario se
                                                 $readSes = new Read;
 
                                                 $readSes->FullRead("select * from vagaemprego ve inner join salao s on ve.idSalao = s.idSalao where ve.idSalao = :catid order by s.nomeSalao", "catid={$idSalao}");
-                                                foreach ($readSes->getResult() as $ses):
-//                                                        echo "<option value=\"{$ses['idSalao']}\" ";
-                                                    
-                                                    echo "<tr><td> {$ses['tituloVaga']} </td>
-                                                              <td> {$ses['profissao']} </td>
-                                                              <td> {$ses['nivel']} </td>
-                                                              <td> {$ses['vinculoEmpregaticio']} </td>
-                                                              <td> {$ses['numeroVagas']} </td>
-                                                                  <td>   <div class=\"btn-group\">
-                                                                    <a href=\"perfilVagaEmpregoPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\">Ir Para Vaga</button></a>
-                                                                    
-                                                                    
-                                                                  </div></td></tr>
-                                                        ";
+                                                
+                                                if($readSes->getResult()):
+                                                    foreach ($readSes->getResult() as $ses):
+    //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                                                    
-                                                endforeach;
+                                                        echo "<tr><td> {$ses['tituloVaga']} </td>
+                                                                  <td> {$ses['profissao']} </td>
+                                                                  <td> {$ses['nivel']} </td>
+                                                                  <td> {$ses['vinculoEmpregaticio']} </td>
+                                                                  <td> {$ses['numeroVagas']} </td>
+                                                                      <td>   <div class=\"btn-group\">
+                                                                        <a href=\"perfilVagaEmpregoPublico.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\">Ir Para Vaga</button></a>
+
+
+                                                                      </div></td></tr>
+                                                            ";
+
+
+                                                    endforeach;
+                                                else:
+                                                    echo "<tr><td>NÃO EXISTEM VAGAS CADASTRADAS!</tr></td>";
+                                                endif;     
                                                 ?>
                                             </tbody>  
                                         </table>

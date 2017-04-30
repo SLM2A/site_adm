@@ -20,8 +20,14 @@ class AdminProfissionalConvidar{
 
     public function ExeCreate(array $Data) {
         $this->Data = $Data;
-        //$this->CreateAluguel();
-        $this->CreateEmprego();
+        
+        if(!array_key_exists('idVagaEmprego',$Data)):
+            $this->Result = TRUE;
+            $this->Error = ["Não existem vagas selecionadas!",RENTAL_ALERT];
+        else:
+            $this->CreateEmprego();
+        endif;
+        
     }
 
      public function ExeUpdateVisualizada($CategoryId, array $Data) {

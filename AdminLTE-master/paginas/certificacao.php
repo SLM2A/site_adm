@@ -13,27 +13,34 @@ $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($data['SendPostForm'])):
     unset($data['SendPostForm']);
 
-    require '../../admin/_models/AdminCertificado.php';
-    $cadastra = new AdminCertificado;
+    if($data['anoInicioCertificado']<$data['anoConclusaoCertificado']):
 
-    $cadastra->ExeCreate($data);
-    $readCertificado = new Read;
+        require '../../admin/_models/AdminCertificado.php';
+        $cadastra = new AdminCertificado;
 
-    $readCertificado->FullRead("SELECT MAX(idCertificado) FROM certificadoprofissionalusuario");
-    $idCertificado = $readCertificado->getResult()[0]['MAX(idCertificado)'];
+        $cadastra->ExeCreate($data);
+        $readCertificado = new Read;
 
-
-    $CertificadoUsuario['idCertificado'] = $idCertificado;
-    $CertificadoUsuario['idUsuario'] = $userlogin['idUsuario'];
+        $readCertificado->FullRead("SELECT MAX(idCertificado) FROM certificadoprofissionalusuario");
+        $idCertificado = $readCertificado->getResult()[0]['MAX(idCertificado)'];
 
 
-    $cadastra->InsereRelacao($CertificadoUsuario);
-    
-      if ($cadastra->getResult()):
-            $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
-            $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
-            echo "<script>location.href='certificacao.php';</script>";
-        endif;
+        $CertificadoUsuario['idCertificado'] = $idCertificado;
+        $CertificadoUsuario['idUsuario'] = $userlogin['idUsuario'];
+
+
+        $cadastra->InsereRelacao($CertificadoUsuario);
+
+          if ($cadastra->getResult()):
+                $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
+                $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
+                echo "<script>location.href='certificacao.php';</script>";
+            endif;
+    else:
+        $_SESSION['userlogin']['msg'] = "Não foi possível cadastrar, pois o campo 'ANO DE INICIO' é maior que o campo 'ANO DE CONCLUSÃO'!";
+        $_SESSION['userlogin']['tipoMsg'] = RENTAL_ALERT;
+        echo "<script>location.href='certificacao.php';</script>";
+    endif;
 endif;
 /*
  * Fim Insere no banco a Certificação

@@ -26,6 +26,7 @@ endif;
     if($read->getResult()):
         foreach ($read->getResult() as $area):
             $array[] = $area['idAreaAtuacao'];
+            
         endforeach;
     endif;
 
@@ -49,7 +50,7 @@ endif;
                     $readAreaAtuacao = new Read;
 
                     $readAreaAtuacao->FullRead("select * from areaatuacao order by nomeProfissao");
-
+                    
 
                     if (!$readAreaAtuacao->getResult()):
                         echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
@@ -57,6 +58,7 @@ endif;
 
                         foreach ($readAreaAtuacao->getResult() as $area):
                             $atuacao = $array[$i];
+                            
                             echo "<option value=\"{$area['idAreaAtuacao']}\" ";
 
                                                         if ($area['idAreaAtuacao'] == $atuacao ):
