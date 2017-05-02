@@ -24,7 +24,7 @@ endif;
 
 $readNaoLida = new Read();
 $readNaoLida->FullRead("Select * from mensagem m inner join usuario u on m.idRemetente=u.idUsuario where m.idDestinatario=:id and situacaoRecebida=0", "id={$userlogin['idUsuario']}");
-//var_dump($readNaoLida->getre());
+
 $readUsuario= new Read();
 $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlogin['idUsuario']}");
 
@@ -137,12 +137,16 @@ $readUsuario->FullRead("Select * FROM usuario where idUsuario=:id", "id={$userlo
                                                
                                             <li><!-- start message -->
                                                 <a href=\"mensagemrecebida.php?msg={$mensagem['idMensagem']}&desr={$mensagem['idDestinatario']}\">
-                                                    <div class=\"pull-left\">
-                                                        <img src=\"../dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">
-                                                    </div>
+                                                    <div class=\"pull-left\">";
+                                                        if($mensagem['avatar']==null):
+                                                          echo "<img src=\"../dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">";
+                                                        else:
+                                                          echo "<img src=\"../uploads/{$mensagem['avatar']}\" class=\"img-circle\" alt=\"User Image\">";  
+                                                        endif;      
+                                                    echo "</div>
                                                     <h4>
                                                    {$mensagem['nomeUsuario']} {$mensagem['sobrenomeUsuario']}
-                                                        <small><i class=\"fa fa-clock-o\"></i> 5 mins</small>
+                                                      
                                                     </h4>
                                                     <p>{$mensagem['assunto']}</p>
                                                 </a>

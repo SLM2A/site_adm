@@ -159,12 +159,12 @@ endif;
                                                         echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                                     else:
                                                         foreach ($readvinculoEmpregaticio->getResult() as $opcao):
-                                                            echo "<input type=\"radio\" name=\"vinculoEmpregaticio\" value=\"{$opcao['opcao']}\" class=\"flat-red\" ";
+                                                            echo "<input type=\"radio\" name=\"vinculoEmpregaticio\" value=\"{$opcao['opcao']}\"  ";
 
                                                             if ($opcao['opcao'] == $data['vinculoEmpregaticio']):
                                                                 echo ' checked';
                                                             endif;
-                                                            echo "> <label>{$objeto['opcao']}</label>";
+                                                            echo "> <label>{$opcao['opcao']}</label>";
                                                         endforeach;
                                                     endif;
                                                     ?>

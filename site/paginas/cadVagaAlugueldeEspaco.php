@@ -169,7 +169,7 @@ endif;
                                                         echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                                     else:
                                                         foreach ($readFormaAluguel->getResult() as $objeto):
-                                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\" ";
+                                                            echo "<input type=\"radio\" name=\"formaAluguel\" value=\"{$objeto['opcao']}\" required";
 
                                                             if ($objeto['opcao'] == $data['formaAluguel']):
                                                                 echo ' checked';

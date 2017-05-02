@@ -126,7 +126,7 @@ endif;
                                                             echo '<option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                                         else:
                                                             foreach ($readnivel->getResult() as $opcao):
-                                                                echo "<option value=\"{$opcao['opcao']}\" ";
+                                                                echo "<option value=\"{$opcao['opcao']}\"  ";
 
                                                                 if ($opcao['opcao'] == $data['nivel']):
                                                                     echo ' selected="selected" ';
@@ -154,7 +154,7 @@ endif;
                                                         echo '<label><option disabled="disabled" value="null"> Sem Acesso ao Banco! </option>';
                                                     else:
                                                         foreach ($readvinculoEmpregaticio->getResult() as $opcao):
-                                                            echo "<input type=\"radio\" name=\"vinculoEmpregaticio\" value=\"{$opcao['opcao']}\" ";
+                                                            echo "<input type=\"radio\" name=\"vinculoEmpregaticio\" value=\"{$opcao['opcao']}\" required";
 
                                                             if ($opcao['opcao'] == $data['vinculoEmpregaticio']):
                                                                 echo ' checked';
