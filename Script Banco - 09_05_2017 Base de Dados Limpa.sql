@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09-Maio-2017 às 14:40
+-- Generation Time: 09-Maio-2017 às 16:35
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -5721,6 +5721,14 @@ CREATE TABLE `certificadoprofissionalusuario` (
   `anoConclusaoCertificado` varchar(4) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `certificadoprofissionalusuario`
+--
+
+INSERT INTO `certificadoprofissionalusuario` (`idCertificado`, `instituicaoCertificado`, `cursoCertificado`, `nivelCertificado`, `duracaoCertificado`, `anoInicioCertificado`, `anoConclusaoCertificado`) VALUES
+(53, 'Embeleze', 'Barbearia', 'Especialização', '12 meses', '2003', '2004'),
+(54, 'Embeleza', 'Barbearia', 'Especialização', '18 meses', '2006', '2008');
+
 -- --------------------------------------------------------
 
 --
@@ -5731,6 +5739,14 @@ CREATE TABLE `certificadousuario` (
   `idCertificado` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `certificadousuario`
+--
+
+INSERT INTO `certificadousuario` (`idCertificado`, `idUsuario`) VALUES
+(53, 65),
+(54, 66);
 
 -- --------------------------------------------------------
 
@@ -5814,6 +5830,14 @@ CREATE TABLE `enderecousuario` (
   `estado` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `enderecousuario`
+--
+
+INSERT INTO `enderecousuario` (`idEndereco`, `idUsuario`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
+(6, 65, '04011-002', 'Rua Estela', '515', '', 'Vila Mariana', 'São Paulo', 'SP'),
+(7, 66, '02218-110', 'Rua Professor Álvaro de Souza Reis', '61', '', 'Vila Medeiros', 'São Paulo', 'SP');
+
 -- --------------------------------------------------------
 
 --
@@ -5830,6 +5854,16 @@ CREATE TABLE `experienciaprofissionalusuario` (
   `descricao` text
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `experienciaprofissionalusuario`
+--
+
+INSERT INTO `experienciaprofissionalusuario` (`idExperiencia`, `cargoExperiencia`, `empresaExperiencia`, `localizacaoExperiencia`, `deExperiencia`, `ateExperiencia`, `descricao`) VALUES
+(88, 'Barbeiro', 'Salão Americano', NULL, '2004', '2005', 'Barba e Cabelo'),
+(89, 'Barbeiro', 'Moshe', NULL, '2002', '2003', 'Barbeiro'),
+(90, 'Barbeiro', 'Onix', NULL, '2003', '2004', 'Onix'),
+(91, 'Barbeiro', 'Salzbell', NULL, '2005', '2017', 'Babeiro Salzbell');
+
 -- --------------------------------------------------------
 
 --
@@ -5840,6 +5874,16 @@ CREATE TABLE `experienciausuario` (
   `idExperiencia` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `experienciausuario`
+--
+
+INSERT INTO `experienciausuario` (`idExperiencia`, `idUsuario`) VALUES
+(88, 65),
+(89, 66),
+(90, 66),
+(91, 66);
 
 -- --------------------------------------------------------
 
@@ -5895,6 +5939,16 @@ CREATE TABLE `habilidadeusuario` (
   `idUsuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `habilidadeusuario`
+--
+
+INSERT INTO `habilidadeusuario` (`idAreaAtuacao`, `idUsuario`) VALUES
+(1, 65),
+(4, 65),
+(1, 66),
+(4, 66);
+
 -- --------------------------------------------------------
 
 --
@@ -5928,6 +5982,14 @@ CREATE TABLE `imagemvagaaluguel` (
   `fotoPequena` varchar(255) DEFAULT NULL,
   `dataFoto` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `imagemvagaaluguel`
+--
+
+INSERT INTO `imagemvagaaluguel` (`idFoto`, `IdVagaAluguel`, `fotoGrande`, `fotoPequena`, `dataFoto`) VALUES
+(52, 30, '30-30/2017/05//30-30-FULL-780c9.jpg', '30-30/2017/05//30-30-SMALL-780c9.jpg', '2017-05-09 18:06:48'),
+(53, 30, '30-30/2017/05//30-30-FULL-4b11f.jpg', '30-30/2017/05//30-30-SMALL-4b11f.jpg', '2017-05-09 18:06:49');
 
 -- --------------------------------------------------------
 
@@ -6014,6 +6076,18 @@ CREATE TABLE `portfolio` (
   `descricaoImagem` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `portfolio`
+--
+
+INSERT INTO `portfolio` (`idPortfolio`, `idUsuario`, `portfolioImagemFull`, `portfolioImagemSmall`, `dataImagem`, `tituloImagem`, `descricaoImagem`) VALUES
+(9, 65, '65-65/2017/05//65-65-FULL-d6a86.jpg', '65-65/2017/05//65-65-SMALL-d6a86.jpg', '2017-05-09 17:47:33', NULL, NULL),
+(10, 65, '65-65/2017/05//65-65-FULL-dc6bc.jpg', '65-65/2017/05//65-65-SMALL-dc6bc.jpg', '2017-05-09 17:47:34', NULL, NULL),
+(11, 65, '65-65/2017/05//65-65-FULL-4eb19.jpg', '65-65/2017/05//65-65-SMALL-4eb19.jpg', '2017-05-09 17:47:34', NULL, NULL),
+(12, 65, '65-65/2017/05//65-65-FULL-04d6d.jpg', '65-65/2017/05//65-65-SMALL-04d6d.jpg', '2017-05-09 17:47:35', 'Corte', 'Teste Corte'),
+(13, 66, '66-66/2017/05//66-66-FULL-97a85.jpg', '66-66/2017/05//66-66-SMALL-d213d.jpg', '2017-05-09 18:20:14', NULL, NULL),
+(14, 66, '66-66/2017/05//66-66-FULL-ff308.jpg', '66-66/2017/05//66-66-SMALL-a402a.jpg', '2017-05-09 18:20:15', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -6028,6 +6102,14 @@ CREATE TABLE `redesocial` (
   `twitter` varchar(50) DEFAULT NULL,
   `whatsapp` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `redesocial`
+--
+
+INSERT INTO `redesocial` (`idRedeSocial`, `idUsuario`, `facebook`, `instagram`, `twitter`, `whatsapp`) VALUES
+(6, 65, 'empresarioteste', 'empresarioteste', 'empresarioteste', '(11)99999-9999'),
+(7, 66, 'profissionalteste', 'profissionalteste', 'profissionalteste', '(11)98904-8949');
 
 -- --------------------------------------------------------
 
@@ -6051,6 +6133,13 @@ CREATE TABLE `salao` (
   `estado` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `salao`
+--
+
+INSERT INTO `salao` (`idSalao`, `avatar`, `nomeSalao`, `cnpjSalao`, `categoriaSalao`, `descricaoSalao`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
+(40, '65-65/2017/05//65-65-SALAO-403d1.jpg', 'Dynamic Health', '15.151.651/5616-51', 'Barbearia', 'Uma barbearia diferente', '04011-002', 'Rua Estela', '515', '', 'Vila Mariana', 'São Paulo', 'SP');
+
 -- --------------------------------------------------------
 
 --
@@ -6061,6 +6150,13 @@ CREATE TABLE `salaoempresario` (
   `idSalao` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `salaoempresario`
+--
+
+INSERT INTO `salaoempresario` (`idSalao`, `idUsuario`) VALUES
+(40, 65);
 
 -- --------------------------------------------------------
 
@@ -6104,6 +6200,14 @@ CREATE TABLE `usuario` (
   `excluir` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `idTipoUsuario`, `avatar`, `apelidoUsuario`, `email`, `senha`, `nomeUsuario`, `sobrenomeUsuario`, `sexoUsuario`, `cpfUsuario`, `dataNascimento`, `descricao`, `situacao`, `excluir`) VALUES
+(65, 1, '65-65/2017/05//65-65-AVATAR-28225.jpg', 'empresario_teste', 'empresario@empresario.com.br', '166acb74f46e691233e35ecb5b9f9e7f', 'Empresario', 'Teste', 'Masculino', '426.593.368-81', '01/01/1950', 'Cadastro de empresário para teste no site rental easy', NULL, NULL),
+(66, 2, '66-66/2017/05//66-66-AVATAR-a7725.jpg', 'profissional_teste', 'profissional@profissional.com.br', 'e5f66152b69ccd368b3decaa070198b8', 'Profissional', 'Teste', 'Masculino', '426.593.368-81', '01/01/1960', 'Usuário profissional para testes no sistema rental easy', 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -6131,6 +6235,13 @@ CREATE TABLE `usuarioconvidado` (
   `idVagaEmprego` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `usuarioconvidado`
+--
+
+INSERT INTO `usuarioconvidado` (`idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`, `visualizadoProfissional`, `visualizadoEmpresario`, `idVagaEmprego`) VALUES
+(65, 66, NULL, 1, 1, 1, 17);
+
 -- --------------------------------------------------------
 
 --
@@ -6152,6 +6263,13 @@ CREATE TABLE `vagaaluguel` (
   `diferencial` text
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `vagaaluguel`
+--
+
+INSERT INTO `vagaaluguel` (`idVagaAluguel`, `idSalao`, `nomeAnuncio`, `profissao`, `formaAluguel`, `preco`, `itemAlugado`, `tamanho`, `diaFuncionamento`, `horarioFuncionamento`, `caracteristica`, `diferencial`) VALUES
+(30, 40, 'Barbeiro com Experiência', 'Barbeiro', 'Por Mês', '500,00', 'Estação de trabalho completa', '5', 'Segunda à Sábado', 'Horário Comercial', 'Uma barbaria diferente', 'Salão com otima localização, proximo ao metro Paraiso.');
+
 -- --------------------------------------------------------
 
 --
@@ -6165,6 +6283,13 @@ CREATE TABLE `vagaaluguelcandidatada` (
   `data` timestamp NULL DEFAULT NULL,
   `situacao` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `vagaaluguelcandidatada`
+--
+
+INSERT INTO `vagaaluguelcandidatada` (`idVagaAluguel`, `idUsuarioEmpresario`, `idUsuarioProfissional`, `data`, `situacao`) VALUES
+(30, NULL, 66, '2017-05-09 18:17:02', 1);
 
 -- --------------------------------------------------------
 
@@ -6187,6 +6312,13 @@ CREATE TABLE `vagaemprego` (
   `diferencialCandidato` text,
   `beneficioCandidato` text
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `vagaemprego`
+--
+
+INSERT INTO `vagaemprego` (`idVagaEmprego`, `idSalao`, `tituloVaga`, `profissao`, `nivel`, `vinculoEmpregaticio`, `numeroVagas`, `faixaRemuneracao`, `comissao`, `descricaoOportunidade`, `requisitoCandidato`, `diferencialCandidato`, `beneficioCandidato`) VALUES
+(17, 40, 'Barbeiro com Experiência', 'Barbeiro', 'Sênior', 'Registro PJ', '1', 'de R$ 1.500,00 à R$ 3.000,00', '60', 'Atuar como barbeiro em horário comercial', 'Mexer com navalha, saber fazer degradê.', 'Usar produtos importados', 'VT, VR e Seguro Saúde');
 
 -- --------------------------------------------------------
 
@@ -6493,7 +6625,7 @@ ALTER TABLE `areaatuacao`
 -- AUTO_INCREMENT for table `certificadoprofissionalusuario`
 --
 ALTER TABLE `certificadoprofissionalusuario`
-  MODIFY `idCertificado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `idCertificado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT for table `diafuncionamento`
 --
@@ -6508,12 +6640,12 @@ ALTER TABLE `dicasustentabilidade`
 -- AUTO_INCREMENT for table `enderecousuario`
 --
 ALTER TABLE `enderecousuario`
-  MODIFY `idEndereco` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idEndereco` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `experienciaprofissionalusuario`
 --
 ALTER TABLE `experienciaprofissionalusuario`
-  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `idExperiencia` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `faixaremuneracao`
 --
@@ -6533,7 +6665,7 @@ ALTER TABLE `horariofuncionamento`
 -- AUTO_INCREMENT for table `imagemvagaaluguel`
 --
 ALTER TABLE `imagemvagaaluguel`
-  MODIFY `idFoto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `idFoto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `mensagem`
 --
@@ -6553,32 +6685,32 @@ ALTER TABLE `objetoalugado`
 -- AUTO_INCREMENT for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idPortfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `redesocial`
 --
 ALTER TABLE `redesocial`
-  MODIFY `idRedeSocial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idRedeSocial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `salao`
 --
 ALTER TABLE `salao`
-  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `idSalao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT for table `vagaaluguel`
 --
 ALTER TABLE `vagaaluguel`
-  MODIFY `idVagaAluguel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `idVagaAluguel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `vagaemprego`
 --
 ALTER TABLE `vagaemprego`
-  MODIFY `idVagaEmprego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idVagaEmprego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `vinculoempregaticio`
 --
