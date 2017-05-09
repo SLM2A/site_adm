@@ -24,7 +24,7 @@ if (!empty($data['SendPostForm'])):
             $_SESSION['userlogin']['msg'] = $cadastra->getError()[0];
             $_SESSION['userlogin']['tipoMsg'] = $cadastra->getError()[1];
         if($_SESSION['userlogin']['msg']!="Não existem vagas selecionadas!"):
-           echo "<script>location.href='perfilProfissionalPublico?id={$idProfissional}';</script>"; 
+           echo "<script>location.href='perfilProfissionalPublico.php?id={$idProfissional}';</script>"; 
         else:
            echo "<script>location.href='escolhervaga.php?id={$idProfissional}';</script>";     
         endif;    

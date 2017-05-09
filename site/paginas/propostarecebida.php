@@ -96,7 +96,7 @@ echo "
                                                foreach ($readEmprego->getResult() as $vaga):
 //                                                        echo "<option value=\"{$ses['idSalao']}\" ";
 
-                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaEmprego[]\" value=\"{$vaga['idVagaEmprego']}\" class=\"flat-red\" ";
+                                                  echo "<tr><td><input type=\"checkbox\" name=\"idVagaEmprego[]\" value=\"{$vaga['idVagaEmprego']}\"";
 
                                                             if ($vaga['idVagaEmprego'] == $data['idVagaEmprego']):
                                                                 echo ' checked';

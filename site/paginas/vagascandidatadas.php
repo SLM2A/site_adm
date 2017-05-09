@@ -70,10 +70,7 @@ foreach ($readVagaAluguel->getResult() as $ses):
                                                               <td> {$ses['preco']} </td>
                                                               <td> {$ses['nomeSalao']} </td>
                                                               <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">    
-                                                              <td><a href=\"editarVagaAluguel.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa fa-pencil\"></i></button></a>
-                                                                  <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaAluguel']}\">
-                                                                  <input type=\"hidden\" name=\"nomeAnuncio\" value=\"{$ses['nomeAnuncio']}\">
-                                                                  <button input name=\"DeleteAluguel\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                              <td>
                                                                   <a href=\"vagaAluguelCandidatar.php?id={$ses['idVagaAluguel']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                               </td></tr>
                                                               </form>
@@ -131,10 +128,7 @@ foreach ($readVagaEmprego->getResult() as $ses):
                                                               <td> {$ses['comissao']}% </td>
                                                               <td> {$ses['nomeSalao']} </td>
                                                               <form name=\"PostForm\" method=\"POST\" enctype=\"multipart/form-data\">    
-                                                              <td><a href=\"editarVagaEmprego.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-info\"><i class=\"fa  fa-pencil\"></i></button></a>
-                                                                  <input type=\"hidden\" name=\"CadastroId\" value=\"{$ses['idVagaEmprego']}\">
-                                                                  <input type=\"hidden\" name=\"nomeAnuncio\" value=\"{$ses['tituloVaga']}\">
-                                                                   <button input name=\"DeleteEmprego\" class=\"btn btn-danger btn-flat\"><i class=\"fa fa-trash-o\"></i></button>
+                                                              <td>
                                                                   <a href=\"vagaEmpregoCandidatar.php?id={$ses['idVagaEmprego']}\"><button type=\"button\" class=\"btn btn-alert btn-flat\">Ver Vaga</button></a>
                                                               </td></tr>
                                                               </form>
